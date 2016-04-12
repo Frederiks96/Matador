@@ -9,17 +9,17 @@ public interface DAO {
 	// Data Acces object - getters
 	
 	int getPosition(Player player) throws SQLException;
-	int getBalance();
-	int getJailTime();
-	int getCardId();
-	int getCardPosition();
-	int getFieldId();
-	int getHouseCount();
-	boolean hasHotel();
-	boolean isMortgaged();
-	int getVehicleID();
-	String getVehicleColour();
-	String getVehicleType();
-	int getAccountId();
+	int getBalance()throws SQLException;
+	int getJailTime()throws SQLException;
+	int getCardId()throws SQLException;
+	int getCardPosition()throws SQLException;
+	int getFieldId()throws SQLException;
+	int getHouseCount()throws SQLException;
+	boolean hasHotel()throws SQLException;
+	boolean isMortgaged()throws SQLException;
+	int getVehicleID()throws SQLException;
+	String getVehicleColour()throws SQLException;
+	String getVehicleType()throws SQLException;
+	int getAccountId()throws SQLException;
 
 }
