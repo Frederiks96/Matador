@@ -28,63 +28,63 @@ public class SQL implements DAO, DTO {
 		return 0;
 	}
 
-	public int getBalance() {
+	public int getBalance()throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int getJailTime() {
+	public int getJailTime() throws SQLException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int getCardId() {
+	public int getCardId()throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int getCardPosition() {
+	public int getCardPosition() throws SQLException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int getFieldId() {
+	public int getFieldId()throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int getHouseCount() {
+	public int getHouseCount() throws SQLException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public boolean hasHotel() {
+	public boolean hasHotel() throws SQLException{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean isMortgaged() {
+	public boolean isMortgaged()throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public int getVehicleID() {
+	public int getVehicleID() throws SQLException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public String getVehicleColour() {
+	public String getVehicleColour()throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String getVehicleType() {
+	public String getVehicleType() throws SQLException{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public int getAccountId() {
+	public int getAccountId()throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	} 
@@ -96,66 +96,66 @@ public class SQL implements DAO, DTO {
 	
 	// >>> Data transfer objects <<<< //
 	
-	public void createPlayer(){
+	public void createPlayer()throws SQLException{
 		// TODO
 	}
 	
-	public void updatePosition() {
+	public void updatePosition() throws SQLException{
 		// TODO Auto-generated method stub
 
 	}
 
-	public void setBalance() {
+	public void setBalance()throws SQLException {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void setJailTime() {
+	public void setJailTime()throws SQLException {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void setCardId() {
+	public void setCardId() throws SQLException{
 		// TODO Auto-generated method stub
 
 	}
 
-	public void setCardPosition() {
+	public void setCardPosition() throws SQLException{
 		// TODO Auto-generated method stub
 	}
 
-	public void setFieldId() {
+	public void setFieldId() throws SQLException{
 		// TODO Auto-generated method stub
 	}
 
-	public void setHouseCount() {
+	public void setHouseCount() throws SQLException{
 		// TODO Auto-generated method stub
 	}
 
-	public void buildHotel() {
+	public void buildHotel()throws SQLException {
 		// TODO Auto-generated method stub
 	}
 
-	public void mortgage() {
+	public void mortgage()throws SQLException {
 		// TODO Auto-generated method stub
 	}
 
-	public void setVehicleID() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setVehicleColour() {
+	public void setVehicleID() throws SQLException{
 		// TODO Auto-generated method stub
 
 	}
 
-	public void setVehicleType() {
+	public void setVehicleColour() throws SQLException{
 		// TODO Auto-generated method stub
 
 	}
 
-	public void setAccountId() {
+	public void setVehicleType() throws SQLException{
+		// TODO Auto-generated method stub
+
+	}
+
+	public void setAccountId() throws SQLException{
 		// TODO Auto-generated method stub
 
 	}
