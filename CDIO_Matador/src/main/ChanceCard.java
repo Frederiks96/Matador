@@ -2,9 +2,14 @@ package main;
 
 public class ChanceCard {
 
-	String text; 
-	ChanceCard(String text){
+	private String text; 
+	
+	public ChanceCard(String text){
 		this.text = text;
+	}
+	
+	public String toString() {
+		return this.text;
 	}
 
 
