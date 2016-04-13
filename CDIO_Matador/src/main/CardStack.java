@@ -11,8 +11,16 @@ public class CardStack {
 
 	public CardStack(){
 		chanceCardDeck = new ArrayList<ChanceCard>();
-		for(int i = 0; i<40; i++){
-			this.card=new ChanceCard("Hej"+i);
+		
+		for(int i = 0; i<40; i++) {
+			
+			if (i==0 || i==1) {
+				this.card = new ChanceCard("KingsBirthday");
+			}
+			else {
+				this.card = new ChanceCard("Hej"+i);
+			}
+
 			chanceCardDeck.add(card);
 		}
 	}
@@ -21,8 +29,19 @@ public class CardStack {
 		Collections.shuffle(chanceCardDeck);
 	}
 
-	public String draw() {
-		return chanceCardDeck.get(0).toString();
+	public String draw(Player player) {
+		ChanceCard temp = chanceCardDeck.get(0);
+
+		if (temp.isOwnable()==true) {
+			player.giveCard(temp);
+		}
+
+		else {
+			chanceCardDeck.add(temp);
+		}
+
+		chanceCardDeck.remove(0);
+		return temp.toString();
 	}
 
 	public ArrayList<String> drawAll() {
