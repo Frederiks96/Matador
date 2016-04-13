@@ -74,8 +74,6 @@ public class Player {
 
 	public void giveCard(ChanceCard card) {
 		this.cards.add(card);
-		System.out.println("John har nu et benådningskort");
-		System.out.println(cards.get(0).toString());
 	}
 
 	public ChanceCard getCard() {
@@ -88,6 +86,10 @@ public class Player {
 
 	public void takeCard() {
 		this.cards.remove(0);
+	}
+	
+	public boolean hasCards() {
+		return this.cards.size()!=0;
 	}
 
 
