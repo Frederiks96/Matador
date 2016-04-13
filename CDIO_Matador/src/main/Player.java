@@ -19,7 +19,6 @@ public class Player {
 		this.numFleetsOwned = 0;
 		this.numBreweriesOwned = 0;
 		this.position = 0;
-		//		createPlayer();
 		numOfPlayers++;
 		this.player_id = numOfPlayers;
 		this.isAlive=true;
@@ -37,11 +36,6 @@ public class Player {
 
 	public void setFleets() {
 		this.numFleetsOwned++;
-	}
-
-	private void createPlayer(Player player) {
-		// Opretter spilleren i databasen. Laves private, da det er en hjælpemetode,
-		// eller skal den ligge implicit i konstruktøren?
 	}
 
 	public int getBreweries() {
@@ -90,6 +84,10 @@ public class Player {
 	
 	public boolean hasCards() {
 		return this.cards.size()!=0;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 
