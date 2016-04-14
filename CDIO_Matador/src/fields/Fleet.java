@@ -29,4 +29,10 @@ public class Fleet extends AbstractFields implements Ownable {
 		return this.owner==null;
 	}
 
+	@Override
+	public void landOnField(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
