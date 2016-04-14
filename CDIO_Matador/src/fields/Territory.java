@@ -13,17 +13,14 @@ public class Territory extends AbstractFields implements Ownable {
 		this.houseCount = 0;
 	}
 
-	@Override
 	public Player getOwner() {
 		return this.owner;
 	}
 
-	@Override
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
 
-	@Override
 	public int getRent() {
 		// Undersøger om alle grunde er ejet i en farvekombination
 		// Undersøger herefter om der er hus på den pågældende grund
@@ -31,7 +28,6 @@ public class Territory extends AbstractFields implements Ownable {
 		return 0;
 	}
 
-	@Override
 	public boolean isOwned() {
 		return this.owner == null;
 	}
