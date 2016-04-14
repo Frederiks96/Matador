@@ -31,7 +31,7 @@ public class Player {
 	}
 
 	public int getFleets() {
-		return numFleetsOwned;
+		return this.numFleetsOwned;
 	}
 
 	public void setFleets() {
@@ -51,7 +51,7 @@ public class Player {
 	}
 
 	public int getPosition() {
-		return position;
+		return this.position;
 	}
 
 	public void setPosition(int position) {
