@@ -21,7 +21,7 @@ public class Account {
 			return "not enough founds";   //text class !!!!
 	}
 	
-	private boolean legalTransaction(int d) {
+	public boolean legalTransaction(int d) {
 		return this.balance+d>=0;
 	}
 

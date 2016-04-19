@@ -48,9 +48,7 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	@Override
 	public void buyProperty(Player player) {
-
 		myGUI.showMessage(player.updateBalance(Price));
-
 		if (player.getAccount().legalTransaction(Price)){
 			this.owner = player;
 			myGUI.setOwner(this.fieldID, player.getName());

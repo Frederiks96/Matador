@@ -127,5 +127,8 @@ public class Player {
 		myGUI.setCar(10, this.name);
 	}
 
+	public Account getAccount(){
+		return this.account;
+	}
 
 }
