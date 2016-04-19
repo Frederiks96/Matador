@@ -8,5 +8,6 @@ public interface Ownable {
 	void setOwner(Player owner);
 	int getRent();
 	boolean isOwned();
+	void buyProperty();
 	
 }
