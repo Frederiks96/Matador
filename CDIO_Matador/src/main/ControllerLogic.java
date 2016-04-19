@@ -10,9 +10,6 @@ public class ControllerLogic {
 	}
 	
 	public void playerTurn(Player player) {
-		
-	
-		
 		c.closeGUI();
 	}
 
