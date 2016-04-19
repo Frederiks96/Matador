@@ -11,6 +11,7 @@ public class Texts {
 	private BufferedReader in;
 	private String valgtSprog;
 	private ControllerGUI c = new ControllerGUI();
+	String[] strings = null;
 
 	public Texts() {
 		valgtSprog = c.getUserSelection("Choose your language", "Dansk", "English");
@@ -30,7 +31,6 @@ public class Texts {
 	}
 
 	public String[] readStrings() {
-		String[] strings = null;
 		
 		try {
 			strings = in.readLine().split(";");
@@ -40,12 +40,17 @@ public class Texts {
 		
 		return strings;
 	}
+	
 	public void closeFile() {
 		try {
 			if (in!=null)in.close();
 		} catch (IOException e) {
 			c.showMessage("Something went wrong, please restart the game");
 		}
+	}
+	
+	public String getString(int id) {
+		return strings[id];
 	}
 
 
