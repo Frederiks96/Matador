@@ -9,4 +9,5 @@ public interface Ownable {
 	int getRent();
 	boolean isOwned();
 	void buyProperty();
+	
 }
