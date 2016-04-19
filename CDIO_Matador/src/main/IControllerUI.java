@@ -1,6 +1,7 @@
 package main;
 
 import desktop_codebehind.Car;
+import desktop_resources.GUI;
 
 public interface IControllerUI {
 	
@@ -19,6 +20,9 @@ public interface IControllerUI {
 	void showMessage(String message);
 	void closeGUI();
 	void setCar(int fieldNumber, String name);
+	void setHouse(int fieldID, int houseCount);
+	void setHotel(int fieldID, boolean hasHotel);
+	void setOwner(int id, String name);
 	
-	
+
 }

@@ -57,8 +57,17 @@ public class ControllerGUI implements IControllerUI {
 	public void setOwner(int id, String name){
 		GUI.setOwner(id, name);
 	}
+
 	
-	
+	@Override
+	public void setHouse(int fieldID, int houseCount) {
+		GUI.setHouses(fieldID, houseCount);
+	}
+
+	@Override
+	public void setHotel(int fieldID, boolean hasHotel) {
+		GUI.setHotel(fieldID, hasHotel);		
+	}
 
 	
 
