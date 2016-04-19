@@ -21,6 +21,10 @@ public class Texts {
 		return texts.getString(key);
 	}
 	
+	public String getFormattedString(String key, Object... args) {
+		return String.format(texts.getString(key), args);
+	}
+	
 	public int getRent(String key) {
 		return Integer.parseInt(rents.getString(key));
 	}
