@@ -3,6 +3,7 @@ package main;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import desktop_resources.GUI;
 import entity.SQL;
 
 public class Player {
@@ -22,6 +23,7 @@ public class Player {
 	private int vID;
 	private int jailTime;
 	private SQL sql = new SQL();
+	private ControllerGUI myGUI = new ControllerGUI();
 	
 
 	public Player(String name, String vColor, String vType) throws SQLException {
@@ -105,6 +107,12 @@ public class Player {
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public void imprison() {
+		this.jailTime++;
+		setPosition(10);
+		myGUI.setCar(10, this.name);
 	}
 
 

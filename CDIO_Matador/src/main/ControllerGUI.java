@@ -46,6 +46,12 @@ public class ControllerGUI implements IControllerUI {
 	public void closeGUI() {
 		GUI.close();
 	}
+
+	public void setCar(int fieldNumber, String name) {
+		GUI.setCar(fieldNumber, name);
+	}
+	
+
 	
 
 }

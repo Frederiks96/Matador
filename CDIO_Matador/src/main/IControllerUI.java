@@ -18,5 +18,7 @@ public interface IControllerUI {
 	void addPlayer(String name, int balance, Car car);
 	void showMessage(String message);
 	void closeGUI();
+	void setCar(int fieldNumber, String name);
+	
 	
 }
