@@ -53,9 +53,7 @@ public class Texts {
 		return strings[id];
 	}
 	
-	//Fleet
 	
-	static String buyfleet = " Do you want to buy fleet? Price: ";
 
 
 }
