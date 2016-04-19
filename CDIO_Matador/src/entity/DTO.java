@@ -6,7 +6,8 @@ public interface DTO {
 	
 	// Data Transfer Object - Setters
 	
-	void createPlayer(int id, String name, int position, int jailTime, boolean isActive) throws SQLException;
+	void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
+			int balance, int vId, String vColor, String vType) throws SQLException;
 	void createAccount(int aId, int balance) throws SQLException;
 	void createVehicle(int vId, String vColour, String vType) throws SQLException;
 	void updatePosition() throws SQLException;

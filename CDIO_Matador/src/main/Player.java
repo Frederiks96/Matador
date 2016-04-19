@@ -1,6 +1,9 @@
 package main;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import entity.SQL;
 
 public class Player {
 
@@ -13,17 +16,31 @@ public class Player {
 	private boolean isAlive;
 	private Account account;
 	private ArrayList<ChanceCard> cards;
+	private String vColor;
+	private String vType;
+	private int accountID;
+	private int vID;
+	private int jailTime;
+	private SQL sql = new SQL();
+	
 
-	public Player(String name) {
+	public Player(String name, String vColor, String vType) throws SQLException {
+		numOfPlayers++;
 		this.name = name;
 		this.numFleetsOwned = 0;
 		this.numBreweriesOwned = 0;
 		this.position = 0;
-		numOfPlayers++;
 		this.player_id = numOfPlayers;
+		this.vID = numOfPlayers*11;
+		this.accountID = numOfPlayers*111;
+		this.jailTime = -1;
+		this.vColor = vColor;
+		this.vType = vType;
 		this.isAlive=true;
 		this.account = new Account();
 		this.cards = new ArrayList<ChanceCard>();
+		
+		sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,this.getBalance(),vID,vColor,vType);
 	}
 
 	public int getPlayerID() {

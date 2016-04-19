@@ -9,23 +9,21 @@ import java.sql.Statement;
 import main.Player;
 
 public class SQL implements DAO, DTO {
-	
+
 	private Connection myCon;
-	private Statement myStmt;
-	private ResultSet myRs;
-	
+
 	public SQL() throws SQLException {
-		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost:3306/Matador","","");
-		this.myStmt = myCon.createStatement();
+		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/Matador","root","");
 	}
 
-	
+
 	// >>>> Data acces objects <<<< //
-	
+
 	public int getPosition(Player player) throws SQLException { 
-		myRs = myStmt.executeQuery("Select position from player where player_id = '"+player.getPlayerID()+"'");
-		
-		return 0;
+		Statement stmt = myCon.createStatement(); 
+		ResultSet rs = stmt.executeQuery("Select position from player where player_id = '"+player.getPlayerID()+"'");
+		rs.next();
+		return rs.getInt(1);
 	}
 
 	public int getBalance()throws SQLException {
@@ -89,17 +87,10 @@ public class SQL implements DAO, DTO {
 		return 0;
 	} 
 
-	
-	
-	
-	
-	
-	// >>> Data transfer objects <<<< //
-	
-	public void createPlayer()throws SQLException{
-		// TODO
-	}
-	
+	// ----------------------------------	
+	//   >>> Data transfer objects <<<<
+	// ----------------------------------
+
 	public void updatePosition() throws SQLException{
 		// TODO Auto-generated method stub
 
@@ -158,5 +149,28 @@ public class SQL implements DAO, DTO {
 	public void setAccountId() throws SQLException{
 		// TODO Auto-generated method stub
 
+	}
+
+
+	public void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
+			int balance, int vId, String vColor, String vType) throws SQLException {
+		Statement stmt = myCon.createStatement(); 
+		createAccount(aId, balance);
+		createVehicle(vId, vColor, vType);
+		stmt.executeQuery("insert into player values(" +id+ ","+name+ ","+position+","
+				+ jailTime +"," +isActive+ ");" 
+				); 
+
+	}
+
+	public void createAccount(int aId, int balance) throws SQLException {
+		Statement stmt = myCon.createStatement();
+		stmt.executeQuery("insert into Bank values("+aId+","+balance+");");
+
+	}
+
+	public void createVehicle(int vId, String vColor, String vType) throws SQLException {
+		Statement stmt = myCon.createStatement();
+		stmt.executeQuery("insert into Vehicle values("+vId+","+vColor+","+vType+");");
 	}
 }
