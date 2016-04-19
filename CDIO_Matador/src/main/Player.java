@@ -56,9 +56,21 @@ public class Player {
 	public void setFleets() {
 		this.numFleetsOwned++;
 	}
+	
+	public void sellFleets() {
+		this.numFleetsOwned--;
+	}
 
 	public int getBreweries() {
 		return this.numBreweriesOwned;
+	}
+	
+	public void setBreweries() {
+		this.numFleetsOwned++;
+	}
+	
+	public void sellBreweries() {
+		this.numFleetsOwned--;
 	}
 
 	public void turn() {
