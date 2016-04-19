@@ -1,5 +1,6 @@
 package fields;
 
+import entity.Texts;
 import main.Player;
 
 public class Tax extends AbstractFields {
@@ -9,7 +10,7 @@ public class Tax extends AbstractFields {
 	}
 
 	@Override
-	public void landOnField(Player player) {
+	public void landOnField(Player player, Texts text) {
 		// TODO Auto-generated method stub
 		
 	}

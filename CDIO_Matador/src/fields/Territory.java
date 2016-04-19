@@ -1,5 +1,6 @@
 package fields;
 
+import entity.Texts;
 import main.Player;
 
 public class Territory extends AbstractFields implements Ownable {
@@ -56,7 +57,7 @@ public class Territory extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public void landOnField(Player player) {
+	public void landOnField(Player player, Texts text) {
 		if (this.owner==null) {
 			// Ingen ejer
 		}

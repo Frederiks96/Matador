@@ -1,5 +1,6 @@
 package fields;
 
+import entity.Texts;
 import main.ControllerGUI;
 import main.Player;
 
@@ -59,33 +60,30 @@ public class Fleet extends AbstractFields implements Ownable {
 
 
 	@Override
-	public void landOnField(Player player) {
-		if(player.getPosition()==this.fieldID){
-			if(owner.equals(null)){
-				String s = myGUI.getUserSelection("buy fleet? "+ Price,"Yes","No");
-				if (s.equals("YES")){
-					buyProperty(player);
-				}
+	public void landOnField(Player player, Texts text) {
+		if(owner.equals(null)) {
+			String s = myGUI.getUserSelection("buy fleet? "+ Price,"Yes","No");
+			if (s.equals("YES")){
+				buyProperty(player);
 			}
-			if (!isMortaged){
+		}
+		if (!isMortaged){
 
-				if (owner.getFleets()==1){
-					player.updateBalance(-getRent());
-					owner.updateBalance(getRent());
-				}
-				if (owner.getFleets()==2){
-					player.updateBalance(-getRent());
-					owner.updateBalance(getRent());
-				}
-				if (owner.getFleets()==3){
-					player.updateBalance(-getRent());
-					owner.updateBalance(getRent());
-				}
-				if (owner.getFleets()==4){
-					player.updateBalance(-getRent());
-					owner.updateBalance(getRent());
-				}
-
+			if (owner.getFleets()==1){
+				player.updateBalance(-getRent());
+				owner.updateBalance(getRent());
+			}
+			if (owner.getFleets()==2){
+				player.updateBalance(-getRent());
+				owner.updateBalance(getRent());
+			}
+			if (owner.getFleets()==3){
+				player.updateBalance(-getRent());
+				owner.updateBalance(getRent());
+			}
+			if (owner.getFleets()==4){
+				player.updateBalance(-getRent());
+				owner.updateBalance(getRent());
 			}
 
 		}
