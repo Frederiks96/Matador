@@ -4,15 +4,17 @@ import java.util.ResourceBundle;
 
 public class Texts {
 	
-	private enum language {Dansk,English};
+	public enum language {Dansk,English};
+	private language l;
 	private ResourceBundle rents;
 	private ResourceBundle texts;
 	private ResourceBundle cards;
 	
-	public Texts(language lang) {
+	public Texts(language l) {
+		this.l=l;
 		rents = ResourceBundle.getBundle("properties.rent");
-		texts = ResourceBundle.getBundle("properties."+lang+"_texts");
-		cards = ResourceBundle.getBundle("properties."+lang+"_cards");
+		texts = ResourceBundle.getBundle("properties."+l+"_texts");
+		cards = ResourceBundle.getBundle("properties."+l+"_cards");
 	}	
 	
 	public String getString(String key) {
