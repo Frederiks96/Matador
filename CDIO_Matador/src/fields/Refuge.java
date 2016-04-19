@@ -10,10 +10,14 @@ public class Refuge extends AbstractFields {
 
 	@Override
 	public void landOnField(Player player) {
-		if (super(id) == 30) {
+		if (player.getPosition() == 30) {
 			player.imprison();
+			// Skriv til spilleren, at han er fængslet
 		}
-		// Skriv noget til spilleren
+		
+		else {
+			// Skriv noget til spilleren
+		}
 	}
 
 }
