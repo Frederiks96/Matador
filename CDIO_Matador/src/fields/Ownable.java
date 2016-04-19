@@ -11,4 +11,5 @@ public interface Ownable {
 	void buyProperty();
 	void buyProperty(Player player);
 	
+	
 }
