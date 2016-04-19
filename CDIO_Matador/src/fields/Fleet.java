@@ -1,12 +1,15 @@
 package fields;
 
+import desktop_resources.GUI;
 import main.Player;
 
 public class Fleet extends AbstractFields implements Ownable {
-	
+
 	private final int BASERENT = 500;
 	private Player owner;
-	
+	int Price = 4000;
+	int id;
+
 	public Fleet(int id) {
 		super(id);
 		this.owner=null;
@@ -31,8 +34,16 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	@Override
 	public void landOnField(Player player) {
-		// TODO Auto-generated method stub
-		
-	}
+		if(player.getPosition()==id){
+			if(owner == null){
+				String s = GUI.getUserSelection("Do you want to buy fleet? Price: " + Price,"Yes","No");
+				if (s == "Ja"){
+					this.owner = player;
+					GUI.setOwner(id, player.getName());
 
-}
+				}
+			}
+
+		}
+
+	}}
