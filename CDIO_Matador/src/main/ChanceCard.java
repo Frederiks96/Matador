@@ -8,7 +8,7 @@ public class ChanceCard {
 	
 	public ChanceCard(String text){
 		this.text = text;
-		if (text.equals("KingsBirthday")) {
+		if (text.charAt(0)=='I' || text.charAt(0)=='E') { // Skal lige rettes til, når teksterne er oversat
 			isOwnable = true;
 		}
 		else {
