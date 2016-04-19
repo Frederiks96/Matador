@@ -11,9 +11,9 @@ public class CardStack {
 
 	public CardStack(){
 		chanceCardDeck = new ArrayList<ChanceCard>();
-		
+
 		for(int i = 0; i<40; i++) {
-			
+
 			if (i==0 || i==1) {
 				this.card = new ChanceCard("KingsBirthday");
 			}
@@ -25,7 +25,7 @@ public class CardStack {
 		}
 	}
 
-	public void shuffle(){
+	public void shuffle() {
 		Collections.shuffle(chanceCardDeck);
 	}
 
