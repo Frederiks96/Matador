@@ -25,7 +25,7 @@ public class ChanceCard {
 	}
 
 	public Player getOwner() {
-		if (isOwnable()) {
+		if (this.isOwnable()) {
 			return this.owner;
 		} else {
 			return null;
