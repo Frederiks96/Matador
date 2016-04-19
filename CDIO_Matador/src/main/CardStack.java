@@ -9,14 +9,14 @@ public class CardStack {
 	private ChanceCard card;
 	private ArrayList<String> texts;
 	private ArrayList<ChanceCard> chanceCardDeck;
-	private Texts text = new Texts();
+//	private Texts text = new Texts();
 
 
 	public CardStack(){
 		chanceCardDeck = new ArrayList<ChanceCard>();
 
 		for(int i = 0; i<40; i++) {
-			this.card = new ChanceCard(text.getString(i));
+//			this.card = new ChanceCard(text.getString(i));
 			chanceCardDeck.add(card);
 		}
 	}
