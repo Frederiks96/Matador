@@ -1,6 +1,5 @@
 package fields;
 
-import desktop_resources.GUI;
 import main.ControllerGUI;
 import dicecup.DiceCup;
 import main.Player;
@@ -11,10 +10,12 @@ public class Brewery extends AbstractFields implements Ownable {
 	private DiceCup dicecup;
 	int Price = 3000;
 	private ControllerGUI myGUI = new ControllerGUI();
+	private boolean isMortgaged;
 	
 	public Brewery(int id) {
 		super(id);
 		this.owner = null;
+		this.isMortgaged=false;
 	}
 
 	public Player getOwner() {
@@ -44,6 +45,16 @@ public class Brewery extends AbstractFields implements Ownable {
 	public void landOnField(Player player) {
 		
 		
+	}
+
+	@Override
+	public void mortage() {
+		this.isMortgaged=true;
+	}
+
+	@Override
+	public void unMortage() {
+		this.isMortgaged=false;
 	}
 
 }
