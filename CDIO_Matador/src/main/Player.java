@@ -81,8 +81,8 @@ public class Player {
 		return account.getBalance();
 	}
 
-	public void updateBalance(int d) { 
-		account.updateBalance(d);
+	public String updateBalance(int d) { 
+		return account.updateBalance(d);
 	}
 
 	public void giveCard(ChanceCard card) {

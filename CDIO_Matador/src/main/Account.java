@@ -13,12 +13,15 @@ public class Account {
 		return this.balance;
 	}
 	
-	public void updateBalance(int d) {
-		if (legalTransaction(d))
+	public String updateBalance(int d) {
+		if (legalTransaction(d)){
 			this.balance += d;
+			return null;}
+		else
+			return "not enough founds";   //text class !!!!
 	}
 	
-	public boolean legalTransaction(int d) {
+	private boolean legalTransaction(int d) {
 		return this.balance+d>=0;
 	}
 
