@@ -4,10 +4,10 @@ import main.Player;
 
 public abstract class AbstractFields {
 	
-	private int id;
+	protected int fieldID;
 	
 	public AbstractFields(int id) {
-		this.id=id;
+		this.fieldID = id;
 	}
 	
 	abstract public void landOnField(Player player);

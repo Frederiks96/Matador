@@ -6,6 +6,8 @@ import desktop_resources.GUI;
 public class ControllerGUI implements IControllerUI {
 	
 	private Player[] players;
+	
+	
 		
 	public String getUserString(String message) {
 		return GUI.getUserString(message);
@@ -50,6 +52,12 @@ public class ControllerGUI implements IControllerUI {
 	public void setCar(int fieldNumber, String name) {
 		GUI.setCar(fieldNumber, name);
 	}
+
+	
+	public void setOwner(int id, String name){
+		GUI.setOwner(id, name);
+	}
+	
 	
 
 	
