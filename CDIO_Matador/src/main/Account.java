@@ -16,7 +16,7 @@ public class Account {
 	public String updateBalance(int d) {
 		if (legalTransaction(d)){
 			this.balance += d;
-			return null;}
+			return "transaction complete";}  //text class !!!
 		else
 			return "not enough founds";   //text class !!!!
 	}
