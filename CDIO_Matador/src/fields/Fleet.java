@@ -1,9 +1,5 @@
 package fields;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
-
-import desktop_resources.GUI;
-import entity.Texts;
 import main.ControllerGUI;
 import main.Player;
 
@@ -52,36 +48,49 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	@Override
 	public void buyProperty(Player player) {
-		this.owner = player;
-		myGUI.setOwner(this.fieldID, player.getName());
-		player.updateBalance(Price);
-		myGUI.showMessage(player.updateBalance(Price));
-		player.setFleets();
 
-		// TODO Auto-generated method stub
+		myGUI.showMessage(player.updateBalance(Price));
+
+		if (player.getAccount().legalTransaction(Price)){
+			this.owner = player;
+			myGUI.setOwner(this.fieldID, player.getName());
+			player.setFleets();
+		}
+
 	}
 
 
 	@Override
 	public void landOnField(Player player) {
 		if(player.getPosition()==this.fieldID){
-			if(owner == null){
+			if(owner.equals(null)){
 				String s = myGUI.getUserSelection("buy fleet? "+ Price,"Yes","No");
-				if (s == "YES"){
+				if (s.equals("YES")){
 					buyProperty(player);
 				}
 			}
 			if (!isMortaged){
-				
+
 				if (owner.getFleets()==1){
-				
-			}
-				
+					player.updateBalance(-getRent());
+					owner.updateBalance(getRent());
+				}
+				if (owner.getFleets()==2){
+					player.updateBalance(-getRent());
+					owner.updateBalance(getRent());
+				}
+				if (owner.getFleets()==3){
+					player.updateBalance(-getRent());
+					owner.updateBalance(getRent());
+				}
+				if (owner.getFleets()==4){
+					player.updateBalance(-getRent());
+					owner.updateBalance(getRent());
+				}
+
 			}
 
 		}
-
-//.equals
 
 	}
 }
