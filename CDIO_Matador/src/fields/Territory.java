@@ -40,6 +40,7 @@ public class Territory extends AbstractFields implements Ownable {
 	@Override
 	public void landOnField(Player player, Texts text) {
 		if (this.owner==null) {
+			// der er ingen der ejer feltet
 			String s = myGUI.getUserSelection(text.getFormattedString("buy", this.price), text.getString("Yes"), text.getString("No"));
 			if (s.equals(text.getString("Yes"))) {
 				buyProperty(player);
@@ -47,19 +48,10 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 
 		if (!mortgaged && this.owner!=player){
+			//en anden ejer felet og det er ikke pantsat
 			myGUI.showMessage(text.getFormattedString("rent", getRent(), owner));
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
-		}
-
-
-
-		else if (this.owner!=player) {
-			// En anden spiller ejer feltet
-			myGUI.showMessage(text.getFormattedString("rent", rent[houseCount], owner));
-		}
-		else {
-			// Spilleren ejer selv feltet
 		}
 	}
 
