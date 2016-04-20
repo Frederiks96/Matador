@@ -26,6 +26,7 @@ public class Player {
 	private int jailTime;
 	private SQL sql = new SQL();
 	private ControllerGUI myGUI = new ControllerGUI();
+	private ControllerLogic l = new ControllerLogic();
 	
 
 	public Player(String name, String vColor, String vType) throws SQLException {
@@ -134,32 +135,8 @@ public class Player {
 	}
 
 	
-	public boolean allOwned(AbstractFields field) {
-		// Returnerer true, hvis en spiller ejer alle felterne, inden for den specifikke farve
-		if(field.colour.equals("BLUE") || colour.equals("PURPLE")){
-			int j = 0;
-			for(int i = 0; i<40; i++){
-				if(gameboard.getLogicField()[i] instanceof Territory){
-					if (gameboard.getLogicField().getColour() == colour && gameboard.getLogicField().getOwner() == owner ){
-						j++;
-					}
-				}
-			}  
-			return 2 == j;
-		}
-		
-		
-		else{
-			int j;
-			for(int i = 0; i<40; i++){
-				if(gameboard.getLogicField()[i] instanceof Territory){
-					if (gameboard.getLogicField().getColour() == colour && gameboard.getLogicField().getOwner() == owner ){
-						j++;
-					}
-				}
-			}
-			return 3 == j;
-		}		
+	public boolean allOwned(Player player, String COLOUR) {
+		return l.hasAll(player, COLOUR);
 	}
 	
 }
