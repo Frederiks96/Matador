@@ -6,9 +6,9 @@ import main.Player;
 import entity.Texts;
 
 public class Territory extends AbstractFields implements Ownable {
-	
+
 	ControllerGUI myGUI = new ControllerGUI();
-	
+
 	private Player owner;
 	private int houseCount;
 	private boolean hasHotel; 
@@ -18,15 +18,15 @@ public class Territory extends AbstractFields implements Ownable {
 	private int housePrice;
 	private boolean mortgaged;
 
-	public Territory(int id, String colour, int price, int baseRent, 
+	public Territory(int fieldID, String colour, int price, int baseRent, 
 			int rent1, int rent2, int rent3, int rent4, int hotelRent, int housePrice){
-		
-		super(id);
+
+		super(fieldID);
 		this.owner = null;
 		this.houseCount = 0;
 		this.colour = colour;
 		this.mortgaged = false;
-		
+
 		this.price = price;
 		this.rent[0] = baseRent;
 		this.rent[1] = rent1;
@@ -45,11 +45,15 @@ public class Territory extends AbstractFields implements Ownable {
 				buyProperty(player);
 			}
 		}
-		
+
 		if (!mortgaged && this.owner!=player){
-			
+			myGUI.showMessage(text.getFormattedString("rent", getRent(), owner));
+			player.updateBalance(-getRent());
+			owner.updateBalance(getRent());
 		}
-		
+
+
+
 		else if (this.owner!=player) {
 			// En anden spiller ejer feltet
 			myGUI.showMessage(text.getFormattedString("rent", rent[houseCount], owner));
@@ -58,12 +62,12 @@ public class Territory extends AbstractFields implements Ownable {
 			// Spilleren ejer selv feltet
 		}
 	}
-	
 
-	public int getRent(Player player) {
-//		if(player.allOwned() && houseCount == 0)
-//			return this.rent[0]*2;
-//		else
+
+	public int getRent() {
+		if(owner.hasAll(colour) && houseCount == 0)
+			return this.rent[0]*2;
+		else
 			return this.rent[this.houseCount];	
 	}
 
@@ -71,32 +75,31 @@ public class Territory extends AbstractFields implements Ownable {
 		return this.owner != null;
 	}
 
-	
 	private void buyHouse(){	// housecount betyer hvor mange huse der skal stå på grunden
-		if(owner.getAccount().legalTransaction(-housePrice) && houseCount < 4){
+		if(owner.getAccount().legalTransaction(-housePrice) && houseCount < 4 && !mortgaged){
 			myGUI.showMessage(owner.updateBalance(-housePrice));
 			myGUI.setHouse(fieldID, houseCount+1);
 			this.houseCount++;
 		}
 	}
-		
+
 	private void buyHotel(){	// has hotel betyder om der skal sættes eller fjernes hotel
-		if(owner.getAccount().legalTransaction(-housePrice) && houseCount == 4){
+		if(owner.getAccount().legalTransaction(-housePrice) && houseCount == 4 && !mortgaged){
 			myGUI.showMessage(owner.updateBalance(-housePrice));
 			myGUI.setHotel(fieldID, true);
 			this.houseCount++;
 		}
 	}
-	
+
 	private void sellHouse(){
 		if(houseCount>1){
 			myGUI.showMessage(owner.updateBalance(housePrice/2));
 			myGUI.setHouse(fieldID, houseCount-1);
 			this.houseCount--;
- 		}
-			
+		}
+
 	}
-	
+
 	private void sellHotel(){
 		if(houseCount == 5){
 			myGUI.showMessage(owner.updateBalance(housePrice/2));
@@ -105,40 +108,30 @@ public class Territory extends AbstractFields implements Ownable {
 			myGUI.setHouse(fieldID, houseCount);
 		}
 	}
-	
-	
-	public int getHouseCount() {	//unødvendig???
-		return this.houseCount;
-	}
-	
-	
 
 	@Override
 	public void buyProperty(Player player){
-		
 		if (player.getAccount().legalTransaction(-this.price)){
 			myGUI.showMessage(player.updateBalance(-this.price));
 			this.owner = player;
 			myGUI.setOwner(this.fieldID, player.getName());
-			player.setFleets();
 		}	
 	}
 
-	
 	@Override
-	public void mortgage() {   // stavefejl
-		mortgaged = true;	
+	public void mortgage() { 
+		if( houseCount == 0)
+			mortgaged = true;	
 	}
 
-	@Override
-	public void unMortgage() {  // stavefejl
+	public void unMortgage() {
 		mortgaged = false;		
 	}
-	
+
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
-	
+
 	public Player getOwner() {
 		return this.owner;
 	}
@@ -147,11 +140,4 @@ public class Territory extends AbstractFields implements Ownable {
 		return colour;
 	}
 
-	@Override
-	public int getRent() {
-		// Unødvendig
-		return 0;
-	}
-
-	
 }
