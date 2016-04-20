@@ -9,7 +9,7 @@ public class Brewery extends AbstractFields implements Ownable {
 	
 	private Player owner;
 	private DiceCup dicecup;
-	int Price = 3000;
+	private int price;
 	private ControllerGUI myGUI = new ControllerGUI();
 	private boolean isMortgaged;
 	
@@ -17,6 +17,7 @@ public class Brewery extends AbstractFields implements Ownable {
 		super(id);
 		this.owner = null;
 		this.isMortgaged=false;
+		this.price = 3000;
 	}
 
 	public Player getOwner() {
@@ -36,16 +37,30 @@ public class Brewery extends AbstractFields implements Ownable {
 	}
 	
 	public void buyProperty(Player player) {
-		this.owner = player;
-		player.updateBalance(Price);
-		myGUI.showMessage(player.updateBalance(Price));
-		
+		if(player.getAccount().legalTransaction(this.price)){
+			this.owner = player;
+			player.updateBalance(price);
+			myGUI.showMessage(player.updateBalance(price));
+			player.setBreweries();
+		}
 	}
 
 	@Override
 	public void landOnField(Player player, Texts text) {
 		
-		
+		if(owner.equals(null)){
+			String s = myGUI.getUserSelection(text.getFormattedString("buy", this.price), 
+											  text.getString("Yes"), text.getString("No"));					  						
+			if (s.equals(text.getString("Yes"))) {
+				buyProperty(player);
+			}
+		}
+	
+		if(!isMortgaged && !this.owner.equals(player)){
+			player.updateBalance(-getRent());
+			owner.updateBalance(getRent());
+		}
+
 	}
 
 	@Override
