@@ -135,7 +135,7 @@ public class Player {
 	}
 
 	
-	public boolean allOwned(Player player, String COLOUR) {
+	public boolean hasAll(Player player, String COLOUR) {
 		return l.hasAll(player, COLOUR);
 	}
 	
