@@ -1,9 +1,12 @@
 package fields;
 
 import entity.Texts;
+import main.ControllerGUI;
 import main.Player;
 
 public class Tax extends AbstractFields {
+	
+	private ControllerGUI myGUI = new ControllerGUI();
 
 	public Tax(int id) {
 		super(id);
@@ -11,8 +14,10 @@ public class Tax extends AbstractFields {
 
 	@Override
 	public void landOnField(Player player, Texts text) {
-		// TODO Auto-generated method stub
-		
+		if (this.fieldID==4) {
+			myGUI.getUserButtonPressed(text.getString("taxOrFine"), text.getString("tax"),text.getString("fine"));
+			
+		}
 	}
 
 

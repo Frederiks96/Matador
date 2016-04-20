@@ -66,7 +66,7 @@ public class ControllerGUI implements IControllerUI {
 
 	@Override
 	public void setHotel(int fieldID, boolean hasHotel) {
-		GUI.setHotel(fieldID, hasHotel);		
+		GUI.setHotel(fieldID, hasHotel);	
 	}
 
 	
