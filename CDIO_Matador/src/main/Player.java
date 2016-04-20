@@ -3,10 +3,7 @@ package main;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import desktop_resources.GUI;
 import entity.SQL;
-import fields.AbstractFields;
-import fields.Territory;
 
 public class Player {
 
@@ -135,8 +132,8 @@ public class Player {
 	}
 
 	
-	public boolean hasAll(Player player, String COLOUR) {
-		return controller.hasAll(player, COLOUR);
+	public boolean hasAll(String COLOUR) {
+		return controller.hasAll(this, COLOUR);
 	}
 	
 }
