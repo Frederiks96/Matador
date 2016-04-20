@@ -123,6 +123,7 @@ public class Territory extends AbstractFields implements Ownable {
 		}	
 	}
 
+	
 	@Override
 	public void mortage() {   // stavefejl
 		mortgaged = true;	
