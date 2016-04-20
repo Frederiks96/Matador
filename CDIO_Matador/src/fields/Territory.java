@@ -57,7 +57,7 @@ public class Territory extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public void landOnField(Player player, Texts text) {
+	public void landOnField(Player player) {
 		if (this.owner==null) {
 			// Ingen ejer
 		}
