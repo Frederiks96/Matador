@@ -148,6 +148,7 @@ public class Player {
 			return 2 == j;
 		}
 		
+		
 		else{
 			int j;
 			for(int i = 0; i<40; i++){
