@@ -8,7 +8,7 @@ import entity.Texts;
 public class Territory extends AbstractFields implements Ownable {
 	
 	ControllerGUI myGUI = new ControllerGUI();
-	GameBoard gameboard = new GameBoard(null);
+	
 	private Player owner;
 	private int houseCount;
 	private boolean hasHotel; 
