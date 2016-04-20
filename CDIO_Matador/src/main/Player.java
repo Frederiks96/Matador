@@ -132,4 +132,9 @@ public class Player {
 		return controller.hasAll(this, COLOUR);
 	}
 	
+	public void mortgageFleet(){
+		numFleetsOwned--;
+	}
+	
+	
 }
