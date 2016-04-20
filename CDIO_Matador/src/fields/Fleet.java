@@ -12,6 +12,13 @@ public class Fleet extends AbstractFields implements Ownable {
 	private ControllerGUI myGUI = new ControllerGUI();
 	private boolean isMortgaged;
 
+	public Fleet(int id) {
+		super(id);
+		this.owner=null;
+		this.isMortgaged=false;
+		this.price = 4000;
+	}
+	
 	public void landOnField(Player player, Texts text) {
 
 		if(owner.equals(null)) {
@@ -27,13 +34,6 @@ public class Fleet extends AbstractFields implements Ownable {
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
 		}
-	}
-
-	public Fleet(int id) {
-		super(id);
-		this.owner=null;
-		this.isMortgaged=false;
-		this.price = 4000;
 	}
 
 	public Player getOwner() {
