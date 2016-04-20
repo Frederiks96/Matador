@@ -61,34 +61,19 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	@Override
 	public void landOnField(Player player, Texts text) {
-		
+
 		if(owner.equals(null)) {
 			String s = myGUI.getUserSelection(text.getFormattedString("buy",this.price),
-											  text.getString("Yes"),text.getString("No"));
+					text.getString("Yes"),text.getString("No"));
 			if (s.equals(text.getString("Yes"))) {
 				buyProperty(player);
 			}
 		}
-		
+
 		if (!isMortaged && !this.owner.equals(player)) {
 
-			if (owner.getFleets()==1){
-				player.updateBalance(-getRent());
-				owner.updateBalance(getRent());
-			}
-			if (owner.getFleets()==2){
-				player.updateBalance(-getRent());
-				owner.updateBalance(getRent());
-			}
-			if (owner.getFleets()==3){
-				player.updateBalance(-getRent());
-				owner.updateBalance(getRent());
-			}
-			if (owner.getFleets()==4){
-				player.updateBalance(-getRent());
-				owner.updateBalance(getRent());
-			}
-
+			player.updateBalance(-getRent());
+			owner.updateBalance(getRent());
 		}
 
 	}
