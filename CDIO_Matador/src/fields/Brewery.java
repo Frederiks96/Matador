@@ -26,6 +26,7 @@ public class Brewery extends AbstractFields implements Ownable {
 
 	public void setOwner(Player owner) {
 		this.owner = owner;
+		owner.setBreweries();
 	}
 
 	public int getRent() {
@@ -37,11 +38,10 @@ public class Brewery extends AbstractFields implements Ownable {
 	}
 	
 	public void buyProperty(Player player) {
-		if(player.getAccount().legalTransaction(this.price)){
-			this.owner = player;
-			player.updateBalance(price);
-			myGUI.showMessage(player.updateBalance(price));
-			player.setBreweries();
+		myGUI.showMessage(player.updateBalance(-this.price));
+		if(player.getAccount().legalTransaction(-this.price)){
+			myGUI.setOwner(this.fieldID, player.getName());
+			setOwner(player);
 		}
 	}
 
