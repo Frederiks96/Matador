@@ -26,7 +26,7 @@ public class Player {
 	private int jailTime;
 	private SQL sql = new SQL();
 	private ControllerGUI myGUI = new ControllerGUI();
-	private ControllerLogic l = new ControllerLogic();
+	private ControllerLogic controller = new ControllerLogic();
 	
 
 	public Player(String name, String vColor, String vType) throws SQLException {
@@ -136,7 +136,7 @@ public class Player {
 
 	
 	public boolean hasAll(Player player, String COLOUR) {
-		return l.hasAll(player, COLOUR);
+		return controller.hasAll(player, COLOUR);
 	}
 	
 }
