@@ -10,13 +10,13 @@ public class Fleet extends AbstractFields implements Ownable {
 	private Player owner;
 	private int price;
 	private ControllerGUI myGUI = new ControllerGUI();
-	private boolean isMortaged;
+	private boolean isMortgaged;
 
 
 	public Fleet(int id) {
 		super(id);
 		this.owner=null;
-		this.isMortaged=false;
+		this.isMortgaged=false;
 		this.price = 4000;
 	}
 
@@ -39,12 +39,12 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	@Override
 	public void mortgage() {
-		// TODO Auto-generated method stub
+		isMortgaged = true;
 	}
 
 	@Override
 	public void unMortgage() {
-		// TODO Auto-generated method stub
+		isMortgaged = false;
 	}
 
 
@@ -70,7 +70,7 @@ public class Fleet extends AbstractFields implements Ownable {
 			}
 		}
 
-		if (!isMortaged && !this.owner.equals(player)) {
+		if (!isMortgaged && !this.owner.equals(player)) {
 
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
