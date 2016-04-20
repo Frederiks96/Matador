@@ -25,8 +25,11 @@ public class Texts {
 		return String.format(texts.getString(key), args);
 	}
 	
-	public int getRent(String key) {
-		return Integer.parseInt(rents.getString(key));
+	public Object getRent(String key) {
+		if (Character.isDigit(rents.getString(key).charAt(0))) {
+			return Integer.parseInt(rents.getString(key));
+		}
+		return rents.getString(key);
 	}
 	
 	public String getCardString(String key) {
