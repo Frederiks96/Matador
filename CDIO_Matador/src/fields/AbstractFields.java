@@ -1,5 +1,6 @@
 package fields;
 
+import entity.Texts;
 import main.Player;
 
 public abstract class AbstractFields {
@@ -10,7 +11,7 @@ public abstract class AbstractFields {
 		this.fieldID = id;
 	}
 	
-	abstract public void landOnField(Player player);
+	abstract public void landOnField(Player player, Texts text);
 	
 
 }

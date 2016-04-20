@@ -1,7 +1,8 @@
 package fields;
 
-import main.ControllerGUI;
 import dicecup.DiceCup;
+import entity.Texts;
+import main.ControllerGUI;
 import main.Player;
 
 public class Brewery extends AbstractFields implements Ownable {
@@ -42,7 +43,7 @@ public class Brewery extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public void landOnField(Player player) {
+	public void landOnField(Player player, Texts text) {
 		
 		
 	}

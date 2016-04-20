@@ -3,6 +3,7 @@ package fields;
 import main.ControllerGUI;
 import main.GameBoard;
 import main.Player;
+import entity.Texts;
 
 public class Territory extends AbstractFields implements Ownable {
 	

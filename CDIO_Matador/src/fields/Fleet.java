@@ -1,5 +1,6 @@
 package fields;
 
+import entity.Texts;
 import main.ControllerGUI;
 import main.Player;
 
@@ -7,7 +8,7 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	private final int BASERENT = 500;
 	private Player owner;
-	int Price = 4000;
+	private int price;
 	private ControllerGUI myGUI = new ControllerGUI();
 	private boolean isMortaged;
 
@@ -16,6 +17,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		super(id);
 		this.owner=null;
 		this.isMortaged=false;
+		this.price = 4000;
 	}
 
 	public Player getOwner() {
@@ -47,9 +49,9 @@ public class Fleet extends AbstractFields implements Ownable {
 
 
 	@Override
-	public void buyProperty(Player player) {
-		myGUI.showMessage(player.updateBalance(Price));
-		if (player.getAccount().legalTransaction(Price)){
+	public void buyProperty(Player player) { // 
+		myGUI.showMessage(player.updateBalance(this.price)); // Der skal bruges setBalance her, som skal laves i IControllerGUI
+		if (player.getAccount().legalTransaction(this.price)){
 			this.owner = player;
 			myGUI.setOwner(this.fieldID, player.getName());
 			player.setFleets();
@@ -59,33 +61,33 @@ public class Fleet extends AbstractFields implements Ownable {
 
 
 	@Override
-	public void landOnField(Player player) {
-		if(player.getPosition()==this.fieldID){
-			if(owner.equals(null)){
-				String s = myGUI.getUserSelection("buy fleet? "+ Price,"Yes","No");
-				if (s.equals("YES")){
-					buyProperty(player);
-				}
+	public void landOnField(Player player, Texts text) {
+		
+		if(owner.equals(null)) {
+			String s = myGUI.getUserSelection(text.getFormattedString("buy",this.price),
+											  text.getString("Yes"),text.getString("No"));
+			if (s.equals(text.getString("Yes"))) {
+				buyProperty(player);
 			}
-			if (!isMortaged){
+		}
+		
+		if (!isMortaged && !this.owner.equals(player)) {
 
-				if (owner.getFleets()==1){
-					player.updateBalance(-getRent());
-					owner.updateBalance(getRent());
-				}
-				if (owner.getFleets()==2){
-					player.updateBalance(-getRent());
-					owner.updateBalance(getRent());
-				}
-				if (owner.getFleets()==3){
-					player.updateBalance(-getRent());
-					owner.updateBalance(getRent());
-				}
-				if (owner.getFleets()==4){
-					player.updateBalance(-getRent());
-					owner.updateBalance(getRent());
-				}
-
+			if (owner.getFleets()==1){
+				player.updateBalance(-getRent());
+				owner.updateBalance(getRent());
+			}
+			if (owner.getFleets()==2){
+				player.updateBalance(-getRent());
+				owner.updateBalance(getRent());
+			}
+			if (owner.getFleets()==3){
+				player.updateBalance(-getRent());
+				owner.updateBalance(getRent());
+			}
+			if (owner.getFleets()==4){
+				player.updateBalance(-getRent());
+				owner.updateBalance(getRent());
 			}
 
 		}

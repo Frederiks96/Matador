@@ -13,9 +13,8 @@ public class CardStack {
 
 	public CardStack(Texts text){
 		chanceCardDeck = new ArrayList<ChanceCard>();
-
-		for(int i = 0; i<40; i++) {
-			this.card = new ChanceCard(text.getCardString("card"+i));
+		for(int i = 1; i<34; i++) {
+			this.card = new ChanceCard(text.getCardString("k"+i));
 			chanceCardDeck.add(card);
 		}
 	}
