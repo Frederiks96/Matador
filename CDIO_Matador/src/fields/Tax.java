@@ -22,6 +22,8 @@ public class Tax extends AbstractFields {
 			} else {
 				player.updateBalance(-4000);
 			}
+		} else {
+			myGUI.showMessage(text.getString("land"));
 		}
 	}
 
