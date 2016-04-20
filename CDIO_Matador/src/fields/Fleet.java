@@ -12,6 +12,22 @@ public class Fleet extends AbstractFields implements Ownable {
 	private ControllerGUI myGUI = new ControllerGUI();
 	private boolean isMortgaged;
 
+	public void landOnField(Player player, Texts text) {
+
+		if(owner.equals(null)) {
+			String s = myGUI.getUserSelection(text.getFormattedString("buy",this.price),
+					text.getString("Yes"),text.getString("No"));
+			if (s.equals(text.getString("Yes"))) {
+				buyProperty(player);
+			}
+		}
+
+		if (!isMortgaged && !this.owner.equals(player)) {
+
+			player.updateBalance(-getRent());
+			owner.updateBalance(getRent());
+		}
+	}
 
 	public Fleet(int id) {
 		super(id);
@@ -37,18 +53,14 @@ public class Fleet extends AbstractFields implements Ownable {
 		return this.owner==null;
 	}
 
-	@Override
 	public void mortgage() {
 		isMortgaged = true;
 	}
 
-	@Override
 	public void unMortgage() {
 		isMortgaged = false;
 	}
 
-
-	@Override
 	public void buyProperty(Player player) { // 
 		myGUI.showMessage(player.updateBalance(-this.price));
 		if (player.getAccount().legalTransaction(-this.price)){
@@ -58,23 +70,4 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	}
 
-
-	@Override
-	public void landOnField(Player player, Texts text) {
-
-		if(owner.equals(null)) {
-			String s = myGUI.getUserSelection(text.getFormattedString("buy",this.price),
-					text.getString("Yes"),text.getString("No"));
-			if (s.equals(text.getString("Yes"))) {
-				buyProperty(player);
-			}
-		}
-
-		if (!isMortgaged && !this.owner.equals(player)) {
-
-			player.updateBalance(-getRent());
-			owner.updateBalance(getRent());
-		}
-
-	}
 }
