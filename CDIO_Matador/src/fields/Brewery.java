@@ -26,11 +26,11 @@ public class Brewery extends AbstractFields implements Ownable {
 
 	public void setOwner(Player owner) {
 		this.owner = owner;
-		owner.setBreweries();
+		owner.addBrewery();
 	}
 
 	public int getRent() {
-		return owner.getBreweries()*dicecup.getLastRoll()*100;
+		return owner.getBreweriesNum()*dicecup.getLastRoll()*100;
 	}
 
 	public boolean isOwned() {
