@@ -59,12 +59,10 @@ public class ControllerGUI implements IControllerUI {
 	}
 
 	
-	@Override
 	public void setHouse(int fieldID, int houseCount) {
 		GUI.setHouses(fieldID, houseCount);
 	}
 
-	@Override
 	public void setHotel(int fieldID, boolean hasHotel) {
 		GUI.setHotel(fieldID, hasHotel);	
 	}
