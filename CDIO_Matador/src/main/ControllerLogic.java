@@ -18,13 +18,13 @@ public class ControllerLogic {
 		c.closeGUI();
 	}
 
-	public boolean hasAll(Player player, String COLOUR) {
+	public boolean hasAll(Player owner, String COLOUR) {
 		fields = gameBoard.getFields();
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Territory) {
 				if (((Territory) (fields[i])).getColour().equals(COLOUR)) {
-					if (((Territory) (fields[i])).getOwner().equals(player)) {
+					if (((Territory) (fields[i])).getOwner().equals(owner)) {
 						j++;
 					}
 				}
