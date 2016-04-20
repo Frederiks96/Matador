@@ -49,26 +49,32 @@ public class Player {
 		return this.player_id;
 	}
 
-	public int getFleets() {
-		return this.numFleetsOwned;
-	}
-
-	public void setFleets() {
+	public void addFleet() {
 		this.numFleetsOwned++;
 	}
+	
+	public int getFleetsNum() {
+		return this.numFleetsOwned;
+	}
+	
+	public void mortgageFleet(){
+		numFleetsOwned--;
+	}
 
-	public int getBreweries() {
+	public void addBrewery() {
+		this.numFleetsOwned++;
+	}
+	
+	public int getBreweriesNum() {
 		return this.numBreweriesOwned;
 	}
 	
-	public void setBreweries() {
-		this.numFleetsOwned++;
+	public void mortgageBrewery(){
+		numBreweriesOwned--;
 	}
+		
 	
-	public void sellBreweries() {
-		this.numFleetsOwned--;
-	}
-
+	
 	public void turn() {
 		// Spillerens tur
 	}
@@ -130,11 +136,6 @@ public class Player {
 	
 	public boolean hasAll(String COLOUR) {
 		return controller.hasAll(this, COLOUR);
-	}
-	
-	
-	public void mortgageFleet(){
-		numFleetsOwned--;
 	}
 	
 	
