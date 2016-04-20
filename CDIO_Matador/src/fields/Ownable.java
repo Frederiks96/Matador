@@ -9,7 +9,7 @@ public interface Ownable {
 	int getRent();
 	boolean isOwned();
 	void buyProperty(Player player);
-	void mortage();
+	void mortgage();
 	void unMortgage();
 	
 }

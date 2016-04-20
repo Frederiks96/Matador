@@ -125,12 +125,12 @@ public class Territory extends AbstractFields implements Ownable {
 
 	
 	@Override
-	public void mortage() {   // stavefejl
+	public void mortgage() {   // stavefejl
 		mortgaged = true;	
 	}
 
 	@Override
-	public void unMortage() {  // stavefejl
+	public void unMortgage() {  // stavefejl
 		mortgaged = false;		
 	}
 	

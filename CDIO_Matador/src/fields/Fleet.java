@@ -38,12 +38,12 @@ public class Fleet extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public void mortage() {
+	public void mortgage() {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void unMortage() {
+	public void unMortgage() {
 		// TODO Auto-generated method stub
 	}
 
