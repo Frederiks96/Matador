@@ -56,10 +56,6 @@ public class Player {
 	public void setFleets() {
 		this.numFleetsOwned++;
 	}
-	
-	public void sellFleets() {
-		this.numFleetsOwned--;
-	}
 
 	public int getBreweries() {
 		return this.numBreweriesOwned;
