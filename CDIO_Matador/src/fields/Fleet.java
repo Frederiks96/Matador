@@ -26,11 +26,11 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	public void setOwner(Player owner) {
 		this.owner=owner;
-		owner.setFleets();
+		owner.addFleet();
 	}
 
 	public int getRent() {
-		return (int) Math.pow(2, (owner.getFleets()-1))*BASERENT;
+		return (int) Math.pow(2, (owner.getFleetsNum()-1))*BASERENT;
 	}
 
 	public boolean isOwned() {
