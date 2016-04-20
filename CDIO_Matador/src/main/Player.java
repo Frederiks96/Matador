@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import desktop_resources.GUI;
 import entity.SQL;
+import fields.AbstractFields;
+import fields.Territory;
 
 public class Player {
 
@@ -131,4 +133,32 @@ public class Player {
 		return this.account;
 	}
 
+	
+	public boolean allOwned(AbstractFields field) {
+		// Returnerer true, hvis en spiller ejer alle felterne, inden for den specifikke farve
+		if(field.colour.equals("BLUE") || colour.equals("PURPLE")){
+			int j = 0;
+			for(int i = 0; i<40; i++){
+				if(gameboard.getLogicField()[i] instanceof Territory){
+					if (gameboard.getLogicField().getColour() == colour && gameboard.getLogicField().getOwner() == owner ){
+						j++;
+					}
+				}
+			}  
+			return 2 == j;
+		}
+		
+		else{
+			int j;
+			for(int i = 0; i<40; i++){
+				if(gameboard.getLogicField()[i] instanceof Territory){
+					if (gameboard.getLogicField().getColour() == colour && gameboard.getLogicField().getOwner() == owner ){
+						j++;
+					}
+				}
+			}
+			return 3 == j;
+		}		
+	}
+	
 }
