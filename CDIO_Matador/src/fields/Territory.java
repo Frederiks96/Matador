@@ -38,15 +38,15 @@ public class Territory extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public void landOnField(Player player) {
+	public void landOnField(Player player, Texts text) {
 		if (this.owner==null) {
 			// Ingen ejer
 		}
-		else if (this.owner!=player) {
-			// En anden spiller ejer feltet
+		else if (this.owner==player) {
+			// Spilleren ejer selv feltet
 		}
 		else {
-			// Spilleren ejer selv feltet
+			// En anden spiller ejer feltet
 		}
 	}
 	
