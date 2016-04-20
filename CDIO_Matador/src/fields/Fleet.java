@@ -52,9 +52,8 @@ public class Fleet extends AbstractFields implements Ownable {
 	public void buyProperty(Player player) { // 
 		myGUI.showMessage(player.updateBalance(this.price)); // Der skal bruges setBalance her, som skal laves i IControllerGUI
 		if (player.getAccount().legalTransaction(this.price)){
-			this.owner = player;
 			myGUI.setOwner(this.fieldID, player.getName());
-			player.setFleets();
+			setOwner(player);
 		}
 
 	}
@@ -62,34 +61,19 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	@Override
 	public void landOnField(Player player, Texts text) {
-		
+
 		if(owner.equals(null)) {
 			String s = myGUI.getUserSelection(text.getFormattedString("buy",this.price),
-											  text.getString("Yes"),text.getString("No"));
+					text.getString("Yes"),text.getString("No"));
 			if (s.equals(text.getString("Yes"))) {
 				buyProperty(player);
 			}
 		}
-		
+
 		if (!isMortaged && !this.owner.equals(player)) {
 
-			if (owner.getFleets()==1){
-				player.updateBalance(-getRent());
-				owner.updateBalance(getRent());
-			}
-			if (owner.getFleets()==2){
-				player.updateBalance(-getRent());
-				owner.updateBalance(getRent());
-			}
-			if (owner.getFleets()==3){
-				player.updateBalance(-getRent());
-				owner.updateBalance(getRent());
-			}
-			if (owner.getFleets()==4){
-				player.updateBalance(-getRent());
-				owner.updateBalance(getRent());
-			}
-
+			player.updateBalance(-getRent());
+			owner.updateBalance(getRent());
 		}
 
 	}
