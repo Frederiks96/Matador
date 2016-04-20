@@ -61,9 +61,9 @@ public class Territory extends AbstractFields implements Ownable {
 	
 
 	public int getRent(Player player) {
-		if(player.allOwned() && houseCount == 0)
-			return this.rent[0]*2;
-		else
+//		if(player.allOwned() && houseCount == 0)
+//			return this.rent[0]*2;
+//		else
 			return this.rent[this.houseCount];	
 	}
 
@@ -72,11 +72,11 @@ public class Territory extends AbstractFields implements Ownable {
 	}
 
 	
-	private void buyHouse(){	// housecount betyer hvor mange huse der skal stå på grunden
-		if(owner.getAccount().legalTransaction(-housePrice) && houseCount < 4){
-			myGUI.showMessage(owner.updateBalance(-housePrice));
-			myGUI.setHouse(fieldID, houseCount+1);
-			this.houseCount++;
+	private void buyHouse(int i){	// housecount betyer hvor mange huse der skal stå på grunden
+		if(owner.getAccount().legalTransaction(-housePrice) && houseCount+i <= 4){
+			myGUI.showMessage(owner.updateBalance(-i*housePrice));
+			myGUI.setHouse(fieldID, houseCount+i);
+			this.houseCount+=i;
 		}
 	}
 		
@@ -88,7 +88,14 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 	}
 	
-	private void sell
+	private void sellHouse(int i){
+		if(houseCount>=i){
+			myGUI.showMessage(owner.updateBalance(i*housePrice/2));
+			myGUI.setHouse(fieldID, houseCount-i);
+			this.houseCount-=i;
+ 		}
+			
+	}
 	
 	private void sellHotel(){
 		if(houseCount == 5){
