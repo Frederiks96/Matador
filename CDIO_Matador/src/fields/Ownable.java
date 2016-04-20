@@ -10,6 +10,6 @@ public interface Ownable {
 	boolean isOwned();
 	void buyProperty(Player player);
 	void mortage();
-	void unMortage();
+	void unMortgage();
 	
 }

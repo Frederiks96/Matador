@@ -29,12 +29,12 @@ public class ControllerLogic {
 					}
 				}
 			}
-
 		}
 		if (COLOUR.equals("BLUE") || COLOUR.equals("PURPLE")) {
 			return j==2;
 		}
 		return j==3;
 	}
-
+	
+	
 }
