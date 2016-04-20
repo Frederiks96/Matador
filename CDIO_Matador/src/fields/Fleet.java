@@ -50,8 +50,8 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	@Override
 	public void buyProperty(Player player) { // 
-		myGUI.showMessage(player.updateBalance(this.price)); // Der skal bruges setBalance her, som skal laves i IControllerGUI
-		if (player.getAccount().legalTransaction(this.price)){
+		myGUI.showMessage(player.updateBalance(-this.price));
+		if (player.getAccount().legalTransaction(-this.price)){
 			myGUI.setOwner(this.fieldID, player.getName());
 			setOwner(player);
 		}
