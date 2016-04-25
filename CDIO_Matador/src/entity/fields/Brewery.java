@@ -14,8 +14,8 @@ public class Brewery extends AbstractFields implements Ownable {
 	private boolean isMortgaged;
 	private String name;
 	
-	public Brewery(int fieldID, Texts text) {
-		super(fieldID);
+	public Brewery(int id, Texts text) {
+		super(id);
 		this.owner = null;
 		this.isMortgaged = false;
 		this.price = 3000;
