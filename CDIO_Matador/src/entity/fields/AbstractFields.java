@@ -13,5 +13,7 @@ public abstract class AbstractFields {
 	
 	abstract public void landOnField(Player player, Texts text);
 	
+	abstract public String getName();
+	
 
 }

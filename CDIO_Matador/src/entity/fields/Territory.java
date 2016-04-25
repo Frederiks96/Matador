@@ -140,5 +140,10 @@ public class Territory extends AbstractFields implements Ownable {
 	public boolean hasHotel() {
 		return this.hasHotel;
 	}
+	
+	@Override
+	public String getName() {
+		return this.name;
+	}
 
 }

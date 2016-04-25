@@ -76,6 +76,7 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	}
 	
+	@Override
 	public String getName() {
 		return this.name;
 	}

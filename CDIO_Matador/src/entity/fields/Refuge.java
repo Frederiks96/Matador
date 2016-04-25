@@ -31,6 +31,7 @@ public class Refuge extends AbstractFields {
 		}
 	}
 	
+	@Override
 	public String getName() {
 		return this.name;
 	}

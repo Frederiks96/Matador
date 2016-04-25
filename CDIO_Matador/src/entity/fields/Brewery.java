@@ -65,20 +65,19 @@ public class Brewery extends AbstractFields implements Ownable {
 
 	}
 
-	@Override
 	public void mortgage(Texts text) {
 		this.isMortgaged=true;
 		owner.mortgageBrewery();
 		owner.updateBalance((int)(this.price*0.5));
 	}
 
-	@Override
 	public void unMortgage() {
 		this.isMortgaged=false;
 		owner.addBrewery();
 		owner.updateBalance(-(int)(this.price*0.5*1.1));
 	}
 	
+	@Override
 	public String getName() {
 		return this.name;
 	}
