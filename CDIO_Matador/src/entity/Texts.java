@@ -36,4 +36,5 @@ public class Texts {
 		return cards.getString(key);
 	}
 	
+	
 }
