@@ -19,7 +19,7 @@ public class Brewery extends AbstractFields implements Ownable {
 		this.owner = null;
 		this.isMortgaged = false;
 		this.price = 3000;
-		this.name = (String) text.getRent(fieldID+"_name");
+		this.name = (String) text.getInfo(fieldID+"_name");
 	}
 
 	public Player getOwner() {
