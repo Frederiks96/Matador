@@ -21,17 +21,19 @@ public class GameBoard {
 		return this.logicFields;
 	}
 
-	public void setupBoard(AbstractFields[] fields) {
+	public void setupBoard() {
 
 		for  (int i = 0; i < logicFields.length; i++){
 
 			if (i == 5 || i==15 || i==25 || i==35){
-				fields[i] = new Fleet(i);
+				logicFields[i] = new Fleet(i);
 			}
 
 			if (i == 4){
-				fields[i] = new Tax(i);
+				logicFields[i] = new Tax(i);
 			}
+			
+			
 
 		}
 	}
