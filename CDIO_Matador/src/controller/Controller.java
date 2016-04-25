@@ -38,6 +38,15 @@ public class Controller {
 		}
 		return j==3;
 	}
+
+	private void playerStateMachine(){
+		// TODO
+	}
+	private void arrested(){
+		// TODO
+	}
+	
+	
 	
 	
 }
