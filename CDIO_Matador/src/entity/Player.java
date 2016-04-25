@@ -44,7 +44,7 @@ public class Player {
 		this.account = new Account();
 		this.cards = new ArrayList<ChanceCard>();
 		
-		sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,this.getBalance(),vID,vColor,vType);
+		sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,getBalance(),vID,vColor,vType);
 	}
 
 	public int getPlayerID() {
@@ -55,7 +55,7 @@ public class Player {
 		this.numFleetsOwned++;
 	}
 	
-	public int getFleetsNum() {
+	public int getNumFleetsOwned() {
 		return this.numFleetsOwned;
 	}
 	
@@ -67,15 +67,13 @@ public class Player {
 		this.numFleetsOwned++;
 	}
 	
-	public int getBreweriesNum() {
+	public int getNumBreweriesOwned() {
 		return this.numBreweriesOwned;
 	}
 	
 	public void mortgageBrewery(){
 		numBreweriesOwned--;
 	}
-		
-	
 	
 	public void turn() {
 		// Spillerens tur
@@ -90,7 +88,15 @@ public class Player {
 	}
 
 	public void setPosition(int position) {
+		if (position>0 && position<40)
 		this.position = position;
+	}
+	
+	public void updatePosition(int lastRoll) {
+		if (lastRoll>0 && lastRoll<13) {
+			updateBalance(-4000);
+			position += lastRoll;
+		}
 	}
 
 	public int getBalance() {
@@ -135,10 +141,8 @@ public class Player {
 		return this.account;
 	}
 
-	
 	public boolean hasAll(String COLOUR) {
 		return controller.hasAll(this, COLOUR);
 	}
-	
 	
 }

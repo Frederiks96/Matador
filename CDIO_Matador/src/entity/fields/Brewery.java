@@ -32,7 +32,7 @@ public class Brewery extends AbstractFields implements Ownable {
 	}
 
 	public int getRent() {
-		return owner.getBreweriesNum()*dicecup.getLastRoll()*100;
+		return owner.getNumBreweriesOwned()*dicecup.getLastRoll()*100;
 	}
 
 	public boolean isOwned() {

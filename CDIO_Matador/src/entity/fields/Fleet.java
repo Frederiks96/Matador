@@ -46,7 +46,7 @@ public class Fleet extends AbstractFields implements Ownable {
 	}
 
 	public int getRent() {
-		return (int) Math.pow(2, (owner.getFleetsNum()-1))*BASERENT;
+		return (int) Math.pow(2, (owner.getNumFleetsOwned()-1))*BASERENT;
 	}
 
 	public boolean isOwned() {
