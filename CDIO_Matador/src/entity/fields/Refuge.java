@@ -4,9 +4,11 @@ import entity.Player;
 import entity.Texts;
 
 public class Refuge extends AbstractFields {
-
+	private String name;
+	
 	public Refuge(int id, Texts text) {
 		super(id);
+		this.name = (String) text.getInfo(id+"_name");
 	}
 
 	@Override
@@ -28,5 +30,10 @@ public class Refuge extends AbstractFields {
 			
 		}
 	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
 
 }

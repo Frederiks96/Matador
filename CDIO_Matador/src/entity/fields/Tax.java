@@ -8,9 +8,11 @@ public class Tax extends AbstractFields {
 	
 	private GUI_Commands myGUI = new GUI_Commands();
 	private String answer;
+	private String name;
 
 	public Tax(int id, Texts text) {
 		super(id);
+		this.name = (String) text.getInfo(id+"_name");
 	}
 
 	@Override
@@ -28,6 +30,10 @@ public class Tax extends AbstractFields {
 			myGUI.showMessage(text.getFormattedString("payTax",2000));
 			player.updateBalance(-2000);
 		}
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 

@@ -17,20 +17,22 @@ public class Territory extends AbstractFields implements Ownable {
 	private int price;
 	private int housePrice;
 	private boolean mortgaged;
+	private String name;
 
 	public Territory(int id, Texts text){
 		super(id);
 		this.owner = null;
 		this.houseCount = 0;
-		this.colour = (String) (text.getInfo(id+"_color"));
+		this.colour = (String) text.getInfo(id+"_color");
 		this.mortgaged = false;
 		this.hasHotel = false;
+		this.name = (String) text.getInfo(id+"_name");
 
-		this.price = (int) (text.getInfo(id+"_price"));
-		this.housePrice = (int) (text.getInfo(id+"_house"));
+		this.price = (int) text.getInfo(id+"_price");
+		this.housePrice = (int) text.getInfo(id+"_house");
 		
 		for (int i = 0; i < rent.length; i++) {
-			this.rent[i] = (int) (text.getInfo(id+"_"+i));
+			this.rent[i] = (int) text.getInfo(id+"_"+i);
 		}
 	}
 
@@ -120,7 +122,7 @@ public class Territory extends AbstractFields implements Ownable {
 
 	public void unMortgage() {
 		mortgaged = false;
-		this.owner.updateBalance(-(int)(this.price*0.1));
+		this.owner.updateBalance(-(int)(this.price*0.5*1.1));
 	}
 
 	public void setOwner(Player owner) {

@@ -11,12 +11,14 @@ public class Fleet extends AbstractFields implements Ownable {
 	private int price;
 	private GUI_Commands myGUI = new GUI_Commands();
 	private boolean isMortgaged;
+	private String name;
 
 	public Fleet(int id, Texts text) {
 		super(id);
 		this.owner=null;
 		this.isMortgaged=false;
 		this.price = 4000;
+		this.name = (String) text.getInfo(id+"_name");
 	}
 	
 	public void landOnField(Player player, Texts text) {
@@ -55,10 +57,14 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	public void mortgage(Texts text) {
 		isMortgaged = true;
+		owner.mortgageFleet();
+		owner.updateBalance((int) (this.price*0.5));
 	}
 
 	public void unMortgage() {
 		isMortgaged = false;
+		owner.addFleet();
+		owner.updateBalance(-(int)(this.price*0.5*1.1)); 
 	}
 
 	public void buyProperty(Player player) { // 
@@ -68,6 +74,10 @@ public class Fleet extends AbstractFields implements Ownable {
 			setOwner(player);
 		}
 
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 }
