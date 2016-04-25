@@ -15,7 +15,7 @@ public class SQL implements DAO, DTO {
 	private Connection myCon;
 
 	public SQL() throws SQLException {
-		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/Matador","root","");
+//		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/Matador","root","");
 	}
 
 

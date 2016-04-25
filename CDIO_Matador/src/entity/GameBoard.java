@@ -10,9 +10,8 @@ import entity.fields.Territory;
 
 public class GameBoard {
 
-	public int hotelCount;
-	public int houseCount; 
-
+	private int hotelCount;
+	private int houseCount; 
 	private AbstractFields[] logicFields;
 
 
@@ -25,26 +24,18 @@ public class GameBoard {
 	}
 
 	public void setupBoard(Texts text) {
-
+		logicFields = new AbstractFields[40];
 		for  (int i = 0; i < logicFields.length; i++){
 
 			if (i == 5 || i==15 || i==25 || i==35){
 				logicFields[i] = new Fleet(i, text);
-			}
-
-			if (i == 4 || i == 38){
+			} else if (i == 4 || i == 38){
 				logicFields[i] = new Tax(i, text);
-			}
-
-			if (i == 30){
+			} else if (i == 0 || i == 2 || i == 7 || i == 10 || i == 17 || i == 20 || i == 22 || i == 30 || i == 33 || i == 36){ 
 				logicFields[i] = new Refuge(i, text);
-			}
-			
-			if (i == 12 || i == 28){
+			} else if (i == 12 || i == 28){
 				logicFields[i] = new Brewery(i, text);
-			}
-			
-			else {
+			} else {
 				logicFields[i] = new Territory(i, text);
 				
 				

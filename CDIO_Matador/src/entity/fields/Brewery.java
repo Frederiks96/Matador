@@ -81,5 +81,9 @@ public class Brewery extends AbstractFields implements Ownable {
 	public String getName() {
 		return this.name;
 	}
+	
+	public boolean isMortgaged() {
+		return this.isMortgaged;
+	}
 
 }

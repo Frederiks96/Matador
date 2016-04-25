@@ -3,6 +3,8 @@ package controller;
 import boundary.GUI_Commands;
 import entity.GameBoard;
 import entity.Player;
+import entity.Texts;
+import entity.Texts.language;
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
 import entity.fields.Fleet;
@@ -13,7 +15,16 @@ public class Controller {
 	private GUI_Commands c = new GUI_Commands(); 
 	private GameBoard gameBoard;
 	private AbstractFields[] fields;
-
+	private String[] properties;
+	private Texts text;
+	
+	public Controller() {
+		text = new Texts(language.Dansk);
+		gameBoard = new GameBoard();
+		gameBoard.setupBoard(text);
+		fields = gameBoard.getFields();
+	}
+	
 
 	public void run() {
 
@@ -49,22 +60,20 @@ public class Controller {
 	}
 	
 	public String[] getOwnedProperties(Player player) {
-		String[] properties = {""}; // Skal rettes
-		fields = gameBoard.getFields();
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Brewery) {
 				if (((Brewery) (fields[i])).getOwner().equals(player)) {
-					// properties[j] = fields[i].getName();
-					// j++;
+					 properties[j] = fields[i].getName();
+					 j++;
 				}
 			}
 			
 			if (fields[i] instanceof Fleet) {
 				if (((Fleet) (fields[i])).getOwner().equals(player)) {
 					if (fields[i] instanceof Fleet) {
-						// properties[j] = fields[i].getName();
-						// j++;
+						 properties[j] = fields[i].getName();
+						 j++;
 					}
 				}
 			}
@@ -73,8 +82,8 @@ public class Controller {
 				if (((Territory) (fields[i])).getOwner().equals(player)) {
 
 					if (fields[i] instanceof Territory) {
-						// properties[j] = fields[i].getName();
-						// j++;
+						 properties[j] = fields[i].getName();
+						 j++;
 					}
 				}
 			}
