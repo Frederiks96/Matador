@@ -48,7 +48,7 @@ public class Controller {
 		// TODO
 	}
 	
-	public String[] getProperties(Player player) {
+	public String[] getOwnedProperties(Player player) {
 		String[] properties = {""}; // Skal rettes
 		fields = gameBoard.getFields();
 		int j = 0;

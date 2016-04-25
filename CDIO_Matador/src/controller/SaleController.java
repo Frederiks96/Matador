@@ -22,13 +22,13 @@ public class SaleController {
 		ownProperties = null;
 		
 		do {
-			ownProperties[j] = gui.getUserSelection(text.getString("commenceTrade"), c.getProperties(offeror));
+			ownProperties[j] = gui.getUserSelection(text.getString("commenceTrade"), c.getOwnedProperties(offeror));
 			j++;
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		j = 0;
 		
 		do {
-			foeProperties[j] = gui.getUserSelection(text.getString("foeProperties"), c.getProperties(offeree));
+			foeProperties[j] = gui.getUserSelection(text.getString("foeProperties"), c.getOwnedProperties(offeree));
 			j++;
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		
