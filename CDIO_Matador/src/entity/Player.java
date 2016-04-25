@@ -26,7 +26,7 @@ public class Player {
 	private SQL sql = new SQL();
 	private GUI_Commands myGUI = new GUI_Commands();
 	private Controller controller = new Controller();
-	
+
 
 	public Player(String name, String vColor, String vType) throws SQLException {
 		numOfPlayers++;
@@ -43,7 +43,7 @@ public class Player {
 		this.isAlive=true;
 		this.account = new Account();
 		this.cards = new ArrayList<ChanceCard>();
-		
+
 		sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,getBalance(),vID,vColor,vType);
 	}
 
@@ -54,11 +54,11 @@ public class Player {
 	public void addFleet() {
 		this.numFleetsOwned++;
 	}
-	
+
 	public int getNumFleetsOwned() {
 		return this.numFleetsOwned;
 	}
-	
+
 	public void mortgageFleet(){
 		numFleetsOwned--;
 	}
@@ -66,15 +66,15 @@ public class Player {
 	public void addBrewery() {
 		this.numFleetsOwned++;
 	}
-	
+
 	public int getNumBreweriesOwned() {
 		return this.numBreweriesOwned;
 	}
-	
+
 	public void mortgageBrewery(){
 		numBreweriesOwned--;
 	}
-	
+
 	public void turn() {
 		// Spillerens tur
 	}
@@ -88,14 +88,24 @@ public class Player {
 	}
 
 	public void setPosition(int position) {
-		if (position>0 && position<40)
-		this.position = position;
+		if (position>0 && position<40) {
+			if (position != 10) {
+				if (position<this.position) {
+					updateBalance(-4000);
+				}
+			}
+			this.position = position;
+		}
 	}
-	
+
 	public void updatePosition(int lastRoll) {
 		if (lastRoll>0 && lastRoll<13) {
-			updateBalance(-4000);
-			position += lastRoll;
+			if ((position+lastRoll)>39) {
+				updateBalance(-4000);
+				position += lastRoll-40;
+			} else {
+				position += lastRoll;
+			}
 		}
 	}
 
@@ -122,15 +132,15 @@ public class Player {
 	public void takeCard() {
 		this.cards.remove(0);
 	}
-	
+
 	public boolean hasCards() {
 		return this.cards.size()!=0;
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public void imprison() {
 		this.jailTime++;
 		setPosition(10);
@@ -144,5 +154,5 @@ public class Player {
 	public boolean hasAll(String COLOUR) {
 		return controller.hasAll(this, COLOUR);
 	}
-	
+
 }
