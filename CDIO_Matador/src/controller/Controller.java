@@ -4,6 +4,8 @@ import boundary.GUI_Commands;
 import entity.GameBoard;
 import entity.Player;
 import entity.fields.AbstractFields;
+import entity.fields.Brewery;
+import entity.fields.Fleet;
 import entity.fields.Territory;
 
 public class Controller {
@@ -46,7 +48,39 @@ public class Controller {
 		// TODO
 	}
 	
-	
-	
-	
+	public String[] getProperties(Player player) {
+		String[] properties = {""}; // Skal rettes
+		fields = gameBoard.getFields();
+		int j = 0;
+		for (int i = 0; i < fields.length; i++) {
+			if (fields[i] instanceof Brewery) {
+				if (((Brewery) (fields[i])).getOwner().equals(player)) {
+					// properties[j] = fields[i].getName();
+					// j++;
+				}
+			}
+			
+			if (fields[i] instanceof Fleet) {
+				if (((Fleet) (fields[i])).getOwner().equals(player)) {
+					if (fields[i] instanceof Fleet) {
+						// properties[j] = fields[i].getName();
+						// j++;
+					}
+				}
+			}
+			
+			if (fields[i] instanceof Territory) {
+				if (((Territory) (fields[i])).getOwner().equals(player)) {
+
+					if (fields[i] instanceof Territory) {
+						// properties[j] = fields[i].getName();
+						// j++;
+					}
+				}
+			}
+		}
+		
+		return properties;
+	}
+
 }
