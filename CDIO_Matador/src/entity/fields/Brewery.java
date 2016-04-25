@@ -66,7 +66,7 @@ public class Brewery extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public void mortgage() {
+	public void mortgage(Texts text) {
 		this.isMortgaged=true;
 	}
 

@@ -24,28 +24,28 @@ public class GameBoard {
 		return this.logicFields;
 	}
 
-	public void setupBoard(Texts text ) {
+	public void setupBoard(Texts text) {
 
 		for  (int i = 0; i < logicFields.length; i++){
 
 			if (i == 5 || i==15 || i==25 || i==35){
-				logicFields[i] = new Fleet(i);
+				logicFields[i] = new Fleet(i, text);
 			}
 
 			if (i == 4 || i == 38){
-				logicFields[i] = new Tax(i);
+				logicFields[i] = new Tax(i, text);
 			}
 
 			if (i == 30){
-				logicFields[i] = new Refuge(i);
+				logicFields[i] = new Refuge(i, text);
 			}
 			
 			if (i == 12 || i == 28){
-				logicFields[i] = new Brewery(i,text);
+				logicFields[i] = new Brewery(i, text);
 			}
 			
 			else {
-				logicFields[i] = new Territory(i,text.getInfo(i + "_color"), text.getInfo(i + "_name"),text.getInfo(i + "_price"),text.getInfo(i + "_0"), text.getInfo(i + "_1"), text.getInfo(i + "_2"),text.getInfo(i + "_3"), text.getInfo(i + "_4"), text.getInfo(i + "_5"),text.getInfo(i + "_house")  )
+				logicFields[i] = new Territory(i, text);
 				
 				
 			}

@@ -12,7 +12,7 @@ public class Fleet extends AbstractFields implements Ownable {
 	private GUI_Commands myGUI = new GUI_Commands();
 	private boolean isMortgaged;
 
-	public Fleet(int id) {
+	public Fleet(int id, Texts text) {
 		super(id);
 		this.owner=null;
 		this.isMortgaged=false;
@@ -53,7 +53,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		return this.owner==null;
 	}
 
-	public void mortgage() {
+	public void mortgage(Texts text) {
 		isMortgaged = true;
 	}
 

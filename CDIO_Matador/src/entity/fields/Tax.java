@@ -9,7 +9,7 @@ public class Tax extends AbstractFields {
 	private GUI_Commands myGUI = new GUI_Commands();
 	private String answer;
 
-	public Tax(int id) {
+	public Tax(int id, Texts text) {
 		super(id);
 	}
 

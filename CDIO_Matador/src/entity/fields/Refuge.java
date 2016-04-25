@@ -5,7 +5,7 @@ import entity.Texts;
 
 public class Refuge extends AbstractFields {
 
-	public Refuge(int id) {
+	public Refuge(int id, Texts text) {
 		super(id);
 	}
 

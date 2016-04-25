@@ -1,6 +1,7 @@
 package entity.fields;
 
 import entity.Player;
+import entity.Texts;
 
 public interface Ownable {
 	
@@ -9,7 +10,7 @@ public interface Ownable {
 	int getRent();
 	boolean isOwned();
 	void buyProperty(Player player);
-	void mortgage();
+	void mortgage(Texts text);
 	void unMortgage();
 	
 }

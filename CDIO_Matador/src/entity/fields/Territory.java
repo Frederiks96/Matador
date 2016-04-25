@@ -18,23 +18,20 @@ public class Territory extends AbstractFields implements Ownable {
 	private int housePrice;
 	private boolean mortgaged;
 
-	public Territory(int fieldID, String colour, int price, int baseRent, 
-			int rent1, int rent2, int rent3, int rent4, int hotelRent, int housePrice){
-
-		super(fieldID);
+	public Territory(int id, Texts text){
+		super(id);
 		this.owner = null;
 		this.houseCount = 0;
-		this.colour = colour;
+		this.colour = (String) (text.getInfo(id+"_color"));
 		this.mortgaged = false;
+		this.hasHotel = false;
 
-		this.price = price;
-		this.rent[0] = baseRent;
-		this.rent[1] = rent1;
-		this.rent[2] = rent2;
-		this.rent[3] = rent3;
-		this.rent[4] = rent4;
-		this.rent[5] = hotelRent;
-		this.housePrice = housePrice;
+		this.price = (int) (text.getInfo(id+"_price"));
+		this.housePrice = (int) (text.getInfo(id+"_house"));
+		
+		for (int i = 0; i < rent.length; i++) {
+			this.rent[i] = (int) (text.getInfo(id+"_"+i));
+		}
 	}
 
 	@Override
@@ -46,7 +43,7 @@ public class Territory extends AbstractFields implements Ownable {
 				buyProperty(player);
 			}
 		}
-
+	
 		if (!mortgaged && this.owner!=player){
 			//en anden ejer felet og det er ikke pantsat
 			myGUI.showMessage(text.getFormattedString("rent", getRent(), owner));
@@ -79,7 +76,7 @@ public class Territory extends AbstractFields implements Ownable {
 		if(owner.getAccount().legalTransaction(-housePrice) && houseCount == 4 && !mortgaged){
 			myGUI.showMessage(owner.updateBalance(-housePrice));
 			myGUI.setHotel(fieldID, true);
-			this.houseCount++;
+			this.hasHotel = true;
 		}
 	}
 
@@ -111,13 +108,19 @@ public class Territory extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public void mortgage() { 
-		if( houseCount == 0)
-			mortgaged = true;	
+	public void mortgage(Texts text) { 
+		if (houseCount == 0) {
+			mortgaged = true;
+			owner.updateBalance((int)(price*0.5));
+		}
+		else {
+			myGUI.showMessage(text.getString("errorHouseOnField"));
+		}
 	}
 
 	public void unMortgage() {
-		mortgaged = false;		
+		mortgaged = false;
+		this.owner.updateBalance(-(int)(this.price*0.1));
 	}
 
 	public void setOwner(Player owner) {
@@ -130,6 +133,10 @@ public class Territory extends AbstractFields implements Ownable {
 
 	public String getColour(){
 		return colour;
+	}
+	
+	public boolean hasHotel() {
+		return this.hasHotel;
 	}
 
 }
