@@ -1,9 +1,10 @@
-package main;
+package boundary;
 
 import desktop_codebehind.Car;
 import desktop_resources.GUI;
+import entity.Player;
 
-public class ControllerGUI implements IControllerUI {
+public class GUI_Commands implements Boundary_Interface {
 	
 	private Player[] players;
 	

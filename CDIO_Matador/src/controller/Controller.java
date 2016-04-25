@@ -1,11 +1,14 @@
-package main;
+package controller;
 
-import fields.AbstractFields;
-import fields.Territory;
+import boundary.GUI_Commands;
+import entity.GameBoard;
+import entity.Player;
+import entity.fields.AbstractFields;
+import entity.fields.Territory;
 
-public class ControllerLogic {
+public class Controller {
 
-	private ControllerGUI c = new ControllerGUI(); 
+	private GUI_Commands c = new GUI_Commands(); 
 	private GameBoard gameBoard;
 	private AbstractFields[] fields;
 

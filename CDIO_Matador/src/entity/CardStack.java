@@ -1,9 +1,7 @@
-package main;
+package entity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import entity.Texts;
 
 public class CardStack {
 	private ChanceCard card;

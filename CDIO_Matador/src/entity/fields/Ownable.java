@@ -1,6 +1,6 @@
-package fields;
+package entity.fields;
 
-import main.Player;
+import entity.Player;
 
 public interface Ownable {
 	

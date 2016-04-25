@@ -1,7 +1,7 @@
-package fields;
+package entity.fields;
 
+import entity.Player;
 import entity.Texts;
-import main.Player;
 
 public abstract class AbstractFields {
 	

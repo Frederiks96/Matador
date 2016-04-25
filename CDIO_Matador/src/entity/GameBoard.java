@@ -1,7 +1,6 @@
-package main;
+package entity;
 
-import entity.Texts;
-import fields.AbstractFields;
+import entity.fields.AbstractFields;
 
 public class GameBoard {
 

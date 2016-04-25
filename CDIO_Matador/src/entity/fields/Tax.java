@@ -1,12 +1,12 @@
-package fields;
+package entity.fields;
 
+import boundary.GUI_Commands;
+import entity.Player;
 import entity.Texts;
-import main.ControllerGUI;
-import main.Player;
 
 public class Tax extends AbstractFields {
 	
-	private ControllerGUI myGUI = new ControllerGUI();
+	private GUI_Commands myGUI = new GUI_Commands();
 	private String answer;
 
 	public Tax(int id) {

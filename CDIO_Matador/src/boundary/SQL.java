@@ -1,4 +1,4 @@
-package entity;
+package boundary;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import main.Player;
+import controller.DAO;
+import controller.DTO;
+import entity.Player;
 
 public class SQL implements DAO, DTO {
 

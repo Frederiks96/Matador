@@ -1,4 +1,4 @@
-package dicecup;
+package entity.dicecup;
 
 public class Dice {
 

@@ -1,8 +1,8 @@
-package entity;
+package controller;
 
 import java.sql.SQLException;
 
-import main.Player;
+import entity.Player;
 
 public interface DAO {
 	

@@ -1,13 +1,13 @@
-package fields;
+package entity.fields;
 
-import main.ControllerGUI;
-import main.GameBoard;
-import main.Player;
+import boundary.GUI_Commands;
+import entity.GameBoard;
+import entity.Player;
 import entity.Texts;
 
 public class Territory extends AbstractFields implements Ownable {
 
-	ControllerGUI myGUI = new ControllerGUI();
+	GUI_Commands myGUI = new GUI_Commands();
 
 	private Player owner;
 	private int houseCount;

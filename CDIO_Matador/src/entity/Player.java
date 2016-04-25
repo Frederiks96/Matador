@@ -1,9 +1,11 @@
-package main;
+package entity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import entity.SQL;
+import boundary.GUI_Commands;
+import boundary.SQL;
+import controller.Controller;
 
 public class Player {
 
@@ -22,8 +24,8 @@ public class Player {
 	private int vID;
 	private int jailTime;
 	private SQL sql = new SQL();
-	private ControllerGUI myGUI = new ControllerGUI();
-	private ControllerLogic controller = new ControllerLogic();
+	private GUI_Commands myGUI = new GUI_Commands();
+	private Controller controller = new Controller();
 	
 
 	public Player(String name, String vColor, String vType) throws SQLException {

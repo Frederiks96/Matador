@@ -1,15 +1,15 @@
-package fields;
+package entity.fields;
 
+import boundary.GUI_Commands;
+import entity.Player;
 import entity.Texts;
-import main.ControllerGUI;
-import main.Player;
 
 public class Fleet extends AbstractFields implements Ownable {
 
 	private final int BASERENT = 500;
 	private Player owner;
 	private int price;
-	private ControllerGUI myGUI = new ControllerGUI();
+	private GUI_Commands myGUI = new GUI_Commands();
 	private boolean isMortgaged;
 
 	public Fleet(int id) {

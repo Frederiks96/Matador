@@ -1,16 +1,16 @@
-package fields;
+package entity.fields;
 
-import dicecup.DiceCup;
+import boundary.GUI_Commands;
+import entity.Player;
 import entity.Texts;
-import main.ControllerGUI;
-import main.Player;
+import entity.dicecup.DiceCup;
 
 public class Brewery extends AbstractFields implements Ownable {
 	
 	private Player owner;
 	private DiceCup dicecup;
 	private int price;
-	private ControllerGUI myGUI = new ControllerGUI();
+	private GUI_Commands myGUI = new GUI_Commands();
 	private boolean isMortgaged;
 	private String name;
 	
