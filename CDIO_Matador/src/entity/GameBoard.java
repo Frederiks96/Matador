@@ -2,8 +2,11 @@ package entity;
 
 import entity.Texts;
 import entity.fields.AbstractFields;
+import entity.fields.Brewery;
 import entity.fields.Fleet;
+import entity.fields.Refuge;
 import entity.fields.Tax;
+import entity.fields.Territory;
 
 public class GameBoard {
 
@@ -21,7 +24,7 @@ public class GameBoard {
 		return this.logicFields;
 	}
 
-	public void setupBoard() {
+	public void setupBoard(Texts text ) {
 
 		for  (int i = 0; i < logicFields.length; i++){
 
@@ -29,19 +32,32 @@ public class GameBoard {
 				logicFields[i] = new Fleet(i);
 			}
 
-			if (i == 4){
+			if (i == 4 || i == 38){
 				logicFields[i] = new Tax(i);
 			}
+
+			if (i == 30){
+				logicFields[i] = new Refuge(i);
+			}
 			
+			if (i == 12 || i == 28){
+				logicFields[i] = new Brewery(i,text);
+			}
 			
+			else {
+				logicFields[i] = new Territory(i,text.getInfo(i + "_color"), text.getInfo(i + "_name"),text.getInfo(i + "_price"),text.getInfo(i + "_0"), text.getInfo(i + "_1"), text.getInfo(i + "_2"),text.getInfo(i + "_3"), text.getInfo(i + "_4"), text.getInfo(i + "_5"),text.getInfo(i + "_house")  )
+				
+				
+			}
+
 
 		}
 	}
-	
+
 	public int getHotel(){
 		return hotelCount;
 	}
-	
+
 	public void addHotel(){
 		hotelCount++;
 	}
