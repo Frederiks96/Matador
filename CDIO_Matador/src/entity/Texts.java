@@ -6,13 +6,13 @@ public class Texts {
 	
 	public enum language {Dansk,English};
 	private language l;
-	private ResourceBundle rents;
+	private ResourceBundle fieldInfo;
 	private ResourceBundle texts;
 	private ResourceBundle cards;
 	
 	public Texts(language l) {
 		this.l=l;
-		rents = ResourceBundle.getBundle("properties.rent");
+		fieldInfo = ResourceBundle.getBundle("properties.fieldInfo");
 		texts = ResourceBundle.getBundle("properties."+l+"_texts");
 		cards = ResourceBundle.getBundle("properties."+l+"_cards");
 	}	
@@ -25,11 +25,11 @@ public class Texts {
 		return String.format(texts.getString(key), args);
 	}
 	
-	public Object getRent(String key) {
-		if (Character.isDigit(rents.getString(key).charAt(0))) {
-			return Integer.parseInt(rents.getString(key));
+	public Object getInfo(String key) {
+		if (Character.isDigit(fieldInfo.getString(key).charAt(0))) {
+			return Integer.parseInt(fieldInfo.getString(key));
 		}
-		return rents.getString(key);
+		return fieldInfo.getString(key);
 	}
 	
 	public String getCardString(String key) {
