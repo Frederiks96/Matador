@@ -3,6 +3,7 @@ package controller;
 import java.sql.SQLException;
 
 import entity.Player;
+import entity.fields.Territory;
 
 public interface DAO {
 	
@@ -14,7 +15,7 @@ public interface DAO {
 	int getCardId()throws SQLException;
 	int getCardPosition()throws SQLException;
 	int getFieldId()throws SQLException;
-	int getHouseCount()throws SQLException;
+	int getFieldHouseCount(Territory territory)throws SQLException;
 	boolean hasHotel()throws SQLException;
 	boolean isMortgaged()throws SQLException;
 	int getVehicleID()throws SQLException;

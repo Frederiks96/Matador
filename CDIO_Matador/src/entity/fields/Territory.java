@@ -159,4 +159,8 @@ public class Territory extends AbstractFields implements Ownable {
 	public boolean isMortgaged() {
 		return this.isMortgaged;
 	}
+	
+	public int getFieldId() {
+		return this.id;
+	}
 }

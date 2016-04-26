@@ -28,6 +28,8 @@ public class TerritoryTest {
 		
 	}
 	
+	
+	
 	@Test
 	public void testBuy(){
 		territory.buyProperty(player1, text);

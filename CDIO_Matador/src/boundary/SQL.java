@@ -9,6 +9,7 @@ import java.sql.Statement;
 import controller.DAO;
 import controller.DTO;
 import entity.Player;
+import entity.fields.Territory;
 
 public class SQL implements DAO, DTO {
 
@@ -56,9 +57,11 @@ public class SQL implements DAO, DTO {
 	}
 
 	@Override
-	public int getHouseCount() throws SQLException{
-		// TODO Auto-generated method stub
-		return 0;
+	public int getFieldHouseCount(Territory territory) throws SQLException{
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("Select house_count from Property where field_id = '" + territory.getFieldId()+"'");
+		rs.next();
+		return rs.getInt(1);
 	}
 
 	public boolean hasHotel() throws SQLException{
@@ -100,8 +103,9 @@ public class SQL implements DAO, DTO {
 
 	}
 
-	public void setBalance()throws SQLException {
-		// TODO Auto-generated method stub
+	public void setBalance(Player player)throws SQLException {
+		Statement stmt = myCon.createStatement(); 
+		stmt.executeQuery("update bank set balance ="+player.getBalance()+" where account_id="+player.getAccountID());		
 
 	}
 
@@ -177,4 +181,9 @@ public class SQL implements DAO, DTO {
 		Statement stmt = myCon.createStatement();
 		stmt.executeQuery("insert into Vehicle values("+vId+","+vColor+","+vType+");");
 	}
+
+
+	
+		
+	
 }

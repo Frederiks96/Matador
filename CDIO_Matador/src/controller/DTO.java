@@ -2,6 +2,8 @@ package controller;
 
 import java.sql.SQLException;
 
+import entity.Player;
+
 public interface DTO {
 	
 	// Data Transfer Object - Setters
@@ -11,7 +13,7 @@ public interface DTO {
 	void createAccount(int aId, int balance) throws SQLException;
 	void createVehicle(int vId, String vColour, String vType) throws SQLException;
 	void updatePosition() throws SQLException;
-	void setBalance() throws SQLException;
+	void setBalance(Player player) throws SQLException;
 	void setJailTime() throws SQLException;
 	void setCardId() throws SQLException; // Ikke nødvendig?
 	void setCardPosition() throws SQLException;
