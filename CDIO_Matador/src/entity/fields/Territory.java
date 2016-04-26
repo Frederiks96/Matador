@@ -7,7 +7,7 @@ import entity.Texts;
 
 public class Territory extends AbstractFields implements Ownable {
 
-	GUI_Commands myGUI = new GUI_Commands();   // spørg Fin hvad forskellen på at lave instanser af objekter og putte objeter ind i parameter listen 
+	private GUI_Commands myGUI = new GUI_Commands();   // spørg Fin hvad forskellen på at lave instanser af objekter og putte objeter ind i parameter listen 
 
 	private Player owner;
 	private int houseCount;
