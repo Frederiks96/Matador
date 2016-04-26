@@ -25,7 +25,7 @@ public class Controller {
 	}
 	
 	public void newGame() {
-		text = new Texts(language.Dansk);
+		getLanguage();
 		gameBoard = new GameBoard();
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
@@ -34,6 +34,7 @@ public class Controller {
 	}
 	
 	public void loadGame() {
+		getLanguage();
 		
 	}
 
@@ -76,7 +77,7 @@ public class Controller {
 	
 	public String[] getOwnedProperties(Player player) {
 		fields = gameBoard.getFields();
-		String[] properties = new String[28];
+		properties = new String[28];
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Brewery) {
@@ -111,6 +112,15 @@ public class Controller {
 	
 	public AbstractFields[] getFields() {
 		return this.fields;
+	}
+	
+	private void getLanguage() {
+		String lang = c.getUserSelection("Choose your preferred language", "Dansk", "English");
+		if (lang.equals("Dansk")) {
+			text = new Texts(language.Dansk);
+		} else {
+			text = new Texts(language.English);	
+		}
 	}
 
 }
