@@ -14,7 +14,7 @@ import entity.fields.Territory;
 
 public class Controller {
 
-	private GUI_Commands gui = new GUI_Commands(); 
+	private GUI_Commands c = new GUI_Commands(); 
 	private GameBoard gameBoard;
 	private AbstractFields[] fields;
 	private String[] properties;
@@ -25,16 +25,7 @@ public class Controller {
 		gameBoard = new GameBoard();
 	}
 	
-	public void run() {
-		boolean button = gui.getUserLeftButtonPressed(text.getString("loadGameQuestion"), "newGame", "loadGame");
-		if (button)
-			newGame();
-		else
-			loadGame();
-	}
-	
-	public void newGame() {
-		getLanguage();
+	public void startNewGame() {
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
 		CardStack deck = new CardStack(text);
@@ -42,8 +33,16 @@ public class Controller {
 	}
 	
 	public void loadGame() {
-		getLanguage();
 		
+	}
+
+	public void run() {
+		getLanguage();
+		if (newGame()) {
+			startNewGame();
+		} else {
+			loadGame();
+		}
 	}
 
 	public void playerTurn(Player player) {
@@ -51,7 +50,7 @@ public class Controller {
 		if (fields[player.getPosition()] instanceof CardField) {
 			deck.draw(player);
 		}
-		gui.closeGUI();
+		c.closeGUI();
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
@@ -119,12 +118,16 @@ public class Controller {
 	}
 	
 	private void getLanguage() {
-		String lang = gui.getUserSelection("Choose your preferred language", "Dansk", "English");
+		String lang = c.getUserSelection("Choose your preferred language", "Dansk", "English");
 		if (lang.equals("Dansk")) {
 			text = new Texts(language.Dansk);
 		} else {
 			text = new Texts(language.English);	
 		}
+	}
+	
+	private boolean newGame() {
+		return c.getUserLeftButtonPressed("", "", "");
 	}
 
 }
