@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.SQLException;
+
 import boundary.GUI_Commands;
 import entity.CardStack;
 import entity.GameBoard;
@@ -27,7 +29,7 @@ public class Controller {
 		gameBoard = new GameBoard();
 	}
 
-	public void startNewGame() {
+	public void startNewGame() throws SQLException {
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
 		CardStack deck = new CardStack(text);
@@ -38,6 +40,15 @@ public class Controller {
 		} while (numOfPlayers < 2 && numOfPlayers > 6);
 		players = new Player[numOfPlayers];
 		
+		for (int i = 1; i < players.length+1; i++) {
+			name = c.getUserString(text.getFormattedString("yourName", i));
+			if (isValidName(name)) {
+				players[i-1] = new Player(name, "","");
+			} else {
+				c.showMessage(text.getString("nameTaken"));
+				i--;
+			}
+		}
 
 	}
 
@@ -45,7 +56,7 @@ public class Controller {
 
 	}
 
-	public void run() {
+	public void run() throws SQLException {
 		getLanguage();
 		if (newGame()) {
 			startNewGame();
@@ -148,8 +159,10 @@ public class Controller {
 
 	public boolean isValidName(String name) {
 		for (int i = 0; i < players.length; i++) {
-			if (players[i].getName().equals(name)) {
-				return false;
+			if (players[i] != null) {
+				if (players[i].getName().toLowerCase().trim().equals(name.toLowerCase().trim())) {
+					return false;
+				}
 			}
 		}
 		return true;
