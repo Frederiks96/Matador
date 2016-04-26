@@ -37,6 +37,7 @@ public class Controller {
 			numOfPlayers = c.getUserInteger(text.getString("numOfPlayers"));
 		} while (numOfPlayers < 2 && numOfPlayers > 6);
 		players = new Player[numOfPlayers];
+		
 
 	}
 
