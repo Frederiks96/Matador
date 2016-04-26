@@ -36,7 +36,4 @@ public class Tax extends AbstractFields {
 	public String getName() {
 		return this.name;
 	}
-
-
-
 }
