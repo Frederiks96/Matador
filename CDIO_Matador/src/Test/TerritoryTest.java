@@ -3,13 +3,14 @@ package Test;
 import org.junit.*;
 
 import org.junit.After;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
+import entity.Texts.language;
 import entity.fields.Territory;
 import entity.fields.Ownable;
 
@@ -17,33 +18,34 @@ public class TerritoryTest {
 
 	private Player player1;
 	private Territory territory;
+	private Texts text;
 	
 	@Before
-	public void setUp(Texts text) throws Exception {
-				
-		territory = new Territory(1, text);
+	public void setUp() throws Exception {
+		text = new Texts(language.Dansk);
+		territory = new Territory(1, null, text);
 		player1 = new Player("John", "grøn", "bil");
 		
 	}
 	
 	@Test
 	public void testBuy(){
-		territory.buyProperty(player1);
+		territory.buyProperty(player1, text);
 		
-		Object expected = this.player1;
-		Object actual = territory.getOwner();
+		Player expected = this.player1;
+		Player actual = territory.getOwner();
 		
-		Assert.assertEquals(expected, actual);
+		assertEquals(expected, actual);
 	}
 	
 	@Test
-	public void testMortgage(Texts text){
+	public void testMortgage(){
 		territory.mortgage(text);
 		
-		Object expected = true;
-		Object actual = territory.isMortgaged();
+		boolean expected = true;
+		boolean actual = territory.isMortgaged();
 		
-		Assert.assertEquals(expected, actual);
+		assertEquals(expected, actual);
 	}
 	
 }
