@@ -65,11 +65,12 @@ public class Controller {
 		}
 
 		for (int i = 0; i < players.length; i++) {
-			if (players[i].isAlive() && numPlayersAlive()>2) {
+			if (players[i].isAlive() && numPlayersAlive()>1) {
 				playerTurn(players[i]);
+			} else {
+				c.showMessage(text.getFormattedString("winner", players[i].getName()));
 			}
 		}
-
 	}
 
 	public void playerTurn(Player player) {
