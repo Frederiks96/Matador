@@ -14,7 +14,7 @@ import entity.fields.Territory;
 
 public class Controller {
 
-	private GUI_Commands c = new GUI_Commands(); 
+	private GUI_Commands gui = new GUI_Commands(); 
 	private GameBoard gameBoard;
 	private AbstractFields[] fields;
 	private String[] properties;
@@ -22,11 +22,19 @@ public class Controller {
 	private CardStack deck;
 	
 	public Controller() {
+		gameBoard = new GameBoard();
+	}
+	
+	public void run() {
+		boolean button = gui.getUserLeftButtonPressed(text.getString("loadGameQuestion"), "newGame", "loadGame");
+		if (button)
+			newGame();
+		else
+			loadGame();
 	}
 	
 	public void newGame() {
-		text = new Texts(language.Dansk);
-		gameBoard = new GameBoard();
+		getLanguage();
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
 		CardStack deck = new CardStack(text);
@@ -34,11 +42,8 @@ public class Controller {
 	}
 	
 	public void loadGame() {
+		getLanguage();
 		
-	}
-
-	public void run() {
-
 	}
 
 	public void playerTurn(Player player) {
@@ -46,7 +51,7 @@ public class Controller {
 		if (fields[player.getPosition()] instanceof CardField) {
 			deck.draw(player);
 		}
-		c.closeGUI();
+		gui.closeGUI();
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
@@ -76,7 +81,7 @@ public class Controller {
 	
 	public String[] getOwnedProperties(Player player) {
 		fields = gameBoard.getFields();
-		String[] properties = new String[28];
+		properties = new String[28];
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Brewery) {
@@ -111,6 +116,15 @@ public class Controller {
 	
 	public AbstractFields[] getFields() {
 		return this.fields;
+	}
+	
+	private void getLanguage() {
+		String lang = gui.getUserSelection("Choose your preferred language", "Dansk", "English");
+		if (lang.equals("Dansk")) {
+			text = new Texts(language.Dansk);
+		} else {
+			text = new Texts(language.English);	
+		}
 	}
 
 }

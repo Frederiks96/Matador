@@ -40,7 +40,7 @@ public class Territory extends AbstractFields implements Ownable {
 			// der er ingen der ejer feltet
 			String s = myGUI.getUserSelection(text.getFormattedString("buy", this.price), text.getString("Yes"), text.getString("No"));
 			if (s.equals(text.getString("Yes"))) {
-				buyProperty(player);
+				buyProperty(player, text);
 			}
 		}
 	
@@ -67,7 +67,7 @@ public class Territory extends AbstractFields implements Ownable {
 	private void buyHouse(Texts text){ 
 		if(owner.getAccount().legalTransaction(-housePrice) && houseCount < 4 && !isMortgaged){
 			owner.updateBalance(-housePrice);
-			myGUI.setHouse(fieldID, houseCount+1);
+			myGUI.setHouse(id, houseCount+1);
 			this.houseCount++;
 		}		
 		else if (isMortgaged)
@@ -83,7 +83,7 @@ public class Territory extends AbstractFields implements Ownable {
 	private void buyHotel(Texts text){	// has hotel betyder om der skal sættes eller fjernes hotel
 		if(owner.getAccount().legalTransaction(-housePrice) && houseCount == 4 && !isMortgaged){
 			owner.updateBalance(-housePrice);
-			myGUI.setHotel(fieldID, true);
+			myGUI.setHotel(id, true);
 			this.houseCount++;
 		}
 		else if (isMortgaged)
@@ -99,7 +99,7 @@ public class Territory extends AbstractFields implements Ownable {
 	private void sellHouse(){
 		if(houseCount>1){
 			owner.updateBalance(housePrice/2);
-			myGUI.setHouse(fieldID, houseCount-1);
+			myGUI.setHouse(id, houseCount-1);
 			this.houseCount--;
 		}
 
@@ -108,18 +108,18 @@ public class Territory extends AbstractFields implements Ownable {
 	private void sellHotel(){
 		if(houseCount == 5){
 			owner.updateBalance(housePrice/2);
-			myGUI.setHotel(fieldID, false);
+			myGUI.setHotel(id, false);
 			this.houseCount--;
-			myGUI.setHouse(fieldID, houseCount);
+			myGUI.setHouse(id, houseCount);
 		}
 	}
 
 	@Override
-	public void buyProperty(Player player){
+	public void buyProperty(Player player, Texts text){
 		if (player.getAccount().legalTransaction(-this.price)){
 			player.updateBalance(-this.price);
 			this.owner = player;
-			myGUI.setOwner(this.fieldID, player.getName());
+			myGUI.setOwner(this.id, player.getName());
 		}	
 	}
 

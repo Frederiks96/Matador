@@ -27,7 +27,7 @@ public class GameBoard {
 		logicFields = new AbstractFields[40];
 		for  (int i = 0; i < logicFields.length; i++){
 			if (i == 5 || i==15 || i==25 || i==35){
-				logicFields[i] = new Fleet(i, text);
+				logicFields[i] = new Fleet(i,null, text);
 			} else if (i == 4 || i == 38){
 				logicFields[i] = new Tax(i, text);
 			} else if (i == 0 || i == 10 || i == 20 || i == 30){ 
@@ -35,9 +35,28 @@ public class GameBoard {
 			} else if (i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 36){
 				logicFields[i] = new CardField(i,text);
 			} else if (i == 12 || i == 28){
-				logicFields[i] = new Brewery(i, text);
+				logicFields[i] = new Brewery(i,null, text);
 			} else {
-				logicFields[i] = new Territory(i, text);
+				logicFields[i] = new Territory(i,null, text);
+			}
+		}
+	}
+	
+	public void setupBoard(Texts text, String gameName) {
+		logicFields = new AbstractFields[40];
+		for  (int i = 0; i < logicFields.length; i++){
+			if (i == 5 || i==15 || i==25 || i==35){
+				logicFields[i] = new Fleet(i,null, text);
+			} else if (i == 4 || i == 38){
+				logicFields[i] = new Tax(i, text);
+			} else if (i == 0 || i == 10 || i == 20 || i == 30){ 
+				logicFields[i] = new Refuge(i, text);
+			} else if (i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 36){
+				logicFields[i] = new CardField(i,text);
+			} else if (i == 12 || i == 28){
+				logicFields[i] = new Brewery(i,null, text);
+			} else {
+				logicFields[i] = new Territory(i,null, text);
 			}
 		}
 	}
