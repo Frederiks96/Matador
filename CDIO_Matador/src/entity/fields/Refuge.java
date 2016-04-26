@@ -22,8 +22,6 @@ public class Refuge extends AbstractFields {
 		} else if (player.getPosition() == 30) {
 			player.imprison();
 			 // Skriv til spilleren, at han er fængslet
-		} else {
-			// Prøv lykken
 		}
 	}
 	
