@@ -1,12 +1,14 @@
 package controller;
 
 import boundary.GUI_Commands;
+import entity.CardStack;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
+import entity.fields.CardField;
 import entity.fields.Fleet;
 import entity.fields.Territory;
 
@@ -17,12 +19,14 @@ public class Controller {
 	private AbstractFields[] fields;
 	private String[] properties;
 	private Texts text;
+	private CardStack deck;
 	
 	public Controller() {
 		text = new Texts(language.Dansk);
 		gameBoard = new GameBoard();
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
+		CardStack deck = new CardStack(text);
 	}
 	
 
@@ -31,6 +35,10 @@ public class Controller {
 	}
 
 	public void playerTurn(Player player) {
+		// Opdatere spillerens position før landOnField kaldes
+		if (fields[player.getPosition()] instanceof CardField) {
+			deck.draw(player);
+		}
 		c.closeGUI();
 	}
 
