@@ -28,7 +28,6 @@ public class TestGetProperties {
 		Texts text = new Texts(language.Dansk);
 		Controller con = new Controller();
 		Player player = new Player("John","Yellow","Ufo");
-		con.getOwnedProperties(player);
 		String[] aha = new String[28];
 		aha[0] = "Rødovrevej";
 		AbstractFields[] fields = con.getFields();

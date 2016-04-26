@@ -60,6 +60,8 @@ public class Controller {
 	}
 	
 	public String[] getOwnedProperties(Player player) {
+		fields = gameBoard.getFields();
+		String[] properties = new String[28];
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Brewery) {
