@@ -15,14 +15,6 @@ public class GameBoard {
 	private AbstractFields[] logicFields;
 
 
-	public AbstractFields getLogicField(int i) {
-		return logicFields[i];
-	}
-
-	public AbstractFields[] getFields() {
-		return this.logicFields;
-	}
-
 	public void setupBoard(Texts text) {
 		logicFields = new AbstractFields[40];
 		for  (int i = 0; i < logicFields.length; i++){
@@ -61,7 +53,12 @@ public class GameBoard {
 		}
 	}
 
-	public int getHotel(){
+	public void countCountBuildings(){
+		
+	}
+	
+	
+	public int getHotelCount(){
 		return hotelCount;
 	}
 
@@ -77,6 +74,16 @@ public class GameBoard {
 		houseCount++;
 	}
 
+	public AbstractFields getLogicField(int i) {
+		return logicFields[i];
+	}
+
+	public AbstractFields[] getFields() {
+		return this.logicFields;
+	}
+
+
+	
 }
 
 //public Territory(int id, String colour, int price, int baseRent,
