@@ -20,20 +20,28 @@ public class Controller {
 	private String[] properties;
 	private Texts text;
 	private CardStack deck;
-	
+	private Player[] players;
+	private String name;
+
 	public Controller() {
 		gameBoard = new GameBoard();
 	}
-	
+
 	public void startNewGame() {
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
 		CardStack deck = new CardStack(text);
 		deck.shuffle();
+		int numOfPlayers = 0;
+		do {
+			numOfPlayers = c.getUserInteger(text.getString("numOfPlayers"));
+		} while (numOfPlayers < 2 && numOfPlayers > 6);
+		players = new Player[numOfPlayers];
+
 	}
-	
+
 	public void loadGame() {
-		
+
 	}
 
 	public void run() {
@@ -43,6 +51,13 @@ public class Controller {
 		} else {
 			loadGame();
 		}
+
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].isAlive() && numPlayersAlive()>2) {
+				playerTurn(players[i]);
+			}
+		}
+
 	}
 
 	public void playerTurn(Player player) {
@@ -77,7 +92,7 @@ public class Controller {
 	private void arrested(){
 		// TODO
 	}
-	
+
 	public String[] getOwnedProperties(Player player) {
 		fields = gameBoard.getFields();
 		properties = new String[28];
@@ -85,38 +100,38 @@ public class Controller {
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Brewery) {
 				if (((Brewery) (fields[i])).getOwner().equals(player)) {
-					 properties[j] = fields[i].getName();
-					 j++;
+					properties[j] = fields[i].getName();
+					j++;
 				}
 			}
-			
+
 			if (fields[i] instanceof Fleet) {
 				if (((Fleet) (fields[i])).getOwner().equals(player)) {
 					if (fields[i] instanceof Fleet) {
-						 properties[j] = fields[i].getName();
-						 j++;
+						properties[j] = fields[i].getName();
+						j++;
 					}
 				}
 			}
-			
+
 			if (fields[i] instanceof Territory) {
 				if (((Territory) (fields[i])).getOwner().equals(player)) {
 
 					if (fields[i] instanceof Territory) {
-						 properties[j] = fields[i].getName();
-						 j++;
+						properties[j] = fields[i].getName();
+						j++;
 					}
 				}
 			}
 		}
-		
+
 		return properties;
 	}
-	
+
 	public AbstractFields[] getFields() {
 		return this.fields;
 	}
-	
+
 	private void getLanguage() {
 		String lang = c.getUserSelection("Choose your preferred language", "Dansk", "English");
 		if (lang.equals("Dansk")) {
@@ -125,9 +140,28 @@ public class Controller {
 			text = new Texts(language.English);	
 		}
 	}
-	
+
 	private boolean newGame() {
 		return c.getUserLeftButtonPressed("", "", "");
+	}
+
+	public boolean isValidName(String name) {
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].getName().equals(name)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public int numPlayersAlive() {
+		int num = 0;
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].isAlive()) {
+				num++;
+			}
+		}
+		return num;
 	}
 
 }
