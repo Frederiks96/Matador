@@ -26,7 +26,6 @@ public class Controller {
 	private String name;
 
 	public Controller() {
-		gameBoard = new GameBoard();
 	}
 
 	public void startNewGame() throws SQLException {
@@ -58,6 +57,7 @@ public class Controller {
 
 	public void run() throws SQLException {
 		getLanguage();
+		gameBoard = new GameBoard();
 		if (newGame()) {
 			startNewGame();
 		} else {
@@ -97,13 +97,6 @@ public class Controller {
 			return j==2;
 		}
 		return j==3;
-	}
-
-	private void playerStateMachine(){
-		// TODO
-	}
-	private void arrested(){
-		// TODO
 	}
 
 	public String[] getOwnedProperties(Player player) {
