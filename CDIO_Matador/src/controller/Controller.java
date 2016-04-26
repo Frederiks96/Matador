@@ -14,7 +14,7 @@ import entity.fields.Territory;
 
 public class Controller {
 
-	private GUI_Commands c = new GUI_Commands(); 
+	private GUI_Commands gui = new GUI_Commands(); 
 	private GameBoard gameBoard;
 	private AbstractFields[] fields;
 	private String[] properties;
@@ -23,6 +23,14 @@ public class Controller {
 	
 	public Controller() {
 		gameBoard = new GameBoard();
+	}
+	
+	public void run() {
+		boolean button = gui.getUserLeftButtonPressed(text.getString("loadGameQuestion"), "newGame", "loadGame");
+		if (button)
+			newGame();
+		else
+			loadGame();
 	}
 	
 	public void newGame() {
@@ -38,16 +46,12 @@ public class Controller {
 		
 	}
 
-	public void run() {
-
-	}
-
 	public void playerTurn(Player player) {
 		// Opdatere spillerens position før landOnField kaldes
 		if (fields[player.getPosition()] instanceof CardField) {
 			deck.draw(player);
 		}
-		c.closeGUI();
+		gui.closeGUI();
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
@@ -115,7 +119,7 @@ public class Controller {
 	}
 	
 	private void getLanguage() {
-		String lang = c.getUserSelection("Choose your preferred language", "Dansk", "English");
+		String lang = gui.getUserSelection("Choose your preferred language", "Dansk", "English");
 		if (lang.equals("Dansk")) {
 			text = new Texts(language.Dansk);
 		} else {
