@@ -91,5 +91,9 @@ public class Controller {
 		
 		return properties;
 	}
+	
+	public AbstractFields[] getFields() {
+		return this.fields;
+	}
 
 }

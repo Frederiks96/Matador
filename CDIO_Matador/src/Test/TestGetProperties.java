@@ -11,7 +11,7 @@ import controller.Controller;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
-import entity.fields.Territory;
+import entity.fields.AbstractFields;
 
 public class TestGetProperties {
 
@@ -25,12 +25,15 @@ public class TestGetProperties {
 
 	@Test
 	public void test() throws SQLException {
+		Texts text = new Texts(language.Dansk);
 		Controller con = new Controller();
 		Player player = new Player("John","Yellow","Ufo");
 		con.getOwnedProperties(player);
 		String[] aha = new String[28];
-		aha[0] = ": Rødovrevej";
-		//assertEquals(con.getOwnedProperties(player)[0],aha[0]);
+		aha[0] = "Rødovrevej";
+		AbstractFields[] fields = con.getFields();
+		fields[1].landOnField(player, text);
+		assertEquals(con.getOwnedProperties(player)[0],aha[0]);
 	}
 
 }
