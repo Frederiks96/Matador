@@ -36,10 +36,17 @@ public class TerritoryTest {
 		Player actual = territory.getOwner();
 		
 		assertEquals(expected, actual);
-	}
+		
+		int expectedBalance = 30000 - territory.getRent();
+		int actualBalance = player1.getBalance();
+		
+		assertEquals(expectedBalance, actualBalance);
+		}
 	
 	@Test
 	public void testMortgage(){
+		
+		territory.setOwner(player1);
 		territory.mortgage(text);
 		
 		boolean expected = true;
