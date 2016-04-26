@@ -18,7 +18,7 @@ public class Territory extends AbstractFields implements Ownable {
 	private boolean isMortgaged;
 	private String name;
 
-	public Territory(int id, Texts text){
+	public Territory(int id, Player owner, Texts text){
 		super(id);
 		this.owner = null;
 		this.houseCount = 0;
@@ -159,5 +159,4 @@ public class Territory extends AbstractFields implements Ownable {
 	public boolean isMortgaged() {
 		return this.isMortgaged;
 	}
-
 }
