@@ -3,10 +3,13 @@ package entity;
 public class Account {
 	
 	private int balance;
+	private int accountID;
+
 	
 	
-	public Account() {
+	public Account(int player_id) {
 		this.balance = 30000;
+		this.accountID = player_id*111;
 	}
 	
 	public int getBalance() {
@@ -23,6 +26,10 @@ public class Account {
 	
 	public boolean legalTransaction(int d) {
 		return this.balance+d>=0;
+	}
+	
+	public int getAccountID() {
+		return this.accountID;
 	}
 
 }
