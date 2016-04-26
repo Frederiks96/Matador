@@ -40,7 +40,7 @@ public class SQL implements DAO, DTO {
 	}
 
 	public int getJailTime() throws SQLException{
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
@@ -81,14 +81,14 @@ public class SQL implements DAO, DTO {
 		return rs.getBoolean(1);
 	}
 
-	public int getVehicleID() throws SQLException{
+	public int getVehicleID(Player player) throws SQLException{
 		Statement stmt = myCon.createStatement();
-
-		return 0;
+		ResultSet rs = stmt.executeQuery("Select vehicle_id from Player where player_id = '" + player.getPlayerID()+"'");
+		rs.next();
+		return rs.getInt(1);
 	}
 
 	public String getVehicleColour()throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

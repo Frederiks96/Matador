@@ -16,9 +16,9 @@ public interface DAO {
 	int getCardPosition()throws SQLException;
 	int getFieldId()throws SQLException;
 	int getFieldHouseCount(Territory territory)throws SQLException;
-	boolean hasHotel()throws SQLException;
-	boolean isMortgaged()throws SQLException;
-	int getVehicleID()throws SQLException;
+	boolean hasHotel(Territory territory)throws SQLException;
+	boolean isMortgaged(Territory territory)throws SQLException;
+	int getVehicleID(Player player)throws SQLException;
 	String getVehicleColour()throws SQLException;
 	String getVehicleType()throws SQLException;
 	int getAccountId()throws SQLException;
