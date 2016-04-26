@@ -12,53 +12,48 @@ import entity.fields.Territory;
 import boundary.SQL;
 
 public class SQLTest {
-	
+
 	Player player;
 	Territory territory;
-	
+	SQL sql;
+
 	@Before
 	public void setUp(Texts text) throws Exception {
-			player = new Player("Mads","green","ufo");
-			territory = new Territory(1,null,text);
+		player = new Player("Mads","green","ufo");
+		territory = new Territory(1,null,text);
+		sql = new SQL();
 	}
 
-			
+
 	@Test 
 	public void getBalancetest() {
-		
-		player.updateBalance(-5000);
-			
 		try {
-			SQL sql = new SQL();
-			sql.setBalance(player.getBalance());
-			sql.getBalance(player);
+			player.updateBalance(-5000);
+			sql.setBalance(player);
+			
+			int expected = player.getBalance();
+			int actual = sql.getBalance(player);
+			
+			assertEquals(expected, actual);
+			
 		} catch (SQLException e) {
-			
-			int actual = 10;
-			
 			e.printStackTrace();
-			
 		}
-		
-		expected = player.getBalance();
-		
-		assertEquals(expected,10);
-		
 	}
-	
-	
-	@Test //House-count Test
-	
-	public void houseCountTest(){
-		int a = 0;
-		try{
-			SQL sql = new SQL();
-			
-			
-			//public Territory(int id, Player owner, Texts text)
-		}
-		
-	}
-	
 
 }
+//	@Test //House-count Test
+//
+//	public void houseCountTest(){
+//		int a = 0;
+//		try{
+//			SQL sql = new SQL();
+//
+//
+//			//public Territory(int id, Player owner, Texts text)
+//		}
+//
+//	}
+//
+//
+//}
