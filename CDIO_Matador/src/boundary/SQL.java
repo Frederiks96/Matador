@@ -15,7 +15,7 @@ public class SQL implements DAO, DTO {
 	private Connection myCon;
 
 	public SQL() throws SQLException {
-//		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/Matador","root","");
+		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/Matador","root","");
 	}
 
 
@@ -28,9 +28,11 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public int getBalance()throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getBalance(Player player)throws SQLException {
+		Statement stmt = myCon.createStatement(); 
+		ResultSet rs = stmt.executeQuery("Select balance from bank where account_id = '" + player.getAccountID()+"'");
+		rs.next();
+		return rs.getInt(1);
 	}
 
 	public int getJailTime() throws SQLException{

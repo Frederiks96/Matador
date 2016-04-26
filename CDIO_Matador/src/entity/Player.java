@@ -41,7 +41,7 @@ public class Player {
 		this.vColor = vColor;
 		this.vType = vType;
 		this.isAlive=true;
-		this.account = new Account();
+		this.account = new Account(player_id);
 		this.cards = new ArrayList<ChanceCard>();
 
 		//sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,getBalance(),vID,vColor,vType);
@@ -87,6 +87,10 @@ public class Player {
 		return this.position;
 	}
 
+	public int getAccountID(){
+		return account.getAccountID();
+	}
+	
 	public void setPosition(int position) {
 		if (position>0 && position<40) {
 			if (position != 10) {
