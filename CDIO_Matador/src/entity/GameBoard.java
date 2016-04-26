@@ -1,8 +1,8 @@
 package entity;
 
-import entity.Texts;
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
+import entity.fields.CardField;
 import entity.fields.Fleet;
 import entity.fields.Refuge;
 import entity.fields.Tax;
@@ -26,22 +26,19 @@ public class GameBoard {
 	public void setupBoard(Texts text) {
 		logicFields = new AbstractFields[40];
 		for  (int i = 0; i < logicFields.length; i++){
-
 			if (i == 5 || i==15 || i==25 || i==35){
 				logicFields[i] = new Fleet(i, text);
 			} else if (i == 4 || i == 38){
 				logicFields[i] = new Tax(i, text);
-			} else if (i == 0 || i == 2 || i == 7 || i == 10 || i == 17 || i == 20 || i == 22 || i == 30 || i == 33 || i == 36){ 
+			} else if (i == 0 || i == 10 || i == 20 || i == 30){ 
 				logicFields[i] = new Refuge(i, text);
+			} else if (i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 36){
+				logicFields[i] = new CardField(i,text);
 			} else if (i == 12 || i == 28){
 				logicFields[i] = new Brewery(i, text);
 			} else {
 				logicFields[i] = new Territory(i, text);
-				
-				
 			}
-
-
 		}
 	}
 

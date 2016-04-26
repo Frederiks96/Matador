@@ -13,21 +13,15 @@ public class Refuge extends AbstractFields {
 
 	@Override
 	public void landOnField(Player player, Texts text) {
-		if (player.getPosition() == 30) {
+		if (player.getPosition() == 0) {
+			// Spilleren er landet på start - spilleren får penge, allerede i update position, så den skal vi ikke røre ved her
+		} else if (player.getPosition() == 10) {
+			// På besøg i fængsel
+		} else if (player.getPosition() == 20) {
+			// Fri parkering
+		} else if (player.getPosition() == 30) {
 			player.imprison();
-			
-			/* 
-			 *  Skriv til spilleren, at han er fængslet
-			 */
-			
-		}
-		
-		else {
-			
-			/* 
-			 *  Skriv noget til spilleren
-			 */
-			
+			 // Skriv til spilleren, at han er fængslet
 		}
 	}
 	

@@ -5,10 +5,10 @@ import entity.Texts;
 
 public abstract class AbstractFields {
 	
-	protected int fieldID;
+	protected int id;
 	
 	public AbstractFields(int fieldID) {
-		this.fieldID = fieldID;
+		this.id = fieldID;
 	}
 	
 	abstract public void landOnField(Player player, Texts text);

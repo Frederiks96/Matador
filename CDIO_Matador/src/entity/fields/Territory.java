@@ -11,7 +11,6 @@ public class Territory extends AbstractFields implements Ownable {
 
 	private Player owner;
 	private int houseCount;
-	private boolean hasHotel; 
 	private String colour;
 	private int[] rent = new int[6];
 	private int price;
@@ -19,13 +18,12 @@ public class Territory extends AbstractFields implements Ownable {
 	private boolean isMortgaged;
 	private String name;
 
-	public Territory(int id, Texts text){
+	public Territory(int id, Player owner, Texts text){
 		super(id);
 		this.owner = null;
 		this.houseCount = 0;
 		this.colour = (String) text.getInfo(id+"_color");
 		this.isMortgaged = false;
-		this.hasHotel = false;
 		this.name = (String) text.getInfo(id+"_name");
 
 		this.price = (int) text.getInfo(id+"_price");
@@ -66,25 +64,41 @@ public class Territory extends AbstractFields implements Ownable {
 		return this.owner != null;
 	}
 
-	private void buyHouse(){	// housecount betyer hvor mange huse der skal stå på grunden
+	private void buyHouse(Texts text){ 
 		if(owner.getAccount().legalTransaction(-housePrice) && houseCount < 4 && !isMortgaged){
-			myGUI.showMessage(owner.updateBalance(-housePrice));
+			owner.updateBalance(-housePrice);
 			myGUI.setHouse(fieldID, houseCount+1);
 			this.houseCount++;
-		}
+		}		
+		else if (isMortgaged)
+			myGUI.showMessage("failedMortgage");
+		
+		else if(houseCount == 4)
+			myGUI.showMessage(text.getString("houseOverLoad"));
+		
+		else if(!owner.getAccount().legalTransaction(-housePrice))
+			myGUI.showMessage(text.getString("faildTransaction"));
 	}
-
-	private void buyHotel(){	// has hotel betyder om der skal sættes eller fjernes hotel
+	
+	private void buyHotel(Texts text){	// has hotel betyder om der skal sættes eller fjernes hotel
 		if(owner.getAccount().legalTransaction(-housePrice) && houseCount == 4 && !isMortgaged){
-			myGUI.showMessage(owner.updateBalance(-housePrice));
+			owner.updateBalance(-housePrice);
 			myGUI.setHotel(fieldID, true);
-			this.hasHotel = true;
+			this.houseCount++;
 		}
+		else if (isMortgaged)
+			myGUI.showMessage(text.getString("failedMortgage"));
+		
+		else if(houseCount < 4)
+			myGUI.showMessage(text.getString("needMoreHouse"));
+		
+		else if(!owner.getAccount().legalTransaction(-housePrice))
+			myGUI.showMessage(text.getString("faildTransaction"));	
 	}
 
 	private void sellHouse(){
 		if(houseCount>1){
-			myGUI.showMessage(owner.updateBalance(housePrice/2));
+			owner.updateBalance(housePrice/2);
 			myGUI.setHouse(fieldID, houseCount-1);
 			this.houseCount--;
 		}
@@ -93,7 +107,7 @@ public class Territory extends AbstractFields implements Ownable {
 
 	private void sellHotel(){
 		if(houseCount == 5){
-			myGUI.showMessage(owner.updateBalance(housePrice/2));
+			owner.updateBalance(housePrice/2);
 			myGUI.setHotel(fieldID, false);
 			this.houseCount--;
 			myGUI.setHouse(fieldID, houseCount);
@@ -103,7 +117,7 @@ public class Territory extends AbstractFields implements Ownable {
 	@Override
 	public void buyProperty(Player player){
 		if (player.getAccount().legalTransaction(-this.price)){
-			myGUI.showMessage(player.updateBalance(-this.price));
+			player.updateBalance(-this.price);
 			this.owner = player;
 			myGUI.setOwner(this.fieldID, player.getName());
 		}	
@@ -136,11 +150,7 @@ public class Territory extends AbstractFields implements Ownable {
 	public String getColour(){
 		return colour;
 	}
-	
-	public boolean hasHotel() {
-		return this.hasHotel;
-	}
-	
+		
 	@Override
 	public String getName() {
 		return this.name;
@@ -149,5 +159,4 @@ public class Territory extends AbstractFields implements Ownable {
 	public boolean isMortgaged() {
 		return this.isMortgaged;
 	}
-
 }

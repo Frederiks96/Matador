@@ -14,12 +14,12 @@ public class Brewery extends AbstractFields implements Ownable {
 	private boolean isMortgaged;
 	private String name;
 	
-	public Brewery(int id, Texts text) {
+	public Brewery(int id, Player owner, Texts text) {
 		super(id);
 		this.owner = null;
 		this.isMortgaged = false;
 		this.price = 3000;
-		this.name = (String) text.getInfo(fieldID+"_name");
+		this.name = (String) text.getInfo(id+"_name");
 	}
 
 	public Player getOwner() {
@@ -39,12 +39,14 @@ public class Brewery extends AbstractFields implements Ownable {
 		return this.owner.equals(null);
 	}
 	
-	public void buyProperty(Player player) {
-		myGUI.showMessage(player.updateBalance(-this.price));
-		if(player.getAccount().legalTransaction(-this.price)){
-			myGUI.setOwner(this.fieldID, player.getName());
+	public void buyProperty(Player player, Texts text) {
+		if(player.getAccount().legalTransaction(-price)){
+			player.updateBalance(-price);
+			myGUI.setOwner(this.id, player.getName());
 			setOwner(player);
 		}
+		else
+			myGUI.showMessage(text.getString("failedTransaction"));
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class Brewery extends AbstractFields implements Ownable {
 			String s = myGUI.getUserSelection(text.getFormattedString("buy", this.price), 
 											  text.getString("Yes"), text.getString("No"));					  						
 			if (s.equals(text.getString("Yes"))) {
-				buyProperty(player);
+				buyProperty(player, text);
 			}
 		}
 	
