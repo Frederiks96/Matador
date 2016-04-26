@@ -37,8 +37,13 @@ public class TerritoryTest {
 	}
 	
 	@Test
-	public void testMortgage(){
+	public void testMortgage(Texts text){
+		territory.mortgage(text);
 		
+		Object expected = true;
+		Object actual = territory.isMortgaged();
+		
+		Assert.assertEquals(expected, actual);
 	}
 	
 }
