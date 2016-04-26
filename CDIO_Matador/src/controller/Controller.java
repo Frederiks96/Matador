@@ -28,33 +28,6 @@ public class Controller {
 	public Controller() {
 	}
 
-	public void startNewGame() throws SQLException {
-		gameBoard.setupBoard(text);
-		fields = gameBoard.getFields();
-		CardStack deck = new CardStack(text);
-		deck.shuffle();
-		int numOfPlayers = 0;
-		do {
-			numOfPlayers = c.getUserInteger(text.getString("numOfPlayers"));
-		} while (numOfPlayers < 2 && numOfPlayers > 6);
-		players = new Player[numOfPlayers];
-		
-		for (int i = 1; i < players.length+1; i++) {
-			name = c.getUserString(text.getFormattedString("yourName", i));
-			if (isValidName(name)) {
-				players[i-1] = new Player(name, "","");
-			} else {
-				c.showMessage(text.getString("nameTaken"));
-				i--;
-			}
-		}
-
-	}
-
-	public void loadGame() {
-
-	}
-
 	public void run() throws SQLException {
 		getLanguage();
 		gameBoard = new GameBoard();
@@ -71,6 +44,19 @@ public class Controller {
 				c.showMessage(text.getFormattedString("winner", players[i].getName()));
 			}
 		}
+	}
+
+	public void startNewGame() throws SQLException {
+		gameBoard.setupBoard(text);
+		fields = gameBoard.getFields();
+		CardStack deck = new CardStack(text);
+		deck.shuffle();
+		addPlayers();
+	}
+
+	public void loadGame() {
+		gameBoard.setupBoard(text, "");
+		loadPlayers();
 	}
 
 	public void playerTurn(Player player) {
@@ -170,6 +156,28 @@ public class Controller {
 			}
 		}
 		return num;
+	}
+	
+	private void addPlayers() throws SQLException {
+		int numOfPlayers = 0;
+		do {
+			numOfPlayers = c.getUserInteger(text.getString("numOfPlayers"));
+		} while (numOfPlayers < 2 && numOfPlayers > 6);
+		players = new Player[numOfPlayers];
+		int i = 0;
+		do {
+			name = c.getUserString(text.getFormattedString("yourName", i+1));
+			if (isValidName(name)) {
+				players[i] = new Player(name,"","");
+				i++;
+			} else {
+				c.showMessage(text.getString("nameTaken"));
+			}
+		} while(i<players.length);
+	}
+	
+	private void loadPlayers() {
+		
 	}
 
 }
