@@ -22,13 +22,20 @@ public class Controller {
 	private CardStack deck;
 	
 	public Controller() {
+	}
+	
+	public void newGame() {
 		text = new Texts(language.Dansk);
 		gameBoard = new GameBoard();
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
 		CardStack deck = new CardStack(text);
+		deck.shuffle();
 	}
 	
+	public void loadGame() {
+		
+	}
 
 	public void run() {
 
