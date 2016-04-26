@@ -113,7 +113,7 @@ public class Player {
 		return account.getBalance();
 	}
 
-	public String updateBalance(int d) { 
+	public Boolean updateBalance(int d) { 
 		return account.updateBalance(d);
 	}
 
