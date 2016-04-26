@@ -18,9 +18,8 @@ public class SQLTest {
 	SQL sql;
 
 	@Before
-	public void setUp(Texts text) throws Exception {
+	public void setUp() throws Exception {
 		player = new Player("Mads","green","ufo");
-		territory = new Territory(1,null,text);
 		sql = new SQL();
 	}
 

@@ -1,5 +1,8 @@
 package boundary;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -64,18 +67,23 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public boolean hasHotel() throws SQLException{
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasHotel(Territory territory) throws SQLException{
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("Select hotel from Property where field_id = '" +territory.getFieldId()+"'");
+		rs.next();
+		return rs.getBoolean(1);
 	}
 
-	public boolean isMortgaged()throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isMortgaged(Territory territory)throws SQLException {
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("Select mortgage from Property where field_id = '" + territory.getFieldId()+"'");
+		rs.next();
+		return rs.getBoolean(1);
 	}
 
 	public int getVehicleID() throws SQLException{
-		// TODO Auto-generated method stub
+		Statement stmt = myCon.createStatement();
+
 		return 0;
 	}
 
@@ -183,7 +191,20 @@ public class SQL implements DAO, DTO {
 	}
 
 
-	
-		
-	
+	public void createNewDB(String dbName) throws IOException,SQLException {
+		Statement stmt = myCon.createStatement();
+		BufferedReader in = new BufferedReader(new FileReader("newDB.sql"));
+		String str;
+		StringBuffer sb = new StringBuffer();
+		sb.append("create database "+dbName+";");
+		while ((str = in.readLine()) != null) {
+			sb.append(str + "\n ");
+		}
+		in.close();
+		stmt.executeUpdate(sb.toString());
+	}
+
+
+
+
 }
