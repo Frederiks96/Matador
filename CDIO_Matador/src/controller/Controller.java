@@ -22,11 +22,11 @@ public class Controller {
 	private CardStack deck;
 	
 	public Controller() {
+		gameBoard = new GameBoard();
 	}
 	
 	public void newGame() {
 		getLanguage();
-		gameBoard = new GameBoard();
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
 		CardStack deck = new CardStack(text);
