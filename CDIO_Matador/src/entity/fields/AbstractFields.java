@@ -7,8 +7,8 @@ public abstract class AbstractFields {
 	
 	protected int id;
 	
-	public AbstractFields(int fieldID) {
-		this.id = fieldID;
+	public AbstractFields(int id) {
+		this.id = id;
 	}
 	
 	abstract public void landOnField(Player player, Texts text);
