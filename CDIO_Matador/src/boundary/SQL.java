@@ -36,6 +36,11 @@ public class SQL implements DAO, DTO {
 		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/" +gameName ,username,password);
 	}
 	
+	public void useDB(String dbName) throws SQLException{
+		Statement stmt = myCon.createStatement(); 
+		stmt.executeQuery(" USE "+ dbName);
+	}
+	
 //-------------------------------------
 //    >>>>  Data access objects  <<<< 
 //-------------------------------------
@@ -126,19 +131,18 @@ public class SQL implements DAO, DTO {
 // ----------------------------------
 	public void updatePosition(Player player) throws SQLException{
 		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("UPDATE player SET position =" + player.getPosition()+ "' WHERE ");
+		stmt.executeUpdate("UPDATE player SET position = " + player.getPosition()+ " WHERE player_id = " + player.getPlayerID());
 	}
 
 	public void setBalance(Player player)throws SQLException {
 		Statement stmt = myCon.createStatement(); 
-		stmt.executeUpdate("UPDATE bank SET balance =" +player.getBalance()+ " WHERE account_id="+player.getAccountID());		
+		stmt.executeUpdate("UPDATE bank SET balance = " + player.getBalance()+ " WHERE account_id = " + player.getAccountID());		
 
 	}
 
-	public void setJailTime()throws SQLException {
-		// TODO Auto-generated method stub
+	public void setJailTime(Player player)throws SQLException {
 		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
+		stmt.executeUpdate("UPDATE player SET jail_time = " + player.get);
 	}
 
 	public void setCardId() throws SQLException{
