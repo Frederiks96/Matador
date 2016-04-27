@@ -57,6 +57,9 @@ public class GameBoard {
 				sql = new SQL();
 				((Territory) (logicFields[i])).setHouseCount(sql.getFieldHouseCount(((Territory)logicFields[i])));
 			}
+			for (int j = 0; j < logicFields.length; j++) {
+				
+			}
 		}
 	}
 
