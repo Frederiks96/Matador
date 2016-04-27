@@ -132,7 +132,7 @@ public class SQL implements DAO, DTO {
 
 	public void setBalance(Player player)throws SQLException {
 		Statement stmt = myCon.createStatement(); 
-		stmt.executeQuery("update bank set balance ="+player.getBalance()+" where account_id="+player.getAccountID());		
+		stmt.executeUpdate("update bank set balance ="+player.getBalance()+" where account_id="+player.getAccountID());		
 
 	}
 
@@ -192,7 +192,7 @@ public class SQL implements DAO, DTO {
 		Statement stmt = myCon.createStatement(); 
 		createAccount(aId, balance);
 		createVehicle(vId, vColor, vType);
-		stmt.executeQuery("insert into player values(" +id+ ","+name+ ","+position+","
+		stmt.executeUpdate("insert into player values(" +id+ ","+vId+","+aId+",'"+name+ "',"+position+","
 				+ jailTime +"," +isActive+ ");" 
 				); 
 
@@ -200,13 +200,13 @@ public class SQL implements DAO, DTO {
 
 	public void createAccount(int aId, int balance) throws SQLException {
 		Statement stmt = myCon.createStatement();
-		stmt.executeQuery("insert into Bank values("+aId+","+balance+");");
+		stmt.executeUpdate("insert into Bank values("+aId+","+balance+");");
 
 	}
 
 	public void createVehicle(int vId, String vColor, String vType) throws SQLException {
 		Statement stmt = myCon.createStatement();
-		stmt.executeQuery("insert into Vehicle values("+vId+","+vColor+","+vType+");");
+		stmt.executeUpdate("insert into Vehicle values("+vId+",'+vColor+','+vType+');");
 	}
 
 
