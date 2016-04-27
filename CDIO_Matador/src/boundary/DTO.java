@@ -3,6 +3,8 @@ package boundary;
 import java.sql.SQLException;
 
 import entity.Player;
+import entity.fields.AbstractFields;
+import entity.fields.Territory;
 
 public interface DTO {
 	
@@ -12,18 +14,24 @@ public interface DTO {
 			int balance, int vId, String vColor, String vType) throws SQLException;
 	void createAccount(int aId, int balance) throws SQLException;
 	void createVehicle(int vId, String vColour, String vType) throws SQLException;
-	void updatePosition() throws SQLException;
+	
+	void updatePosition(Player player) throws SQLException;
 	void setBalance(Player player) throws SQLException;
-	void setJailTime() throws SQLException;
+	void setJailTime(Player player) throws SQLException;
+	void setVehicleID(Player player) throws SQLException; // Ikke nødvendig?
+	void setVehicleColour(Player player) throws SQLException;
+	void setVehicleType(Player player) throws SQLException;
+	void setAccountId(Player player) throws SQLException; // Ikke nødvendig?
+	
+	
 	void setCardId() throws SQLException; // Ikke nødvendig?
 	void setCardPosition() throws SQLException;
-	void setFieldId() throws SQLException; // Ikke nødvendig?
-	void setHouseCount() throws SQLException;
-	void buildHotel() throws SQLException;
-	void mortgage() throws SQLException;
-	void setVehicleID() throws SQLException; // Ikke nødvendig?
-	void setVehicleColour() throws SQLException;
-	void setVehicleType() throws SQLException;
-	void setAccountId() throws SQLException; // Ikke nødvendig?
+	
+	void setFieldId(AbstractFields field) throws SQLException; // Ikke nødvendig?
+	void setHouseCount(AbstractFields field) throws SQLException;
+	void buildHotel(Territory territory) throws SQLException;
+	void mortgage(AbstractFields field) throws SQLException;
+	
+	
 
 }

@@ -18,8 +18,8 @@ public class SQL implements DAO, DTO {
 	private String username = "root";
 	private String password = "";
 
-	public SQL() throws SQLException {
-		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/Matador",username,password);
+	public SQL(){
+		
 	}
 	
 	public void updateUser(String username, String password) {
@@ -32,6 +32,9 @@ public class SQL implements DAO, DTO {
 		return !myCon.isClosed();
 	}
 	
+	public void getConnection(String gameName) throws SQLException{
+		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/" +gameName ,username,password);
+	}
 	
 //-------------------------------------
 //    >>>>  Data access objects  <<<< 
@@ -91,7 +94,6 @@ public class SQL implements DAO, DTO {
 		rs.next();
 		return rs.getInt(1);
 	}
-
 	
 	@Override
 	public int getFieldHouseCount(Territory territory) throws SQLException{
@@ -122,65 +124,81 @@ public class SQL implements DAO, DTO {
 // ----------------------------------	
 //   >>> Data transfer objects <<<<
 // ----------------------------------
-	public void updatePosition() throws SQLException{
-		// TODO Auto-generated method stub
-
+	public void updatePosition(Player player) throws SQLException{
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("UPDATE player SET position =" + player.getPosition()+ "' WHERE ");
 	}
 
 	public void setBalance(Player player)throws SQLException {
 		Statement stmt = myCon.createStatement(); 
-		stmt.executeUpdate("update bank set balance ="+player.getBalance()+" where account_id="+player.getAccountID());		
+		stmt.executeUpdate("UPDATE bank SET balance =" +player.getBalance()+ " WHERE account_id="+player.getAccountID());		
 
 	}
 
 	public void setJailTime()throws SQLException {
 		// TODO Auto-generated method stub
-
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void setCardId() throws SQLException{
 		// TODO Auto-generated method stub
-
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void setCardPosition() throws SQLException{
 		// TODO Auto-generated method stub
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void setFieldId() throws SQLException{
 		// TODO Auto-generated method stub
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void setHouseCount() throws SQLException{
 		// TODO Auto-generated method stub
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void buildHotel()throws SQLException {
 		// TODO Auto-generated method stub
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void mortgage()throws SQLException {
 		// TODO Auto-generated method stub
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void setVehicleID() throws SQLException{
 		// TODO Auto-generated method stub
-
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void setVehicleColour() throws SQLException{
 		// TODO Auto-generated method stub
-
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void setVehicleType() throws SQLException{
 		// TODO Auto-generated method stub
-
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 	public void setAccountId() throws SQLException{
 		// TODO Auto-generated method stub
-
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
 	}
 
 
