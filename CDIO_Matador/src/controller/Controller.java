@@ -76,7 +76,6 @@ public class Controller {
 	}
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
-		gameBoard.setupBoard(text, gameName);
 		sql.getConnection(gameName);
 		try {
 			loadPlayers();
@@ -84,7 +83,7 @@ public class Controller {
 		} catch (SQLException s) {
 			// Spørg om brugernavn og adgangskode
 		}
-		
+		gameBoard.setupBoard(text, gameName);
 		
 	}
 
