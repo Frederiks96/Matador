@@ -217,4 +217,11 @@ public class Controller {
 		deck.loadCards(text);
 	}
 
+	private void loadGameBoard(){
+		// TODO
+		// sætter alle ejerne på brættet ud fra databasen
+		// sætter hvor mange 
+	}
+	
+	
 }
