@@ -79,19 +79,25 @@ public class SQL implements DAO, DTO {
 	}
 	
 	
-	public int getCardId()throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getCardId(int position)throws SQLException {
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT card_id FROM chanceCard WHERE position = '" + position + "'");
+		rs.next();
+		return rs.getInt(1);
 	}
 
-	public int getCardPosition() throws SQLException{
-		// TODO Auto-generated method stub
-		return 0;
+	public int getCardPosition(int cardID) throws SQLException{
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT position FROM chanceCard WHERE card_ID = '" + cardID + "'");
+		rs.next();
+		return rs.getInt(1);
 	}
 
 	public int getFieldId()throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("");
+		rs.next();
+		return rs.getInt(1);
 	}
 
 	@Override
