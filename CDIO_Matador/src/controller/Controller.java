@@ -77,7 +77,7 @@ public class Controller {
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		gameBoard.setupBoard(text, gameName);
-		
+		sql.getConnection(gameName);
 		try {
 			loadPlayers();
 			loadCards(text);

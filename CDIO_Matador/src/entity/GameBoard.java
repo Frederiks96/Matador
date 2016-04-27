@@ -2,6 +2,7 @@ package entity;
 
 import java.sql.SQLException;
 
+import boundary.SQL;
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
 import entity.fields.CardField;
@@ -16,6 +17,7 @@ public class GameBoard {
 	private int houseCount; 
 	private AbstractFields[] logicFields;
 	private CardStack deck;
+	private SQL sql;
 
 
 	public void setupBoard(Texts text) {
@@ -52,8 +54,12 @@ public class GameBoard {
 				logicFields[i] = new Brewery(i,null, text);
 			} else {
 				logicFields[i] = new Territory(i,null, text);
+				sql = new SQL();
+				(Territory)(logicFields[i])	   //sql.getFieldHouseCount(logicFields[i]);
 			}
 		}
+		
+		
 	}
 
 	public void countCountBuildings(){
