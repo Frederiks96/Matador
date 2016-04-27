@@ -23,12 +23,11 @@ public class Player {
 	private int accountID;
 	private int vID;
 	private int jailTime;
-	private SQL sql = new SQL();
 	private GUI_Commands myGUI = new GUI_Commands();
 	private Controller controller = new Controller();
 
 
-	public Player(String name, String vColor, String vType) throws SQLException {
+	public Player(String name, String vColor, String vType, SQL sql) throws SQLException {
 		numOfPlayers++;
 		this.name = name;
 		this.numFleetsOwned = 0;

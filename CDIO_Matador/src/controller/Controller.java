@@ -2,8 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
-import com.mysql.jdbc.Connection;
+import java.util.ArrayList;
 
 import boundary.GUI_Commands;
 import boundary.SQL;
@@ -18,7 +17,7 @@ import entity.fields.CardField;
 import entity.fields.Fleet;
 import entity.fields.Territory;
 
-public class Controller {
+public class Controller  {
 
 	private GUI_Commands c = new GUI_Commands(); 
 	private GameBoard gameBoard;
@@ -30,7 +29,8 @@ public class Controller {
 	private SQL sql;
 	private String gameName;
 
-	public Controller() {
+	public Controller() throws SQLException {
+		this.sql = new SQL();
 	}
 
 	public void run() throws SQLException {
@@ -40,7 +40,7 @@ public class Controller {
 		if (game.equals(text.getString("newGame"))) {
 			startNewGame();
 		} else {
-			loadGame(text, game);
+			loadGame(text, c.getUserSelection(text.getString("chooseGame"), sql.getActiveGames()));
 		}
 
 		for (int i = 0; i < players.length; i++) {
@@ -53,17 +53,15 @@ public class Controller {
 	}
 
 	public void startNewGame() throws SQLException {
-		sql = new SQL();
-
 		do {
 		gameName = c.getUserString(text.getString("nameGame"));
-		} while (!gameName.equals(null) && !gameName.trim().equals(""));
-		
-		sql.getConnection("Matador");
+		} while (gameName.equals(null) || gameName.trim().equals("") || dbNameUsed(gameName.trim()));
+
 		try {
 			sql.createNewDB(gameName);
 		} catch (IOException e) {
 			c.showMessage(text.getString("fileNotFound"));
+			c.closeGUI();
 		}
 		sql.useDB(gameName);
 		
@@ -76,14 +74,14 @@ public class Controller {
 	}
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
-		sql.getConnection(gameName);
+		sql.useDB(gameName);
 		try {
 			loadPlayers();
 			loadCards(text);
 		} catch (SQLException s) {
 			// Spørg om brugernavn og adgangskode
 		}
-		gameBoard.setupBoard(text, gameName);
+		gameBoard.setupBoard(text, gameName,players);
 		
 	}
 
@@ -162,7 +160,7 @@ public class Controller {
 	}
 
 	private String newGame() {
-		return c.getUserSelection("", "", "");
+		return c.getUserSelection(text.getString("loadGameQuestion"),text.getString("loadGame"),text.getString("newGame"));
 	}
 
 	public boolean isValidName(String name) {
@@ -196,7 +194,7 @@ public class Controller {
 		do {
 			String name = c.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
-				players[i] = new Player(name,"","");
+				players[i] = new Player(name,"","",sql);
 				i++;
 			} else {
 				c.showMessage(text.getString("nameTaken"));
@@ -205,9 +203,8 @@ public class Controller {
 	}
 
 	private void loadPlayers() throws SQLException {
-		SQL sql = new SQL();
 		for (int i = 0; i < players.length; i++) {
-			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
+			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1),sql);
 			sql.setBalance(players[i]);
 		}
 	}
@@ -222,5 +219,14 @@ public class Controller {
 		// sætter hvor mange 
 	}
 	
+	private boolean dbNameUsed(String dbName) throws SQLException {
+		String[] s = sql.getActiveGames();
+			for (int i = 0; i < s.length; i++) {
+				if (s[i].equals(dbName)) {
+					return true;
+				}
+			}
+		return false;
+	}
 	
 }
