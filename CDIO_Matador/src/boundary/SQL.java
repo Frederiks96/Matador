@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import controller.DAO;
-import controller.DTO;
 import entity.Player;
 import entity.fields.Territory;
 
@@ -102,13 +100,12 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public String getVehicleColour()throws SQLException {
+	public String getVehicleColour(int id)throws SQLException {
 		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("Select vehicle_id from Player where player_id = '" + player.getPlayerID()+"'");
-
 		
+		ResultSet rs = stmt.executeQuery("SELECT vehicle_id FROM Player WHERE player_id = '" + id +"'");
 		
-		return null;
+		return rs.getString(1);
 	}
 
 	public String getVehicleType() throws SQLException{
@@ -222,6 +219,7 @@ public class SQL implements DAO, DTO {
 		in.close();
 		stmt.executeUpdate(sb.toString());
 	}
+
 
 
 

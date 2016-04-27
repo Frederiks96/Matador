@@ -1,4 +1,4 @@
-package controller;
+package boundary;
 
 import java.sql.SQLException;
 
@@ -20,7 +20,7 @@ public interface DAO {
 	boolean hasHotel(Territory territory)throws SQLException;
 	boolean isMortgaged(Territory territory)throws SQLException;
 	int getVehicleID(Player player)throws SQLException;
-	String getVehicleColour()throws SQLException;
+	String getVehicleColour(int id)throws SQLException;
 	String getVehicleType()throws SQLException;
 	int getAccountId()throws SQLException;
 

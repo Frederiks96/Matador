@@ -1,4 +1,4 @@
-package controller;
+package boundary;
 
 import java.sql.SQLException;
 
