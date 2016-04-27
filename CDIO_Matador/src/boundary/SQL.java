@@ -78,7 +78,6 @@ public class SQL implements DAO, DTO {
 		return rs.getString(1);
 	}
 	
-	
 	public int getCardId(int position)throws SQLException {
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT card_id FROM chanceCard WHERE position = '" + position + "'");
@@ -93,31 +92,25 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public int getFieldId()throws SQLException {
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("");
-		rs.next();
-		return rs.getInt(1);
-	}
-
+	
 	@Override
 	public int getFieldHouseCount(Territory territory) throws SQLException{
 		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("Select house_count from Property where field_id = '" + territory.getFieldId()+"'");
+		ResultSet rs = stmt.executeQuery("SELECT house_count FROM Property WHERE field_id = '" + territory.getFieldId()+"'");
 		rs.next();
 		return rs.getInt(1);
 	}
 
 	public boolean hasHotel(Territory territory) throws SQLException{
 		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("Select hotel from Property where field_id = '" +territory.getFieldId()+"'");
+		ResultSet rs = stmt.executeQuery("SELCET hotel FROM Property WHERE field_id = '" +territory.getFieldId()+"'");
 		rs.next();
 		return rs.getBoolean(1);
 	}
 
 	public boolean isMortgaged(Territory territory)throws SQLException {
 		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("Select mortgage from Property where field_id = '" + territory.getFieldId()+"'");
+		ResultSet rs = stmt.executeQuery("SELECT mortgage FROM Property WHERE field_id = '" + territory.getFieldId()+"'");
 		rs.next();
 		return rs.getBoolean(1);
 	}
