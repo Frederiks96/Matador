@@ -25,8 +25,12 @@ public class SQL implements DAO, DTO {
 	public void updateUser(String username, String password) {
 		this.username = username;
 		this.password = password;
+		
 	}
 
+	public boolean establishedConnection()throws SQLException{
+		return !myCon.isClosed();
+	}
 	
 	
 //-------------------------------------
@@ -46,18 +50,34 @@ public class SQL implements DAO, DTO {
 		return rs.getString(1);
 	}
 
-	public int getBalance(Player player)throws SQLException {
+	public int getBalance(int playerID)throws SQLException {
 		Statement stmt = myCon.createStatement(); 
 		ResultSet rs = stmt.executeQuery("SELECT balance FROM bank WHERE account_id = '" + player.getAccountID()+"'");
 		rs.next();
 		return rs.getInt(1);
 	}
 
-	public int getJailTime() throws SQLException{
-		
+	public int getJailTime(int playerID) throws SQLException{
+		Statement stmt = myCon.createStatement(); 
+		ResultSet rs = stmt.executeQuery("SELECT balance FROM bank WHERE account_id = '" + player.getAccountID()+"'");
+		rs.next();
+		return rs.getInt(1);
 		return 0;
 	}
 
+	public String getVehicleColour(int playerID)throws SQLException {
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT vehicle_colour FROM player NATURAL JOIN vehicle WHERE player_id = '" +playerID+ "'");
+		return rs.getString(1);
+	}
+
+	public String getVehicleType(int playerID) throws SQLException{
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT vehicle_type FROM player NATURAL JOIN vehicel WHERE player_id = '" +playerID+ "'");
+		return rs.getString(1);
+	}
+	
+	
 	public int getCardId()throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
@@ -95,31 +115,7 @@ public class SQL implements DAO, DTO {
 		return rs.getBoolean(1);
 	}
 
-//	public int getVehicleID(Player player) throws SQLException{
-//		Statement stmt = myCon.createStatement();
-//		ResultSet rs = stmt.executeQuery("SELECT vehicle_id FROM vehicle WHERE vehicle_id = '" + player.getPlayerID()+"'");
-//		rs.next();
-//		return rs.getInt(1);
-//	}
 
-	public String getVehicleColour(int playerID)throws SQLException {
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT vehicle_colour FROM player NATURAL JOIN vehicle WHERE player_id = '" +playerID+ "'");
-		return rs.getString(1);
-	}
-
-	public String getVehicleType(int playerID) throws SQLException{
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT vehicle_type FROM player NATURAL JOIN vehicel WHERE player_id = '" +playerID+ "'");
-		return rs.getString(1);
-	}
-
-	public int getAccountId()throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	} 
-
-	
 	
 	
 	
