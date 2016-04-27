@@ -54,7 +54,7 @@ public class Controller  {
 
 	public void startNewGame() throws SQLException {
 		do {
-		gameName = c.getUserString(text.getString("nameGame"));
+			gameName = c.getUserString(text.getString("nameGame"));
 		} while (gameName.equals(null) || gameName.trim().equals("") || dbNameUsed(gameName.trim()));
 
 		try {
@@ -63,8 +63,7 @@ public class Controller  {
 			c.showMessage(text.getString("fileNotFound"));
 			c.closeGUI();
 		}
-		sql.useDB(gameName);
-		
+
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
 		CardStack deck = new CardStack();
@@ -75,14 +74,18 @@ public class Controller  {
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
-		try {
-			loadPlayers();
-			loadCards(text);
-		} catch (SQLException s) {
-			// Spørg om brugernavn og adgangskode
+
+		while (true) {
+			try {
+				loadPlayers();
+				loadCards(text);
+				break;
+			} catch (SQLException s) {
+				sql.updateUser(c.getUserString(text.getString("getUser")), c.getUserString("getPass"));
+			}
 		}
-		gameBoard.setupBoard(text, gameName,players);
-		
+		gameBoard.setupBoard(text,gameName,players);
+
 	}
 
 	public void playerTurn(Player player) {
@@ -208,7 +211,7 @@ public class Controller  {
 			sql.setBalance(players[i]);
 		}
 	}
-	
+
 	private void loadCards(Texts text) throws SQLException {
 		deck.loadCards(text);
 	}
@@ -218,15 +221,15 @@ public class Controller  {
 		// sætter alle ejerne på brættet ud fra databasen
 		// sætter hvor mange 
 	}
-	
+
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();
-			for (int i = 0; i < s.length; i++) {
-				if (s[i].equals(dbName)) {
-					return true;
-				}
+		for (int i = 0; i < s.length; i++) {
+			if (s[i].equals(dbName)) {
+				return true;
 			}
+		}
 		return false;
 	}
-	
+
 }
