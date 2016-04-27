@@ -74,7 +74,6 @@ public class Controller  {
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
-
 		while (true) {
 			try {
 				loadPlayers();
@@ -85,7 +84,6 @@ public class Controller  {
 			}
 		}
 		gameBoard.setupBoard(text,gameName,players);
-
 	}
 
 	public void playerTurn(Player player) {
