@@ -142,7 +142,7 @@ public class SQL implements DAO, DTO {
 
 	public void setJailTime(Player player)throws SQLException {
 		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("UPDATE player SET jail_time = " + player.get);
+		stmt.executeUpdate("UPDATE player SET jail_time = " + player.getJailTime()+ " WHERE player_id = " + player.getPlayerID() );
 	}
 
 	public void setCardId() throws SQLException{
