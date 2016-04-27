@@ -27,9 +27,11 @@ public class SQL implements DAO, DTO {
 		this.password = password;
 	}
 
-
-	// >>>> Data acces objects <<<< //
-
+	
+	
+//-------------------------------------
+//    >>>>  Data access objects  <<<< 
+//-------------------------------------
 	public int getPosition(Player player) throws SQLException { 
 		Statement stmt = myCon.createStatement(); 
 		ResultSet rs = stmt.executeQuery("SELECT position FROM player WHERE player_id = '"+player.getPlayerID()+"'");
@@ -37,9 +39,9 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 	
-	public String getPlayerName(int player_id) throws SQLException {
+	public String getPlayerName(int playerID) throws SQLException {
 		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("SELECT name FROM player WHERE player_id = '"+player_id+"'");
+		ResultSet rs = stmt.executeQuery("SELECT name FROM player WHERE player_id = '"+playerID+"'");
 		rs.next();
 		return rs.getString(1);
 	}
@@ -93,24 +95,23 @@ public class SQL implements DAO, DTO {
 		return rs.getBoolean(1);
 	}
 
-	public int getVehicleID(Player player) throws SQLException{
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("Select vehicle_id from Player where player_id = '" + player.getPlayerID()+"'");
-		rs.next();
-		return rs.getInt(1);
-	}
+//	public int getVehicleID(Player player) throws SQLException{
+//		Statement stmt = myCon.createStatement();
+//		ResultSet rs = stmt.executeQuery("SELECT vehicle_id FROM vehicle WHERE vehicle_id = '" + player.getPlayerID()+"'");
+//		rs.next();
+//		return rs.getInt(1);
+//	}
 
-	public String getVehicleColour(int id)throws SQLException {
+	public String getVehicleColour(int playerID)throws SQLException {
 		Statement stmt = myCon.createStatement();
-		
-		ResultSet rs = stmt.executeQuery("SELECT vehicle_id FROM Player WHERE player_id = '" + id +"'");
-		
+		ResultSet rs = stmt.executeQuery("SELECT vehicle_colour FROM player NATURAL JOIN vehicle WHERE player_id = '" +playerID+ "'");
 		return rs.getString(1);
 	}
 
-	public String getVehicleType() throws SQLException{
-		// TODO Auto-generated method stub
-		return null;
+	public String getVehicleType(int playerID) throws SQLException{
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT vehicle_type FROM player NATURAL JOIN vehicel WHERE player_id = '" +playerID+ "'");
+		return rs.getString(1);
 	}
 
 	public int getAccountId()throws SQLException {
@@ -118,10 +119,13 @@ public class SQL implements DAO, DTO {
 		return 0;
 	} 
 
-	// ----------------------------------	
-	//   >>> Data transfer objects <<<<
-	// ----------------------------------
-
+	
+	
+	
+	
+// ----------------------------------	
+//   >>> Data transfer objects <<<<
+// ----------------------------------
 	public void updatePosition() throws SQLException{
 		// TODO Auto-generated method stub
 
