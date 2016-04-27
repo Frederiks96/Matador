@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.Connection;
+
 import boundary.GUI_Commands;
 import boundary.SQL;
 import entity.CardStack;
@@ -26,6 +28,7 @@ public class Controller {
 	private CardStack deck;
 	private Player[] players;
 	private SQL sql;
+	private String gameName;
 
 	public Controller() {
 	}
@@ -50,11 +53,17 @@ public class Controller {
 
 	public void startNewGame() throws SQLException {
 		sql = new SQL();
+		
+		do {
+		gameName = c.getUserString(text.getString("nameGame"));
+		} while (!gameName.equals(null) && !gameName.trim().equals(""));
+		
 		try {
-			sql.createNewDB(c.getUserString(text.getString("nameGame")));
+			sql.createNewDB(gameName);
 		} catch (IOException e) {
 			c.showMessage(text.getString("fileNotFound"));
 		}
+		
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
 		CardStack deck = new CardStack(text);
@@ -62,13 +71,15 @@ public class Controller {
 		addPlayers();
 	}
 
-	public void loadGame() {
-		gameBoard.setupBoard(text, "");
+	public void loadGame() throws SQLException {
+		gameBoard.setupBoard(text, gameName);
 		try {
 			loadPlayers();
 		} catch (SQLException s) {
-			// Spørg om brugernavn og adgangskode til DB
+			// Spørg om brugernavn og adgangskode
 		}
+		
+		
 	}
 
 	public void playerTurn(Player player) {
@@ -191,9 +202,13 @@ public class Controller {
 	private void loadPlayers() throws SQLException {
 		SQL sql = new SQL();
 		for (int i = 0; i < players.length; i++) {
-			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i*11),sql.getVehicleType(i*11));
+			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
 			sql.setBalance(players[i]);
 		}
+	}
+	
+	private void loadCards() throws SQLException {
+		sql = new SQL();
 	}
 
 }

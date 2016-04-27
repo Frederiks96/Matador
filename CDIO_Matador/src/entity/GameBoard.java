@@ -1,5 +1,7 @@
 package entity;
 
+import java.sql.SQLException;
+
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
 import entity.fields.CardField;
@@ -13,6 +15,7 @@ public class GameBoard {
 	private int hotelCount;
 	private int houseCount; 
 	private AbstractFields[] logicFields;
+	private CardStack deck;
 
 
 	public void setupBoard(Texts text) {
@@ -82,6 +85,16 @@ public class GameBoard {
 		return this.logicFields;
 	}
 
+	public void createCardDeck(Texts text) {
+		deck = new CardStack();
+		deck.shuffle();
+		deck.newDeck(text);
+	}
+	
+	public void loadCardDeck(Texts text) throws SQLException {
+		deck = new CardStack();
+		deck.loadCards();
+	}
 
 	
 }
