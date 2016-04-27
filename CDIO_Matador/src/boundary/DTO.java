@@ -2,6 +2,7 @@ package boundary;
 
 import java.sql.SQLException;
 
+import entity.ChanceCard;
 import entity.Player;
 import entity.fields.AbstractFields;
 import entity.fields.Territory;
@@ -14,6 +15,7 @@ public interface DTO {
 			int balance, int vId, String vColor, String vType) throws SQLException;
 	void createAccount(int aId, int balance) throws SQLException;
 	void createVehicle(int vId, String vColour, String vType) throws SQLException;
+	void createChanceCard(ChanceCard card) throws SQLException;
 	
 	void updatePosition(Player player) throws SQLException;
 	void setBalance(Player player) throws SQLException;
@@ -24,7 +26,7 @@ public interface DTO {
 	void setAccountId(Player player) throws SQLException; // Ikke nødvendig?
 	
 	
-	void setCardId() throws SQLException; // Ikke nødvendig?
+	void setCardId(ChanceCard card) throws SQLException; // Ikke nødvendig?
 	void setCardPosition() throws SQLException;
 	
 	void setFieldId(AbstractFields field) throws SQLException; // Ikke nødvendig?

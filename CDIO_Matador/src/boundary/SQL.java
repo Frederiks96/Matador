@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import entity.ChanceCard;
 import entity.Player;
 import entity.fields.Territory;
 
@@ -137,7 +138,6 @@ public class SQL implements DAO, DTO {
 	public void setBalance(Player player)throws SQLException {
 		Statement stmt = myCon.createStatement(); 
 		stmt.executeUpdate("UPDATE bank SET balance = " + player.getBalance()+ " WHERE account_id = " + player.getAccountID());		
-
 	}
 
 	public void setJailTime(Player player)throws SQLException {
@@ -145,23 +145,13 @@ public class SQL implements DAO, DTO {
 		stmt.executeUpdate("UPDATE player SET jail_time = " + player.getJailTime()+ " WHERE player_id = " + player.getPlayerID() );
 	}
 
-	public void setCardId() throws SQLException{
-		// TODO Auto-generated method stub
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
-	}
 
 	public void setCardPosition() throws SQLException{
 		// TODO Auto-generated method stub
 		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
+		stmt.executeUpdate("  ");
 	}
 
-	public void setFieldId() throws SQLException{
-		// TODO Auto-generated method stub
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
-	}
 
 	public void setHouseCount() throws SQLException{
 		// TODO Auto-generated method stub
@@ -181,11 +171,6 @@ public class SQL implements DAO, DTO {
 		stmt.executeUpdate("");
 	}
 
-	public void setVehicleID() throws SQLException{
-		// TODO Auto-generated method stub
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
-	}
 
 	public void setVehicleColour() throws SQLException{
 		// TODO Auto-generated method stub
@@ -199,13 +184,9 @@ public class SQL implements DAO, DTO {
 		stmt.executeUpdate("");
 	}
 
-	public void setAccountId() throws SQLException{
-		// TODO Auto-generated method stub
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
-	}
 
-
+	
+	
 	public void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
 			int balance, int vId, String vColor, String vType) throws SQLException {
 		Statement stmt = myCon.createStatement(); 
@@ -219,16 +200,17 @@ public class SQL implements DAO, DTO {
 
 	public void createAccount(int aId, int balance) throws SQLException {
 		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("insert into Bank values("+aId+","+balance+");");
+		stmt.executeUpdate("INSERT INTO Bank VALUES("+aId+","+balance+");");
 
 	}
 
 	public void createVehicle(int vId, String vColor, String vType) throws SQLException {
 		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("insert into Vehicle values("+vId+",'+vColor+','+vType+');");
+		stmt.executeUpdate("INSERT INTO Vehicle VALUES("+vId+",'+vColor+','+vType+');");
 	}
 
-
+	
+	
 	public void createNewDB(String dbName) throws IOException,SQLException {
 		Statement stmt = myCon.createStatement();
 		BufferedReader in = new BufferedReader(new FileReader("newDB.sql"));
@@ -242,7 +224,11 @@ public class SQL implements DAO, DTO {
 		stmt.executeUpdate(sb.toString());
 	}
 
-
+	public void createChanceCard(ChanceCard card) throws SQLException{
+		// TODO
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("INSERT INTO chancecard VALUES(" + card.getCardID());
+	}
 
 
 
