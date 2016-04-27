@@ -3,6 +3,7 @@ package controller;
 import java.sql.SQLException;
 
 import boundary.GUI_Commands;
+import boundary.SQL;
 import entity.CardStack;
 import entity.GameBoard;
 import entity.Player;
@@ -23,7 +24,6 @@ public class Controller {
 	private Texts text;
 	private CardStack deck;
 	private Player[] players;
-	private String name;
 
 	public Controller() {
 	}
@@ -56,7 +56,11 @@ public class Controller {
 
 	public void loadGame() {
 		gameBoard.setupBoard(text, "");
-		loadPlayers();
+		try {
+			loadPlayers();
+		} catch (SQLException s) {
+			// Spørg om brugernavn og adgangskode til DB
+		}
 	}
 
 	public void playerTurn(Player player) {
@@ -166,7 +170,7 @@ public class Controller {
 		players = new Player[numOfPlayers];
 		int i = 0;
 		do {
-			name = c.getUserString(text.getFormattedString("yourName", i+1));
+			String name = c.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
 				players[i] = new Player(name,"","");
 				i++;
@@ -176,8 +180,11 @@ public class Controller {
 		} while(i<players.length);
 	}
 	
-	private void loadPlayers() {
-		
+	private void loadPlayers() throws SQLException {
+		SQL sql = new SQL();
+		for (int i = 0; i < players.length; i++) {
+			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(),sql.getVehicleType());
+		}
 	}
 
 }
