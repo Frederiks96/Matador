@@ -36,9 +36,9 @@ public class SQL implements DAO, DTO {
 //-------------------------------------
 //    >>>>  Data access objects  <<<< 
 //-------------------------------------
-	public int getPosition(Player player) throws SQLException { 
+	public int getPosition(int playerID) throws SQLException { 
 		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("SELECT position FROM player WHERE player_id = '"+player.getPlayerID()+"'");
+		ResultSet rs = stmt.executeQuery("SELECT position FROM player WHERE player_id = '" +playerID+ "'");
 		rs.next();
 		return rs.getInt(1);
 	}
@@ -52,28 +52,29 @@ public class SQL implements DAO, DTO {
 
 	public int getBalance(int playerID)throws SQLException {
 		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("SELECT balance FROM bank WHERE account_id = '" + player.getAccountID()+"'");
+		ResultSet rs = stmt.executeQuery("SELECT balance FROM player NATURAL JOIN bank WHERE playerID = '" +playerID+ "'");
 		rs.next();
 		return rs.getInt(1);
 	}
 
 	public int getJailTime(int playerID) throws SQLException{
 		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("SELECT balance FROM bank WHERE account_id = '" + player.getAccountID()+"'");
+		ResultSet rs = stmt.executeQuery("SELECT jail_time FROM player WHERE player_id = '" +playerID+"'");
 		rs.next();
 		return rs.getInt(1);
-		return 0;
 	}
 
 	public String getVehicleColour(int playerID)throws SQLException {
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT vehicle_colour FROM player NATURAL JOIN vehicle WHERE player_id = '" +playerID+ "'");
+		rs.next();
 		return rs.getString(1);
 	}
 
 	public String getVehicleType(int playerID) throws SQLException{
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT vehicle_type FROM player NATURAL JOIN vehicel WHERE player_id = '" +playerID+ "'");
+		rs.next();
 		return rs.getString(1);
 	}
 	
