@@ -93,19 +93,6 @@ public class GameBoard {
 	
 	public void loadCardDeck(Texts text) throws SQLException {
 		deck = new CardStack();
-		deck.loadCards();
+		deck.loadCards(text);
 	}
-
-	
 }
-
-//public Territory(int id, String colour, int price, int baseRent,
-//int rent1, int rent2, int rent3, int rent4, int hotelRent, int housePrice){
-//	
-//
-//for (int i = 0; i < logicFields.length; i++) {
-//	logicFields[i] = new Territory(i,text.getRent(i+"_color")
-//}
-//logicFields[1] = new Territory(1,
-//}
-

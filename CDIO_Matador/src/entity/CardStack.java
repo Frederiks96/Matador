@@ -52,10 +52,10 @@ public class CardStack {
 		return texts;
 	}
 	
-	public void loadCards() throws SQLException {
+	public void loadCards(Texts text) throws SQLException {
 		sql = new SQL();
 		for (int i = 0; i < chanceCardDeck.size(); i++) {
-			chanceCardDeck.add(new ChanceCard("k"+sql.getCardId(i)));
+			chanceCardDeck.add(new ChanceCard(text.getCardString("k"+sql.getCardId(i))));
 		}
 	}
 
