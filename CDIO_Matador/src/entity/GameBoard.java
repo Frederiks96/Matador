@@ -39,7 +39,7 @@ public class GameBoard {
 		}
 	}
 	
-	public void setupBoard(Texts text, String gameName) {
+	public void setupBoard(Texts text, String gameName) throws SQLException {
 		logicFields = new AbstractFields[40];
 		for  (int i = 0; i < logicFields.length; i++){
 			if (i == 5 || i==15 || i==25 || i==35){
@@ -55,11 +55,9 @@ public class GameBoard {
 			} else {
 				logicFields[i] = new Territory(i,null, text);
 				sql = new SQL();
-				(Territory)(logicFields[i])	   //sql.getFieldHouseCount(logicFields[i]);
+				((Territory) (logicFields[i])).setHouseCount(sql.getFieldHouseCount(((Territory)logicFields[i])));
 			}
 		}
-		
-		
 	}
 
 	public void countCountBuildings(){
