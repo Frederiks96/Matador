@@ -183,7 +183,7 @@ public class Controller {
 	private void loadPlayers() throws SQLException {
 		SQL sql = new SQL();
 		for (int i = 0; i < players.length; i++) {
-			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(),sql.getVehicleType());
+			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i*11),sql.getVehicleType(i*11));
 		}
 	}
 

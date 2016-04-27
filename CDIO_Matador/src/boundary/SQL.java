@@ -17,9 +17,16 @@ import entity.fields.Territory;
 public class SQL implements DAO, DTO {
 
 	private Connection myCon;
+	private String username = "root";
+	private String password = "";
 
 	public SQL() throws SQLException {
-		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/Matador","root","");
+		this.myCon = DriverManager.getConnection("jdbc:mysql://localhost/Matador",username,password);
+	}
+	
+	public void updateUser(String username, String password) {
+		this.username = username;
+		this.password = password;
 	}
 
 
@@ -27,14 +34,21 @@ public class SQL implements DAO, DTO {
 
 	public int getPosition(Player player) throws SQLException { 
 		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("Select position from player where player_id = '"+player.getPlayerID()+"'");
+		ResultSet rs = stmt.executeQuery("SELECT position FROM player WHERE player_id = '"+player.getPlayerID()+"'");
 		rs.next();
 		return rs.getInt(1);
+	}
+	
+	public String getPlayerName(int player_id) throws SQLException {
+		Statement stmt = myCon.createStatement(); 
+		ResultSet rs = stmt.executeQuery("SELECT name FROM player WHERE player_id = '"+player_id+"'");
+		rs.next();
+		return rs.getString(1);
 	}
 
 	public int getBalance(Player player)throws SQLException {
 		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("Select balance from bank where account_id = '" + player.getAccountID()+"'");
+		ResultSet rs = stmt.executeQuery("SELECT balance FROM bank WHERE account_id = '" + player.getAccountID()+"'");
 		rs.next();
 		return rs.getInt(1);
 	}
@@ -89,6 +103,11 @@ public class SQL implements DAO, DTO {
 	}
 
 	public String getVehicleColour()throws SQLException {
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("Select vehicle_id from Player where player_id = '" + player.getPlayerID()+"'");
+
+		
+		
 		return null;
 	}
 
