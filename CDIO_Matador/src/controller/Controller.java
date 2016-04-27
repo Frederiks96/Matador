@@ -36,10 +36,11 @@ public class Controller {
 	public void run() throws SQLException {
 		getLanguage();
 		gameBoard = new GameBoard();
-		if (newGame()) {
+		String game = newGame();
+		if (game.equals(text.getString("newGame"))) {
 			startNewGame();
 		} else {
-			loadGame();
+			loadGame(text, game);
 		}
 
 		for (int i = 0; i < players.length; i++) {
@@ -53,28 +54,33 @@ public class Controller {
 
 	public void startNewGame() throws SQLException {
 		sql = new SQL();
-		
+
 		do {
 		gameName = c.getUserString(text.getString("nameGame"));
 		} while (!gameName.equals(null) && !gameName.trim().equals(""));
 		
+		sql.getConnection("Matador");
 		try {
 			sql.createNewDB(gameName);
 		} catch (IOException e) {
 			c.showMessage(text.getString("fileNotFound"));
 		}
+		sql.useDB(gameName);
 		
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
-		CardStack deck = new CardStack(text);
+		CardStack deck = new CardStack();
+		deck.newDeck(text);
 		deck.shuffle();
 		addPlayers();
 	}
 
-	public void loadGame() throws SQLException {
+	public void loadGame(Texts text, String gameName) throws SQLException {
 		gameBoard.setupBoard(text, gameName);
+		
 		try {
 			loadPlayers();
+			loadCards(text);
 		} catch (SQLException s) {
 			// Spørg om brugernavn og adgangskode
 		}
@@ -156,8 +162,8 @@ public class Controller {
 		}
 	}
 
-	private boolean newGame() {
-		return c.getUserLeftButtonPressed("", "", "");
+	private String newGame() {
+		return c.getUserSelection("", "", "");
 	}
 
 	public boolean isValidName(String name) {
@@ -207,8 +213,8 @@ public class Controller {
 		}
 	}
 	
-	private void loadCards() throws SQLException {
-		sql = new SQL();
+	private void loadCards(Texts text) throws SQLException {
+		deck.loadCards(text);
 	}
 
 }
