@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import boundary.GUI_Commands;
@@ -24,6 +25,7 @@ public class Controller {
 	private Texts text;
 	private CardStack deck;
 	private Player[] players;
+	private SQL sql;
 
 	public Controller() {
 	}
@@ -47,6 +49,12 @@ public class Controller {
 	}
 
 	public void startNewGame() throws SQLException {
+		sql = new SQL();
+		try {
+			sql.createNewDB(c.getUserString(text.getString("nameGame")));
+		} catch (IOException e) {
+			c.showMessage(text.getString("fileNotFound"));
+		}
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
 		CardStack deck = new CardStack(text);
@@ -161,7 +169,7 @@ public class Controller {
 		}
 		return num;
 	}
-	
+
 	private void addPlayers() throws SQLException {
 		int numOfPlayers = 0;
 		do {
@@ -179,11 +187,12 @@ public class Controller {
 			}
 		} while(i<players.length);
 	}
-	
+
 	private void loadPlayers() throws SQLException {
 		SQL sql = new SQL();
 		for (int i = 0; i < players.length; i++) {
 			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i*11),sql.getVehicleType(i*11));
+			sql.setBalance(players[i]);
 		}
 	}
 
