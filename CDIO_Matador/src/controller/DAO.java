@@ -10,6 +10,7 @@ public interface DAO {
 	// Data Acces object - getters
 	
 	int getPosition(Player player) throws SQLException;
+	String getPlayerName(int player_id) throws SQLException;
 	int getBalance(Player player)throws SQLException;
 	int getJailTime()throws SQLException;
 	int getCardId()throws SQLException;
