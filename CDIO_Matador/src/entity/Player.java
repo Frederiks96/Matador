@@ -159,4 +159,8 @@ public class Player {
 		return controller.hasAll(this, COLOUR);
 	}
 
+	public int getJailTime(){
+		return this.jailTime;
+	}
+
 }
