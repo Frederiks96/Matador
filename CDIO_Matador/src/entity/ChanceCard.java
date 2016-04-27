@@ -37,5 +37,9 @@ public class ChanceCard {
 	public void setOwner(Player player) {
 		this.owner=player;
 	}
+	
+	public String getCardID() {
+		return this.cardID;
+	}
 
 }
