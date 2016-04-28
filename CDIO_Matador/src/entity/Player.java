@@ -102,14 +102,16 @@ public class Player {
 		}
 	}
 
-	public void updatePosition(int lastRoll) {
+	public void updatePosition(int lastRoll) throws SQLException {
 		if (lastRoll>0 && lastRoll<13) {
 			if ((position+lastRoll)>39) {
-				updateBalance(-4000);
+				updateBalance(4000);
+				sql.setBalance(this);
 				position += lastRoll-40;
 			} else {
 				position += lastRoll;
 			}
+		sql.updatePosition(this);
 		}
 	}
 

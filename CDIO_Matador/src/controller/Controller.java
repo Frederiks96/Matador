@@ -90,7 +90,7 @@ public class Controller  {
 		gameBoard.setupBoard(text,gameName,players,sql);
 	}
 
-	public void playerTurn(Player player) {
+	public void playerTurn(Player player) throws SQLException {
 		String button = c.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
 		if (button.equals(text.getString("roll"))) {
 			dicecup.roll();
