@@ -30,6 +30,7 @@ public class Controller  {
 	private SQL sql;
 	private String gameName;
 	private DiceCup dicecup = new DiceCup();
+	private SaleController broker = new SaleController();
 
 	public Controller() throws SQLException {
 		this.sql = new SQL();
@@ -91,16 +92,21 @@ public class Controller  {
 	}
 
 	public void playerTurn(Player player) throws SQLException {
-		String button = c.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
-		if (button.equals(text.getString("roll"))) {
-			dicecup.roll();
-			c.setDice(dicecup.getDieOne(), dicecup.getDieTwo());
-			player.updatePosition(dicecup.getLastRoll());
-		} else if (button.equals(text.getString("trade"))) {
-			
-		} else {
-			
-		}
+		String button;
+		do {
+			button = c.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
+			if (button.equals(text.getString("roll"))) {
+				dicecup.roll();
+				c.setDice(dicecup.getDieOne(), dicecup.getDieTwo());
+				player.updatePosition(dicecup.getLastRoll());
+			} else if (button.equals(text.getString("trade"))) {
+				String offereeName = c.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
+				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, c);
+			} else {
+				// Byg huse
+			}
+		} while (!button.equals(text.getString("roll")));
+		
 		// Opdatere spillerens position før landOnField kaldes
 		if (fields[player.getPosition()] instanceof CardField) {
 			deck.draw(player);
@@ -244,4 +250,23 @@ public class Controller  {
 		return false;
 	}
 
+	private Player getPlayer(String playerName) {
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].getName().equals(playerName)) {
+				return players[i];
+			}
+		}
+		return null;
+	}
+
+
+	private String[] getOpponents(Player player) {
+		String[] opponents = new String[players.length-1];
+		for (int i = 0; i < players.length; i++) {
+			if (!players[i].equals(player)) {
+				opponents[i] = players[i].getName();
+			}
+		}
+		return opponents;
+	}
 }
