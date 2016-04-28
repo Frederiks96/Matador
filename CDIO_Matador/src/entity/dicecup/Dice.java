@@ -5,7 +5,7 @@ public class Dice {
 	private int lastRoll;
 
 	public void roll() {
-		lastRoll = (int) Math.floor(Math.random()) * 6;
+		lastRoll = (int) (Math.random()*6+1);
 	}
 
 	public int getLastRoll() {

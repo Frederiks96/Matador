@@ -30,7 +30,7 @@ public class Controller  {
 	private SQL sql;
 	private String gameName;
 	private DiceCup dicecup = new DiceCup();
-	private SaleController broker = new SaleController();
+	private SaleController broker;
 
 	public Controller() throws SQLException {
 		this.sql = new SQL();
@@ -39,22 +39,25 @@ public class Controller  {
 	public void run() throws SQLException {
 		getLanguage();
 		gameBoard = new GameBoard();
+		dicecup = new DiceCup();
 		String game = newGame();
 		if (game.equals(text.getString("newGame"))) {
 			startNewGame();
 		} else {
 			loadGame(text, c.getUserSelection(text.getString("chooseGame"), sql.getActiveGames()));
 		}
-
-		for (int i = 0; i < players.length; i++) {
-			if (players[i].isAlive() && numPlayersAlive()>1) {
-				playerTurn(players[i]);
-			} else {
-				c.showMessage(text.getFormattedString("winner", players[i].getName()));
-				c.closeGUI();
-				sql.dropDB(); // Skal laves i SQL klassen
+		
+		do {
+			for (int i = 0; i < players.length; i++) {
+				if (players[i].isAlive()) {
+					playerTurn(players[i]);
+				}
 			}
-		}
+		} while (numPlayersAlive()>1);
+		
+		c.showMessage(text.getFormattedString("winner", getWinner()));
+		// sql.dropDB(); // Skal laves i SQL klassen
+		c.closeGUI();
 	}
 
 	public void startNewGame() throws SQLException {
@@ -101,17 +104,18 @@ public class Controller  {
 				player.updatePosition(dicecup.getLastRoll());
 			} else if (button.equals(text.getString("trade"))) {
 				String offereeName = c.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
+				broker = new SaleController();
 				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, c);
 			} else {
 				// Byg huse
 			}
 		} while (!button.equals(text.getString("roll")));
-		
+
+		// Land på felt
 		// Opdatere spillerens position før landOnField kaldes
 		if (fields[player.getPosition()] instanceof CardField) {
 			deck.draw(player);
 		}
-		c.closeGUI();
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
@@ -216,6 +220,7 @@ public class Controller  {
 			String name = c.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
 				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/);
+				c.addPlayer(name, players[i].getBalance());
 				i++;
 			} else {
 				c.showMessage(text.getString("nameTaken"));
@@ -268,5 +273,14 @@ public class Controller  {
 			}
 		}
 		return opponents;
+	}
+	
+	private String getWinner() {
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].isAlive()) {
+				return players[i].getName();
+			}
+		}
+		return "";
 	}
 }

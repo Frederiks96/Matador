@@ -3,7 +3,6 @@ package main;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import boundary.SQL;
 import controller.Controller;
 
 public class Main {
