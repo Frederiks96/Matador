@@ -135,6 +135,15 @@ public class SQL implements DAO, DTO {
 		rs.next();
 		return rs.getBoolean(1);
 	}
+	
+	public int getOwner(int field_id) throws SQLException {
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT player_id FROM Property WHERE field_id = " + field_id+";");
+		myCon.close();
+		rs.next();
+		return rs.getInt(1);
+	}
 
 
 

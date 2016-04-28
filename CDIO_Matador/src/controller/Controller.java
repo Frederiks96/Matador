@@ -83,7 +83,7 @@ public class Controller  {
 				sql.updateUser(c.getUserString(text.getString("getUser")), c.getUserString("getPass"));
 			}
 		}
-		gameBoard.setupBoard(text,gameName,players);
+		gameBoard.setupBoard(text,gameName,players,sql);
 	}
 
 	public void playerTurn(Player player) {
@@ -152,7 +152,7 @@ public class Controller  {
 	}
 
 	private void getLanguage() {
-		String lang = c.getUserSelection("Choose your preferred language", "Dansk", "English");
+		String lang = c.getUserButtonPressed("Choose your preferred language", "Dansk", "English");
 		if (lang.equals("Dansk")) {
 			text = new Texts(language.Dansk);
 		} else {
@@ -161,7 +161,7 @@ public class Controller  {
 	}
 
 	private String newGame() {
-		return c.getUserSelection(text.getString("loadGameQuestion"),text.getString("loadGame"),text.getString("newGame"));
+		return c.getUserButtonPressed(text.getString("loadGameQuestion"),text.getString("loadGame"),text.getString("newGame"));
 	}
 
 	public boolean isValidName(String name) {
