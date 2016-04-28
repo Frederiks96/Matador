@@ -31,7 +31,7 @@ public class SQLTest {
 			sql.setBalance(player);
 			
 			int expected = player.getBalance();
-			int actual = sql.getBalance(player);
+			int actual = sql.getBalance(player.getPlayerID());
 			
 			assertEquals(expected, actual);
 			
