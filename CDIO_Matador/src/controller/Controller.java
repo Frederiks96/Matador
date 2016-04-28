@@ -195,7 +195,7 @@ public class Controller  {
 		do {
 			String name = c.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
-				players[i] = new Player(name,"","",sql);
+				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/);
 				i++;
 			} else {
 				c.showMessage(text.getString("nameTaken"));
@@ -205,7 +205,7 @@ public class Controller  {
 
 	private void loadPlayers() throws SQLException {
 		for (int i = 0; i < players.length; i++) {
-			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1),sql);
+			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
 			sql.setBalance(players[i]);
 		}
 	}
