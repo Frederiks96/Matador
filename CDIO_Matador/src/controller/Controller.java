@@ -2,15 +2,16 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import boundary.GUI_Commands;
 import boundary.SQL;
+import desktop_resources.GUI;
 import entity.CardStack;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
+import entity.dicecup.DiceCup;
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
 import entity.fields.CardField;
@@ -28,6 +29,7 @@ public class Controller  {
 	private Player[] players;
 	private SQL sql;
 	private String gameName;
+	private DiceCup dicecup = new DiceCup();
 
 	public Controller() throws SQLException {
 		this.sql = new SQL();
@@ -48,6 +50,8 @@ public class Controller  {
 				playerTurn(players[i]);
 			} else {
 				c.showMessage(text.getFormattedString("winner", players[i].getName()));
+				c.closeGUI();
+				sql.dropDB(); // Skal laves i SQL klassen
 			}
 		}
 	}
@@ -87,6 +91,16 @@ public class Controller  {
 	}
 
 	public void playerTurn(Player player) {
+		String button = c.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
+		if (button.equals(text.getString("roll"))) {
+			dicecup.roll();
+			c.setDice(dicecup.getDieOne(), dicecup.getDieTwo());
+			player.updatePosition(dicecup.getLastRoll());
+		} else if (button.equals(text.getString("trade"))) {
+			
+		} else {
+			
+		}
 		// Opdatere spillerens position før landOnField kaldes
 		if (fields[player.getPosition()] instanceof CardField) {
 			deck.draw(player);

@@ -274,10 +274,10 @@ public class SQL implements DAO, DTO {
 	}
 
 	public String[] getActiveGames() throws SQLException {
+		long start = System.nanoTime();
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SHOW DATABASES LIKE 'CDIO%';");
-		myCon.close();
 		ArrayList<String> gamesFromDB = new ArrayList<String>();
 		while (rs.next()) {
 			gamesFromDB.add(rs.getString(1));
@@ -288,6 +288,10 @@ public class SQL implements DAO, DTO {
 			String temp = str.substring(5, str.length());
 			games[i] = temp;
 		}
+		myCon.close();
+		long slut = System.nanoTime();
+		double result = (slut-start)/1000000;
+		System.out.println(result + " milisekunder");
 		return games;
 	}
 
