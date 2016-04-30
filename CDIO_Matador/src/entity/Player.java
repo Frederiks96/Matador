@@ -44,8 +44,9 @@ public class Player {
 		this.isAlive=true;
 		this.account = new Account(player_id);
 		this.cards = new ArrayList<ChanceCard>();
+		this.turn = false;
 
-		sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,getBalance(),vID,vColor,vType);
+		sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,getBalance(),vID,vColor,vType, turn);
 	}
 
 	public int getPlayerID() {
