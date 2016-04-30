@@ -72,6 +72,14 @@ public class GUI_Commands implements Boundary_Interface {
 		GUI.setDice(faceValue1, faceValue2);
 	}
 
+	public void removeCar(int position, String name) {
+		GUI.removeCar(position, name);
+	}
+
+	public void setBalance(String name, int balance) {
+		GUI.setBalance(name, balance);
+	}
+
 	
 
 }
