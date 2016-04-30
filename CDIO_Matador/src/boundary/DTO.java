@@ -34,7 +34,7 @@ public interface DTO {
 	void buildHotel(Territory territory) throws SQLException;
 	void mortgage(AbstractFields field) throws SQLException;
 	
-	void setIsAlive()throws SQLException;
-	void setTurn()throws SQLException;
+	void setIsAlive(Player player)throws SQLException;
+	void setTurn(Player player)throws SQLException;
 
 }

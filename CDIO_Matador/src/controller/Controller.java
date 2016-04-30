@@ -2,10 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import boundary.GUI_Commands;
 import boundary.SQL;
-import desktop_resources.GUI;
 import entity.CardStack;
 import entity.GameBoard;
 import entity.Player;
@@ -99,29 +97,39 @@ public class Controller  {
 	}
 
 	public void playerTurn(Player player) throws SQLException {
-		String button;
+		player.setTurn(true);
+		String options;
+		
 		do {
-			button = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
-			if (button.equals(text.getString("roll"))) {
+			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
+			
+			if (options.equals(text.getString("roll"))) {
+				gui.removeCar(player.getPosition(), player.getName());		
 				dicecup.roll();
-				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());
-				player.updatePosition(dicecup.getLastRoll());
-			} else if (button.equals(text.getString("trade"))) {
+				player.updatePosition((int)(dicecup.getLastRoll()));		
+				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
+				gui.setCar(player.getPosition(), player.getName());		
+				gameBoard.getLogicField(player.getPosition()).landOnField(player, text);;
+				gui.setBalance(player.getName(), player.getAccount().getBalance());
+				if (fields[player.getPosition()] instanceof CardField) 
+					deck.draw(player);
+					
+			} else if (options.equals(text.getString("trade"))) {
 				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
 				broker = new SaleController();
 				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, gui);
+			
 			} else {
 				// Byg huse
 			}
-		} while (!button.equals(text.getString("roll")));
-
-		// Land på felt
-		// Opdatere spillerens position før landOnField kaldes
-		if (fields[player.getPosition()] instanceof CardField) {
-			deck.draw(player);
-		}
+		
+		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
+						
+		player.setTurn(false);
+		saveGame();
 	}
 
+	
 	public boolean hasAll(Player owner, String COLOUR) {
 		fields = gameBoard.getFields();
 		int j = 0;
@@ -221,7 +229,7 @@ public class Controller  {
 		do {
 			String name = gui.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
-				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/);
+				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/, sql);
 				gui.addPlayer(name, players[i].getBalance());
 				i++;
 			} else {
@@ -232,7 +240,7 @@ public class Controller  {
 
 	private void loadPlayers() throws SQLException {
 		for (int i = 0; i < players.length; i++) {
-			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
+			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1), sql);
 			sql.setBalance(players[i]);
 		}
 	}
@@ -284,5 +292,15 @@ public class Controller  {
 			}
 		}
 		return "";
+	}
+
+	private void saveGame() throws SQLException{
+		for (int i = 0; i< players.length; i++){
+			sql.setBalance(players[i]);
+			sql.updatePosition(players[i]);
+			sql.setJailTime(players[i]);
+			sql.setTurn(players[i]);
+			sql.setIsAlive(players[i]);
+		}
 	}
 }

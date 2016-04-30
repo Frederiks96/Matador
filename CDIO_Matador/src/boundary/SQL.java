@@ -349,13 +349,13 @@ public class SQL implements DAO, DTO {
 	
 
 	@Override
-	public void setIsAlive() throws SQLException {
+	public void setIsAlive(Player player) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setTurn() throws SQLException {
+	public void setTurn(Player player) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
