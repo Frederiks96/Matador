@@ -27,7 +27,7 @@ public interface DTO {
 	
 	
 	void setCardId(ChanceCard card) throws SQLException; // Ikke nødvendig?
-	void setCardPosition() throws SQLException;
+	void setCardPosition(int position, String card_id) throws SQLException;
 	
 	void setFieldId(AbstractFields field) throws SQLException; // Ikke nødvendig?
 	void setHouseCount(AbstractFields field) throws SQLException;

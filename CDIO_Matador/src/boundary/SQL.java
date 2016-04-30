@@ -207,81 +207,90 @@ public class SQL implements DAO, DTO {
 	}
 
 
-	public void setCardPosition() throws SQLException {
+	public void setCardPosition(int position, String card_id) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("  ");
+		String query = "UPDATE "+dbName+".chancecard SET position = ? WHERE card_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, position);
+		stmt.setString(2, card_id);
+		stmt.executeUpdate();
 		myCon.close();
 	}
 
 
-	public void setHouseCount() throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
-		myCon.close();
-	}
-
-	public void buildHotel()throws SQLException {
+	public void setHouseCount() throws SQLException{ // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-	public void mortgage()throws SQLException {
+	public void buildHotel()throws SQLException { // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-
-	public void setVehicleColour() throws SQLException{
+	public void mortgage()throws SQLException { // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-	public void setVehicleType() throws SQLException{
+	public void setVehicleColour() throws SQLException{ // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-
-
+	public void setVehicleType() throws SQLException{ // Mangler
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("");
+		myCon.close();
+	}
 
 	public void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
 			int balance, int vId, String vColor, String vType) throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement(); 
 		createAccount(aId, balance);
 		createVehicle(vId, vColor, vType);
-		stmt.executeUpdate("insert into "+dbName+".player values(" +id+ ","+vId+","+aId+",'"+name+ "',"+position+","
-				+ jailTime +"," +isActive+ ");" 
-				); 
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?)";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, id);
+		stmt.setInt(2, vId);
+		stmt.setInt(3, aId);
+		stmt.setString(4, name);
+		stmt.setInt(5, position);
+		stmt.setInt(6, jailTime);
+		stmt.setBoolean(7, isActive);
+		stmt.executeUpdate();
 		myCon.close();
 	}
 
 	public void createAccount(int aId, int balance) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("INSERT INTO "+dbName+".bank VALUES("+aId+","+balance+");");
+		String query = "INSERT INTO "+dbName+".bank VALUES(?,?)";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, aId);
+		stmt.setInt(2, balance);
+		stmt.executeUpdate();
 		myCon.close();
-
 	}
 
 	public void createVehicle(int vId, String vColor, String vType) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("INSERT INTO "+dbName+".vehicle VALUES("+vId+",'"+vColor+"','"+vType+"');");
+		String query = "INSERT INTO "+dbName+".vehicle VALUES(?,?,?)";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, vId);
+		stmt.setString(2, vColor);
+		stmt.setString(3, vType);
+		stmt.executeUpdate();
 		myCon.close();
 	}
-
-
 
 	public void createNewDB(String dbName) throws IOException,SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
