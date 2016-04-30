@@ -16,6 +16,7 @@ public class Player {
 	private int numFleetsOwned;
 	private int numBreweriesOwned;
 	private boolean isAlive;
+	private boolean turn;
 	private Account account;
 	private ArrayList<ChanceCard> cards;
 	private String vColor;
@@ -163,6 +164,14 @@ public class Player {
 
 	public int getJailTime(){
 		return this.jailTime;
+	}
+
+	public boolean isTurn() {
+		return turn;
+	}
+
+	public void setTurn(boolean turn) {
+		this.turn = turn;
 	}
 
 }
