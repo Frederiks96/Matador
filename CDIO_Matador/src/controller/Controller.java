@@ -40,13 +40,8 @@ public class Controller  {
 		getLanguage();
 		gameBoard = new GameBoard();
 		dicecup = new DiceCup();
-		String game = newGame();
-		if (game.equals(text.getString("newGame"))) {
-			startNewGame();
-		} else {
-			loadGame(text, c.getUserSelection(text.getString("chooseGame"), sql.getActiveGames()));
-		}
-		
+		chooseGame();
+
 		do {
 			for (int i = 0; i < players.length; i++) {
 				if (players[i].isAlive()) {
@@ -58,6 +53,15 @@ public class Controller  {
 		c.showMessage(text.getFormattedString("winner", getWinner()));
 		// sql.dropDB(); // Skal laves i SQL klassen
 		c.closeGUI();
+	}
+
+	private void chooseGame() throws SQLException {
+		String game = c.getUserButtonPressed(text.getString("loadGameQuestion"),text.getString("loadGame"),text.getString("newGame"));
+		if (game.equals(text.getString("newGame"))) {
+			startNewGame();
+		} else {
+			loadGame(text, c.getUserSelection(text.getString("chooseGame"), sql.getActiveGames()));
+		}
 	}
 
 	public void startNewGame() throws SQLException {
@@ -184,10 +188,7 @@ public class Controller  {
 		}
 	}
 
-	private String newGame() {
-		return c.getUserButtonPressed(text.getString("loadGameQuestion"),text.getString("loadGame"),text.getString("newGame"));
-	}
-
+	
 	public boolean isValidName(String name) {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i] != null) {
