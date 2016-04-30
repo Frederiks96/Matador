@@ -29,17 +29,17 @@ public class SQL implements DAO, DTO {
 	public void useDB(String dbName) {
 		SQL.dbName = "CDIO_"+dbName;
 	}
-	
+
 	public void updateUser(String username, String password) {
 		SQL.username = username;
 		SQL.password = password;
 	}
 
-// ------------------------------------------------------------------------------------------------------------------	
-//										>>> Data access objects <<<<
-// ------------------------------------------------------------------------------------------------------------------
-	
-	
+	// ------------------------------------------------------------------------------------------------------------------	
+	//										>>> Data access objects <<<<
+	// ------------------------------------------------------------------------------------------------------------------
+
+
 	public int getPosition(int playerID) throws SQLException { 
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELECT position FROM "+dbName+".player WHERE player_id = ?";
@@ -158,7 +158,7 @@ public class SQL implements DAO, DTO {
 		rs.next();
 		return rs.getBoolean(1);
 	}
-	
+
 	public int getOwner(int field_id) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELECT player_id FROM "+dbName+".property WHERE field_id = ?";
@@ -171,15 +171,14 @@ public class SQL implements DAO, DTO {
 	}
 
 
-// ------------------------------------------------------------------------------------------------------------------	
-//   										>>> Data transfer objects <<<<
-// ------------------------------------------------------------------------------------------------------------------
-	
-	
+	// ------------------------------------------------------------------------------------------------------------------	
+	//   										>>> Data transfer objects <<<<
+	// ------------------------------------------------------------------------------------------------------------------
+
 	public void updatePosition(Player player) throws SQLException{
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String query = "UPDATE "+dbName+".player SET position = ? WHERE player_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		String update = "UPDATE "+dbName+".player SET position = ? WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setInt(1, player.getPosition());
 		stmt.setInt(2, player.getPlayerID());
 		stmt.executeUpdate();
@@ -188,8 +187,8 @@ public class SQL implements DAO, DTO {
 
 	public void setBalance(Player player)throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String query = "UPDATE "+dbName+".bank SET balance = ? WHERE account_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		String update = "UPDATE "+dbName+".bank SET balance = ? WHERE account_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setInt(1, player.getBalance());
 		stmt.setInt(2, player.getAccountID());
 		stmt.executeUpdate();
@@ -198,25 +197,23 @@ public class SQL implements DAO, DTO {
 
 	public void setJailTime(Player player)throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String query = "UPDATE "+dbName+".player SET jail_time = ? WHERE player_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		String update = "UPDATE "+dbName+".player SET jail_time = ? WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setInt(1, player.getJailTime());
 		stmt.setInt(2, player.getPlayerID());
 		stmt.executeUpdate();
 		myCon.close();
 	}
 
-
 	public void setCardPosition(int position, String card_id) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String query = "UPDATE "+dbName+".chancecard SET position = ? WHERE card_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		String update = "UPDATE "+dbName+".chancecard SET position = ? WHERE card_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setInt(1, position);
 		stmt.setString(2, card_id);
 		stmt.executeUpdate();
 		myCon.close();
 	}
-
 
 	public void setHouseCount() throws SQLException{ // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
@@ -254,12 +251,12 @@ public class SQL implements DAO, DTO {
 	}
 
 	public void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
-			int balance, int vId, String vColor, String vType) throws SQLException {
+			int balance, int vId, String vColor, String vType, boolean turn) throws SQLException {
 		createAccount(aId, balance);
 		createVehicle(vId, vColor, vType);
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String query = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?)";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		String update = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?)";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setInt(1, id);
 		stmt.setInt(2, vId);
 		stmt.setInt(3, aId);
@@ -273,8 +270,8 @@ public class SQL implements DAO, DTO {
 
 	public void createAccount(int aId, int balance) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String query = "INSERT INTO "+dbName+".bank VALUES(?,?)";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		String update = "INSERT INTO "+dbName+".bank VALUES(?,?)";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setInt(1, aId);
 		stmt.setInt(2, balance);
 		stmt.executeUpdate();
@@ -283,8 +280,8 @@ public class SQL implements DAO, DTO {
 
 	public void createVehicle(int vId, String vColor, String vType) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String query = "INSERT INTO "+dbName+".vehicle VALUES(?,?,?)";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		String update = "INSERT INTO "+dbName+".vehicle VALUES(?,?,?)";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setInt(1, vId);
 		stmt.setString(2, vColor);
 		stmt.setString(3, vType);
@@ -292,8 +289,12 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void createNewDB(String dbName) throws IOException,SQLException {
+	public void createNewDB(String dbName) throws IOException,SQLException { // Mangler prepared Statement
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "";
+
+
+
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS CDIO_"+dbName+" DEFAULT CHARACTER SET utf8;");
 		stmt.executeUpdate("USE CDIO_"+dbName+";");
@@ -301,8 +302,9 @@ public class SQL implements DAO, DTO {
 		BufferedReader in = new BufferedReader(new FileReader("newDB.sql"));
 		String str;
 		while ((str = in.readLine()) != null) {
-			if (!str.equals(""))
+			if (!str.equals("")) {
 				stmt.executeUpdate(str);
+			}
 		}
 		in.close();
 		myCon.close();
@@ -310,12 +312,14 @@ public class SQL implements DAO, DTO {
 
 	public void createChanceCard(ChanceCard card) throws SQLException{
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("INSERT INTO "+dbName+".chancecard VALUES(" + card.getCardID()+");");
+		String update = "INSERT INTO "+dbName+".chancecard VALUES(?);";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+		stmt.setString(1, card.getCardID());
+		stmt.executeUpdate();
 		myCon.close();
 	}
 
-	public String[] getActiveGames() throws SQLException {
+	public String[] getActiveGames() throws SQLException { // Skal denne have prepared statement?
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SHOW DATABASES LIKE 'CDIO%';");
@@ -333,66 +337,54 @@ public class SQL implements DAO, DTO {
 		return games;
 	}
 
-	@Override
-	public void setVehicleID(Player player) throws SQLException {
+	public void setVehicleID(Player player) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void setVehicleColour(Player player) throws SQLException {
+	public void setVehicleColour(Player player) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void setVehicleType(Player player) throws SQLException {
+	public void setVehicleType(Player player) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void setAccountId(Player player) throws SQLException {
+	public void setAccountId(Player player) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void setCardId(ChanceCard card) throws SQLException {
+	public void setCardId(ChanceCard card) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void setFieldId(AbstractFields field) throws SQLException {
+	public void setFieldId(AbstractFields field) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void setHouseCount(AbstractFields field) throws SQLException {
+	public void setHouseCount(AbstractFields field) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void buildHotel(Territory territory) throws SQLException {
+	public void buildHotel(Territory territory) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void mortgage(AbstractFields field) throws SQLException {
+	public void mortgage(AbstractFields field) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public int getOwner(AbstractFields field) throws SQLException {
+	public int getOwner(AbstractFields field) throws SQLException { // Mangler
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-
 
 }
