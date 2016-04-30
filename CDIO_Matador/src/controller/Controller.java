@@ -20,7 +20,7 @@ import entity.fields.Territory;
 
 public class Controller  {
 
-	private GUI_Commands c = new GUI_Commands(); 
+	private GUI_Commands gui = new GUI_Commands(); 
 	private GameBoard gameBoard;
 	private AbstractFields[] fields;
 	private String[] properties;
@@ -50,30 +50,30 @@ public class Controller  {
 			}
 		} while (numPlayersAlive()>1);
 		
-		c.showMessage(text.getFormattedString("winner", getWinner()));
+		gui.showMessage(text.getFormattedString("winner", getWinner()));
 		// sql.dropDB(); // Skal laves i SQL klassen
-		c.closeGUI();
+		gui.closeGUI();
 	}
 
 	private void chooseGame() throws SQLException {
-		String game = c.getUserButtonPressed(text.getString("loadGameQuestion"),text.getString("loadGame"),text.getString("newGame"));
+		String game = gui.getUserButtonPressed(text.getString("loadGameQuestion"),text.getString("loadGame"),text.getString("newGame"));
 		if (game.equals(text.getString("newGame"))) {
 			startNewGame();
 		} else {
-			loadGame(text, c.getUserSelection(text.getString("chooseGame"), sql.getActiveGames()));
+			loadGame(text, gui.getUserSelection(text.getString("chooseGame"), sql.getActiveGames()));
 		}
 	}
 
 	public void startNewGame() throws SQLException {
 		do {
-			gameName = c.getUserString(text.getString("nameGame"));
+			gameName = gui.getUserString(text.getString("nameGame"));
 		} while (gameName.equals(null) || gameName.trim().equals("") || dbNameUsed(gameName.trim()));
 
 		try {
 			sql.createNewDB(gameName);
 		} catch (IOException e) {
-			c.showMessage(text.getString("fileNotFound"));
-			c.closeGUI();
+			gui.showMessage(text.getString("fileNotFound"));
+			gui.closeGUI();
 		}
 
 		gameBoard.setupBoard(text);
@@ -92,7 +92,7 @@ public class Controller  {
 				loadCards(text);
 				break;
 			} catch (SQLException s) {
-				sql.updateUser(c.getUserString(text.getString("getUser")), c.getUserString("getPass"));
+				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
 			}
 		}
 		gameBoard.setupBoard(text,gameName,players,sql);
@@ -101,15 +101,15 @@ public class Controller  {
 	public void playerTurn(Player player) throws SQLException {
 		String button;
 		do {
-			button = c.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
+			button = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
 			if (button.equals(text.getString("roll"))) {
 				dicecup.roll();
-				c.setDice(dicecup.getDieOne(), dicecup.getDieTwo());
+				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());
 				player.updatePosition(dicecup.getLastRoll());
 			} else if (button.equals(text.getString("trade"))) {
-				String offereeName = c.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
+				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
 				broker = new SaleController();
-				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, c);
+				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, gui);
 			} else {
 				// Byg huse
 			}
@@ -180,7 +180,7 @@ public class Controller  {
 	}
 
 	private void getLanguage() {
-		String lang = c.getUserButtonPressed("Choose your preferred language", "Dansk", "English");
+		String lang = gui.getUserButtonPressed("Choose your preferred language", "Dansk", "English");
 		if (lang.equals("Dansk")) {
 			text = new Texts(language.Dansk);
 		} else {
@@ -213,18 +213,20 @@ public class Controller  {
 	private void addPlayers() throws SQLException {
 		int numOfPlayers = 0;
 		do {
-			numOfPlayers = c.getUserInteger(text.getString("numOfPlayers"));
+			numOfPlayers = gui.getUserInteger(text.getString("numOfPlayers"));
 		} while (numOfPlayers < 2 && numOfPlayers > 6);
+		
+		
 		players = new Player[numOfPlayers];
 		int i = 0;
 		do {
-			String name = c.getUserString(text.getFormattedString("yourName", i+1));
+			String name = gui.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
 				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/);
-				c.addPlayer(name, players[i].getBalance());
+				gui.addPlayer(name, players[i].getBalance());
 				i++;
 			} else {
-				c.showMessage(text.getString("nameTaken"));
+				gui.showMessage(text.getString("nameTaken"));
 			}
 		} while(i<players.length);
 	}
