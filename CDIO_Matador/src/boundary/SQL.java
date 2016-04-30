@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.PreparedStatement;
+
 import entity.ChanceCard;
 import entity.Player;
 import entity.fields.AbstractFields;
@@ -24,7 +26,7 @@ public class SQL implements DAO, DTO {
 	public SQL() throws SQLException {
 	}
 
-	public void useDB(String dbName) throws SQLException {
+	public void useDB(String dbName) {
 		SQL.dbName = "CDIO_"+dbName;
 	}
 	
@@ -33,149 +35,180 @@ public class SQL implements DAO, DTO {
 		SQL.password = password;
 	}
 
-	//-------------------------------------
-	//    >>>>  Data access objects  <<<< 
-	//-------------------------------------
+// ------------------------------------------------------------------------------------------------------------------	
+//										>>> Data access objects <<<<
+// ------------------------------------------------------------------------------------------------------------------
+	
+	
 	public int getPosition(int playerID) throws SQLException { 
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("SELECT position FROM player WHERE player_id = '" +playerID+ "'");
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT position FROM "+dbName+".player WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, playerID);
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
 	}
 
 	public String getPlayerName(int playerID) throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("SELECT name FROM player WHERE player_id = '"+playerID+"'");
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT name FROM "+dbName+".player WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, playerID);
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getString(1);
 	}
 
-	public int getBalance(int playerID)throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("SELECT balance FROM player NATURAL JOIN bank WHERE playerID = '" +playerID+ "'");
+	public int getBalance(int playerID) throws SQLException {
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT balance FROM "+dbName+".player NATURAL JOIN "+dbName+".bank WHERE playerID = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, playerID);
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
 	}
 
 	public int getJailTime(int playerID) throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement(); 
-		ResultSet rs = stmt.executeQuery("SELECT jail_time FROM player WHERE player_id = '" +playerID+"'");
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT jail_time FROM "+dbName+".player WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, playerID);
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
 	}
 
-	public String getVehicleColour(int playerID)throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT vehicle_colour FROM player NATURAL JOIN vehicle WHERE player_id = '" +playerID+ "'");
+	public String getVehicleColour(int playerID) throws SQLException {
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT vehicle_colour FROM "+dbName+".player NATURAL JOIN "+dbName+".vehicle WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, playerID);
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getString(1);
 	}
 
 	public String getVehicleType(int playerID) throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT vehicle_type FROM player NATURAL JOIN vehicel WHERE player_id = '" +playerID+ "'");
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT vehicle_type FROM "+dbName+".player NATURAL JOIN "+dbName+".vehicel WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, playerID);
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getString(1);
 	}
 
 	public int getCardId(int position)throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT card_id FROM chanceCard WHERE position = '" + position + "'");
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT card_id FROM "+dbName+".chanceCard WHERE position = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, position);
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
 	}
 
 	public int getCardPosition(int cardID) throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT position FROM chanceCard WHERE card_ID = '" + cardID + "'");
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT position FROM "+dbName+".chanceCard WHERE card_ID = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, cardID);
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
 	}
 
-	@Override
 	public int getFieldHouseCount(Territory territory) throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT house_count FROM Property WHERE field_id = '" + territory.getFieldId()+"'");
+		ResultSet rs = stmt.executeQuery("SELECT house_count FROM "+dbName+".property WHERE field_id = " + territory.getFieldId()+";");
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
 	}
 
 	public boolean hasHotel(Territory territory) throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELCET hotel FROM Property WHERE field_id = '" +territory.getFieldId()+"'");
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELCET hotel FROM "+dbName+".property WHERE field_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, territory.getFieldId());
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getBoolean(1);
 	}
 
 	public boolean isMortgaged(Territory territory)throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT mortgage FROM Property WHERE field_id = '" + territory.getFieldId()+"'");
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT mortgage FROM "+dbName+".property WHERE field_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, territory.getFieldId());
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getBoolean(1);
 	}
 	
 	public int getOwner(int field_id) throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT player_id FROM Property WHERE field_id = " + field_id+";");
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "SELECT player_id FROM "+dbName+".property WHERE field_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, field_id);
+		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
 	}
 
 
-
-
-
-	// ----------------------------------	
-	//   >>> Data transfer objects <<<<
-	// ----------------------------------
+// ------------------------------------------------------------------------------------------------------------------	
+//   										>>> Data transfer objects <<<<
+// ------------------------------------------------------------------------------------------------------------------
+	
+	
 	public void updatePosition(Player player) throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("UPDATE player SET position = " + player.getPosition()+ " WHERE player_id = " + player.getPlayerID());
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "UPDATE "+dbName+".player SET position = ? WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, player.getPosition());
+		stmt.setInt(2, player.getPlayerID());
+		stmt.executeUpdate();
 		myCon.close();
 	}
 
 	public void setBalance(Player player)throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement(); 
-		stmt.executeUpdate("UPDATE bank SET balance = " + player.getBalance()+ " WHERE account_id = " + player.getAccountID());	
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "UPDATE "+dbName+".bank SET balance = ? WHERE account_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, player.getBalance());
+		stmt.setInt(2, player.getAccountID());
+		stmt.executeUpdate();
 		myCon.close();
 	}
 
 	public void setJailTime(Player player)throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("UPDATE player SET jail_time = " + player.getJailTime()+ " WHERE player_id = " + player.getPlayerID() );
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String query = "UPDATE "+dbName+".player SET jail_time = ? WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+		stmt.setInt(1, player.getJailTime());
+		stmt.setInt(2, player.getPlayerID());
+		stmt.executeUpdate();
 		myCon.close();
 	}
 
 
 	public void setCardPosition() throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("  ");
 		myCon.close();
@@ -183,21 +216,21 @@ public class SQL implements DAO, DTO {
 
 
 	public void setHouseCount() throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
 	public void buildHotel()throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
 	public void mortgage()throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
@@ -205,14 +238,14 @@ public class SQL implements DAO, DTO {
 
 
 	public void setVehicleColour() throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
 	public void setVehicleType() throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
@@ -223,35 +256,35 @@ public class SQL implements DAO, DTO {
 
 	public void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
 			int balance, int vId, String vColor, String vType) throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement(); 
 		createAccount(aId, balance);
 		createVehicle(vId, vColor, vType);
-		stmt.executeUpdate("insert into player values(" +id+ ","+vId+","+aId+",'"+name+ "',"+position+","
+		stmt.executeUpdate("insert into "+dbName+".player values(" +id+ ","+vId+","+aId+",'"+name+ "',"+position+","
 				+ jailTime +"," +isActive+ ");" 
 				); 
 		myCon.close();
 	}
 
 	public void createAccount(int aId, int balance) throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("INSERT INTO Bank VALUES("+aId+","+balance+");");
+		stmt.executeUpdate("INSERT INTO "+dbName+".bank VALUES("+aId+","+balance+");");
 		myCon.close();
 
 	}
 
 	public void createVehicle(int vId, String vColor, String vType) throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("INSERT INTO Vehicle VALUES("+vId+",'"+vColor+"','"+vType+"');");
+		stmt.executeUpdate("INSERT INTO "+dbName+".vehicle VALUES("+vId+",'"+vColor+"','"+vType+"');");
 		myCon.close();
 	}
 
 
 
 	public void createNewDB(String dbName) throws IOException,SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+SQL.dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS CDIO_"+dbName+" DEFAULT CHARACTER SET utf8;");
 		stmt.executeUpdate("USE CDIO_"+dbName+";");
@@ -267,15 +300,14 @@ public class SQL implements DAO, DTO {
 	}
 
 	public void createChanceCard(ChanceCard card) throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("INSERT INTO chancecard VALUES(" + card.getCardID()+");");
+		stmt.executeUpdate("INSERT INTO "+dbName+".chancecard VALUES(" + card.getCardID()+");");
 		myCon.close();
 	}
 
 	public String[] getActiveGames() throws SQLException {
-		long start = System.nanoTime();
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/"+dbName,username,password);
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SHOW DATABASES LIKE 'CDIO%';");
 		ArrayList<String> gamesFromDB = new ArrayList<String>();
@@ -289,9 +321,6 @@ public class SQL implements DAO, DTO {
 			games[i] = temp;
 		}
 		myCon.close();
-		long slut = System.nanoTime();
-		double result = (slut-start)/1000000;
-		System.out.println(result + " milisekunder");
 		return games;
 	}
 
