@@ -215,8 +215,7 @@ public class Controller  {
 		do {
 			numOfPlayers = gui.getUserInteger(text.getString("numOfPlayers"));
 		} while (numOfPlayers < 2 && numOfPlayers > 6);
-		
-		
+	
 		players = new Player[numOfPlayers];
 		int i = 0;
 		do {
