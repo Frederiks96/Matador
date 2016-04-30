@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS `Player`(
 `jail_time` INT NOT NULL,
 `is_active` BOOLEAN NOT NULL,
 `turn` BOOLEAN NOT NULL,
-PRIMARY KEY (`player_id`),CONSTRAINT `vehicle_id`,
-FOREIGN KEY (`vehicle_id`)REFERENCES `Vehicle` (`vehicle_id`),
+PRIMARY KEY (`player_id`),
+CONSTRAINT `vehicle_id`FOREIGN KEY (`vehicle_id`)REFERENCES `Vehicle` (`vehicle_id`),
 FOREIGN KEY (`account_id`)REFERENCES `Bank` (`account_id`)
 );
 
