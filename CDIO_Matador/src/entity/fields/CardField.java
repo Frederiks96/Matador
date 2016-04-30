@@ -21,4 +21,9 @@ public class CardField extends AbstractFields {
 		return this.name;
 	}
 
+	@Override
+	public int getID() {
+		return id;
+	}
+
 }

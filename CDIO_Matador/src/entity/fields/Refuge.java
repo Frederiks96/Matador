@@ -29,6 +29,11 @@ public class Refuge extends AbstractFields {
 	public String getName() {
 		return this.name;
 	}
+
+	@Override
+	public int getID() {
+		return id;
+	}
 	
 
 }

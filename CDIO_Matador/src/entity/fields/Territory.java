@@ -17,7 +17,7 @@ public class Territory extends AbstractFields implements Ownable {
 	private int housePrice;
 	private boolean isMortgaged;
 	private String name;
-
+	
 	public Territory(int id, Player owner, Texts text){
 		super(id);
 		this.owner = null;
@@ -25,7 +25,7 @@ public class Territory extends AbstractFields implements Ownable {
 		this.colour = (String) text.getInfo(id+"_color");
 		this.isMortgaged = false;
 		this.name = (String) text.getInfo(id+"_name");
-
+	
 		this.price = (int) text.getInfo(id+"_price");
 		this.housePrice = (int) text.getInfo(id+"_house");
 		
@@ -33,7 +33,7 @@ public class Territory extends AbstractFields implements Ownable {
 			this.rent[i] = (int) text.getInfo(id+"_"+i);
 		}
 	}
-
+	
 	@Override
 	public void landOnField(Player player, Texts text) {
 		if (this.owner==null) {
@@ -163,7 +163,7 @@ public class Territory extends AbstractFields implements Ownable {
 		return this.isMortgaged;
 	}
 	
-	public int getFieldId() {
+	public int getID() {
 		return this.id;
 	}
 	

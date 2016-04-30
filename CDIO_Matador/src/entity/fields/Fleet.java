@@ -86,4 +86,9 @@ public class Fleet extends AbstractFields implements Ownable {
 		return this.isMortgaged;
 	}
 
+	@Override
+	public int getID() {
+		return id;
+	}
+
 }

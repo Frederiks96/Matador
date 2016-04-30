@@ -15,5 +15,6 @@ public abstract class AbstractFields {
 	
 	abstract public String getName();
 	
+	abstract public int getID();
 
 }

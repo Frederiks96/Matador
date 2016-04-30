@@ -88,4 +88,9 @@ public class Brewery extends AbstractFields implements Ownable {
 		return this.isMortgaged;
 	}
 
+	@Override
+	public int getID() {
+		return id;
+	}
+
 }
