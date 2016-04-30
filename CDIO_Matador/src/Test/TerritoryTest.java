@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import boundary.SQL;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
@@ -19,12 +20,13 @@ public class TerritoryTest {
 	private Player player1;
 	private Territory territory;
 	private Texts text;
+	SQL sql;
 	
 	@Before
 	public void setUp() throws Exception {
 		text = new Texts(language.Dansk);
 		territory = new Territory(1, null, text);
-		player1 = new Player("John", "grøn", "bil");
+		player1 = new Player("John", "grøn", "bil", sql);
 		
 	}
 	

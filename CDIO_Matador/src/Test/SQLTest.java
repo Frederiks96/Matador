@@ -19,7 +19,7 @@ public class SQLTest {
 
 	@Before
 	public void setUp() throws Exception {
-		player = new Player("Mads","green","ufo");
+		player = new Player("Mads","green","ufo", sql);
 		sql = new SQL();
 	}
 

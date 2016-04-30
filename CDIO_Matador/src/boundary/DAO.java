@@ -16,7 +16,7 @@ public interface DAO {
 	int getJailTime(int playerID)throws SQLException;
 	String getVehicleColour(int playerID)throws SQLException;
 	String getVehicleType(int playerID)throws SQLException;
-	int getOwner(AbstractFields field)throws SQLException;
+	int getOwner(int fieldID)throws SQLException;
 	
 	int getCardId(int position)throws SQLException;
 	int getCardPosition(int cardID)throws SQLException;

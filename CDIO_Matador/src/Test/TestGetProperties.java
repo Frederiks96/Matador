@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import boundary.SQL;
+
 import static org.junit.Assert.*;
 
 import controller.Controller;
@@ -15,6 +18,8 @@ import entity.fields.AbstractFields;
 
 public class TestGetProperties {
 
+	SQL sql;
+	
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -27,7 +32,7 @@ public class TestGetProperties {
 	public void test() throws SQLException {
 		Texts text = new Texts(language.Dansk);
 		Controller con = new Controller();
-		Player player = new Player("John","Yellow","Ufo");
+		Player player = new Player("John","Yellow","Ufo", sql);
 		String[] aha = new String[28];
 		aha[0] = "Rødovrevej";
 		AbstractFields[] fields = con.getFields();

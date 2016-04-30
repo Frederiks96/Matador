@@ -131,7 +131,7 @@ public class SQL implements DAO, DTO {
 	public int getFieldHouseCount(Territory territory) throws SQLException{
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT house_count FROM "+dbName+".property WHERE field_id = " + territory.getFieldId()+";");
+		ResultSet rs = stmt.executeQuery("SELECT house_count FROM "+dbName+".property WHERE field_id = " + territory.getID()+";");
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
@@ -141,7 +141,7 @@ public class SQL implements DAO, DTO {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELCET hotel FROM "+dbName+".property WHERE field_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
-		stmt.setInt(1, territory.getFieldId());
+		stmt.setInt(1, territory.getID());
 		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
@@ -152,24 +152,24 @@ public class SQL implements DAO, DTO {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELECT mortgage FROM "+dbName+".property WHERE field_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
-		stmt.setInt(1, territory.getFieldId());
+		stmt.setInt(1, territory.getID());
 		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getBoolean(1);
 	}
 
-	public int getOwner(int field_id) throws SQLException {
+	public int getOwner(int fieldID) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELECT player_id FROM "+dbName+".property WHERE field_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
-		stmt.setInt(1, field_id);
+		stmt.setInt(1, fieldID);
 		ResultSet rs = stmt.executeQuery();
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
 	}
-
+	
 
 	// ------------------------------------------------------------------------------------------------------------------	
 	//   										>>> Data transfer objects <<<<
@@ -215,35 +215,35 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void setHouseCount() throws SQLException{ // Mangler
+	public void setHouseCount(AbstractFields field) throws SQLException{ // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-	public void buildHotel()throws SQLException { // Mangler
+	public void buildHotel(AbstractFields field)throws SQLException { // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-	public void mortgage()throws SQLException { // Mangler
+	public void mortgage(AbstractFields field)throws SQLException { // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-	public void setVehicleColour() throws SQLException{ // Mangler
+	public void setVehicleColour(Player player) throws SQLException{ // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-	public void setVehicleType() throws SQLException{ // Mangler
+	public void setVehicleType(Player player) throws SQLException{ // Mangler
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
@@ -338,54 +338,29 @@ public class SQL implements DAO, DTO {
 		return games;
 	}
 
-	public void setVehicleID(Player player) throws SQLException { // Mangler
-		// TODO Auto-generated method stub
+	
 
+	@Override
+	public void buildHotel(Territory territory) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void setVehicleColour(Player player) throws SQLException { // Mangler
-		// TODO Auto-generated method stub
+	
 
+	@Override
+	public void setIsAlive() throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void setVehicleType(Player player) throws SQLException { // Mangler
+	@Override
+	public void setTurn() throws SQLException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
-	public void setAccountId(Player player) throws SQLException { // Mangler
-		// TODO Auto-generated method stub
 
-	}
-
-	public void setCardId(ChanceCard card) throws SQLException { // Mangler
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setFieldId(AbstractFields field) throws SQLException { // Mangler
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setHouseCount(AbstractFields field) throws SQLException { // Mangler
-		// TODO Auto-generated method stub
-
-	}
-
-	public void buildHotel(Territory territory) throws SQLException { // Mangler
-		// TODO Auto-generated method stub
-
-	}
-
-	public void mortgage(AbstractFields field) throws SQLException { // Mangler
-		// TODO Auto-generated method stub
-
-	}
-
-	public int getOwner(AbstractFields field) throws SQLException { // Mangler
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 }

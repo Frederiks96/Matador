@@ -26,10 +26,9 @@ public class Player {
 	private int jailTime;
 	private GUI_Commands myGUI = new GUI_Commands();
 	private Controller controller = new Controller();
-	private SQL sql = new SQL();
 
 
-	public Player(String name, String vColor, String vType) throws SQLException {
+	public Player(String name, String vColor, String vType, SQL sql) throws SQLException {
 		numOfPlayers++;
 		this.name = name;
 		this.numFleetsOwned = 0;
@@ -108,12 +107,10 @@ public class Player {
 		if (lastRoll>0 && lastRoll<13) {
 			if ((position+lastRoll)>39) {
 				updateBalance(4000);
-				sql.setBalance(this);
 				position += lastRoll-40;
 			} else {
 				position += lastRoll;
 			}
-		sql.updatePosition(this);
 		}
 	}
 

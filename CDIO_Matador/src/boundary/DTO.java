@@ -20,20 +20,21 @@ public interface DTO {
 	void updatePosition(Player player) throws SQLException;
 	void setBalance(Player player) throws SQLException;
 	void setJailTime(Player player) throws SQLException;
-	void setVehicleID(Player player) throws SQLException; // Ikke nødvendig?
+	
 	void setVehicleColour(Player player) throws SQLException;
 	void setVehicleType(Player player) throws SQLException;
-	void setAccountId(Player player) throws SQLException; // Ikke nødvendig?
+
 	
 	
-	void setCardId(ChanceCard card) throws SQLException; // Ikke nødvendig?
+	
 	void setCardPosition(int position, String card_id) throws SQLException;
 	
-	void setFieldId(AbstractFields field) throws SQLException; // Ikke nødvendig?
+	
 	void setHouseCount(AbstractFields field) throws SQLException;
 	void buildHotel(Territory territory) throws SQLException;
 	void mortgage(AbstractFields field) throws SQLException;
 	
-	
+	void setIsAlive()throws SQLException;
+	void setTurn()throws SQLException;
 
 }
