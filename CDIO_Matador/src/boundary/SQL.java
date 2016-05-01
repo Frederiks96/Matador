@@ -125,7 +125,7 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public int getFieldHouseCount(Territory territory) throws SQLException{
+	public int getFieldHouseCount(Territory territory) throws SQLException{	//  denne returnere også om der er hotel
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT house_count FROM "+dbName+".property WHERE field_id = " + territory.getID()+";");
@@ -134,7 +134,7 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public boolean hasHotel(Territory territory) throws SQLException{
+	public boolean hasHotel(Territory territory) throws SQLException{	//skal ikke bruges pga. getFieldHouseCount
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELCET hotel FROM "+dbName+".property WHERE field_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
@@ -166,6 +166,26 @@ public class SQL implements DAO, DTO {
 		rs.next();
 		return rs.getInt(1);
 	}
+	
+	public String[] getActiveGames() throws SQLException { // Skal denne have prepared statement? ---- er det ikke et DAO????
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery("SHOW DATABASES LIKE 'CDIO%';");
+		ArrayList<String> gamesFromDB = new ArrayList<String>();
+		while (rs.next()) {
+			gamesFromDB.add(rs.getString(1));
+		}
+		String[] games = new String[gamesFromDB.size()];
+		for (int i = 0; i < gamesFromDB.size(); i++) {
+			String str = gamesFromDB.get(i);
+			String temp = str.substring(5, str.length());
+			games[i] = temp;
+		}
+		myCon.close();
+		return games;
+	}
+	
+	
 	
 
 	// ------------------------------------------------------------------------------------------------------------------	
@@ -212,7 +232,7 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void setHouseCount(int field_id, int house_count) throws SQLException {
+	public void setHouseCount(int field_id, int house_count) throws SQLException { // denne metode gemmer også om der er et hotel
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String update = "UPDATE "+dbName+".property SET house_count = ? WHERE field_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
@@ -232,20 +252,50 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void setVehicleColour(Player player) throws SQLException { // Skal denne overhovedet bruges??
+	public void setVehicleColour(Player player) throws SQLException { // Skal denne overhovedet bruges??  -  NEJ!! pga. create vehicle
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-	public void setVehicleType(Player player) throws SQLException { // Skal denne overhovedet bruges??
+	public void setVehicleType(Player player) throws SQLException { // Skal denne overhovedet bruges??  - NEJ!!! pga. create vehicle
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
+	public void buildHotel(Territory territory) throws SQLException { // tilføj remove hotel , eventuelt kun brug housecount() ergo skal ikke bruge pga. setHouseCount også gemmer om der er hotel
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String update = "UPDATE "+dbName+".property SET hotel = ? WHERE field_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+		stmt.setBoolean(1, true);
+		stmt.setInt(2, territory.getID());
+		stmt.executeUpdate();
+		myCon.close();
+	}
+
+	public void setIsAlive(Player player) throws SQLException {
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String update = "UPDATE "+dbName+".player SET is_active = ? WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+		stmt.setBoolean(1, player.isAlive());
+		stmt.setInt(2, player.getPlayerID());
+		stmt.executeUpdate();
+		myCon.close();
+	}
+
+	public void setTurn(Player player) throws SQLException {
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String update = "UPDATE "+dbName+".player SET turn = ? WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+		stmt.setBoolean(1, player.isTurn());
+		stmt.setInt(2, player.getPlayerID());
+		stmt.executeUpdate();
+		myCon.close();
+	}
+	
 	public void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
 			int balance, int vId, String vColor, String vType, boolean turn) throws SQLException {
 		createAccount(aId, balance);
@@ -290,8 +340,6 @@ public class SQL implements DAO, DTO {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "";
 
-
-
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS CDIO_"+dbName+" DEFAULT CHARACTER SET utf8;");
 		stmt.executeUpdate("USE CDIO_"+dbName+";");
@@ -316,51 +364,7 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public String[] getActiveGames() throws SQLException { // Skal denne have prepared statement?
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		ResultSet rs = stmt.executeQuery("SHOW DATABASES LIKE 'CDIO%';");
-		ArrayList<String> gamesFromDB = new ArrayList<String>();
-		while (rs.next()) {
-			gamesFromDB.add(rs.getString(1));
-		}
-		String[] games = new String[gamesFromDB.size()];
-		for (int i = 0; i < gamesFromDB.size(); i++) {
-			String str = gamesFromDB.get(i);
-			String temp = str.substring(5, str.length());
-			games[i] = temp;
-		}
-		myCon.close();
-		return games;
-	}
+	
 
-	public void buildHotel(Territory territory) throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "UPDATE "+dbName+".property SET hotel = ? WHERE field_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setBoolean(1, true);
-		stmt.setInt(2, territory.getID());
-		stmt.executeUpdate();
-		myCon.close();
-	}
-
-	public void setIsAlive(Player player) throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "UPDATE "+dbName+".player SET is_active = ? WHERE player_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setBoolean(1, player.isAlive());
-		stmt.setInt(2, player.getPlayerID());
-		stmt.executeUpdate();
-		myCon.close();
-	}
-
-	public void setTurn(Player player) throws SQLException {
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "UPDATE "+dbName+".player SET turn = ? WHERE player_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setBoolean(1, player.isTurn());
-		stmt.setInt(2, player.getPlayerID());
-		stmt.executeUpdate();
-		myCon.close();
-	}
+	
 }

@@ -25,7 +25,7 @@ public interface DAO {
 	boolean hasHotel(Territory territory)throws SQLException;
 	boolean isMortgaged(Territory territory)throws SQLException;
 	
-	
+	public String[] getActiveGames() throws SQLException;
 	
 
 }
