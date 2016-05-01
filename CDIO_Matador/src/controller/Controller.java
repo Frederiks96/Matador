@@ -39,18 +39,28 @@ public class Controller  {
 		gameBoard = new GameBoard();
 		dicecup = new DiceCup();
 		chooseGame();
-
-		do {
-			for (int i = 0; i < players.length; i++) {
+		
+		int i=0;
+		
+		//checks who's turn it is
+		for(int j = 0; j < players.length; j++){
+			while(!players[j].isTurn())
+				i++;
+		}
+		
+		// This loop gives all alive players a turn 
+		while (numPlayersAlive()>1); {	
+			while (i < players.length) {
 				if (players[i].isAlive()) {
 					playerTurn(players[i]);
 				}
+				i++;
 			}
-		} while (numPlayersAlive()>1);
+		} 
 
 		gui.showMessage(text.getFormattedString("winner", getWinner()));
-		// sql.dropDB(); // Skal laves i SQL klassen
 		gui.closeGUI();
+		sql.dropDataBase();
 	}
 
 	private void chooseGame() throws SQLException {

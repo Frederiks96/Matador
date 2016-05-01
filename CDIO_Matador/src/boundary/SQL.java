@@ -12,14 +12,13 @@ import java.util.ArrayList;
 
 import entity.ChanceCard;
 import entity.Player;
-import entity.fields.AbstractFields;
 import entity.fields.Territory;
 
 public class SQL implements DAO, DTO {
 
 	private static String username = "root";
 	private static String password = "";
-	private static String dbName = "Matador";
+	private static String dbName;
 
 	public SQL() {
 	}
@@ -367,7 +366,12 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	
+	public void dropDataBase() throws SQLException{
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("DROP DATABASE "+dbName);
+		myCon.close();
+	}
 
 	
 }
