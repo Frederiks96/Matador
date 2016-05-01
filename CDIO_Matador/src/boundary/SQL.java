@@ -192,7 +192,7 @@ public class SQL implements DAO, DTO {
 	//   										>>> Data transfer objects <<<<
 	// ------------------------------------------------------------------------------------------------------------------
 
-	public void updatePosition(Player player) throws SQLException{
+	public void setPosition(Player player) throws SQLException{
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String update = "UPDATE "+dbName+".player SET position = ? WHERE player_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
@@ -336,7 +336,7 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void createNewDB(String dbName) throws IOException,SQLException { // Mangler prepared Statement
+	public void createNewDB(String dbName) throws IOException,SQLException { // Mangler prepared Statement - skal denne have interface?
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "";
 
