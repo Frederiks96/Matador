@@ -3,10 +3,10 @@ package entity.fields;
 import entity.Player;
 import entity.Texts;
 
-public class CardField extends AbstractFields {
+public class ChanceField extends AbstractFields {
 	private String name;
 	
-	public CardField(int id, Texts text) {
+	public ChanceField(int id, Texts text) {
 		super(id);
 		this.name = (String) text.getInfo(id+"_name");
 	}
@@ -24,6 +24,16 @@ public class CardField extends AbstractFields {
 	@Override
 	public int getID() {
 		return id;
+	}
+
+	@Override
+	public int getHouseCount() {
+		return 0;
+	}
+
+	@Override
+	public boolean isMortgaged() {
+		return false;
 	}
 
 }

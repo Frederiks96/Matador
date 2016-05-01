@@ -12,7 +12,7 @@ import entity.Texts.language;
 import entity.dicecup.DiceCup;
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
-import entity.fields.CardField;
+import entity.fields.ChanceField;
 import entity.fields.Fleet;
 import entity.fields.Territory;
 
@@ -47,7 +47,7 @@ public class Controller  {
 				}
 			}
 		} while (numPlayersAlive()>1);
-		
+
 		gui.showMessage(text.getFormattedString("winner", getWinner()));
 		// sql.dropDB(); // Skal laves i SQL klassen
 		gui.closeGUI();
@@ -75,7 +75,7 @@ public class Controller  {
 		}
 
 		gameBoard.setupBoard(text);
-		fields = gameBoard.getFields();
+		fields = gameBoard.getLogicFields();
 		CardStack deck = new CardStack();
 		deck.newDeck(text);
 		deck.shuffle();
@@ -99,10 +99,10 @@ public class Controller  {
 	public void playerTurn(Player player) throws SQLException {
 		player.setTurn(true);
 		String options;
-		
+
 		do {
 			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
-			
+
 			if (options.equals(text.getString("roll"))) {
 				gui.removeCar(player.getPosition(), player.getName());		
 				dicecup.roll();
@@ -111,27 +111,27 @@ public class Controller  {
 				gui.setCar(player.getPosition(), player.getName());		
 				gameBoard.getLogicField(player.getPosition()).landOnField(player, text);;
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
-				if (fields[player.getPosition()] instanceof CardField) 
+				if (fields[player.getPosition()] instanceof ChanceField) 
 					deck.draw(player);
-					
+
 			} else if (options.equals(text.getString("trade"))) {
 				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
 				broker = new SaleController();
 				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, gui);
-			
+
 			} else {
 				// Byg huse
 			}
-		
+
 		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
-						
+
 		player.setTurn(false);
 		saveGame();
 	}
 
-	
+
 	public boolean hasAll(Player owner, String COLOUR) {
-		fields = gameBoard.getFields();
+		fields = gameBoard.getLogicFields();
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Territory) {
@@ -149,7 +149,7 @@ public class Controller  {
 	}
 
 	public String[] getOwnedProperties(Player player) {
-		fields = gameBoard.getFields();
+		fields = gameBoard.getLogicFields();
 		properties = new String[28];
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
@@ -196,7 +196,7 @@ public class Controller  {
 		}
 	}
 
-	
+
 	public boolean isValidName(String name) {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i] != null) {
@@ -223,7 +223,7 @@ public class Controller  {
 		do {
 			numOfPlayers = gui.getUserInteger(text.getString("numOfPlayers"));
 		} while (numOfPlayers < 2 && numOfPlayers > 6);
-	
+
 		players = new Player[numOfPlayers];
 		int i = 0;
 		do {
@@ -284,7 +284,7 @@ public class Controller  {
 		}
 		return opponents;
 	}
-	
+
 	private String getWinner() {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i].isAlive()) {
@@ -301,6 +301,16 @@ public class Controller  {
 			sql.setJailTime(players[i]);
 			sql.setTurn(players[i]);
 			sql.setIsAlive(players[i]);
+		}
+//		for(int i=0; i < deck.length; i++){
+//			sql.setCardPosition(deck[i].getPosition, deck[i].getID());
+//		}
+
+		for(int i = 0; i < fields.length; i++){
+			if (fields[i] instanceof Territory || fields[i] instanceof Brewery || fields[i] instanceof Fleet){
+				sql.setMortgage( fields[i].getID(), fields[i].isMortgaged()); 
+				sql.setHouseCount(fields[i].getID(), fields[i].getHouseCount());
+			}
 		}
 	}
 }

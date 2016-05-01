@@ -91,4 +91,9 @@ public class Fleet extends AbstractFields implements Ownable {
 		return id;
 	}
 
+	@Override
+	public int getHouseCount() {
+		return 0;
+	}
+
 }

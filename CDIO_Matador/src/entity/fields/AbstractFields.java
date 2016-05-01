@@ -17,4 +17,7 @@ public abstract class AbstractFields {
 	
 	abstract public int getID();
 
+	abstract public int getHouseCount();
+	
+	abstract public boolean isMortgaged();
 }

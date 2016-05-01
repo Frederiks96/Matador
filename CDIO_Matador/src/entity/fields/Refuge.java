@@ -34,6 +34,17 @@ public class Refuge extends AbstractFields {
 	public int getID() {
 		return id;
 	}
+
+	@Override
+	public int getHouseCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isMortgaged() {
+		return false;
+	}
 	
 
 }

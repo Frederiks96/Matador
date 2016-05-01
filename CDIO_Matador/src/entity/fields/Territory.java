@@ -170,5 +170,11 @@ public class Territory extends AbstractFields implements Ownable {
 	public void setHouseCount(int houseCount) {
 		this.houseCount = houseCount;
 	}
+
+	@Override
+	public int getHouseCount() {
+		// TODO Auto-generated method stub
+		return houseCount;
+	}
 	
 }

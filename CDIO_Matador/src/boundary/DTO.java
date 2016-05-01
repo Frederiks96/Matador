@@ -24,7 +24,7 @@ public interface DTO {
 	void setCardPosition(int position, String card_id) throws SQLException;
 	void setHouseCount(int field_id, int house_count) throws SQLException;
 	void buildHotel(Territory territory) throws SQLException; 
-	void mortgage(int field_id) throws SQLException; 
+	void setMortgage(int field_id, boolean mortgaged) throws SQLException; 
 	void setIsAlive(Player player) throws SQLException;
 	void setTurn(Player player) throws SQLException;	
 

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import entity.ChanceCard;
 import entity.Player;
+import entity.fields.AbstractFields;
 import entity.fields.Territory;
 
 public class SQL implements DAO, DTO {
@@ -242,11 +243,11 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void mortgage(int field_id) throws SQLException {
+	public void setMortgage(int field_id, boolean mortgaged) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String update = "UPDATE "+dbName+".property SET mortgage = ? WHERE field_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setBoolean(1, true);
+		stmt.setBoolean(1, mortgaged);
 		stmt.setInt(2, field_id);
 		stmt.executeUpdate();
 		myCon.close();

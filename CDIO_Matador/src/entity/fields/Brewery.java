@@ -93,4 +93,9 @@ public class Brewery extends AbstractFields implements Ownable {
 		return id;
 	}
 
+	@Override
+	public int getHouseCount() {
+		return 0;
+	}
+
 }
