@@ -175,6 +175,16 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 	
+	@Override
+	public int countPlayers() throws SQLException {
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		Statement stmt = myCon.createStatement();
+		ResultSet rs = stmt.executeQuery ("SELECT COUNT(player_id) FROM "+dbName+".player");
+		myCon.close();
+		rs.next();
+		return rs.getInt(1);
+	}
+	
 	public String[] getActiveGames() throws SQLException { // Skal denne have prepared statement? ---- er det ikke et DAO????
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
@@ -373,6 +383,8 @@ public class SQL implements DAO, DTO {
 		stmt.executeUpdate();
 		myCon.close();
 	}
+
+	
 
 	
 
