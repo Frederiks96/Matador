@@ -32,6 +32,14 @@ public class SQL implements DAO, DTO {
 		SQL.password = password;
 	}
 
+	public void dropDataBase() throws SQLException{
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		Statement stmt = myCon.createStatement();
+		stmt.executeUpdate("DROP DATABASE "+dbName);
+		myCon.close();
+	}
+	
+	
 	// ------------------------------------------------------------------------------------------------------------------	
 	//										>>> Data access objects <<<<
 	// ------------------------------------------------------------------------------------------------------------------
@@ -366,12 +374,7 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void dropDataBase() throws SQLException{
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("DROP DATABASE "+dbName);
-		myCon.close();
-	}
+	
 
 	
 }
