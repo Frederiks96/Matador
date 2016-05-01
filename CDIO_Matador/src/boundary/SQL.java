@@ -10,11 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.PreparedStatement;
-
 import entity.ChanceCard;
 import entity.Player;
-import entity.fields.AbstractFields;
 import entity.fields.Territory;
 
 public class SQL implements DAO, DTO {
@@ -23,7 +20,7 @@ public class SQL implements DAO, DTO {
 	private static String password = "";
 	private static String dbName = "Matador";
 
-	public SQL() throws SQLException {
+	public SQL() {
 	}
 
 	public void useDB(String dbName) {
@@ -106,7 +103,7 @@ public class SQL implements DAO, DTO {
 		return rs.getString(1);
 	}
 
-	public int getCardId(int position)throws SQLException {
+	public int getCardId(int position) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELECT card_id FROM "+dbName+".chanceCard WHERE position = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
@@ -148,7 +145,7 @@ public class SQL implements DAO, DTO {
 		return rs.getBoolean(1);
 	}
 
-	public boolean isMortgaged(Territory territory)throws SQLException {
+	public boolean isMortgaged(Territory territory) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELECT mortgage FROM "+dbName+".property WHERE field_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
@@ -185,7 +182,7 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void setBalance(Player player)throws SQLException {
+	public void setBalance(Player player) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String update = "UPDATE "+dbName+".bank SET balance = ? WHERE account_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
@@ -195,7 +192,7 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void setJailTime(Player player)throws SQLException {
+	public void setJailTime(Player player) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String update = "UPDATE "+dbName+".player SET jail_time = ? WHERE player_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
@@ -215,35 +212,34 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void setHouseCount(AbstractFields field) throws SQLException{ // Mangler
+	public void setHouseCount(int field_id, int house_count) throws SQLException {
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String update = "UPDATE "+dbName+".property SET house_count = ? WHERE field_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+		stmt.setInt(1, house_count);
+		stmt.setInt(2, field_id);
+		stmt.executeUpdate();
+		myCon.close();
+	}
+
+	public void mortgage(int field_id) throws SQLException {
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String update = "UPDATE "+dbName+".property SET mortgage = ? WHERE field_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+		stmt.setBoolean(1, true);
+		stmt.setInt(2, field_id);
+		stmt.executeUpdate();
+		myCon.close();
+	}
+
+	public void setVehicleColour(Player player) throws SQLException { // Skal denne overhovedet bruges??
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
 		myCon.close();
 	}
 
-	public void buildHotel(AbstractFields field)throws SQLException { // Mangler
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
-		myCon.close();
-	}
-
-	public void mortgage(AbstractFields field)throws SQLException { // Mangler
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
-		myCon.close();
-	}
-
-	public void setVehicleColour(Player player) throws SQLException{ // Mangler
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
-		myCon.close();
-	}
-
-	public void setVehicleType(Player player) throws SQLException{ // Mangler
+	public void setVehicleType(Player player) throws SQLException { // Skal denne overhovedet bruges??
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("");
@@ -311,9 +307,9 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void createChanceCard(ChanceCard card) throws SQLException{
+	public void createChanceCard(ChanceCard card) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "INSERT INTO "+dbName+".chancecard VALUES(?);";
+		String update = "INSERT INTO "+dbName+".chancecard VALUES(?)";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setString(1, card.getCardID());
 		stmt.executeUpdate();
@@ -338,29 +334,33 @@ public class SQL implements DAO, DTO {
 		return games;
 	}
 
-	
-
-	@Override
 	public void buildHotel(Territory territory) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String update = "UPDATE "+dbName+".property SET hotel = ? WHERE field_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+		stmt.setBoolean(1, true);
+		stmt.setInt(2, territory.getID());
+		stmt.executeUpdate();
+		myCon.close();
 	}
 
-	
-
-	@Override
 	public void setIsAlive(Player player) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String update = "UPDATE "+dbName+".player SET is_active = ? WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+		stmt.setBoolean(1, player.isAlive());
+		stmt.setInt(2, player.getPlayerID());
+		stmt.executeUpdate();
+		myCon.close();
 	}
 
-	@Override
 	public void setTurn(Player player) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+		String update = "UPDATE "+dbName+".player SET turn = ? WHERE player_id = ?";
+		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+		stmt.setBoolean(1, player.isTurn());
+		stmt.setInt(2, player.getPlayerID());
+		stmt.executeUpdate();
+		myCon.close();
 	}
-
-
-	
-
 }
