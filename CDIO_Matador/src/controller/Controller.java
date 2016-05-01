@@ -43,13 +43,14 @@ public class Controller  {
 		int i=0;
 
 		//checks who's turn it is
-		for(int j = 0; j < players.length; j++){
-			while(!players[j].isTurn())
-				i++;
-		}
+//		for(int j = 0; j < players.length; j++){
+//			while(!players[j].isTurn()){
+//				i++;
+//			}
+//		}
 
 		// This loop gives all alive players a turn 
-		while (numPlayersAlive()>1); {	
+		while (numPlayersAlive()>1) {	
 			while (i < players.length) {
 				if (players[i].isAlive()) {
 					playerTurn(players[i]);
@@ -90,6 +91,8 @@ public class Controller  {
 		deck.newDeck(text);
 		deck.shuffle();
 		addPlayers();
+		players[0].setTurn(true);
+		
 	}
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
@@ -114,27 +117,27 @@ public class Controller  {
 			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
 
 			if (options.equals(text.getString("roll"))) {
-				gui.removeCar(player.getPosition(), player.getName());		
+				gui.removeCar(player.getPosition()+1, player.getName());		
 				dicecup.roll();
 				player.updatePosition((int)(dicecup.getLastRoll()));		
 				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
-				gui.setCar(player.getPosition(), player.getName());		
+				gui.setCar(player.getPosition()+1, player.getName());		
 				gameBoard.getLogicField(player.getPosition()).landOnField(player, text);;
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (fields[player.getPosition()] instanceof ChanceField) 
 					deck.draw(player);
 				player.setTurn(false);
 				saveGame();
-			
+
 			} else if (options.equals(text.getString("trade"))) {
 				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
 				broker = new SaleController();
 				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, gui);
 				saveGame();
-			
+
 			} else {	//BUILD
-				
-				
+
+
 				saveGame();
 			}
 
@@ -241,6 +244,7 @@ public class Controller  {
 			if (isValidName(name)) {
 				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/, sql);
 				gui.addPlayer(name, players[i].getBalance());
+				gui.setCar(players[i].getPosition()+1, players[i].getName());
 				i++;
 			} else {
 				gui.showMessage(text.getString("nameTaken"));
