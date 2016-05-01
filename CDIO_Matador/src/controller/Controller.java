@@ -39,15 +39,15 @@ public class Controller  {
 		gameBoard = new GameBoard();
 		dicecup = new DiceCup();
 		chooseGame();
-		
+
 		int i=0;
-		
+
 		//checks who's turn it is
 		for(int j = 0; j < players.length; j++){
 			while(!players[j].isTurn())
 				i++;
 		}
-		
+
 		// This loop gives all alive players a turn 
 		while (numPlayersAlive()>1); {	
 			while (i < players.length) {
@@ -123,22 +123,23 @@ public class Controller  {
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (fields[player.getPosition()] instanceof ChanceField) 
 					deck.draw(player);
-
+				player.setTurn(false);
+				saveGame();
+			
 			} else if (options.equals(text.getString("trade"))) {
 				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
 				broker = new SaleController();
 				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, gui);
-
-			} else {
-				// Byg huse
+				saveGame();
+			
+			} else {	//BUILD
+				
+				
+				saveGame();
 			}
 
 		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
-
-		player.setTurn(false);
-		saveGame();
 	}
-
 
 	public boolean hasAll(Player owner, String COLOUR) {
 		fields = gameBoard.getLogicFields();
@@ -206,7 +207,6 @@ public class Controller  {
 		}
 	}
 
-
 	public boolean isValidName(String name) {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i] != null) {
@@ -249,7 +249,7 @@ public class Controller  {
 	}
 
 	private void loadPlayers() throws SQLException {
-		for (int i = 0; i < players.length; i++) {
+		for (int i = 0; i < sql.countPlayers(); i++) {
 			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1), sql);
 			sql.setBalance(players[i]);
 		}
@@ -284,7 +284,6 @@ public class Controller  {
 		return null;
 	}
 
-
 	private String[] getOpponents(Player player) {
 		String[] opponents = new String[players.length-1];
 		for (int i = 0; i < players.length; i++) {
@@ -312,9 +311,9 @@ public class Controller  {
 			sql.setTurn(players[i]);
 			sql.setIsAlive(players[i]);
 		}
-//		for(int i=0; i < deck.length; i++){
-//			sql.setCardPosition(deck[i].getPosition, deck[i].getID());
-//		}
+		//		for(int i=0; i < deck.length; i++){
+		//			sql.setCardPosition(deck[i].getPosition, deck[i].getID());
+		//		}
 
 		for(int i = 0; i < fields.length; i++){
 			if (fields[i] instanceof Territory || fields[i] instanceof Brewery || fields[i] instanceof Fleet){
