@@ -340,6 +340,8 @@ public class SQL implements DAO, DTO {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "";
 
+		
+		
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS CDIO_"+dbName+" DEFAULT CHARACTER SET utf8;");
 		stmt.executeUpdate("USE CDIO_"+dbName+";");

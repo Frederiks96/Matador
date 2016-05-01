@@ -297,7 +297,7 @@ public class Controller  {
 	private void saveGame() throws SQLException{
 		for (int i = 0; i< players.length; i++){
 			sql.setBalance(players[i]);
-			sql.updatePosition(players[i]);
+			sql.setPosition(players[i]);
 			sql.setJailTime(players[i]);
 			sql.setTurn(players[i]);
 			sql.setIsAlive(players[i]);
