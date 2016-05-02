@@ -1,5 +1,6 @@
 package entity.fields;
 
+import boundary.GUI_Commands;
 import entity.Player;
 import entity.Texts;
 
@@ -12,7 +13,7 @@ public class ChanceField extends AbstractFields {
 	}
 
 	@Override
-	public void landOnField(Player player, Texts text) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		// Du er landet på prøv lykken
 	}
 
@@ -34,6 +35,12 @@ public class ChanceField extends AbstractFields {
 	@Override
 	public boolean isMortgaged() {
 		return false;
+	}
+
+	@Override
+	public Player getOwner() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

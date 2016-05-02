@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import boundary.GUI_Commands;
 import boundary.SQL;
 import entity.GameBoard;
 import entity.Player;
@@ -22,6 +23,7 @@ public class TerritoryTest {
 	private Territory territory;
 	private Texts text;
 	SQL sql;
+	GUI_Commands gui;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -36,8 +38,8 @@ public class TerritoryTest {
 	
 	@Test
 	public void testBuy(){
-		territory.buyProperty(player1, text);
-		territory.landOnField(player2, text);
+		territory.buyProperty(player1, text, gui);
+		territory.landOnField(player2, text, gui);
 		
 		Player expected = this.player1;
 		Player actual = territory.getOwner();
@@ -64,7 +66,7 @@ public class TerritoryTest {
 	public void testMortgage(){
 		
 		territory.setOwner(player1);
-		territory.mortgage(text);
+		territory.mortgage(text, gui);
 		
 		boolean expected = true;
 		boolean actual = territory.isMortgaged();

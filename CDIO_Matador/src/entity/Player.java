@@ -15,6 +15,7 @@ public class Player {
 	private static int numOfPlayers = 0;			//    så det kommer til at hedde 001, 002, osv..
 	private int numFleetsOwned;
 	private int numBreweriesOwned;
+	private int numTerritoryOwned;
 	private boolean isAlive;
 	private boolean turn;
 	private Account account;
@@ -172,4 +173,21 @@ public class Player {
 		this.turn = turn;
 	}
 
+	public int getNumTerritoryOwned() {
+		return numTerritoryOwned;
+	}
+
+	public void updateNumTerritoryOwned(int i){
+		numTerritoryOwned = numTerritoryOwned + i;	
+	}
+
+	public void updateNumBreweriesOwned(int i) {
+		numBreweriesOwned = numBreweriesOwned +i;
+		
+	}
+
+	public void updateNumFleetOwned(int i) {
+		numFleetsOwned = numFleetsOwned + i;
+	}
+	
 }
