@@ -78,7 +78,7 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public int getJailTime(int playerID) throws SQLException{
+	public int getJailTime(int playerID) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELECT jail_time FROM "+dbName+".player WHERE player_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
@@ -100,7 +100,7 @@ public class SQL implements DAO, DTO {
 		return rs.getString(1);
 	}
 
-	public String getVehicleType(int playerID) throws SQLException{
+	public String getVehicleType(int playerID) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELECT vehicle_type FROM "+dbName+".player NATURAL JOIN "+dbName+".vehicel WHERE player_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
@@ -122,7 +122,7 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public int getCardPosition(int cardID) throws SQLException{
+	public int getCardPosition(int cardID) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELECT position FROM "+dbName+".chanceCard WHERE card_ID = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
@@ -133,24 +133,13 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public int getFieldHouseCount(Territory territory) throws SQLException{	// denne returnere også om der er hotel
+	public int getFieldHouseCount(Territory territory) throws SQLException {	
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT house_count FROM "+dbName+".property WHERE field_id = " + territory.getID()+";");
 		myCon.close();
 		rs.next();
 		return rs.getInt(1);
-	}
-
-	public boolean hasHotel(Territory territory) throws SQLException { // skal ikke bruges pga. getFieldHouseCount
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String query = "SELCET hotel FROM "+dbName+".property WHERE field_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
-		stmt.setInt(1, territory.getID());
-		ResultSet rs = stmt.executeQuery();
-		myCon.close();
-		rs.next();
-		return rs.getBoolean(1);
 	}
 
 	public boolean isMortgaged(Territory territory) throws SQLException {
@@ -208,7 +197,7 @@ public class SQL implements DAO, DTO {
 	// ------------------------------------------------------------------------------------------------------------------
 
 	
-	public void setPosition(Player player) throws SQLException{
+	public void setPosition(Player player) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String update = "UPDATE "+dbName+".player SET position = ? WHERE player_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
@@ -248,7 +237,7 @@ public class SQL implements DAO, DTO {
 		myCon.close();
 	}
 
-	public void setHouseCount(int field_id, int house_count) throws SQLException { // denne metode gemmer også om der er et hotel
+	public void setHouseCount(int field_id, int house_count) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String update = "UPDATE "+dbName+".property SET house_count = ? WHERE field_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
@@ -264,16 +253,6 @@ public class SQL implements DAO, DTO {
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setBoolean(1, mortgaged);
 		stmt.setInt(2, field_id);
-		stmt.executeUpdate();
-		myCon.close();
-	}
-
-	public void buildHotel(Territory territory) throws SQLException { // tilføj remove hotel , eventuelt kun brug housecount() ergo skal ikke bruge pga. setHouseCount også gemmer om der er hotel
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "UPDATE "+dbName+".property SET hotel = ? WHERE field_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setBoolean(1, true);
-		stmt.setInt(2, territory.getID());
 		stmt.executeUpdate();
 		myCon.close();
 	}

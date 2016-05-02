@@ -21,7 +21,6 @@ public interface DAO {
 	int getCardPosition(int cardID) 			throws SQLException;
 	int countPlayers() 							throws SQLException;
 	int getFieldHouseCount(Territory territory) throws SQLException;
-	boolean hasHotel(Territory territory) 		throws SQLException;
 	boolean isMortgaged(Territory territory) 	throws SQLException;
 	public String[] getActiveGames() 			throws SQLException;
 	
