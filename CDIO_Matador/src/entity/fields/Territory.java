@@ -177,4 +177,8 @@ public class Territory extends AbstractFields implements Ownable {
 		return houseCount;
 	}
 	
+	public int getPrice() {
+		return price;
+	}
+	
 }

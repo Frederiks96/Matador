@@ -44,7 +44,7 @@ public class TerritoryTest {
 		
 		assertEquals(expected, actual);
 		
-		int expectedBalance = 30000 - territory.getPrice;
+		int expectedBalance = 30000 - territory.getPrice();
 		int actualBalance = player1.getBalance();
 		
 		assertEquals(expectedBalance, actualBalance);
