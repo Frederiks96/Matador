@@ -61,7 +61,7 @@ public class TerritoryTest {
 	public void testMortgage(){
 		
 		territory.setOwner(player1);
-		territory.mortgage(text);
+		territory.mortgage(text, gui);
 		
 		boolean expected = true;
 		boolean actual = territory.isMortgaged();
