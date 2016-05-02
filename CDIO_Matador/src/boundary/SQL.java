@@ -334,7 +334,7 @@ public class SQL implements DAO, DTO {
 		createAccount(aId, balance);
 		createVehicle(vId, vColor, vType);
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?)";
+		String update = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?,?)";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 		stmt.setInt(1, id);
 		stmt.setInt(2, vId);
@@ -343,7 +343,7 @@ public class SQL implements DAO, DTO {
 		stmt.setInt(5, position);
 		stmt.setInt(6, jailTime);
 		stmt.setBoolean(7, isActive);
-		//		stmt.setBoolean(8, turn);
+		stmt.setBoolean(8, turn);
 		stmt.executeUpdate();
 		myCon.close();
 	}
