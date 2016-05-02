@@ -44,12 +44,15 @@ public class TerritoryTest {
 		
 		assertEquals(expected, actual);
 		
-		int expectedBalance = 30000 - territory.getRent();
+		int expectedBalance = 30000 - territory.getPrice;
 		int actualBalance = player1.getBalance();
 		
 		assertEquals(expectedBalance, actualBalance);
 		
 		int expectedAfterPayment = 30000 - territory.getRent();
+		int actualAfterPayment = player2.getBalance();
+		
+		assertEquals(expectedAfterPayment, actualAfterPayment);
 		}
 	
 	@Test
