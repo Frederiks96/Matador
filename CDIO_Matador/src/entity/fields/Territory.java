@@ -180,16 +180,9 @@ public class Territory extends AbstractFields implements Ownable {
 
 	@Override
 	public int getHouseCount() {
-		// TODO Auto-generated method stub
 		return houseCount;
 	}
 
-	public int getPrice() {
-		return price;
-	}
-
-	
-	
 	public int getPrice() {
 		return price;
 	}
