@@ -133,7 +133,7 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public int getFieldHouseCount(Territory territory) throws SQLException{	//  denne returnere også om der er hotel
+	public int getFieldHouseCount(Territory territory) throws SQLException{	// denne returnere også om der er hotel
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT house_count FROM "+dbName+".property WHERE field_id = " + territory.getID()+";");
@@ -142,7 +142,7 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public boolean hasHotel(Territory territory) throws SQLException{	//skal ikke bruges pga. getFieldHouseCount
+	public boolean hasHotel(Territory territory) throws SQLException { // skal ikke bruges pga. getFieldHouseCount
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String query = "SELCET hotel FROM "+dbName+".property WHERE field_id = ?";
 		java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
@@ -175,7 +175,6 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 	
-	@Override
 	public int countPlayers() throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
@@ -203,13 +202,12 @@ public class SQL implements DAO, DTO {
 		return games;
 	}
 	
-	
-	
 
 	// ------------------------------------------------------------------------------------------------------------------	
 	//   										>>> Data transfer objects <<<<
 	// ------------------------------------------------------------------------------------------------------------------
 
+	
 	public void setPosition(Player player) throws SQLException{
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		String update = "UPDATE "+dbName+".player SET position = ? WHERE player_id = ?";
@@ -267,20 +265,6 @@ public class SQL implements DAO, DTO {
 		stmt.setBoolean(1, mortgaged);
 		stmt.setInt(2, field_id);
 		stmt.executeUpdate();
-		myCon.close();
-	}
-
-	public void setVehicleColour(Player player) throws SQLException { // Skal denne overhovedet bruges??  -  NEJ!! pga. create vehicle
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
-		myCon.close();
-	}
-
-	public void setVehicleType(Player player) throws SQLException { // Skal denne overhovedet bruges??  - NEJ!!! pga. create vehicle
-		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("");
 		myCon.close();
 	}
 
@@ -383,10 +367,6 @@ public class SQL implements DAO, DTO {
 		stmt.executeUpdate();
 		myCon.close();
 	}
-
-	
-
-	
 
 	
 }
