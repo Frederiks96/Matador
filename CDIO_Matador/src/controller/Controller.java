@@ -43,11 +43,11 @@ public class Controller  {
 		int i=0;
 
 		//checks who's turn it is
-//		for(int j = 0; j < players.length; j++){
-//			while(!players[j].isTurn()){
-//				i++;
-//			}
-//		}
+		//		for(int j = 0; j < players.length; j++){
+		//			while(!players[j].isTurn()){
+		//				i++;
+		//			}
+		//		}
 
 		// This loop gives all alive players a turn 
 		while (numPlayersAlive()>1) {	
@@ -92,7 +92,7 @@ public class Controller  {
 		deck.shuffle();
 		addPlayers();
 		players[0].setTurn(true);
-		
+
 	}
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
@@ -117,12 +117,12 @@ public class Controller  {
 			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
 
 			if (options.equals(text.getString("roll"))) {
-				gui.removeCar(player.getPosition()+1, player.getName());		
+				gui.removeCar(player.getPosition(), player.getName());		
 				dicecup.roll();
 				player.updatePosition((int)(dicecup.getLastRoll()));		
 				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
-				gui.setCar(player.getPosition()+1, player.getName());		
-				gameBoard.getLogicField(player.getPosition()).landOnField(player, text);;
+				gui.setCar(player.getPosition(), player.getName());		
+				gameBoard.getLogicField(player.getPosition()).landOnField(player, text, gui);;
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (fields[player.getPosition()] instanceof ChanceField) 
 					deck.draw(player);
@@ -136,12 +136,21 @@ public class Controller  {
 				saveGame();
 
 			} else {	//BUILD
-
-
+				build(player);
 				saveGame();
 			}
 
 		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
+	}
+
+	private String[] getTerritoriesOwned(Player player) {
+		String[] ownedTerritories = new String[player.getNumTerritoryOwned()];
+		for (int i = 0; i < fields.length; i++) {
+			if(fields[i] instanceof Territory && fields[i].getOwner().equals(player)){
+				ownedTerritories[i] = fields[i].getName();
+			}
+		}
+		return ownedTerritories;
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
@@ -244,7 +253,7 @@ public class Controller  {
 			if (isValidName(name)) {
 				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/, sql);
 				gui.addPlayer(name, players[i].getBalance());
-				gui.setCar(players[i].getPosition()+1, players[i].getName());
+				gui.setCar(players[i].getPosition(), players[i].getName());
 				i++;
 			} else {
 				gui.showMessage(text.getString("nameTaken"));
@@ -267,6 +276,30 @@ public class Controller  {
 		// TODO
 		// sætter alle ejerne på brættet ud fra databasen
 		// sætter hvor mange 
+	}
+
+	private void build(Player player){
+		String property = gui.getUserSelection(text.getString("choosePropertyBuild"), getTerritoriesOwned(player));
+		String building;
+		do{
+			building = gui.getUserButtonPressed(text.getString("chooseBuild"),
+					text.getString("house"),text.getString("hotel"), text.getString("back"));
+			if (building == text.getString("house")){
+
+				for (int j = 0; j < fields.length; j++) {
+					if (fields[j].getName().equals(property));
+					((Territory) (fields[j])).buyHouse(text, gui);
+				}	
+			}
+			
+			if(building == text.getString("hotel")){
+				for (int j = 0; j < fields.length; j++) {
+					if (fields[j].getName().equals(property));
+					((Territory) (fields[j])).buyHotel(text, gui);
+				}	
+			}
+			
+		}while (building != text.getString("back"));
 	}
 
 	private boolean dbNameUsed(String dbName) throws SQLException {
