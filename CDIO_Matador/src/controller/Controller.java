@@ -40,16 +40,17 @@ public class Controller  {
 		dicecup = new DiceCup();
 		chooseGame();
 
-		int i=0;
+		countTotalWorth(players[0]);
 
 		while (numPlayersAlive()>1) {	
-			while (i < players.length) {
+			for (int i=0; i < players.length; i++) {
 				if (players[i].isAlive() && players[i].isTurn()) {
 					playerTurn(players[i]);
 					players[i].setTurn(false);
-					players[i+1].setTurn(true);
+					if(players.length == i+1 )players[0].setTurn(true);
+					else players[i+1].setTurn(true);
+				
 				}
-				i++;
 			}
 		} 
 
@@ -105,11 +106,11 @@ public class Controller  {
 
 	public void playerTurn(Player player) throws SQLException {
 		String options;
-		
+
 		if (player.getJailTime()>1){
-			
+
 		}
-			
+
 		else do {
 			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
 
@@ -122,7 +123,7 @@ public class Controller  {
 				gameboard.getLogicField(player.getPosition()).landOnField(player, text, gui);;
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (fields[player.getPosition()] instanceof ChanceField) 
-					deck.draw(player);				
+//					deck.draw(player);				
 				saveGame();
 
 			} else if (options.equals(text.getString("trade"))) {
@@ -131,7 +132,7 @@ public class Controller  {
 				broker.suggestDeal(player, getPlayer(offereeName), text, gameboard, gui);
 				saveGame();
 
-			} else {	//BUILD
+			} else {	//BUILD   //manage properties
 				build(player);
 				saveGame();
 			}
@@ -139,7 +140,7 @@ public class Controller  {
 		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
 	}
 
-	private String[] getTerritoriesOwned(Player player) {
+	private String[] getTerritoriesOwned(Player player) { //	virker ikke
 		String[] ownedTerritories = new String[player.getNumTerritoryOwned()];
 		for (int i = 0; i < fields.length; i++) {
 			if(fields[i] instanceof Territory && ((Territory)(fields[i])).getOwner().equals(player)){
@@ -240,7 +241,7 @@ public class Controller  {
 		int numOfPlayers = 0;
 		do {
 			numOfPlayers = gui.getUserInteger(text.getString("numOfPlayers"));
-		} while (numOfPlayers < 2 && numOfPlayers > 6);
+		} while (numOfPlayers < 2 || numOfPlayers > 6);
 
 		players = new Player[numOfPlayers];
 		int i = 0;
@@ -276,31 +277,34 @@ public class Controller  {
 	}
 
 	private void build(Player player){ // mangler build even
-		String property = gui.getUserSelection(text.getString("choosePropertyBuild"), getTerritoriesOwned(player));
-		String building;
-		do{
-			building = gui.getUserButtonPressed(text.getString("chooseBuild"),
-					text.getString("house"),text.getString("hotel"), text.getString("back"));
-			
-			// Builds a house
-			if (building == text.getString("house") && gameboard.getHouseCount() < 32){
-				for (int j = 0; j < fields.length; j++) {
-					if (fields[j].getName().equals(property));
-					((Territory) (fields[j])).buyHouse(text, gui);
-				}	
-			}else gui.showMessage(text.getString("noMoreHouses"));
-			
-			// Builds a hotel
-			if(building == text.getString("hotel") && gameboard.getHotelCount() < 12){
-				for (int j = 0; j < fields.length; j++) {
-					if (fields[j].getName().equals(property));
-					((Territory) (fields[j])).buyHotel(text, gui);
-				}	
-			}else gui.showMessage(text.getString("noMoreHotels"));
-			
-		}while (building != text.getString("back"));
-	}
+		if(player.getNumTerritoryOwned()>1){
+			String property = gui.getUserSelection(text.getString("choosePropertyBuild"),
+					getTerritoriesOwned(player));
+			String building;
+			do{
+				building = gui.getUserButtonPressed(text.getString("chooseBuild"),
+						text.getString("house"),text.getString("hotel"), text.getString("back"));
 
+				// Builds a house
+				if (building == text.getString("house") && gameboard.getHouseCount() < 32){
+					for (int j = 0; j < fields.length; j++) {
+						if (fields[j].getName().equals(property));
+						((Territory) (fields[j])).buyHouse(text, gui);
+					}	
+				}else gui.showMessage(text.getString("noMoreHouses"));
+
+				// Builds a hotel
+				if(building == text.getString("hotel") && gameboard.getHotelCount() < 12){
+					for (int j = 0; j < fields.length; j++) {
+						if (fields[j].getName().equals(property));
+						((Territory) (fields[j])).buyHotel(text, gui);
+					}	
+				}else gui.showMessage(text.getString("noMoreHotels"));
+
+			}while (building != text.getString("back"));
+		}else gui.showMessage(text.getString("notEnoughTerritory"));
+	}
+	
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();
 		for (int i = 0; i < s.length; i++) {
@@ -362,17 +366,17 @@ public class Controller  {
 			if (fields[i] instanceof Fleet){
 				sql.setMortgage( fields[i].getID(), ((Fleet)(fields[i])).isMortgaged()); 
 			}
-		
+
 		}
 	}
 
 	private int countTotalWorth(Player player){
 		// Counts player balance + value of properties + values of buildings
-		
+
 		int totalworth=0;
-		
+
 		totalworth += player.getBalance();
-		
+
 		for (int i = 0; i < fields.length; i++) {
 			if(fields[i] instanceof Territory){
 				if(((Territory)(fields[i])).isMortgaged())
@@ -383,21 +387,21 @@ public class Controller  {
 							*((Territory)(fields[i])).getHousePrice()*0.5);
 				}
 			}
-			
+
 			if(fields[i] instanceof Fleet){
 				if(((Fleet)(fields[i])).isMortgaged())
 					totalworth += ((Fleet)(fields[i])).getPrice()*0.5*0.9;
 				else totalworth += ((Fleet)(fields[i])).getPrice();
 			}
-			
+
 			if(fields[i] instanceof Brewery){
 				if(((Brewery)(fields[i])).isMortgaged())
 					totalworth += ((Brewery)(fields[i])).getPrice()*0.5*0.9;
-				else totalworth += ((Fleet)(fields[i])).getPrice();
+				else totalworth += ((Brewery)(fields[i])).getPrice();
 			}
 		}
 		return totalworth;
-		
+
 	}
 
 }

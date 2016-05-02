@@ -22,13 +22,13 @@ public class Fleet extends AbstractFields implements Ownable {
 	
 	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 
-		if(owner.equals(null)) {
+		if(owner==null) {
 			boolean choice = gui.getUserLeftButtonPressed(text.getFormattedString("buy", this.price),
 					text.getString("Yes"), text.getString("No"));
 			if (choice) buyProperty(player, text, gui);
 		}
 
-		if (!isMortgaged && !this.owner.equals(player)) {
+		if (!isMortgaged && !owner.equals(player)) {
 
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
