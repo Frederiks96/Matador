@@ -42,18 +42,12 @@ public class Controller  {
 
 		int i=0;
 
-		//checks who's turn it is
-		//		for(int j = 0; j < players.length; j++){
-		//			while(!players[j].isTurn()){
-		//				i++;
-		//			}
-		//		}
-
-		// This loop gives all alive players a turn 
 		while (numPlayersAlive()>1) {	
 			while (i < players.length) {
-				if (players[i].isAlive()) {
+				if (players[i].isAlive() && players[i].isTurn()) {
 					playerTurn(players[i]);
+					players[i].setTurn(false);
+					players[i+1].setTurn(true);
 				}
 				i++;
 			}
@@ -110,7 +104,6 @@ public class Controller  {
 	}
 
 	public void playerTurn(Player player) throws SQLException {
-		player.setTurn(true);
 		String options;
 		
 		if (player.getJailTime()>1){
@@ -129,8 +122,7 @@ public class Controller  {
 				gameboard.getLogicField(player.getPosition()).landOnField(player, text, gui);;
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (fields[player.getPosition()] instanceof ChanceField) 
-					deck.draw(player);
-				player.setTurn(false);
+					deck.draw(player);				
 				saveGame();
 
 			} else if (options.equals(text.getString("trade"))) {
@@ -258,6 +250,7 @@ public class Controller  {
 				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/, sql);
 				gui.addPlayer(name, players[i].getBalance());
 				gui.setCar(players[i].getPosition(), players[i].getName());
+				if(i==0) players[i].setTurn(true);
 				i++;
 			} else {
 				gui.showMessage(text.getString("nameTaken"));
