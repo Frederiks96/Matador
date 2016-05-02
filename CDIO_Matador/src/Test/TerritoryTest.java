@@ -29,6 +29,8 @@ public class TerritoryTest {
 	public void setUp() throws Exception {
 		text = new Texts(language.Dansk);
 		territory = new Territory(1, null, text);
+		sql = new SQL();
+		gui = new GUI_Commands();
 		player1 = new Player("John", "grøn", "bil", sql);
 		player2 = new Player("Jens", "gul", "bil", sql);
 		
@@ -54,7 +56,7 @@ public class TerritoryTest {
 	
 	@Test
 	public void testRent(){
-		territory.landOnField(player2, text);
+		territory.landOnField(player2, text, gui);
 		
 		int expected = 30000 - territory.getRent();
 		int actual = player2.getBalance();
