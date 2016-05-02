@@ -48,12 +48,17 @@ public class TerritoryTest {
 		int actualBalance = player1.getBalance();
 		
 		assertEquals(expectedBalance, actualBalance);
-		
-		int expectedAfterPayment = 30000 - territory.getRent();
-		int actualAfterPayment = player2.getBalance();
-		
-		assertEquals(expectedAfterPayment, actualAfterPayment);
 		}
+	
+	@Test
+	public void testRent(){
+		territory.landOnField(player2, text);
+		
+		int expected = 30000 - territory.getRent();
+		int actual = player2.getBalance();
+		
+		assertEquals(expected, actual);
+	}
 	
 	@Test
 	public void testMortgage(){
