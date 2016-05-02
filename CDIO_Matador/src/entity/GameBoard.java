@@ -84,24 +84,7 @@ public class GameBoard {
 	}
 
 	public void countCountBuildings(){
-
-	}
-
-
-	public int getHotelCount(){
-		return hotelCount;
-	}
-
-	public void addHotel(){
-		hotelCount++;
-	}
-
-	public int getHouseCount(){
-		return houseCount;
-	}
-
-	public void addHouse(){
-		houseCount++;
+		//TODO
 	}
 
 	public AbstractFields getLogicField(int i) {
@@ -121,5 +104,29 @@ public class GameBoard {
 	public void loadCardDeck(Texts text) throws SQLException {
 		deck = new CardStack();
 		deck.loadCards(text);
+	}
+
+	public int getHotelCount(){
+		return hotelCount;
+	}
+
+	public void addHotel(){
+		hotelCount++;
+	}
+
+	public void subtactHotel(){
+		hotelCount--;
+	}
+	
+	public int getHouseCount(){
+		return houseCount;
+	}
+
+	public void addHouse(){
+		houseCount++;
+	}
+	
+	public void subractHouse(){
+		houseCount--;
 	}
 }

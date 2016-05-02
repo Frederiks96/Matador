@@ -19,7 +19,7 @@ import entity.fields.Territory;
 public class Controller  {
 
 	private GUI_Commands gui = new GUI_Commands(); 
-	private GameBoard gameBoard;
+	private GameBoard gameboard;
 	private AbstractFields[] fields;
 	private String[] properties;
 	private Texts text;
@@ -36,7 +36,7 @@ public class Controller  {
 
 	public void run() throws SQLException {
 		getLanguage();
-		gameBoard = new GameBoard();
+		gameboard = new GameBoard();
 		dicecup = new DiceCup();
 		chooseGame();
 
@@ -85,8 +85,8 @@ public class Controller  {
 			gui.closeGUI();
 		}
 
-		gameBoard.setupBoard(text);
-		fields = gameBoard.getLogicFields();
+		gameboard.setupBoard(text);
+		fields = gameboard.getLogicFields();
 		CardStack deck = new CardStack();
 		deck.newDeck(text);
 		deck.shuffle();
@@ -106,14 +106,18 @@ public class Controller  {
 				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
 			}
 		}
-		gameBoard.setupBoard(text,gameName,players,sql);
+		gameboard.setupBoard(text,gameName,players,sql);
 	}
 
 	public void playerTurn(Player player) throws SQLException {
 		player.setTurn(true);
 		String options;
-
-		do {
+		
+		if (player.getJailTime()>1){
+			
+		}
+			
+		else do {
 			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
 
 			if (options.equals(text.getString("roll"))) {
@@ -122,7 +126,7 @@ public class Controller  {
 				player.updatePosition((int)(dicecup.getLastRoll()));		
 				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
 				gui.setCar(player.getPosition(), player.getName());		
-				gameBoard.getLogicField(player.getPosition()).landOnField(player, text, gui);;
+				gameboard.getLogicField(player.getPosition()).landOnField(player, text, gui);;
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (fields[player.getPosition()] instanceof ChanceField) 
 					deck.draw(player);
@@ -132,7 +136,7 @@ public class Controller  {
 			} else if (options.equals(text.getString("trade"))) {
 				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
 				broker = new SaleController();
-				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, gui);
+				broker.suggestDeal(player, getPlayer(offereeName), text, gameboard, gui);
 				saveGame();
 
 			} else {	//BUILD
@@ -154,7 +158,7 @@ public class Controller  {
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
-		fields = gameBoard.getLogicFields();
+		fields = gameboard.getLogicFields();
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Territory) {
@@ -172,7 +176,7 @@ public class Controller  {
 	}
 
 	public String[] getOwnedProperties(Player player) {
-		fields = gameBoard.getLogicFields();
+		fields = gameboard.getLogicFields();
 		properties = new String[28];
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
@@ -278,26 +282,28 @@ public class Controller  {
 		// sætter hvor mange 
 	}
 
-	private void build(Player player){
+	private void build(Player player){ // mangler build even
 		String property = gui.getUserSelection(text.getString("choosePropertyBuild"), getTerritoriesOwned(player));
 		String building;
 		do{
 			building = gui.getUserButtonPressed(text.getString("chooseBuild"),
 					text.getString("house"),text.getString("hotel"), text.getString("back"));
-			if (building == text.getString("house")){
-
+			
+			// Builds a house
+			if (building == text.getString("house") && gameboard.getHouseCount() < 32){
 				for (int j = 0; j < fields.length; j++) {
 					if (fields[j].getName().equals(property));
 					((Territory) (fields[j])).buyHouse(text, gui);
 				}	
-			}
+			}else gui.showMessage(text.getString("noMoreHouses"));
 			
-			if(building == text.getString("hotel")){
+			// Builds a hotel
+			if(building == text.getString("hotel") && gameboard.getHotelCount() < 12){
 				for (int j = 0; j < fields.length; j++) {
 					if (fields[j].getName().equals(property));
 					((Territory) (fields[j])).buyHotel(text, gui);
 				}	
-			}
+			}else gui.showMessage(text.getString("noMoreHotels"));
 			
 		}while (building != text.getString("back"));
 	}
@@ -396,8 +402,6 @@ public class Controller  {
 					totalworth += ((Brewery)(fields[i])).getPrice()*0.5*0.9;
 				else totalworth += ((Fleet)(fields[i])).getPrice();
 			}
-			
-		
 		}
 		return totalworth;
 		
