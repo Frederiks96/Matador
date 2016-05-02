@@ -146,7 +146,7 @@ public class Controller  {
 	private String[] getTerritoriesOwned(Player player) {
 		String[] ownedTerritories = new String[player.getNumTerritoryOwned()];
 		for (int i = 0; i < fields.length; i++) {
-			if(fields[i] instanceof Territory && fields[i].getOwner().equals(player)){
+			if(fields[i] instanceof Territory && ((Territory)(fields[i])).getOwner().equals(player)){
 				ownedTerritories[i] = fields[i].getName();
 			}
 		}
@@ -353,10 +353,54 @@ public class Controller  {
 		//		}
 
 		for(int i = 0; i < fields.length; i++){
-			if (fields[i] instanceof Territory || fields[i] instanceof Brewery || fields[i] instanceof Fleet){
-				sql.setMortgage( fields[i].getID(), fields[i].isMortgaged()); 
-				sql.setHouseCount(fields[i].getID(), fields[i].getHouseCount());
+			if (fields[i] instanceof Territory ){
+				sql.setMortgage( fields[i].getID(), ((Territory)(fields[i])).isMortgaged()); 
+				sql.setHouseCount(fields[i].getID(), ((Territory)(fields[i])).getHouseCount());
 			}
+			if (fields[i] instanceof Brewery){
+				sql.setMortgage( fields[i].getID(), ((Brewery)(fields[i])).isMortgaged()); 
+			}
+			if (fields[i] instanceof Fleet){
+				sql.setMortgage( fields[i].getID(), ((Fleet)(fields[i])).isMortgaged()); 
+			}
+		
 		}
 	}
+
+	private int countTotalWorth(Player player){
+		// Counts player balance + value of properties + values of buildings
+		
+		int totalworth=0;
+		
+		totalworth += player.getBalance();
+		
+		for (int i = 0; i < fields.length; i++) {
+			if(fields[i] instanceof Territory){
+				if(((Territory)(fields[i])).isMortgaged())
+					totalworth += (((Territory)(fields[i])).getPrice()*0.5*0.9);
+				else{
+					totalworth += ((Territory)(fields[i])).getPrice();
+					totalworth += (((Territory)(fields[i])).getHouseCount()
+							*((Territory)(fields[i])).getHousePrice()*0.5);
+				}
+			}
+			
+			if(fields[i] instanceof Fleet){
+				if(((Fleet)(fields[i])).isMortgaged())
+					totalworth += ((Fleet)(fields[i])).getPrice()*0.5*0.9;
+				else totalworth += ((Fleet)(fields[i])).getPrice();
+			}
+			
+			if(fields[i] instanceof Brewery){
+				if(((Brewery)(fields[i])).isMortgaged())
+					totalworth += ((Brewery)(fields[i])).getPrice()*0.5*0.9;
+				else totalworth += ((Fleet)(fields[i])).getPrice();
+			}
+			
+		
+		}
+		return totalworth;
+		
+	}
+
 }
