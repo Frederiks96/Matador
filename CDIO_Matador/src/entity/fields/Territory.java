@@ -64,7 +64,7 @@ public class Territory extends AbstractFields implements Ownable {
 		return this.owner != null;
 	}
 
-	private void buyHouse(Texts text, GUI_Commands gui){ 
+	public void buyHouse(Texts text, GUI_Commands gui){ 
 		if(owner.getAccount().legalTransaction(-housePrice) && houseCount < 4 && !isMortgaged){
 			owner.updateBalance(-housePrice);
 			gui.setHouse(id, houseCount+1);
@@ -80,7 +80,7 @@ public class Territory extends AbstractFields implements Ownable {
 			gui.showMessage(text.getString("faildTransaction"));
 	}
 
-	private void buyHotel(Texts text,GUI_Commands gui){	// has hotel betyder om der skal sættes eller fjernes hotel
+	public void buyHotel(Texts text,GUI_Commands gui){	// has hotel betyder om der skal sættes eller fjernes hotel
 		if(owner.getAccount().legalTransaction(-housePrice) && houseCount == 4){
 			owner.updateBalance(-housePrice);
 			gui.setHotel(id, true);
