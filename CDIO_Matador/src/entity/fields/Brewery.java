@@ -10,7 +10,6 @@ public class Brewery extends AbstractFields implements Ownable {
 	private Player owner;
 	private DiceCup dicecup;
 	private int price;
-	private GUI_Commands myGUI = new GUI_Commands();
 	private boolean isMortgaged;
 	private String name;
 	
@@ -39,24 +38,30 @@ public class Brewery extends AbstractFields implements Ownable {
 		return this.owner.equals(null);
 	}
 	
-	public void buyProperty(Player player, Texts text) {
+	public void buyProperty(Player player, Texts text, GUI_Commands gui) {
 		if(player.getAccount().legalTransaction(-price)){
 			player.updateBalance(-price);
-			myGUI.setOwner(this.id, player.getName());
+			gui.setOwner(this.id, player.getName());
 			setOwner(player);
 		}
 		else
-			myGUI.showMessage(text.getString("failedTransaction"));
+			gui.showMessage(text.getString("failedTransaction"));
 	}
 
 	@Override
-	public void landOnField(Player player, Texts text) {
+	public void sellPproperty(Player player) {
+		// TODO Auto-generated method stub
+		player.updateNumBreweriesOwned(-1);
+	}
+	
+	@Override
+	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		
 		if(!isOwned()){
-			String s = myGUI.getUserSelection(text.getFormattedString("buy", this.price), 
+			String s = gui.getUserSelection(text.getFormattedString("buy", this.price), 
 											  text.getString("Yes"), text.getString("No"));					  						
 			if (s.equals(text.getString("Yes"))) {
-				buyProperty(player, text);
+				buyProperty(player, text, gui);
 			}
 		}
 	
@@ -67,7 +72,7 @@ public class Brewery extends AbstractFields implements Ownable {
 
 	}
 
-	public void mortgage(Texts text) {
+	public void mortgage(Texts text, GUI_Commands gui) {
 		this.isMortgaged=true;
 		owner.mortgageBrewery();
 		owner.updateBalance((int)(this.price*0.5));
@@ -97,5 +102,6 @@ public class Brewery extends AbstractFields implements Ownable {
 	public int getHouseCount() {
 		return 0;
 	}
+
 
 }

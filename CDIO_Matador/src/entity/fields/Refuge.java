@@ -1,5 +1,6 @@
 package entity.fields;
 
+import boundary.GUI_Commands;
 import entity.Player;
 import entity.Texts;
 
@@ -12,7 +13,7 @@ public class Refuge extends AbstractFields {
 	}
 
 	@Override
-	public void landOnField(Player player, Texts text) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		if (player.getPosition() == 0) {
 			// Spilleren er landet på start - spilleren får penge, allerede i update position, så den skal vi ikke røre ved her
 		} else if (player.getPosition() == 10) {
@@ -44,6 +45,12 @@ public class Refuge extends AbstractFields {
 	@Override
 	public boolean isMortgaged() {
 		return false;
+	}
+
+	@Override
+	public Player getOwner() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
