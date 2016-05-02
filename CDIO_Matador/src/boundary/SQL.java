@@ -32,7 +32,7 @@ public class SQL implements DAO, DTO {
 		SQL.password = password;
 	}
 
-	public void dropDataBase() throws SQLException{
+	public void dropDataBase() throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		stmt.executeUpdate("DROP DATABASE "+dbName);
@@ -133,7 +133,7 @@ public class SQL implements DAO, DTO {
 		return rs.getInt(1);
 	}
 
-	public int getFieldHouseCount(Territory territory) throws SQLException {	
+	public int getFieldHouseCount(Territory territory) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		Statement stmt = myCon.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT house_count FROM "+dbName+".property WHERE field_id = " + territory.getID()+";");
@@ -319,7 +319,7 @@ public class SQL implements DAO, DTO {
 
 	public void createNewDB(String dbName) throws IOException,SQLException { // Mangler prepared Statement - skal denne have interface?
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String query = "";
+//		String query = "";
 
 		
 		
