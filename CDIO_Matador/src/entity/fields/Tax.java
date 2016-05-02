@@ -40,20 +40,4 @@ public class Tax extends AbstractFields {
 	public int getID() {
 		return id;
 	}
-
-	@Override
-	public int getHouseCount() {
-		return 0;
-	}
-
-	@Override
-	public boolean isMortgaged() {
-		return false;
-	}
-
-	@Override
-	public Player getOwner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

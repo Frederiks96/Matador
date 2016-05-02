@@ -27,20 +27,4 @@ public class ChanceField extends AbstractFields {
 		return id;
 	}
 
-	@Override
-	public int getHouseCount() {
-		return 0;
-	}
-
-	@Override
-	public boolean isMortgaged() {
-		return false;
-	}
-
-	@Override
-	public Player getOwner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

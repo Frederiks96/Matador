@@ -14,5 +14,5 @@ public interface Ownable {
 	void mortgage(Texts text, GUI_Commands gui);
 	void unMortgage();
 	void sellPproperty(Player player);
-	
+	int getPrice();
 }

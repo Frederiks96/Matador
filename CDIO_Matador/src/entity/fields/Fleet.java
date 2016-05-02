@@ -37,6 +37,16 @@ public class Fleet extends AbstractFields implements Ownable {
 		}
 	}
 
+	public void buyProperty(Player player, Texts text, GUI_Commands gui) { // 
+		if (player.getAccount().legalTransaction(-price)){
+			player.updateBalance(-price);
+			gui.setOwner(id, player.getName());
+			setOwner(player);
+		}
+		else 
+			gui.showMessage(text.getString("failedTransaction"));
+	}
+	
 	public Player getOwner() {
 		return this.owner;
 	}
@@ -65,16 +75,6 @@ public class Fleet extends AbstractFields implements Ownable {
 		owner.addFleet();
 		owner.updateBalance(-(int)(this.price*0.5*1.1)); 
 	}
-
-	public void buyProperty(Player player, Texts text, GUI_Commands gui) { // 
-		if (player.getAccount().legalTransaction(-price)){
-			player.updateBalance(-price);
-			gui.setOwner(id, player.getName());
-			setOwner(player);
-		}
-		else 
-			gui.showMessage(text.getString("failedTransaction"));
-	}
 	
 	@Override
 	public String getName() {
@@ -91,13 +91,13 @@ public class Fleet extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public int getHouseCount() {
-		return 0;
+	public void sellPproperty(Player player) {
+		player.updateNumFleetOwned(-1);
 	}
 
 	@Override
-	public void sellPproperty(Player player) {
-		player.updateNumFleetOwned(-1);
+	public int getPrice() {
+		return price;
 	}
 
 	

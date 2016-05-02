@@ -21,39 +21,6 @@ public class Brewery extends AbstractFields implements Ownable {
 		this.name = (String) text.getInfo(id+"_name");
 	}
 
-	public Player getOwner() {
-		return this.owner;
-	}
-
-	public void setOwner(Player owner) {
-		this.owner = owner;
-		owner.addBrewery();
-	}
-
-	public int getRent() {
-		return owner.getNumBreweriesOwned()*dicecup.getLastRoll()*100;
-	}
-
-	public boolean isOwned() {
-		return this.owner.equals(null);
-	}
-	
-	public void buyProperty(Player player, Texts text, GUI_Commands gui) {
-		if(player.getAccount().legalTransaction(-price)){
-			player.updateBalance(-price);
-			gui.setOwner(this.id, player.getName());
-			setOwner(player);
-		}
-		else
-			gui.showMessage(text.getString("failedTransaction"));
-	}
-
-	@Override
-	public void sellPproperty(Player player) {
-		// TODO Auto-generated method stub
-		player.updateNumBreweriesOwned(-1);
-	}
-	
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		
@@ -71,7 +38,22 @@ public class Brewery extends AbstractFields implements Ownable {
 		}
 
 	}
-
+	
+	public void buyProperty(Player player, Texts text, GUI_Commands gui) {
+		if(player.getAccount().legalTransaction(-price)){
+			player.updateBalance(-price);
+			gui.setOwner(this.id, player.getName());
+			setOwner(player);
+		}
+		else
+			gui.showMessage(text.getString("failedTransaction"));
+	}
+	
+	@Override
+	public void sellPproperty(Player player) {
+		player.updateNumBreweriesOwned(-1);
+	}
+	
 	public void mortgage(Texts text, GUI_Commands gui) {
 		this.isMortgaged=true;
 		owner.mortgageBrewery();
@@ -84,24 +66,42 @@ public class Brewery extends AbstractFields implements Ownable {
 		owner.updateBalance(-(int)(this.price*0.5*1.1));
 	}
 	
+	public boolean isMortgaged() {
+		return this.isMortgaged;
+	}
+
+	public boolean isOwned() {
+		return this.owner.equals(null);
+	}
+			
+	public void setOwner(Player owner) {
+		this.owner = owner;
+		owner.addBrewery();
+	}
+	
+	public Player getOwner() {
+		return this.owner;
+	}
+
+	public int getRent() {
+		return owner.getNumBreweriesOwned()*dicecup.getLastRoll()*100;
+	}
+
 	@Override
 	public String getName() {
 		return this.name;
 	}
 	
-	public boolean isMortgaged() {
-		return this.isMortgaged;
-	}
-
 	@Override
 	public int getID() {
 		return id;
 	}
 
 	@Override
-	public int getHouseCount() {
-		return 0;
+	public int getPrice() {
+		return price;
 	}
+
 
 
 }
