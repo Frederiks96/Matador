@@ -176,8 +176,8 @@ public class Player {
 		return numTerritoryOwned;
 	}
 
-	public void updateNumTerritoryOwned(int i){
-		numTerritoryOwned = numTerritoryOwned + i;	
+	public void updateNumTerritoryOwned(){
+		numTerritoryOwned++;	
 	}
 
 	public void updateNumBreweriesOwned(int i) {

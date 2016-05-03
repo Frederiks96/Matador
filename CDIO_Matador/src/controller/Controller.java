@@ -145,11 +145,15 @@ public class Controller  {
 		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
 	}
 
-	private String[] getTerritoriesOwned(Player player) { //	virker ikke
+	public String[] getTerritoriesOwned(Player player, AbstractFields[] fields) { 
 		String[] ownedTerritories = new String[player.getNumTerritoryOwned()];
+		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
-			if(fields[i] instanceof Territory && ((Territory)(fields[i])).getOwner().equals(player)){
-				ownedTerritories[i] = fields[i].getName();
+			if(fields[i] instanceof Territory && ((Territory)(fields[i])).getOwner()!=null){
+				if (((Territory)(fields[i])).getOwner().equals(player)){
+					ownedTerritories[j] = fields[i].getName();
+					j++;
+				}
 			}
 		}
 		return ownedTerritories;
@@ -286,7 +290,7 @@ public class Controller  {
 	private void build(Player player){ // mangler build even
 		if(player.getNumTerritoryOwned()>1){
 			String property = gui.getUserSelection(text.getString("choosePropertyBuild"),
-					getTerritoriesOwned(player));
+					getTerritoriesOwned(player, fields));
 			String building;
 			do{
 				building = gui.getUserButtonPressed(text.getString("chooseBuild"),
