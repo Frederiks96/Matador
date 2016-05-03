@@ -8,7 +8,7 @@ import entity.fields.Territory;
 
 public interface DAO {
 	
-	// Data Acces object - "getters"
+	// Data Access object - "getters"
 	
 	int getPosition(int playerID) 				throws SQLException;
 	String getPlayerName(int playerID) 			throws SQLException;
