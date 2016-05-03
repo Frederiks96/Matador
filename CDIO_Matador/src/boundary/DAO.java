@@ -2,13 +2,11 @@ package boundary;
 
 import java.sql.SQLException;
 
-import entity.Player;
-import entity.fields.AbstractFields;
 import entity.fields.Territory;
 
 public interface DAO {
 	
-	// Data Acces object - "getters"
+	// Data Access object - "getters"
 	
 	int getPosition(int playerID) 				throws SQLException;
 	String getPlayerName(int playerID) 			throws SQLException;

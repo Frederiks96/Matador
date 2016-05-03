@@ -2,14 +2,9 @@ package boundary;
 
 import desktop_codebehind.Car;
 import desktop_resources.GUI;
-import entity.Player;
 
 public class GUI_Commands implements Boundary_Interface {
 	
-	private Player[] players;
-	
-	
-		
 	public String getUserString(String message) {
 		return GUI.getUserString(message);
 	}

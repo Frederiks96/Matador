@@ -31,8 +31,8 @@ public class TerritoryTest {
 		territory = new Territory(1, null, text);
 		sql = new SQL();
 		gui = new GUI_Commands();
-		player1 = new Player("John", "grøn", "bil", sql);
-		player2 = new Player("Jens", "gul", "bil", sql);
+		player1 = new Player("John", "grøn", "bil");
+		player2 = new Player("Jens", "gul", "bil");
 		
 	}
 	

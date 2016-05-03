@@ -34,7 +34,7 @@ public class TestGetProperties {
 	public void test() throws SQLException {
 		Texts text = new Texts(language.Dansk);
 		Controller con = new Controller();
-		Player player = new Player("John","Yellow","Ufo", sql);
+		Player player = new Player("John","Yellow","Ufo");
 		String[] aha = new String[28];
 		aha[0] = "Rødovrevej";
 		AbstractFields[] fields = con.getFields();

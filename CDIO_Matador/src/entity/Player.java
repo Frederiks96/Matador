@@ -29,7 +29,7 @@ public class Player {
 	private Controller controller = new Controller();
 
 
-	public Player(String name, String vColor, String vType, SQL sql) throws SQLException {
+	public Player(String name, String vColor, String vType) throws SQLException {
 		numOfPlayers++;
 		this.name = name;
 		this.numFleetsOwned = 0;
@@ -46,7 +46,6 @@ public class Player {
 		this.cards = new ArrayList<ChanceCard>();
 		this.turn = false;
 
-//		sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,getBalance(),vID,vColor,vType, turn);
 	}
 
 	public int getPlayerID() {
@@ -189,5 +188,18 @@ public class Player {
 	public void updateNumFleetOwned(int i) {
 		numFleetsOwned = numFleetsOwned + i;
 	}
+	
+	public String getVehicleColour() {
+		return this.vColor;
+	}
+	
+	public String getVehicleType() {
+		return this.vType;
+	}
+	
+	public int getVehicleID() {
+		return this.vID;
+	}
+	
 	
 }
