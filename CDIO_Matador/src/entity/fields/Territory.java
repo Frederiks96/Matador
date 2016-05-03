@@ -97,7 +97,7 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 	}
 
-	private void sellHouse(GUI_Commands gui){
+	public void sellHouse(GUI_Commands gui){
 		if(houseCount>1){
 			owner.updateBalance(housePrice/2);
 			gui.setHouse(id, houseCount-1);
@@ -106,7 +106,7 @@ public class Territory extends AbstractFields implements Ownable {
 
 	}
 
-	private void sellHotel(GUI_Commands gui){
+	public void sellHotel(GUI_Commands gui){
 		if(houseCount == 5){
 			owner.updateBalance(housePrice/2);
 			gui.setHotel(id, false);
