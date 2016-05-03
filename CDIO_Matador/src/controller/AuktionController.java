@@ -30,7 +30,19 @@ public class AuktionController {
 								field.getName()),text.getString("Yes"),text.getString("No"));
 
 						if (choice){
-							int bid = gui.getUserInteger(text.getFormattedString("bid",players[i].getName(),previousbid));
+							int bid;
+							
+							do{
+								bid = gui.getUserInteger(text.getFormattedString("bid",players[i].getName(),previousbid));
+								
+								if (bid > players[i].getBalance()){
+									gui.showMessage(text.getString("failedTransaction"));
+								}
+								
+							} while (bid > players[i].getBalance());
+							
+							
+							
 
 							if (bid > previousbid){
 								previousbid = currentbid;

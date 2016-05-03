@@ -29,6 +29,7 @@ public class Controller  {
 	private String gameName;
 	private DiceCup dicecup = new DiceCup();
 	private TradeController broker;
+	private PropertiesController manage;
 
 	public Controller() throws SQLException {
 		this.sql = new SQL();
@@ -106,10 +107,9 @@ public class Controller  {
 
 	public void playerTurn(Player player) throws SQLException {
 		String options;
-		String choice;
 
-		if (player.getJailTime()>1){
-
+		if (player.getJailTime()>-1){
+			// TODO
 		}
 
 		else do {
@@ -117,6 +117,7 @@ public class Controller  {
 					text.getStrings("roll","trade","manageProperties"));
 
 			if (options.equals(text.getString("roll"))) {
+				//ROLL
 				gui.removeCar(player.getPosition(), player.getName());		
 				dicecup.roll();
 				player.updatePosition((dicecup.getLastRoll()));		
@@ -129,34 +130,19 @@ public class Controller  {
 				saveGame();
 
 			} else if (options.equals(text.getString("trade"))) {
+				//TRADE
 				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), 
 						getOpponents(player));
 				broker = new TradeController();
 				broker.suggestDeal(player, getPlayer(offereeName), text, gameboard, gui);
 				saveGame();
 
-			} else {	//BUILD   //manage properties
-
-				choice = gui.getUserButtonPressed("", text.getStrings("build","mortgage","unbuild"));
-				build(player);
+			} else { //MANAGE PROPERTIES
+				manage.manage(gui, player, text, fields, gameboard);
 				saveGame();
 			}
 
-		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
-	}
-
-	public String[] getTerritoriesOwned(Player player, AbstractFields[] fields) { 
-		String[] ownedTerritories = new String[player.getNumTerritoryOwned()];
-		int j = 0;
-		for (int i = 0; i < fields.length; i++) {
-			if(fields[i] instanceof Territory && ((Territory)(fields[i])).getOwner()!=null){
-				if (((Territory)(fields[i])).getOwner().equals(player)){
-					ownedTerritories[j] = fields[i].getName();
-					j++;
-				}
-			}
-		}
-		return ownedTerritories;
+		} while (!options.equals(text.getString("roll")) || !dicecup.hasPair());
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
@@ -281,41 +267,6 @@ public class Controller  {
 		deck.loadCards(text);
 	}
 
-	private void loadGameBoard(){
-		// TODO
-		// sætter alle ejerne på brættet ud fra databasen
-		// sætter hvor mange 
-	}
-
-	private void build(Player player){ // mangler build even
-		if(player.getNumTerritoryOwned()>1){
-			String property = gui.getUserSelection(text.getString("choosePropertyBuild"),
-					getTerritoriesOwned(player, fields));
-			String building;
-			do{
-				building = gui.getUserButtonPressed(text.getString("chooseBuild"),
-						text.getString("house"),text.getString("hotel"), text.getString("back"));
-
-				// Builds a house
-				if (building == text.getString("house") && gameboard.getHouseCount() < 32){
-					for (int j = 0; j < fields.length; j++) {
-						if (fields[j].getName().equals(property));
-						((Territory) (fields[j])).buyHouse(text, gui);
-					}	
-				}else gui.showMessage(text.getString("noMoreHouses"));
-
-				// Builds a hotel
-				if(building == text.getString("hotel") && gameboard.getHotelCount() < 12){
-					for (int j = 0; j < fields.length; j++) {
-						if (fields[j].getName().equals(property));
-						((Territory) (fields[j])).buyHotel(text, gui);
-					}	
-				}else gui.showMessage(text.getString("noMoreHotels"));
-
-			}while (building != text.getString("back"));
-		}else gui.showMessage(text.getString("notEnoughTerritory"));
-	}
-
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();
 		for (int i = 0; i < s.length; i++) {
@@ -362,9 +313,9 @@ public class Controller  {
 			sql.setTurn(players[i]);
 			sql.setIsAlive(players[i]);
 		}
-		//		for(int i=0; i < deck.length; i++){
-		//			sql.setCardPosition(deck[i].getPosition, deck[i].getID());
-		//		}
+		//				for(int i=0; i < deck.size(); i++){
+		//					sql.setCardPosition(deck[i].getPosition, deck[i].getID());
+		//				}
 
 		for(int i = 0; i < fields.length; i++){
 			if (fields[i] instanceof Territory ){
@@ -413,6 +364,21 @@ public class Controller  {
 		}
 		return totalworth;
 
+	}
+
+	public void bankrupt(Player player, Player creditor) {
+		player.bankrupt();
+		if (creditor!=null) {
+			creditor.updateBalance(player.getBalance());
+			player.updateBalance(-player.getBalance());
+
+		} else {
+			player.updateBalance(-player.getBalance());
+			String[] properties = getOwnedProperties(player);
+		//	AuktionController auktion = new AuktionController();
+		//	auktion.start(properties);
+			
+		}
 	}
 
 }

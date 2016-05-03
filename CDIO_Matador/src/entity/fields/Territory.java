@@ -123,8 +123,9 @@ public class Territory extends AbstractFields implements Ownable {
 			player.updateNumTerritoryOwned();
 		}	
 	}
+	
 	@Override
-	public void sellPproperty(Player player){
+	public void sellProperty(Player player){
 		
 		
 		player.updateNumTerritoryOwned();

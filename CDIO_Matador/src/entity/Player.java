@@ -3,8 +3,6 @@ package entity;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import boundary.GUI_Commands;
-import boundary.SQL;
 import controller.Controller;
 
 public class Player {
@@ -29,19 +27,19 @@ public class Player {
 
 	public Player(String name, String vColor, String vType) throws SQLException {
 		numOfPlayers++;
-		this.name = name;
-		this.numFleetsOwned = 0;
-		this.numBreweriesOwned = 0;
-		this.position = 0;
-		this.player_id = numOfPlayers;
-		this.vID = numOfPlayers*11;
-		this.jailTime = -1;
-		this.vColor = vColor;
-		this.vType = vType;
-		this.isAlive=true;
-		this.account = new Account(player_id);
-		this.cards = new ArrayList<ChanceCard>();
-		this.turn = false;
+		this.name 				= name;
+		this.numFleetsOwned 	= 0;
+		this.numBreweriesOwned 	= 0;
+		this.position 			= 0;
+		this.player_id 			= numOfPlayers;
+		this.vID 				= numOfPlayers*11;
+		this.jailTime 			= -1;
+		this.vColor 			= vColor;
+		this.vType 				= vType;
+		this.isAlive			= true;
+		this.account 			= new Account(player_id);
+		this.cards 				= new ArrayList<ChanceCard>();
+		this.turn 				= false;
 
 	}
 
@@ -52,17 +50,21 @@ public class Player {
 	public void addFleet() {
 		this.numFleetsOwned++;
 	}
+	
+	public void sellFleet() {
+		this.numFleetsOwned--;
+	}
 
 	public int getNumFleetsOwned() {
 		return this.numFleetsOwned;
 	}
 
-	public void mortgageFleet(){
-		numFleetsOwned--;
-	}
-
 	public void addBrewery() {
 		this.numFleetsOwned++;
+	}
+	
+	public void sellBrewery() {
+		this.numBreweriesOwned--;
 	}
 
 	public int getNumBreweriesOwned() {
@@ -71,10 +73,6 @@ public class Player {
 
 	public void mortgageBrewery(){
 		numBreweriesOwned--;
-	}
-
-	public void turn() {
-		// Spillerens tur
 	}
 
 	public boolean isAlive() {
@@ -175,15 +173,6 @@ public class Player {
 	public void updateNumTerritoryOwned(){
 		numTerritoryOwned++;	
 	}
-
-	public void updateNumBreweriesOwned(int i) {
-		numBreweriesOwned = numBreweriesOwned +i;
-		
-	}
-
-	public void updateNumFleetOwned(int i) {
-		numFleetsOwned = numFleetsOwned + i;
-	}
 	
 	public String getVehicleColour() {
 		return this.vColor;
@@ -198,7 +187,10 @@ public class Player {
 	}
 	
 	public void bankrupt() {
-		
+		this.isAlive 			= false;
+		this.numBreweriesOwned 	= 0;
+		this.numFleetsOwned 	= 0;
+		this.numTerritoryOwned 	= 0;
 	}
 	
 	
