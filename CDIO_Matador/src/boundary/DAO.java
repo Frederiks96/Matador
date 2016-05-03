@@ -2,8 +2,6 @@ package boundary;
 
 import java.sql.SQLException;
 
-import entity.Player;
-import entity.fields.AbstractFields;
 import entity.fields.Territory;
 
 public interface DAO {

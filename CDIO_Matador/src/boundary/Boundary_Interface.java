@@ -1,7 +1,6 @@
 package boundary;
 
 import desktop_codebehind.Car;
-import desktop_resources.GUI;
 
 public interface Boundary_Interface {
 	
