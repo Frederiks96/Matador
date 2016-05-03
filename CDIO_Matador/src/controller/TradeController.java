@@ -7,7 +7,7 @@ import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 
-public class SaleController {
+public class TradeController {
 	private Controller c;
 	private String[] ownProperties;
 	private String[] foeProperties;
@@ -15,7 +15,7 @@ public class SaleController {
 	private int ownOffer;
 	private int foeOffer;
 
-	public SaleController() throws SQLException {
+	public TradeController() throws SQLException {
 		c = new Controller();
 	}
 

@@ -28,7 +28,7 @@ public class Controller  {
 	private SQL sql;
 	private String gameName;
 	private DiceCup dicecup = new DiceCup();
-	private SaleController broker;
+	private TradeController broker;
 
 	public Controller() throws SQLException {
 		this.sql = new SQL();
@@ -106,13 +106,15 @@ public class Controller  {
 
 	public void playerTurn(Player player) throws SQLException {
 		String options;
+		String choice;
 
 		if (player.getJailTime()>1){
 
 		}
 
 		else do {
-			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
+			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), 
+					text.getStrings("roll","trade","manageProperties"));
 
 			if (options.equals(text.getString("roll"))) {
 				gui.removeCar(player.getPosition(), player.getName());		
@@ -127,12 +129,15 @@ public class Controller  {
 				saveGame();
 
 			} else if (options.equals(text.getString("trade"))) {
-				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
-				broker = new SaleController();
+				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), 
+						getOpponents(player));
+				broker = new TradeController();
 				broker.suggestDeal(player, getPlayer(offereeName), text, gameboard, gui);
 				saveGame();
 
 			} else {	//BUILD   //manage properties
+				
+				choice = gui.getUserButtonPressed("", text.getStrings("build","mortgage","unbuild"));
 				build(player);
 				saveGame();
 			}
