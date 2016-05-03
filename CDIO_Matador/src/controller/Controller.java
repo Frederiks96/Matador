@@ -385,7 +385,7 @@ public class Controller  {
 	}
 
 	private void landedOn(Player player){	// Asks if Player wants to buy, otherwise auction
-		AbstractFields field = fields[player.getPosition()];
+		AbstractFields field = gameboard.getLogicField(player.getPosition());
 		boolean buy = false;
 		
 		if(field instanceof Territory && ((Territory)field).getOwner() == null){
