@@ -1,24 +1,30 @@
 package entity.fields;
 
+import boundary.GUI_Commands;
 import entity.Player;
 import entity.Texts;
 
-public class CardField extends AbstractFields {
+public class ChanceField extends AbstractFields {
 	private String name;
 	
-	public CardField(int id, Texts text) {
+	public ChanceField(int id, Texts text) {
 		super(id);
 		this.name = (String) text.getInfo(id+"_name");
 	}
 
 	@Override
-	public void landOnField(Player player, Texts text) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		// Du er landet på prøv lykken
 	}
 
 	@Override
 	public String getName() {
 		return this.name;
+	}
+
+	@Override
+	public int getID() {
+		return id;
 	}
 
 }

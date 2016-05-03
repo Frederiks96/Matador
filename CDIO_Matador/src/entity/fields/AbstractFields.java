@@ -1,5 +1,6 @@
 package entity.fields;
 
+import boundary.GUI_Commands;
 import entity.Player;
 import entity.Texts;
 
@@ -11,9 +12,9 @@ public abstract class AbstractFields {
 		this.id = id;
 	}
 	
-	abstract public void landOnField(Player player, Texts text);
+	abstract public void landOnField(Player player, Texts text, GUI_Commands gui);
 	
 	abstract public String getName();
 	
-
+	abstract public int getID();
 }

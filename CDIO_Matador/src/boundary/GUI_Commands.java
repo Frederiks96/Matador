@@ -51,25 +51,33 @@ public class GUI_Commands implements Boundary_Interface {
 	}
 
 	public void setCar(int fieldNumber, String name) {
-		GUI.setCar(fieldNumber, name);
+		GUI.setCar(fieldNumber+1, name);
 	}
 
 	
 	public void setOwner(int id, String name){
-		GUI.setOwner(id, name);
+		GUI.setOwner(id+1, name);
 	}
 
 	
 	public void setHouse(int fieldID, int houseCount) {
-		GUI.setHouses(fieldID, houseCount);
+		GUI.setHouses(fieldID+1, houseCount);
 	}
 
 	public void setHotel(int fieldID, boolean hasHotel) {
-		GUI.setHotel(fieldID, hasHotel);	
+		GUI.setHotel(fieldID+1, hasHotel);	
 	}
 	
 	public void setDice(int faceValue1, int faceValue2) {
 		GUI.setDice(faceValue1, faceValue2);
+	}
+
+	public void removeCar(int position, String name) {
+		GUI.removeCar(position+1, name);
+	}
+
+	public void setBalance(String name, int balance) {
+		GUI.setBalance(name, balance);
 	}
 
 	

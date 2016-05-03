@@ -15,7 +15,9 @@ public class Player {
 	private static int numOfPlayers = 0;			//    så det kommer til at hedde 001, 002, osv..
 	private int numFleetsOwned;
 	private int numBreweriesOwned;
+	private int numTerritoryOwned;
 	private boolean isAlive;
+	private boolean turn;
 	private Account account;
 	private ArrayList<ChanceCard> cards;
 	private String vColor;
@@ -25,10 +27,9 @@ public class Player {
 	private int jailTime;
 	private GUI_Commands myGUI = new GUI_Commands();
 	private Controller controller = new Controller();
-	private SQL sql = new SQL();
 
 
-	public Player(String name, String vColor, String vType) throws SQLException {
+	public Player(String name, String vColor, String vType, SQL sql) throws SQLException {
 		numOfPlayers++;
 		this.name = name;
 		this.numFleetsOwned = 0;
@@ -43,8 +44,9 @@ public class Player {
 		this.isAlive=true;
 		this.account = new Account(player_id);
 		this.cards = new ArrayList<ChanceCard>();
+		this.turn = false;
 
-		sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,getBalance(),vID,vColor,vType);
+		sql.createPlayer(player_id, name, position, jailTime, isAlive,accountID,getBalance(),vID,vColor,vType, turn);
 	}
 
 	public int getPlayerID() {
@@ -106,12 +108,10 @@ public class Player {
 		if (lastRoll>0 && lastRoll<13) {
 			if ((position+lastRoll)>39) {
 				updateBalance(4000);
-				sql.setBalance(this);
 				position += lastRoll-40;
 			} else {
 				position += lastRoll;
 			}
-		sql.updatePosition(this);
 		}
 	}
 
@@ -165,4 +165,29 @@ public class Player {
 		return this.jailTime;
 	}
 
+	public boolean isTurn() {
+		return turn;
+	}
+
+	public void setTurn(boolean turn) {
+		this.turn = turn;
+	}
+
+	public int getNumTerritoryOwned() {
+		return numTerritoryOwned;
+	}
+
+	public void updateNumTerritoryOwned(int i){
+		numTerritoryOwned = numTerritoryOwned + i;	
+	}
+
+	public void updateNumBreweriesOwned(int i) {
+		numBreweriesOwned = numBreweriesOwned +i;
+		
+	}
+
+	public void updateNumFleetOwned(int i) {
+		numFleetsOwned = numFleetsOwned + i;
+	}
+	
 }

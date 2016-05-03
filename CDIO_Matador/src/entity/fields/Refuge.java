@@ -1,5 +1,6 @@
 package entity.fields;
 
+import boundary.GUI_Commands;
 import entity.Player;
 import entity.Texts;
 
@@ -12,22 +13,31 @@ public class Refuge extends AbstractFields {
 	}
 
 	@Override
-	public void landOnField(Player player, Texts text) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		if (player.getPosition() == 0) {
-			// Spilleren er landet på start - spilleren får penge, allerede i update position, så den skal vi ikke røre ved her
+			// START - the player receives his money in Player.updatePosition()
+			gui.showMessage(text.getString("startLanded"));
 		} else if (player.getPosition() == 10) {
-			// På besøg i fængsel
+			// visit in jail
+			gui.showMessage(text.getString("jailVisit"));
 		} else if (player.getPosition() == 20) {
-			// Fri parkering
+			// Fri parking
+			gui.showMessage(text.getString("freeParking"));
 		} else if (player.getPosition() == 30) {
+			// Go to Jail
+			gui.showMessage(text.getString("goToJail"));
 			player.imprison();
-			 // Skriv til spilleren, at han er fængslet
 		}
 	}
 	
 	@Override
 	public String getName() {
 		return this.name;
+	}
+
+	@Override
+	public int getID() {
+		return id;
 	}
 	
 

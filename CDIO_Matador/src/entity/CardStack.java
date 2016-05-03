@@ -31,7 +31,7 @@ public class CardStack {
 	public String draw(Player player) {
 		ChanceCard temp = chanceCardDeck.get(0);
 
-		if (temp.isOwnable()==true) {
+		if (temp.isOwnable()) {
 			temp.setOwner(player);
 			player.giveCard(temp);
 		}

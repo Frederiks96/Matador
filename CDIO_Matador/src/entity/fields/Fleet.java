@@ -9,7 +9,6 @@ public class Fleet extends AbstractFields implements Ownable {
 	private final int BASERENT = 500;
 	private Player owner;
 	private int price;
-	private GUI_Commands myGUI = new GUI_Commands();
 	private boolean isMortgaged;
 	private String name;
 
@@ -21,23 +20,31 @@ public class Fleet extends AbstractFields implements Ownable {
 		this.name = (String) text.getInfo(id+"_name");
 	}
 	
-	public void landOnField(Player player, Texts text) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 
-		if(owner.equals(null)) {
-			String s = myGUI.getUserSelection(text.getFormattedString("buy",this.price),
-					text.getString("Yes"),text.getString("No"));
-			if (s.equals(text.getString("Yes"))) {
-				buyProperty(player,text);
-			}
+		if(owner==null) {
+			boolean choice = gui.getUserLeftButtonPressed(text.getFormattedString("buy", this.price),
+					text.getString("Yes"), text.getString("No"));
+			if (choice) buyProperty(player, text, gui);
 		}
 
-		if (!isMortgaged && !this.owner.equals(player)) {
+		if (!isMortgaged && !owner.equals(player)) {
 
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
 		}
 	}
 
+	public void buyProperty(Player player, Texts text, GUI_Commands gui) { // 
+		if (player.getAccount().legalTransaction(-price)){
+			player.updateBalance(-price);
+			gui.setOwner(id, player.getName());
+			setOwner(player);
+		}
+		else 
+			gui.showMessage(text.getString("failedTransaction"));
+	}
+	
 	public Player getOwner() {
 		return this.owner;
 	}
@@ -55,7 +62,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		return this.owner==null;
 	}
 
-	public void mortgage(Texts text) {
+	public void mortgage(Texts text, GUI_Commands gui) {
 		isMortgaged = true;
 		owner.mortgageFleet();
 		owner.updateBalance((int) (this.price*0.5));
@@ -65,16 +72,6 @@ public class Fleet extends AbstractFields implements Ownable {
 		isMortgaged = false;
 		owner.addFleet();
 		owner.updateBalance(-(int)(this.price*0.5*1.1)); 
-	}
-
-	public void buyProperty(Player player, Texts text) { // 
-		if (player.getAccount().legalTransaction(-price)){
-			player.updateBalance(-price);
-			myGUI.setOwner(id, player.getName());
-			setOwner(player);
-		}
-		else 
-			myGUI.showMessage(text.getString("failedTransaction"));
 	}
 	
 	@Override
@@ -86,4 +83,20 @@ public class Fleet extends AbstractFields implements Ownable {
 		return this.isMortgaged;
 	}
 
+	@Override
+	public int getID() {
+		return id;
+	}
+
+	@Override
+	public void sellPproperty(Player player) {
+		player.updateNumFleetOwned(-1);
+	}
+
+	@Override
+	public int getPrice() {
+		return price;
+	}
+
+	
 }

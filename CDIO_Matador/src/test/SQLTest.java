@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import java.sql.SQLException;
 
@@ -19,8 +19,8 @@ public class SQLTest {
 
 	@Before
 	public void setUp() throws Exception {
-		player = new Player("Mads","green","ufo");
 		sql = new SQL();
+		player = new Player("Mads","green","ufo", sql);
 	}
 
 
@@ -28,7 +28,11 @@ public class SQLTest {
 	public void getBalancetest() {
 		try {
 			player.updateBalance(-5000);
+			long start = System.currentTimeMillis();
 			sql.setBalance(player);
+			long finish = System.currentTimeMillis();
+			double result = (finish-start);
+			System.out.println("The time was: "+result);
 			
 			int expected = player.getBalance();
 			int actual = sql.getBalance(player.getPlayerID());
