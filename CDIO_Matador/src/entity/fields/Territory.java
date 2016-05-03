@@ -26,11 +26,11 @@ public class Territory extends AbstractFields implements Ownable {
 		this.isMortgaged = false;
 		this.name = (String) text.getInfo(id+"_name");
 
-		this.price = (int) text.getInfo(id+"_price");
-		this.housePrice = (int) text.getInfo(id+"_house");
+		this.price = Integer.parseInt(text.getInfo(id+"_price"));
+		this.housePrice = Integer.parseInt(text.getInfo(id+"_house"));
 
 		for (int i = 0; i < rent.length; i++) {
-			this.rent[i] = (int) text.getInfo(id+"_"+i);
+			this.rent[i] = Integer.parseInt(text.getInfo(id+"_"+i));
 		}
 	}
 
@@ -38,7 +38,7 @@ public class Territory extends AbstractFields implements Ownable {
 	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		if (this.owner==null) {
 			// The territory is not owned
-			boolean choice = gui.getUserLeftButtonPressed(text.getFormattedString("buy", this.price), text.getString("Yes"), text.getString("No"));
+			boolean choice = gui.getUserLeftButtonPressed(text.getFormattedString("buy", this.name, this.price), text.getString("Yes"), text.getString("No"));
 			if (choice) buyProperty(player, text, gui);
 		}
 
@@ -97,7 +97,7 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 	}
 
-	private void sellHouse(GUI_Commands gui){
+	public void sellHouse(GUI_Commands gui){
 		if(houseCount>1){
 			owner.updateBalance(housePrice/2);
 			gui.setHouse(id, houseCount-1);
@@ -106,7 +106,7 @@ public class Territory extends AbstractFields implements Ownable {
 
 	}
 
-	private void sellHotel(GUI_Commands gui){
+	public void sellHotel(GUI_Commands gui){
 		if(houseCount == 5){
 			owner.updateBalance(housePrice/2);
 			gui.setHotel(id, false);

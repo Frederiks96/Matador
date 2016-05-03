@@ -33,10 +33,7 @@ public class Texts {
 		return String.format(texts.getString(key), args);
 	}
 	
-	public Object getInfo(String key) {
-		if (Character.isDigit(fieldInfo.getString(key).charAt(0))) {
-			return Integer.parseInt(fieldInfo.getString(key));
-		}
+	public String getInfo(String key) {
 		return fieldInfo.getString(key);
 	}
 	

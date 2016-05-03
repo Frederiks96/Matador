@@ -23,7 +23,7 @@ public class Fleet extends AbstractFields implements Ownable {
 	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 
 		if(owner==null) {
-			boolean choice = gui.getUserLeftButtonPressed(text.getFormattedString("buy", this.price),
+			boolean choice = gui.getUserLeftButtonPressed(text.getFormattedString("buy", this.name, this.price),
 					text.getString("Yes"), text.getString("No"));
 			if (choice) buyProperty(player, text, gui);
 		}

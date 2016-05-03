@@ -28,7 +28,7 @@ public class Controller  {
 	private SQL sql;
 	private String gameName;
 	private DiceCup dicecup = new DiceCup();
-	private SaleController broker;
+	private TradeController broker;
 
 	public Controller() throws SQLException {
 		this.sql = new SQL();
@@ -82,7 +82,7 @@ public class Controller  {
 
 		gameboard.setupBoard(text);
 		fields = gameboard.getLogicFields();
-		CardStack deck = new CardStack();
+		this.deck = new CardStack();
 		deck.newDeck(text);
 		deck.shuffle();
 		addPlayers();
@@ -92,27 +92,29 @@ public class Controller  {
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
-		while (true) {
-			try {
-				loadPlayers();
-				loadCards(text);
-				break;
-			} catch (SQLException s) {
-				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
-			}
-		}
+//		while (true) {
+//			try {
+				loadPlayers(sql);
+//				loadCards(text);
+//				break;
+//			} catch (SQLException s) {
+//				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
+//			}
+//		}
 		gameboard.setupBoard(text,gameName,players,sql);
 	}
 
 	public void playerTurn(Player player) throws SQLException {
 		String options;
+		String choice;
 
 		if (player.getJailTime()>1){
 
 		}
 
 		else do {
-			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
+			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), 
+					text.getStrings("roll","trade","manageProperties"));
 
 			if (options.equals(text.getString("roll"))) {
 				gui.removeCar(player.getPosition(), player.getName());		
@@ -127,12 +129,15 @@ public class Controller  {
 				saveGame();
 
 			} else if (options.equals(text.getString("trade"))) {
-				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
-				broker = new SaleController();
+				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), 
+						getOpponents(player));
+				broker = new TradeController();
 				broker.suggestDeal(player, getPlayer(offereeName), text, gameboard, gui);
 				saveGame();
 
 			} else {	//BUILD   //manage properties
+				
+				choice = gui.getUserButtonPressed("", text.getStrings("build","mortgage","unbuild"));
 				build(player);
 				saveGame();
 			}
@@ -170,7 +175,7 @@ public class Controller  {
 
 	public String[] getOwnedProperties(Player player) {
 		fields = gameboard.getLogicFields();
-		properties = new String[28];
+		properties = new String[player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoryOwned()];
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Brewery) {
@@ -259,7 +264,7 @@ public class Controller  {
 		} while(i<players.length);
 	}
 
-	private void loadPlayers() throws SQLException {
+	private void loadPlayers(SQL sql) throws SQLException {
 		for (int i = 0; i < sql.countPlayers(); i++) {
 			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1), sql);
 			sql.setBalance(players[i]);

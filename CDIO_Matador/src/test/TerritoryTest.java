@@ -41,7 +41,6 @@ public class TerritoryTest {
 	@Test
 	public void testBuy(){
 		territory.buyProperty(player1, text, gui);
-		territory.landOnField(player2, text, gui);
 		
 		Player expected = this.player1;
 		Player actual = territory.getOwner();
@@ -56,6 +55,7 @@ public class TerritoryTest {
 	
 	@Test
 	public void testRent(){
+		territory.buyProperty(player1, text, gui);
 		territory.landOnField(player2, text, gui);
 		
 		int expected = 30000 - territory.getRent();

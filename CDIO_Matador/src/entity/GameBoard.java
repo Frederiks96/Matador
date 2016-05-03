@@ -45,15 +45,15 @@ public class GameBoard {
 		gui = new GUI_Commands();
 		Player owner;
 		for  (int i = 0; i < logicFields.length; i++){
-			if (!players[sql.getOwner(i)].equals(null)) {
-				owner = players[sql.getOwner(i)-1];
+			if (sql.getOwnerID(i)!=0) {
+				owner = players[sql.getOwnerID(i)-1];
 			} else {
 				owner = null;
 			}
 
 			if (i == 5 || i==15 || i==25 || i==35){
 				logicFields[i] = new Fleet(i,owner, text);
-				if (!owner.equals(null)) {
+				if (owner!=null) {
 					gui.setOwner(i, owner.getName());
 				}
 			} else if (i == 4 || i == 38){
@@ -64,12 +64,12 @@ public class GameBoard {
 				logicFields[i] = new ChanceField(i,text);
 			} else if (i == 12 || i == 28){
 				logicFields[i] = new Brewery(i,owner, text);
-				if (!owner.equals(null)) {
+				if (owner!=null) {
 					gui.setOwner(i, owner.getName());
 				}
 			} else {
 				logicFields[i] = new Territory(i,owner, text);
-				if (!owner.equals(null)) {
+				if (owner!=null) {
 					gui.setOwner(i, owner.getName());
 				}
 				int house = sql.getFieldHouseCount(((Territory)logicFields[i]));
