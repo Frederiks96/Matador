@@ -69,7 +69,7 @@ public class Brewery extends AbstractFields implements Ownable {
 	}
 
 	public boolean isOwned() {
-		return this.owner.equals(null);
+		return this.owner == null;
 	}
 			
 	public void setOwner(Player owner) {
