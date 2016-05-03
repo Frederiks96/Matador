@@ -107,7 +107,7 @@ public class Controller  {
 
 	public void playerTurn(Player player) throws SQLException {
 		String options;
-		
+
 		if (player.getJailTime()>-1){
 			// TODO
 		}
@@ -267,12 +267,6 @@ public class Controller  {
 		deck.loadCards(text);
 	}
 
-	private void loadGameBoard(){
-		// TODO
-		// sætter alle ejerne på brættet ud fra databasen
-		// sætter hvor mange 
-	}
-
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();
 		for (int i = 0; i < s.length; i++) {
@@ -319,9 +313,9 @@ public class Controller  {
 			sql.setTurn(players[i]);
 			sql.setIsAlive(players[i]);
 		}
-//				for(int i=0; i < deck.size(); i++){
-//					sql.setCardPosition(deck[i].getPosition, deck[i].getID());
-//				}
+		//				for(int i=0; i < deck.size(); i++){
+		//					sql.setCardPosition(deck[i].getPosition, deck[i].getID());
+		//				}
 
 		for(int i = 0; i < fields.length; i++){
 			if (fields[i] instanceof Territory ){
@@ -370,6 +364,21 @@ public class Controller  {
 		}
 		return totalworth;
 
+	}
+
+	public void bankrupt(Player player, Player creditor) {
+		player.bankrupt();
+		if (creditor!=null) {
+			creditor.updateBalance(player.getBalance());
+			player.updateBalance(-player.getBalance());
+
+		} else {
+			player.updateBalance(-player.getBalance());
+			String[] properties = getOwnedProperties(player);
+		//	AuktionController auktion = new AuktionController();
+		//	auktion.start(properties);
+			
+		}
 	}
 
 }
