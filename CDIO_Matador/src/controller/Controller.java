@@ -49,7 +49,7 @@ public class Controller  {
 					players[i].setTurn(false);
 					if(players.length == i+1 )players[0].setTurn(true);
 					else players[i+1].setTurn(true);
-				
+
 				}
 			}
 		} 
@@ -95,7 +95,7 @@ public class Controller  {
 		while (true) {
 			try {
 				loadPlayers();
-//				loadCards(text);
+				//				loadCards(text);
 				break;
 			} catch (SQLException s) {
 				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
@@ -119,13 +119,13 @@ public class Controller  {
 			if (options.equals(text.getString("roll"))) {
 				gui.removeCar(player.getPosition(), player.getName());		
 				dicecup.roll();
-				player.updatePosition((int)(dicecup.getLastRoll()));		
+				player.updatePosition((dicecup.getLastRoll()));		
 				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
 				gui.setCar(player.getPosition(), player.getName());		
 				gameboard.getLogicField(player.getPosition()).landOnField(player, text, gui);;
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (fields[player.getPosition()] instanceof ChanceField) 
-//					deck.draw(player);				
+					deck.draw(player);				
 				saveGame();
 
 			} else if (options.equals(text.getString("trade"))) {
@@ -136,7 +136,7 @@ public class Controller  {
 				saveGame();
 
 			} else {	//BUILD   //manage properties
-				
+
 				choice = gui.getUserButtonPressed("", text.getStrings("build","mortgage","unbuild"));
 				build(player);
 				saveGame();
@@ -311,7 +311,7 @@ public class Controller  {
 			}while (building != text.getString("back"));
 		}else gui.showMessage(text.getString("notEnoughTerritory"));
 	}
-	
+
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();
 		for (int i = 0; i < s.length; i++) {
