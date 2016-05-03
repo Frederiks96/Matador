@@ -22,7 +22,6 @@ public class Player {
 	private ArrayList<ChanceCard> cards;
 	private String vColor;
 	private String vType;
-	private int accountID;
 	private int vID;
 	private int jailTime;
 	private GUI_Commands myGUI = new GUI_Commands();
@@ -37,7 +36,6 @@ public class Player {
 		this.position = 0;
 		this.player_id = numOfPlayers;
 		this.vID = numOfPlayers*11;
-		this.accountID = numOfPlayers*111;
 		this.jailTime = -1;
 		this.vColor = vColor;
 		this.vType = vType;
@@ -176,8 +174,8 @@ public class Player {
 		return numTerritoryOwned;
 	}
 
-	public void updateNumTerritoryOwned(int i){
-		numTerritoryOwned = numTerritoryOwned + i;	
+	public void updateNumTerritoryOwned(){
+		numTerritoryOwned++;	
 	}
 
 	public void updateNumBreweriesOwned(int i) {
