@@ -43,7 +43,7 @@ public class TestGetTerritoriesOwned {
 		fields[1].landOnField(player1, text, gui);
 		fields[3].landOnField(player1, text, gui);
 		fields[6].landOnField(player1, text, gui);
-		gui.getUserSelection("Vælg din grunde", con.getTerritoriesOwned(player1,fields));
+		gui.getUserSelection("Vælg din grunde", con.getOwnedTerritories(player1,fields));
 	}
 
 }
