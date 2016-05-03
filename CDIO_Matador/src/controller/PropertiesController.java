@@ -7,7 +7,7 @@ import boundary.GUI_Commands;
 import entity.GameBoard;
 import entity.fields.AbstractFields;
 
-public class MangageProppertiesController {
+public class PropertiesController {
 
 
 	public void build(String property, Player player, GUI_Commands gui, Texts text, GameBoard gameboard, AbstractFields[] fields){ // mangler build even

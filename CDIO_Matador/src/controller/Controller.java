@@ -29,7 +29,7 @@ public class Controller  {
 	private String gameName;
 	private DiceCup dicecup = new DiceCup();
 	private TradeController broker;
-	private MangageProppertiesController manage;
+	private PropertiesController manage;
 
 	public Controller() throws SQLException {
 		this.sql = new SQL();

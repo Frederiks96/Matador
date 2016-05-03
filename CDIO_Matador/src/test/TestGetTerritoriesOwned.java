@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import boundary.GUI_Commands;
 import controller.Controller;
+import controller.PropertiesController;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
@@ -14,7 +15,7 @@ import entity.fields.AbstractFields;
 
 public class TestGetTerritoriesOwned {
 	
-	Controller con;
+	PropertiesController con;
 	GUI_Commands gui;
 	Player player1;
 	GameBoard board;
@@ -23,7 +24,7 @@ public class TestGetTerritoriesOwned {
 
 	@Before
 	public void setUp() throws Exception {
-		con = new Controller();
+		con = new PropertiesController();
 		gui = new GUI_Commands();
 		player1 = new Player("John","Green","UFO");
 		board = new GameBoard();
