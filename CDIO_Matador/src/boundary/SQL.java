@@ -173,7 +173,7 @@ public class SQL implements DAO, DTO {
 	public String getVehicleType(int playerID) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		try {
-			String query = "SELECT vehicle_type FROM "+dbName+".player NATURAL JOIN "+dbName+".vehicel WHERE player_id = ?";
+			String query = "SELECT v_type FROM "+dbName+".player NATURAL JOIN "+dbName+".vehicel WHERE player_id = ?";
 			java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
 			stmt.setInt(1, playerID);
 			try {
