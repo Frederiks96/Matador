@@ -366,7 +366,7 @@ public class Controller  {
 
 	}
 
-	public void bankrupt(Player player, Player creditor) {
+	public void bankrupt(Player player, Player creditor, AbstractFields field) {
 		player.bankrupt();
 		if (creditor!=null) {
 			creditor.updateBalance(player.getBalance());
@@ -375,8 +375,8 @@ public class Controller  {
 		} else {
 			player.updateBalance(-player.getBalance());
 			String[] properties = getOwnedProperties(player);
-		//	AuktionController auktion = new AuktionController();
-		//	auktion.start(properties);
+			AuktionController auktion = new AuktionController();
+			auktion.auction(players, field, this, gui);
 			
 		}
 	}
