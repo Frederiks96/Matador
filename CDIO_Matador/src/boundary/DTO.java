@@ -10,8 +10,7 @@ public interface DTO {
 	
 	// Data Transfer Object - "Setters"
 	
-	void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
-			int balance, int vId, String vColor, String vType, boolean turn) 	throws SQLException;
+	void createPlayer(Player player)										 	throws SQLException;
 	void createAccount(int aId, int balance) 									throws SQLException;
 	void createVehicle(int vId, String vColour, String vType) 					throws SQLException;
 	void createChanceCard(ChanceCard card) 										throws SQLException;
@@ -23,6 +22,6 @@ public interface DTO {
 	void setMortgage(int field_id, boolean mortgaged) 							throws SQLException; 
 	void setIsAlive(Player player) 												throws SQLException;
 	void setTurn(Player player) 												throws SQLException;
-	void createNewDB(String dbName)												throws IOException, SQLException;
+	void createNewDB(String dbName)												throws SQLException, IOException;
 
 }

@@ -20,28 +20,46 @@ public class SQLTest {
 	@Before
 	public void setUp() throws Exception {
 		sql = new SQL();
-		player = new Player("Mads","green","ufo", sql);
+		sql.useDB("Hej");
+//		player = new Player("Mads","green","ufo", sql);
 	}
 
 
+//	@Test 
+//	public void getBalancetest() {
+//		try {
+//			player.updateBalance(-5000);
+//			long start = System.currentTimeMillis();
+//			sql.setBalance(player);
+//			long finish = System.currentTimeMillis();
+//			double result = (finish-start);
+//			System.out.println("The time was: "+result);
+//			
+//			int expected = player.getBalance();
+//			int actual = sql.getBalance(player.getPlayerID());
+//			
+//			assertEquals(expected, actual);
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
 	@Test 
-	public void getBalancetest() {
+	public void getFromDB() {
+		String navn = "";
+		String v_colour = "";
+		String v_type = "";
 		try {
-			player.updateBalance(-5000);
-			long start = System.currentTimeMillis();
-			sql.setBalance(player);
-			long finish = System.currentTimeMillis();
-			double result = (finish-start);
-			System.out.println("The time was: "+result);
+			navn = sql.getPlayerName(1);
+			v_colour = sql.getVehicleColour(1);
+			v_type = sql.getVehicleType(1);
+		} catch (SQLException s) {
 			
-			int expected = player.getBalance();
-			int actual = sql.getBalance(player.getPlayerID());
-			
-			assertEquals(expected, actual);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
+		assertEquals(navn,"JOHN");
+		assertEquals(v_type,"UFO");
+		assertEquals(v_colour,"GREEN");
 	}
 
 }

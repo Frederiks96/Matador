@@ -92,15 +92,15 @@ public class Controller  {
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
-//		while (true) {
-//			try {
-				loadPlayers(sql);
+		while (true) {
+			try {
+				loadPlayers();
 //				loadCards(text);
-//				break;
-//			} catch (SQLException s) {
-//				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
-//			}
-//		}
+				break;
+			} catch (SQLException s) {
+				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
+			}
+		}
 		gameboard.setupBoard(text,gameName,players,sql);
 	}
 
@@ -254,6 +254,7 @@ public class Controller  {
 			String name = gui.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
 				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/, sql);
+				sql.createPlayer(players[i]);
 				gui.addPlayer(name, players[i].getBalance());
 				gui.setCar(players[i].getPosition(), players[i].getName());
 				if(i==0) players[i].setTurn(true);
@@ -264,8 +265,9 @@ public class Controller  {
 		} while(i<players.length);
 	}
 
-	private void loadPlayers(SQL sql) throws SQLException {
-		for (int i = 0; i < sql.countPlayers(); i++) {
+	private void loadPlayers() throws SQLException {
+		players = new Player[sql.countPlayers()];
+		for (int i = 0; i < players.length; i++) {
 			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1), sql);
 			sql.setBalance(players[i]);
 		}
@@ -378,9 +380,9 @@ public class Controller  {
 	private int countTotalWorth(Player player){
 		// Counts player balance + value of properties + values of buildings
 
-		int totalworth=0;
-
+		int totalworth = 0;
 		totalworth += player.getBalance();
+		fields = new AbstractFields[40];
 
 		for (int i = 0; i < fields.length; i++) {
 			if(fields[i] instanceof Territory){
