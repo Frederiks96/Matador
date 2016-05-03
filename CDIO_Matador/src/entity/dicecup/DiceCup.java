@@ -31,4 +31,4 @@ public class DiceCup {
 	public int getDieTwo() {
 		return this.die2.getLastRoll();
 	}
-}
+}	
