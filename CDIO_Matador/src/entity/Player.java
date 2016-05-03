@@ -189,7 +189,10 @@ public class Player {
 	}
 	
 	public void bankrupt() {
-		this.isAlive = false;
+		this.isAlive 			= false;
+		this.numBreweriesOwned 	= 0;
+		this.numFleetsOwned 	= 0;
+		this.numTerritoryOwned 	= 0;
 	}
 	
 	
