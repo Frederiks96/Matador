@@ -64,7 +64,7 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	public void mortgage(Texts text, GUI_Commands gui) {
 		isMortgaged = true;
-		owner.mortgageFleet();
+		owner.sellFleet();
 		owner.updateBalance((int) (this.price*0.5));
 	}
 
@@ -89,8 +89,8 @@ public class Fleet extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public void sellPproperty(Player player) {
-		player.updateNumFleetOwned(-1);
+	public void sellProperty(Player player) {
+		player.addFleet();;
 	}
 
 	@Override

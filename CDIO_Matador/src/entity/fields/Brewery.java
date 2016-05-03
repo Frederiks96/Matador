@@ -48,8 +48,8 @@ public class Brewery extends AbstractFields implements Ownable {
 	}
 	
 	@Override
-	public void sellPproperty(Player player) {
-		player.updateNumBreweriesOwned(-1);
+	public void sellProperty(Player player) {
+		player.sellBrewery();
 	}
 	
 	public void mortgage(Texts text, GUI_Commands gui) {
