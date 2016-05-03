@@ -378,7 +378,7 @@ public class Controller  {
 			//TODO
 			player.updateBalance(-player.getBalance());
 			String[] properties = getOwnedProperties(player);
-			AuktionController auktion = new AuktionController();
+			AuctionController auktion = new AuctionController();
 			auktion.auction(players, field, this, gui);
 
 		}
@@ -394,7 +394,7 @@ public class Controller  {
 			
 			field.landOnField(player, buy, text, gui);;
 			if(!buy){
-				AuktionController auctioncon = new AuktionController();
+				AuctionController auctioncon = new AuctionController();
 				auctioncon.auction(players, field, this, gui);
 			}
 		}
@@ -405,7 +405,7 @@ public class Controller  {
 			
 			field.landOnField(player, buy, text, gui);;
 			if(!buy){
-				AuktionController auctioncon = new AuktionController();
+				AuctionController auctioncon = new AuctionController();
 				auctioncon.auction(players, field, this, gui);
 			}
 		}
@@ -416,7 +416,7 @@ public class Controller  {
 			
 			field.landOnField(player, buy, text, gui);;
 			if(!buy){
-				AuktionController auctioncon = new AuktionController();
+				AuctionController auctioncon = new AuctionController();
 				auctioncon.auction(players, field, this, gui);
 			}
 		}

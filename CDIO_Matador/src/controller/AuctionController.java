@@ -7,7 +7,7 @@ import entity.fields.Brewery;
 import entity.fields.Fleet;
 import entity.fields.Territory;
 
-public class AuktionController {
+public class AuctionController {
 
 	Texts text;
 	int currentbid = 0;
