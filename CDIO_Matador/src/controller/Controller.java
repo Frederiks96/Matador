@@ -253,7 +253,7 @@ public class Controller  {
 		do {
 			String name = gui.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
-				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/, sql);
+				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/);
 				sql.createPlayer(players[i]);
 				gui.addPlayer(name, players[i].getBalance());
 				gui.setCar(players[i].getPosition(), players[i].getName());
@@ -268,7 +268,7 @@ public class Controller  {
 	private void loadPlayers() throws SQLException {
 		players = new Player[sql.countPlayers()];
 		for (int i = 0; i < players.length; i++) {
-			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1), sql);
+			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
 			sql.setBalance(players[i]);
 		}
 	}

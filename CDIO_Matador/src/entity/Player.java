@@ -29,7 +29,7 @@ public class Player {
 	private Controller controller = new Controller();
 
 
-	public Player(String name, String vColor, String vType, SQL sql) throws SQLException {
+	public Player(String name, String vColor, String vType) throws SQLException {
 		numOfPlayers++;
 		this.name = name;
 		this.numFleetsOwned = 0;
