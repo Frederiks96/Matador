@@ -35,7 +35,7 @@ public class Texts {
 	
 	public Object getInfo(String key) {
 		if (Character.isDigit(fieldInfo.getString(key).charAt(0))) {
-			return Integer.parseInt(fieldInfo.getString(key));
+			return fieldInfo.getString(key);
 		}
 		return fieldInfo.getString(key);
 	}
