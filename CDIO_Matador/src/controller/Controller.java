@@ -82,7 +82,7 @@ public class Controller  {
 
 		gameboard.setupBoard(text);
 		fields = gameboard.getLogicFields();
-		CardStack deck = new CardStack();
+		this.deck = new CardStack();
 		deck.newDeck(text);
 		deck.shuffle();
 		addPlayers();
@@ -175,7 +175,7 @@ public class Controller  {
 
 	public String[] getOwnedProperties(Player player) {
 		fields = gameboard.getLogicFields();
-		properties = new String[28];
+		properties = new String[player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoryOwned()];
 		int j = 0;
 		for (int i = 0; i < fields.length; i++) {
 			if (fields[i] instanceof Brewery) {
