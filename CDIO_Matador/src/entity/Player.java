@@ -23,9 +23,9 @@ public class Player {
 	private int accountID;
 	private int vID;
 	private int jailTime;
-	private SQL sql = new SQL();
 	private GUI_Commands myGUI = new GUI_Commands();
 	private Controller controller = new Controller();
+	private SQL sql = new SQL();
 
 
 	public Player(String name, String vColor, String vType) throws SQLException {
@@ -102,14 +102,16 @@ public class Player {
 		}
 	}
 
-	public void updatePosition(int lastRoll) {
+	public void updatePosition(int lastRoll) throws SQLException {
 		if (lastRoll>0 && lastRoll<13) {
 			if ((position+lastRoll)>39) {
-				updateBalance(-4000);
+				updateBalance(4000);
+				sql.setBalance(this);
 				position += lastRoll-40;
 			} else {
 				position += lastRoll;
 			}
+		sql.updatePosition(this);
 		}
 	}
 
@@ -157,6 +159,10 @@ public class Player {
 
 	public boolean hasAll(String COLOUR) {
 		return controller.hasAll(this, COLOUR);
+	}
+
+	public int getJailTime(){
+		return this.jailTime;
 	}
 
 }

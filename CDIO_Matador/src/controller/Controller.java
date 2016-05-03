@@ -1,21 +1,24 @@
 package controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import boundary.GUI_Commands;
 import boundary.SQL;
+import desktop_resources.GUI;
 import entity.CardStack;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
+import entity.dicecup.DiceCup;
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
 import entity.fields.CardField;
 import entity.fields.Fleet;
 import entity.fields.Territory;
 
-public class Controller {
+public class Controller  {
 
 	private GUI_Commands c = new GUI_Commands(); 
 	private GameBoard gameBoard;
@@ -24,51 +27,99 @@ public class Controller {
 	private Texts text;
 	private CardStack deck;
 	private Player[] players;
+	private SQL sql;
+	private String gameName;
+	private DiceCup dicecup = new DiceCup();
+	private SaleController broker;
 
-	public Controller() {
+	public Controller() throws SQLException {
+		this.sql = new SQL();
 	}
 
 	public void run() throws SQLException {
 		getLanguage();
 		gameBoard = new GameBoard();
-		if (newGame()) {
+		dicecup = new DiceCup();
+		chooseGame();
+
+		do {
+			for (int i = 0; i < players.length; i++) {
+				if (players[i].isAlive()) {
+					playerTurn(players[i]);
+				}
+			}
+		} while (numPlayersAlive()>1);
+		
+		c.showMessage(text.getFormattedString("winner", getWinner()));
+		// sql.dropDB(); // Skal laves i SQL klassen
+		c.closeGUI();
+	}
+
+	private void chooseGame() throws SQLException {
+		String game = c.getUserButtonPressed(text.getString("loadGameQuestion"),text.getString("loadGame"),text.getString("newGame"));
+		if (game.equals(text.getString("newGame"))) {
 			startNewGame();
 		} else {
-			loadGame();
-		}
-
-		for (int i = 0; i < players.length; i++) {
-			if (players[i].isAlive() && numPlayersAlive()>1) {
-				playerTurn(players[i]);
-			} else {
-				c.showMessage(text.getFormattedString("winner", players[i].getName()));
-			}
+			loadGame(text, c.getUserSelection(text.getString("chooseGame"), sql.getActiveGames()));
 		}
 	}
 
 	public void startNewGame() throws SQLException {
+		do {
+			gameName = c.getUserString(text.getString("nameGame"));
+		} while (gameName.equals(null) || gameName.trim().equals("") || dbNameUsed(gameName.trim()));
+
+		try {
+			sql.createNewDB(gameName);
+		} catch (IOException e) {
+			c.showMessage(text.getString("fileNotFound"));
+			c.closeGUI();
+		}
+
 		gameBoard.setupBoard(text);
 		fields = gameBoard.getFields();
-		CardStack deck = new CardStack(text);
+		CardStack deck = new CardStack();
+		deck.newDeck(text);
 		deck.shuffle();
 		addPlayers();
 	}
 
-	public void loadGame() {
-		gameBoard.setupBoard(text, "");
-		try {
-			loadPlayers();
-		} catch (SQLException s) {
-			// Spørg om brugernavn og adgangskode til DB
+	public void loadGame(Texts text, String gameName) throws SQLException {
+		sql.useDB(gameName);
+		while (true) {
+			try {
+				loadPlayers();
+				loadCards(text);
+				break;
+			} catch (SQLException s) {
+				sql.updateUser(c.getUserString(text.getString("getUser")), c.getUserString("getPass"));
+			}
 		}
+		gameBoard.setupBoard(text,gameName,players,sql);
 	}
 
-	public void playerTurn(Player player) {
+	public void playerTurn(Player player) throws SQLException {
+		String button;
+		do {
+			button = c.getUserButtonPressed(text.getFormattedString("turn", player.getName()), text.getStrings("roll","trade","build"));
+			if (button.equals(text.getString("roll"))) {
+				dicecup.roll();
+				c.setDice(dicecup.getDieOne(), dicecup.getDieTwo());
+				player.updatePosition(dicecup.getLastRoll());
+			} else if (button.equals(text.getString("trade"))) {
+				String offereeName = c.getUserButtonPressed(text.getString("offereeName"), getOpponents(player));
+				broker = new SaleController();
+				broker.suggestDeal(player, getPlayer(offereeName), text, gameBoard, c);
+			} else {
+				// Byg huse
+			}
+		} while (!button.equals(text.getString("roll")));
+
+		// Land på felt
 		// Opdatere spillerens position før landOnField kaldes
 		if (fields[player.getPosition()] instanceof CardField) {
 			deck.draw(player);
 		}
-		c.closeGUI();
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
@@ -129,7 +180,7 @@ public class Controller {
 	}
 
 	private void getLanguage() {
-		String lang = c.getUserSelection("Choose your preferred language", "Dansk", "English");
+		String lang = c.getUserButtonPressed("Choose your preferred language", "Dansk", "English");
 		if (lang.equals("Dansk")) {
 			text = new Texts(language.Dansk);
 		} else {
@@ -137,10 +188,7 @@ public class Controller {
 		}
 	}
 
-	private boolean newGame() {
-		return c.getUserLeftButtonPressed("", "", "");
-	}
-
+	
 	public boolean isValidName(String name) {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i] != null) {
@@ -161,7 +209,7 @@ public class Controller {
 		}
 		return num;
 	}
-	
+
 	private void addPlayers() throws SQLException {
 		int numOfPlayers = 0;
 		do {
@@ -172,19 +220,68 @@ public class Controller {
 		do {
 			String name = c.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
-				players[i] = new Player(name,"","");
+				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/);
+				c.addPlayer(name, players[i].getBalance());
 				i++;
 			} else {
 				c.showMessage(text.getString("nameTaken"));
 			}
 		} while(i<players.length);
 	}
-	
+
 	private void loadPlayers() throws SQLException {
-		SQL sql = new SQL();
 		for (int i = 0; i < players.length; i++) {
-			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(),sql.getVehicleType());
+			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
+			sql.setBalance(players[i]);
 		}
 	}
 
+	private void loadCards(Texts text) throws SQLException {
+		deck.loadCards(text);
+	}
+
+	private void loadGameBoard(){
+		// TODO
+		// sætter alle ejerne på brættet ud fra databasen
+		// sætter hvor mange 
+	}
+
+	private boolean dbNameUsed(String dbName) throws SQLException {
+		String[] s = sql.getActiveGames();
+		for (int i = 0; i < s.length; i++) {
+			if (s[i].equals(dbName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private Player getPlayer(String playerName) {
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].getName().equals(playerName)) {
+				return players[i];
+			}
+		}
+		return null;
+	}
+
+
+	private String[] getOpponents(Player player) {
+		String[] opponents = new String[players.length-1];
+		for (int i = 0; i < players.length; i++) {
+			if (!players[i].equals(player)) {
+				opponents[i] = players[i].getName();
+			}
+		}
+		return opponents;
+	}
+	
+	private String getWinner() {
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].isAlive()) {
+				return players[i].getName();
+			}
+		}
+		return "";
+	}
 }

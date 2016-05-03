@@ -5,6 +5,7 @@ public class ChanceCard {
 	private String text;
 	private boolean isOwnable;
 	private Player owner;
+	private String cardID;
 
 	public ChanceCard(String text){
 		this.text = text;
@@ -14,6 +15,7 @@ public class ChanceCard {
 		else {
 			isOwnable = false;
 		}
+		this.cardID = text;
 	}
 
 	public String toString() {
@@ -34,6 +36,10 @@ public class ChanceCard {
 
 	public void setOwner(Player player) {
 		this.owner=player;
+	}
+	
+	public String getCardID() {
+		return this.cardID;
 	}
 
 }

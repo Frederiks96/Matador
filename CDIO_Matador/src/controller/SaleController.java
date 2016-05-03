@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.SQLException;
+
 import boundary.GUI_Commands;
 import entity.GameBoard;
 import entity.Player;
@@ -13,7 +15,7 @@ public class SaleController {
 	private int ownOffer;
 	private int foeOffer;
 
-	public SaleController() {
+	public SaleController() throws SQLException {
 		c = new Controller();
 	}
 

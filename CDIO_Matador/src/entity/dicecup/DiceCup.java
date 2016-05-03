@@ -10,8 +10,9 @@ public class DiceCup {
 		this.die2 = new Dice();
 	}
 
-	public int roll(){
-		return die1.roll() + die2.roll();
+	public void roll(){
+		die1.roll();
+		die2.roll();
 	}
 
 	public boolean hasPair() {
@@ -21,5 +22,13 @@ public class DiceCup {
 	public int getLastRoll() {
 		return die1.getLastRoll() + die2.getLastRoll();
 		
+	}
+	
+	public int getDieOne() {
+		return this.die1.getLastRoll();
+	}
+	
+	public int getDieTwo() {
+		return this.die2.getLastRoll();
 	}
 }

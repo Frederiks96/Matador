@@ -1,16 +1,23 @@
 package entity;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import boundary.SQL;
 
 public class CardStack {
 	private ChanceCard card;
 	private ArrayList<String> texts;
 	private ArrayList<ChanceCard> chanceCardDeck;
+	private SQL sql;
 
 
-	public CardStack(Texts text){
+	public CardStack(){
 		chanceCardDeck = new ArrayList<ChanceCard>();
+	}
+	
+	public void newDeck(Texts text) {
 		for(int i = 1; i<34; i++) {
 			this.card = new ChanceCard(text.getCardString("k"+i));
 			chanceCardDeck.add(card);
@@ -43,6 +50,13 @@ public class CardStack {
 			texts.add(chanceCardDeck.get(i).toString());
 		} 
 		return texts;
+	}
+	
+	public void loadCards(Texts text) throws SQLException {
+		sql = new SQL();
+		for (int i = 0; i < chanceCardDeck.size(); i++) {
+			chanceCardDeck.add(new ChanceCard(text.getCardString("k"+sql.getCardId(i))));
+		}
 	}
 
 }

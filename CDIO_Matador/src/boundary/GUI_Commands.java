@@ -67,6 +67,10 @@ public class GUI_Commands implements Boundary_Interface {
 	public void setHotel(int fieldID, boolean hasHotel) {
 		GUI.setHotel(fieldID, hasHotel);	
 	}
+	
+	public void setDice(int faceValue1, int faceValue2) {
+		GUI.setDice(faceValue1, faceValue2);
+	}
 
 	
 

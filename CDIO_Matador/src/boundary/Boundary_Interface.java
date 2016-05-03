@@ -23,6 +23,7 @@ public interface Boundary_Interface {
 	void setHouse(int fieldID, int houseCount);
 	void setHotel(int fieldID, boolean hasHotel);
 	void setOwner(int id, String name);
+	void setDice(int faceValue1, int faceValue2);
 	
 
 }
