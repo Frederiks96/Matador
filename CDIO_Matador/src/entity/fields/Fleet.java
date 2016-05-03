@@ -20,16 +20,14 @@ public class Fleet extends AbstractFields implements Ownable {
 		this.name = (String) text.getInfo(id+"_name");
 	}
 	
-	public void landOnField(Player player, Texts text, GUI_Commands gui) {
+	public void landOnField(Player player, boolean buy, Texts text, GUI_Commands gui) {
 
-		if(owner==null) {
-			boolean choice = gui.getUserLeftButtonPressed(text.getFormattedString("buy", this.name, this.price),
-					text.getString("Yes"), text.getString("No"));
-			if (choice) buyProperty(player, text, gui);
+		if(buy) {	// The Fleet is not Owned, and the player wishes to buy it
+			buyProperty(player, text, gui);
 		}
 
-		if (!isMortgaged && !owner.equals(player)) {
-
+		if (!isMortgaged && owner!=player) {	//another player owns the Fleet
+			gui.showMessage(text.getFormattedString("rent", getRent(), owner));
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
 		}

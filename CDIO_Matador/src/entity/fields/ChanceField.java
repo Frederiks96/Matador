@@ -13,7 +13,7 @@ public class ChanceField extends AbstractFields {
 	}
 
 	@Override
-	public void landOnField(Player player, Texts text, GUI_Commands gui) {
+	public void landOnField(Player player, boolean buy, Texts text, GUI_Commands gui) {
 		// Du er landet på prøv lykken
 	}
 

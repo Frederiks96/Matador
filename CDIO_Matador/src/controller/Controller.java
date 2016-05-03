@@ -123,7 +123,9 @@ public class Controller  {
 				player.updatePosition((dicecup.getLastRoll()));		
 				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
 				gui.setCar(player.getPosition(), player.getName());		
-				gameboard.getLogicField(player.getPosition()).landOnField(player, text, gui);;
+
+				landedOn(player);
+				
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (fields[player.getPosition()] instanceof ChanceField) 
 					deck.draw(player);				
@@ -378,8 +380,48 @@ public class Controller  {
 			String[] properties = getOwnedProperties(player);
 			AuktionController auktion = new AuktionController();
 			auktion.auction(players, field, this, gui);
-			
+
 		}
 	}
 
+	private void landedOn(Player player){	// Asks if Player wants to buy, otherwise auction
+		AbstractFields field = fields[player.getPosition()];
+		boolean buy = false;
+		
+		if(field instanceof Territory && ((Territory)field).getOwner() == null){
+			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
+					((Territory)field).getPrice()),text.getString("Yes"), text.getString("No"));
+			
+			field.landOnField(player, buy, text, gui);;
+			if(!buy){
+				AuktionController auctioncon = new AuktionController();
+				auctioncon.auction(players, field, this, gui);
+			}
+		}
+	
+		if(field instanceof Fleet && ((Fleet)field).getOwner() == null){
+			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
+					((Fleet)field).getPrice()),text.getString("Yes"), text.getString("No"));
+			
+			field.landOnField(player, buy, text, gui);;
+			if(!buy){
+				AuktionController auctioncon = new AuktionController();
+				auctioncon.auction(players, field, this, gui);
+			}
+		}
+		
+		if(field instanceof Brewery && ((Brewery)field).getOwner() == null){
+			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
+					((Brewery)field).getPrice()),text.getString("Yes"), text.getString("No"));
+			
+			field.landOnField(player, buy, text, gui);;
+			if(!buy){
+				AuktionController auctioncon = new AuktionController();
+				auctioncon.auction(players, field, this, gui);
+			}
+		}
+		else 
+			field.landOnField(player,buy, text, gui);
+		
+	}
 }

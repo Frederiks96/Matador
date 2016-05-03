@@ -15,7 +15,7 @@ public class Tax extends AbstractFields {
 	}
 
 	@Override
-	public void landOnField(Player player, Texts text, GUI_Commands gui) {
+	public void landOnField(Player player,boolean buy, Texts text, GUI_Commands gui) {
 		if (this.id==4) {
 			answer = gui.getUserButtonPressed(text.getString("taxOrFine"), text.getString("tax"),text.getString("fine"));
 			if (answer.equals(text.getString("tax"))) {

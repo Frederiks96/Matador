@@ -13,7 +13,7 @@ public class Refuge extends AbstractFields {
 	}
 
 	@Override
-	public void landOnField(Player player, Texts text, GUI_Commands gui) {
+	public void landOnField(Player player,boolean buy, Texts text, GUI_Commands gui) {
 		if (player.getPosition() == 0) {
 			// START - the player receives his money in Player.updatePosition()
 			gui.showMessage(text.getString("startLanded"));

@@ -12,7 +12,7 @@ public abstract class AbstractFields {
 		this.id = id;
 	}
 	
-	abstract public void landOnField(Player player, Texts text, GUI_Commands gui);
+	abstract public void landOnField(Player player, boolean buy, Texts text, GUI_Commands gui);
 	
 	abstract public String getName();
 	
