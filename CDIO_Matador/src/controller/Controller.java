@@ -92,15 +92,15 @@ public class Controller  {
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
-//		while (true) {
-//			try {
+		while (true) {
+			try {
 				loadPlayers();
 //				loadCards(text);
-//				break;
-//			} catch (SQLException s) {
-//				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
-//			}
-//		}
+				break;
+			} catch (SQLException s) {
+				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
+			}
+		}
 		gameboard.setupBoard(text,gameName,players,sql);
 	}
 
@@ -254,6 +254,7 @@ public class Controller  {
 			String name = gui.getUserString(text.getFormattedString("yourName", i+1));
 			if (isValidName(name)) {
 				players[i] = new Player(name,""/*Bilens farve*/,""/*Bilens type*/, sql);
+				sql.createPlayer(players[i]);
 				gui.addPlayer(name, players[i].getBalance());
 				gui.setCar(players[i].getPosition(), players[i].getName());
 				if(i==0) players[i].setTurn(true);

@@ -498,22 +498,21 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-	public void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
-			int balance, int vId, String vColor, String vType, boolean turn) throws SQLException {
-		createAccount(aId, balance);
-		createVehicle(vId, vColor, vType);
+	public void createPlayer(Player player) throws SQLException {
+		createAccount(player.getAccountID(), player.getBalance());
+		createVehicle(player.getVehicleID(), player.getVehicleColour(), player.getVehicleType());
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		try {
 			String update = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?,?)";
 			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-			stmt.setInt(1, id);
-			stmt.setInt(2, vId);
-			stmt.setInt(3, aId);
-			stmt.setString(4, name);
-			stmt.setInt(5, position);
-			stmt.setInt(6, jailTime);
-			stmt.setBoolean(7, isActive);
-			stmt.setBoolean(8, turn);
+			stmt.setInt(1, player.getPlayerID());
+			stmt.setInt(2, player.getVehicleID());
+			stmt.setInt(3, player.getAccountID());
+			stmt.setString(4, player.getName());
+			stmt.setInt(5, player.getPosition());
+			stmt.setInt(6, player.getJailTime());
+			stmt.setBoolean(7, player.isAlive());
+			stmt.setBoolean(8, player.isTurn());
 			try {
 				stmt.executeUpdate();
 			} finally {
