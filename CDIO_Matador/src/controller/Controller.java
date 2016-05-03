@@ -373,6 +373,7 @@ public class Controller  {
 			player.updateBalance(-player.getBalance());
 
 		} else {
+			//TODO
 			player.updateBalance(-player.getBalance());
 			String[] properties = getOwnedProperties(player);
 			AuktionController auktion = new AuktionController();
