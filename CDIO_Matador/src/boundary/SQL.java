@@ -34,9 +34,16 @@ public class SQL implements DAO, DTO {
 
 	public void dropDataBase() throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("DROP DATABASE "+dbName);
-		myCon.close();
+		try {
+			Statement stmt = myCon.createStatement();
+			try {
+				stmt.executeUpdate("DROP DATABASE "+dbName);
+			} finally {
+				stmt.close();
+			}
+		} finally {
+			myCon.close();
+		}
 	}
 
 
@@ -422,42 +429,70 @@ public class SQL implements DAO, DTO {
 
 	public void setHouseCount(int field_id, int house_count) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "UPDATE "+dbName+".property SET house_count = ? WHERE field_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setInt(1, house_count);
-		stmt.setInt(2, field_id);
-		stmt.executeUpdate();
-		myCon.close();
+		try {
+			String update = "UPDATE "+dbName+".property SET house_count = ? WHERE field_id = ?";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1, house_count);
+			stmt.setInt(2, field_id);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+			myCon.close();
+		}
 	}
 
 	public void setMortgage(int field_id, boolean mortgaged) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "UPDATE "+dbName+".property SET mortgage = ? WHERE field_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setBoolean(1, mortgaged);
-		stmt.setInt(2, field_id);
-		stmt.executeUpdate();
-		myCon.close();
+		try {
+			String update = "UPDATE "+dbName+".property SET mortgage = ? WHERE field_id = ?";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setBoolean(1, mortgaged);
+			stmt.setInt(2, field_id);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+			myCon.close();
+		}
 	}
 
 	public void setIsAlive(Player player) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "UPDATE "+dbName+".player SET is_active = ? WHERE player_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setBoolean(1, player.isAlive());
-		stmt.setInt(2, player.getPlayerID());
-		stmt.executeUpdate();
-		myCon.close();
+		try {
+			String update = "UPDATE "+dbName+".player SET is_active = ? WHERE player_id = ?";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setBoolean(1, player.isAlive());
+			stmt.setInt(2, player.getPlayerID());
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+			myCon.close();
+		}
 	}
 
 	public void setTurn(Player player) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "UPDATE "+dbName+".player SET turn = ? WHERE player_id = ?";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setBoolean(1, player.isTurn());
-		stmt.setInt(2, player.getPlayerID());
-		stmt.executeUpdate();
-		myCon.close();
+		try {
+			String update = "UPDATE "+dbName+".player SET turn = ? WHERE player_id = ?";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setBoolean(1, player.isTurn());
+			stmt.setInt(2, player.getPlayerID());
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+			myCon.close();
+		}
 	}
 
 	public void createPlayer(int id, String name, int position, int jailTime, boolean isActive, int aId, 
@@ -465,39 +500,60 @@ public class SQL implements DAO, DTO {
 		createAccount(aId, balance);
 		createVehicle(vId, vColor, vType);
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?,?)";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setInt(1, id);
-		stmt.setInt(2, vId);
-		stmt.setInt(3, aId);
-		stmt.setString(4, name);
-		stmt.setInt(5, position);
-		stmt.setInt(6, jailTime);
-		stmt.setBoolean(7, isActive);
-		stmt.setBoolean(8, turn);
-		stmt.executeUpdate();
-		myCon.close();
+		try {
+			String update = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?,?)";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1, id);
+			stmt.setInt(2, vId);
+			stmt.setInt(3, aId);
+			stmt.setString(4, name);
+			stmt.setInt(5, position);
+			stmt.setInt(6, jailTime);
+			stmt.setBoolean(7, isActive);
+			stmt.setBoolean(8, turn);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+			myCon.close();
+		}
 	}
 
 	public void createAccount(int aId, int balance) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "INSERT INTO "+dbName+".bank VALUES(?,?)";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setInt(1, aId);
-		stmt.setInt(2, balance);
-		stmt.executeUpdate();
-		myCon.close();
+		try {
+			String update = "INSERT INTO "+dbName+".bank VALUES(?,?)";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1, aId);
+			stmt.setInt(2, balance);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+			myCon.close();
+		}
 	}
 
 	public void createVehicle(int vId, String vColor, String vType) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "INSERT INTO "+dbName+".vehicle VALUES(?,?,?)";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setInt(1, vId);
-		stmt.setString(2, vColor);
-		stmt.setString(3, vType);
-		stmt.executeUpdate();
-		myCon.close();
+		try {
+			String update = "INSERT INTO "+dbName+".vehicle VALUES(?,?,?)";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1, vId);
+			stmt.setString(2, vColor);
+			stmt.setString(3, vType);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+			myCon.close();
+		}
 	}
 
 	public void createNewDB(String dbName) throws IOException,SQLException { // Mangler prepared Statement - skal denne have interface?
@@ -523,12 +579,18 @@ public class SQL implements DAO, DTO {
 
 	public void createChanceCard(ChanceCard card) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		String update = "INSERT INTO "+dbName+".chancecard VALUES(?)";
-		java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-		stmt.setString(1, card.getCardID());
-		stmt.executeUpdate();
-		myCon.close();
+		try {
+			String update = "INSERT INTO "+dbName+".chancecard VALUES(?)";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setString(1, card.getCardID());
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+			myCon.close();
+		}
 	}
-
 
 }
