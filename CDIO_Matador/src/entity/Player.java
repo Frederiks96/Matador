@@ -24,7 +24,6 @@ public class Player {
 	private String vType;
 	private int vID;
 	private int jailTime;
-	private GUI_Commands myGUI = new GUI_Commands();
 	private Controller controller = new Controller();
 
 
@@ -147,7 +146,6 @@ public class Player {
 	public void imprison() {
 		this.jailTime++;
 		setPosition(10);
-		myGUI.setCar(10, this.name);
 	}
 
 	public Account getAccount(){
@@ -197,6 +195,10 @@ public class Player {
 	
 	public int getVehicleID() {
 		return this.vID;
+	}
+	
+	public void bankrupt() {
+		
 	}
 	
 	

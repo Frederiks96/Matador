@@ -1,7 +1,6 @@
 package entity.fields;
 
 import boundary.GUI_Commands;
-import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 
