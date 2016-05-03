@@ -26,11 +26,11 @@ public class Territory extends AbstractFields implements Ownable {
 		this.isMortgaged = false;
 		this.name = (String) text.getInfo(id+"_name");
 
-		this.price = (int) text.getInfo(id+"_price");
-		this.housePrice = (int) text.getInfo(id+"_house");
+		this.price = Integer.parseInt(text.getInfo(id+"_price"));
+		this.housePrice = Integer.parseInt(text.getInfo(id+"_house"));
 
 		for (int i = 0; i < rent.length; i++) {
-			this.rent[i] = (int) text.getInfo(id+"_"+i);
+			this.rent[i] = Integer.parseInt(text.getInfo(id+"_"+i));
 		}
 	}
 

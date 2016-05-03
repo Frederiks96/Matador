@@ -173,7 +173,7 @@ public class SQL implements DAO, DTO {
 	public String getVehicleType(int playerID) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		try {
-			String query = "SELECT v_type FROM "+dbName+".player NATURAL JOIN "+dbName+".vehicel WHERE player_id = ?";
+			String query = "SELECT v_type FROM "+dbName+".player NATURAL JOIN "+dbName+".vehicle WHERE player_id = ?";
 			java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
 			stmt.setInt(1, playerID);
 			try {
@@ -245,8 +245,9 @@ public class SQL implements DAO, DTO {
 			try {
 				ResultSet rs = stmt.executeQuery();
 				try {
-					rs.next();
-					return rs.getInt(1);
+					if (rs.next())
+						return rs.getInt(1);
+					return 0;
 				} finally {
 					rs.close();
 				}
@@ -281,7 +282,7 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-	public int getOwner(int fieldID) throws SQLException {
+	public int getOwnerID(int fieldID) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		try {
 			String query = "SELECT player_id FROM "+dbName+".property WHERE field_id = ?";
@@ -290,8 +291,10 @@ public class SQL implements DAO, DTO {
 			try {
 				ResultSet rs = stmt.executeQuery();
 				try {
-					rs.next();
-					return rs.getInt(1);
+					if (rs.next()) {
+						return rs.getInt(1);
+					}
+					return 0;
 				} finally {
 					rs.close();
 				}
