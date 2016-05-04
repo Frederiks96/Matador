@@ -40,7 +40,7 @@ public class Territory extends AbstractFields implements Ownable {
 			buyProperty(player, text, gui);
 		}
 	
-		else if (!isMortgaged && owner!=player){	// another player owns the territory
+		else if (!isMortgaged && owner!=player && isOwned()){	// another player owns the territory
 			gui.showMessage(text.getFormattedString("rent", getRent(), owner));
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
