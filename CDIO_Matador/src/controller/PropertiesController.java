@@ -89,7 +89,7 @@ public class PropertiesController {
 			}else gui.showMessage(text.getString("noMoreHouses"));
 
 			// Remove a house
-			if(building == text.getString("house-")){
+			if(building == text.getString("house-") && !buildEven()){
 				for (int j = 0; j < fields.length; j++) {
 					if (fields[j].getName().equals(propertyName))
 						((Territory) (fields[j])).sellHouse(gui);
@@ -104,7 +104,7 @@ public class PropertiesController {
 			}else gui.showMessage(text.getString("noMoreHotels"));
 
 			// Remove a hotel
-			if(building == text.getString("hotel-")){
+			if(building == text.getString("hotel-") && !buildEven()){
 				for (int j = 0; j < fields.length; j++) {
 					if (fields[j].getName().equals(propertyName))
 						((Territory) (fields[j])).sellHotel(gui);
@@ -116,7 +116,6 @@ public class PropertiesController {
 
 	private boolean buildEven(){
 		boolean legal = false;
-
 		int totalHouse = 0;
 
 		for (int i = 0; i < fields.length; i++) {
@@ -131,13 +130,6 @@ public class PropertiesController {
 				}
 			}
 		}
-		return legal;
-	}
-
-	private boolean removeEven(){
-		boolean legal = false;
-
-
 		return legal;
 	}
 
