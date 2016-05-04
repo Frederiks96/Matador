@@ -33,12 +33,12 @@ public class Controller  {
 
 	public Controller() throws SQLException {
 		this.sql = new SQL();
+		gameboard = new GameBoard();
+		dicecup = new DiceCup();
 	}
 
 	public void run() throws SQLException {
 		getLanguage();
-		gameboard = new GameBoard();
-		dicecup = new DiceCup();
 		chooseGame();
 
 		while (numPlayersAlive()>1) {	

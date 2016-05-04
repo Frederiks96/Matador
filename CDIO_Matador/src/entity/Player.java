@@ -22,7 +22,6 @@ public class Player {
 	private String vType;
 	private int vID;
 	private int jailTime;
-	private Controller controller = new Controller();
 
 
 	public Player(String name, String vColor, String vType) throws SQLException {
@@ -148,10 +147,6 @@ public class Player {
 
 	public Account getAccount(){
 		return this.account;
-	}
-
-	public boolean hasAll(String COLOUR) {
-		return controller.hasAll(this, COLOUR);
 	}
 
 	public int getJailTime(){
