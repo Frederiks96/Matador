@@ -404,7 +404,7 @@ public class Controller  {
 			}
 		}
 	
-		if(field instanceof Fleet && ((Fleet)field).getOwner() == null){
+		else if(field instanceof Fleet && ((Fleet)field).getOwner() == null){
 			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
 					((Fleet)field).getPrice()),text.getString("Yes"), text.getString("No"));
 			
@@ -414,7 +414,7 @@ public class Controller  {
 			}
 		}
 		
-		if(field instanceof Brewery && ((Brewery)field).getOwner() == null){
+		else if(field instanceof Brewery && ((Brewery)field).getOwner() == null){
 			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
 					((Brewery)field).getPrice()),text.getString("Yes"), text.getString("No"));
 			
