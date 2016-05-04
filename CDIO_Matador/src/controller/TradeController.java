@@ -18,12 +18,12 @@ public class TradeController {
 	public TradeController() throws SQLException {
 	}
 
-	public void suggestDeal(Player offeror, Player offeree, Texts text, GameBoard board, GUI_Commands gui, Controller con) {
+	public void suggestDeal(Player offeror, Player offeree, Texts text, GameBoard board, GUI_Commands gui) {
 		ownProperties = new ArrayList<String>();
 		foeProperties = new ArrayList<String>();
 		do {
-			if (con.getOwnedProperties(offeror)!=null) {
-			ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), con.getOwnedProperties(offeror)));
+			if (board.getOwnedProperties(offeror)!=null) {
+			ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), board.getOwnedProperties(offeror)));
 			} else {
 				gui.showMessage(text.getString("noPropOwned"));
 				break;
@@ -31,7 +31,7 @@ public class TradeController {
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		
 		do {
-			foeProperties.add(gui.getUserSelection(text.getString("foeProperties"), con.getOwnedProperties(offeree)));
+			foeProperties.add(gui.getUserSelection(text.getString("foeProperties"), board.getOwnedProperties(offeree)));
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		
 		ownOffer = gui.getUserInteger(text.getString("getOwnOffer"));
@@ -42,7 +42,7 @@ public class TradeController {
 		if (text.getString("Yes").equals(answer)) {
 			completeDeal(offeror, offeree, ownProperties, ownOffer,foeOffer);
 		} else if (text.getString("counterOffer").equals(answer)) {
-			suggestDeal(offeree, offeror, text, board, gui,con);
+			suggestDeal(offeree, offeror, text, board, gui);
 		} else {
 			gui.showMessage(text.getFormattedString("handover", offeror.getName()));
 			gui.showMessage(text.getFormattedString("dealRejected", offeree.getName()));

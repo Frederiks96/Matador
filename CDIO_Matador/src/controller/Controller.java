@@ -137,7 +137,7 @@ public class Controller  {
 				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), 
 						getOpponents(player));
 				broker = new TradeController();
-				broker.suggestDeal(player, getPlayer(offereeName), text, gameboard, gui,this);
+				broker.suggestDeal(player, getPlayer(offereeName), text, gameboard, gui);
 				saveGame();
 
 			} else { //MANAGE PROPERTIES

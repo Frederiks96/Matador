@@ -24,12 +24,12 @@ public class Brewery extends AbstractFields implements Ownable {
 
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
+		boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
+				getPrice()),text.getString("Yes"), text.getString("No"));
 		
-		if (buy){ // The Brewery is owned and the Player wishes to buy it
+		if (buy) { // The Brewery is owned and the Player wishes to buy it
 			buyProperty(player, text, gui);
-		}
-	
-		else if(!isMortgaged && owner!=player && isOwned()){
+		} else if(!isMortgaged && owner!=player && isOwned()) {
 			gui.showMessage(text.getFormattedString("rent", getRent(), owner));
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());

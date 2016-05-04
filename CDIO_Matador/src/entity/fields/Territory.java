@@ -36,23 +36,22 @@ public class Territory extends AbstractFields implements Ownable {
 
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
-		
+		boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
+				getPrice()),text.getString("Yes"), text.getString("No"));
 		if (buy) {	// The territory is not owned and the player wishes to buy
 			buyProperty(player, text, gui);
-		}
-	
-		else if (!isMortgaged && owner!=player && isOwned()){	// another player owns the territory
-			gui.showMessage(text.getFormattedString("rent", getRent(board), owner));
-			player.updateBalance(-getRent());
-			owner.updateBalance(getRent());
+		} else if (!isMortgaged && owner!=player && isOwned()){	// another player owns the territory
+			int rent = getRent();
+			if (board.hasAll(this.owner, this.colour)) {
+				rent *= 2;
+			}
+			gui.showMessage(text.getFormattedString("rent", rent, owner));
+			player.updateBalance(rent);
+			owner.updateBalance(rent);
 		}
 	}
 
-
-	public int getRent(GameBoard board) {
-		if(board.hasAll(this.owner, this.colour) && houseCount == 0)
-			return this.rent[0]*2;
-		else
+	public int getRent() {
 			return this.rent[this.houseCount];	
 	}
 

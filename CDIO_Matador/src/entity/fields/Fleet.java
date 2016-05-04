@@ -22,12 +22,11 @@ public class Fleet extends AbstractFields implements Ownable {
 	}
 	
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
-
-		if(buy) {	// The Fleet is not Owned, and the player wishes to buy it
+		boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
+				getPrice()),text.getString("Yes"), text.getString("No"));
+		if (buy) {	// The Fleet is not Owned, and the player wishes to buy it
 			buyProperty(player, text, gui);
-		}
-
-		else if (!isMortgaged && owner!=player && isOwned()) {	//another player owns the Fleet
+		} else if (!isMortgaged && owner!=player && isOwned()) {	//another player owns the Fleet
 			gui.showMessage(text.getFormattedString("rent", getRent(), owner));
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
