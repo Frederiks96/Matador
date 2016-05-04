@@ -24,6 +24,11 @@ public class Brewery extends AbstractFields implements Ownable {
 
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
+		if (text==null)
+			System.out.println("text");
+		if (gui==null)
+			System.out.println("gui");
+		System.out.println(getName());
 		boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
 				getPrice()),text.getString("Yes"), text.getString("No"));
 		

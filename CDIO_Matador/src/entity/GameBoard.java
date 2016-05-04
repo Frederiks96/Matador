@@ -23,6 +23,7 @@ public class GameBoard {
 
 
 	public void setupBoard(Texts text) {
+		this.gui = new GUI_Commands();
 		for  (int i = 0; i < logicFields.length; i++){
 			if (i == 5 || i==15 || i==25 || i==35){
 				this.logicFields[i] = new Fleet(i,null, text);
@@ -181,7 +182,7 @@ public class GameBoard {
 	public void saveBoard(SQL sql) throws SQLException {
 		for(int i = 0; i < logicFields.length; i++){
 			if (logicFields[i] instanceof Ownable){
-				sql.setMortgage(i, ((Territory)(logicFields[i])).isMortgaged()); 
+				sql.setMortgage(i, ((Ownable)(logicFields[i])).isMortgaged()); 
 				if (logicFields[i] instanceof Territory)
 					sql.setHouseCount(i, ((Territory)(logicFields[i])).getHouseCount());
 			}

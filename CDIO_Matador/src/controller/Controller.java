@@ -125,7 +125,7 @@ public class Controller  {
 				gameboard.landOnField(player, text);
 				if (gameboard.isOwnable(player.getPosition())) {
 					if (gameboard.getOwner(player.getPosition()) == null) {
-						auctioneer.auction(players, gameboard.getLogicField(player.getPosition()), this, gui);
+						auctioneer.auction(players, gameboard.getLogicField(player.getPosition()), this, gui,text);
 					}
 				}
 
@@ -153,9 +153,9 @@ public class Controller  {
 	private void getLanguage() {
 		String lang = gui.getUserButtonPressed("Choose your preferred language", "Dansk", "English");
 		if (lang.equals("Dansk")) {
-			text = new Texts(language.Dansk);
+			this.text = new Texts(language.Dansk);
 		} else {
-			text = new Texts(language.English);	
+			this.text = new Texts(language.English);	
 		}
 	}
 
@@ -282,7 +282,7 @@ public class Controller  {
 			player.updateBalance(-player.getBalance());
 			String[] properties = gameboard.getOwnedProperties(player);
 			for (int i = 0; i < properties.length; i++) {
-				auctioneer.auction(players, gameboard.getProperty(properties[i]), this, gui);
+				auctioneer.auction(players, gameboard.getProperty(properties[i]), this, gui, text);
 			}
 		}
 	}

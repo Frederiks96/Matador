@@ -31,7 +31,13 @@ public class TradeController {
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		
 		do {
-			foeProperties.add(gui.getUserSelection(text.getString("foeProperties"), board.getOwnedProperties(offeree)));
+			if (board.getOwnedProperties(offeree)!=null) {
+				foeProperties.add(gui.getUserSelection(text.getFormattedString("foeProperties",offeree.getName()), board.getOwnedProperties(offeree)));
+			} else {
+				gui.showMessage(text.getString("noPropOwnedByFoe"));
+				break;
+			}
+			
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		
 		ownOffer = gui.getUserInteger(text.getString("getOwnOffer"));
