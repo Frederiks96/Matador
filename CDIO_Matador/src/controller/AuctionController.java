@@ -31,33 +31,25 @@ public class AuctionController {
 
 						if (choice){
 							int bid;
-							
+
 							do{
 								bid = gui.getUserInteger(text.getFormattedString("bid",players[i].getName(),previousbid));
-								
+
 								if (bid > players[i].getBalance()){
 									gui.showMessage(text.getString("failedTransaction"));
 								}
-								
+
 							} while (bid > players[i].getBalance());
-							
-							
-							
 
 							if (bid > previousbid){
 								previousbid = currentbid;
 								currentbid = bid;
+								winner = i;
 							}	
 						}	
 						else pass++;
 					}
 
-					winner++;
-
-					if (i == players.length){
-						i = 0;
-						winner = -1;
-					}
 				}
 			} while (pass < con.numPlayersAlive()-1);
 
