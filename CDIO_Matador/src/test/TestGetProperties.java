@@ -1,29 +1,33 @@
 package test;
 
 import java.sql.SQLException;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import boundary.GUI_Commands;
-import boundary.SQL;
-
 import static org.junit.Assert.*;
-
-import controller.Controller;
+import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
-import entity.fields.AbstractFields;
 
 public class TestGetProperties {
 
-	SQL sql;
-	GUI_Commands gui;
+	private GUI_Commands gui;
+	private Texts text;
+	private Player player;
+	private String[] aha;
+	private GameBoard board;
 	
 	@Before
 	public void setUp() throws Exception {
+		text = new Texts(language.Dansk);
+		player = new Player("John","Yellow","Ufo");
+		aha = new String[28];
+		board = new GameBoard();
+		board.setupBoard(text);
+		gui = new GUI_Commands();
+		aha[0] = "Rødovrevej";
 	}
 
 	@After
@@ -32,14 +36,9 @@ public class TestGetProperties {
 
 	@Test
 	public void test() throws SQLException {
-		Texts text = new Texts(language.Dansk);
-		Controller con = new Controller();
-		Player player = new Player("John","Yellow","Ufo");
-		String[] aha = new String[28];
-		aha[0] = "Rødovrevej";
-		AbstractFields[] fields = con.getFields();
-		fields[1].landOnField(player, text, gui);
-		assertEquals(con.getOwnedProperties(player)[0],aha[0]);
+		player.setPosition(1);
+		board.landOnField(player, text, gui);
+		assertEquals(board.getOwnedProperties(player)[0],aha[0]);
 	}
 
 }
