@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 import boundary.GUI_Commands;
 import boundary.SQL;
 import desktop_fields.Ownable;
@@ -11,11 +12,7 @@ import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
 import entity.dicecup.DiceCup;
-import entity.fields.AbstractFields;
-import entity.fields.Brewery;
 import entity.fields.ChanceField;
-import entity.fields.Fleet;
-import entity.fields.Territory;
 
 public class Controller  {
 
@@ -125,7 +122,12 @@ public class Controller  {
 				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
 				gui.setCar(player.getPosition(), player.getName());		
 
-				landedOn(player);
+				gameboard.landOnField(player, text);
+				if (gameboard.isOwnable(player.getPosition())) {
+					if (gameboard.getOwner(player.getPosition()) == null) {
+						auctioneer.auction(players, gameboard.getLogicField(player.getPosition()), this, gui);
+					}
+				}
 
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (gameboard.getLogicField(player.getPosition()) instanceof ChanceField) 
@@ -285,42 +287,41 @@ public class Controller  {
 		}
 	}
 
-	public void landedOn(Player player){	// Asks if Player wants to buy, otherwise auction
-		AbstractFields field = gameboard.getLogicField(player.getPosition());
-		boolean buy = false;
-
-		if(field instanceof Territory && ((Territory)field).getOwner() == null){
-			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
-					((Territory)field).getPrice()),text.getString("Yes"), text.getString("No"));
-
-			field.landOnField(player, text, gui, gameboard);;
-			if(!buy){
-				auctioneer.auction(players, field, this, gui);
-			}
-		}
-
-		else if(field instanceof Fleet && ((Fleet)field).getOwner() == null){
-			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
-					((Fleet)field).getPrice()),text.getString("Yes"), text.getString("No"));
-
-			field.landOnField(player, text, gui, gameboard);
-			if(!buy){
-				auctioneer.auction(players, field, this, gui);
-			}
-		}
-
-		else if(field instanceof Brewery && ((Brewery)field).getOwner() == null){
-			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
-					((Brewery)field).getPrice()),text.getString("Yes"), text.getString("No"));
-
-			field.landOnField(player, text, gui, gameboard);
-			if(!buy){
-				auctioneer.auction(players, field, this, gui);
-			}
-		}
-		else 
-			field.landOnField(player, text, gui, gameboard);
-
-	}
+//	public void landedOn(Player player){	// Asks if Player wants to buy, otherwise auction
+//		boolean buy = false;
+//
+//		if(field instanceof Territory && ((Territory)field).getOwner() == null){
+//			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
+//					((Territory)field).getPrice()),text.getString("Yes"), text.getString("No"));
+//
+//			field.landOnField(player, text, gui, gameboard);;
+//			if(!buy){
+//				auctioneer.auction(players, field, this, gui);
+//			}
+//		}
+//
+//		else if(field instanceof Fleet && ((Fleet)field).getOwner() == null){
+//			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
+//					((Fleet)field).getPrice()),text.getString("Yes"), text.getString("No"));
+//
+//			field.landOnField(player, text, gui, gameboard);
+//			if(!buy){
+//				auctioneer.auction(players, field, this, gui);
+//			}
+//		}
+//
+//		else if(field instanceof Brewery && ((Brewery)field).getOwner() == null){
+//			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
+//					((Brewery)field).getPrice()),text.getString("Yes"), text.getString("No"));
+//
+//			field.landOnField(player, text, gui, gameboard);
+//			if(!buy){
+//				auctioneer.auction(players, field, this, gui);
+//			}
+//		}
+//		else 
+//			field.landOnField(player, text, gui, gameboard);
+//
+//	}
 	
 }

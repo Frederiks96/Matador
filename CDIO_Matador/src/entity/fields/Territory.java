@@ -7,7 +7,7 @@ import entity.Texts;
 
 public class Territory extends AbstractFields implements Ownable {
 
-	
+
 	private Player owner;
 	private int houseCount;
 	private String colour;
@@ -36,10 +36,12 @@ public class Territory extends AbstractFields implements Ownable {
 
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
-		boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
-				getPrice()),text.getString("Yes"), text.getString("No"));
-		if (buy) {	// The territory is not owned and the player wishes to buy
-			buyProperty(player, text, gui);
+		if (!isOwned()) {
+			boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
+					getPrice()),text.getString("Yes"), text.getString("No"));
+			if (buy) {	// The territory is not owned and the player wishes to buy
+				buyProperty(player, text, gui);
+			}
 		} else if (!isMortgaged && owner!=player && isOwned()){	// another player owns the territory
 			int rent = getRent();
 			if (board.hasAll(this.owner, this.colour)) {
@@ -52,7 +54,7 @@ public class Territory extends AbstractFields implements Ownable {
 	}
 
 	public int getRent() {
-			return this.rent[this.houseCount];	
+		return this.rent[this.houseCount];	
 	}
 
 	public boolean isOwned() {
@@ -121,11 +123,11 @@ public class Territory extends AbstractFields implements Ownable {
 			player.updateNumTerritoryOwned();
 		}	
 	}
-	
+
 	@Override
 	public void sellProperty(Player player){
-		
-		
+
+
 		player.updateNumTerritoryOwned();
 	}
 
@@ -181,9 +183,9 @@ public class Territory extends AbstractFields implements Ownable {
 	public int getPrice() {
 		return price;
 	}
-	
+
 	public int getHousePrice(){
 		return housePrice;
 	}
-	
+
 }

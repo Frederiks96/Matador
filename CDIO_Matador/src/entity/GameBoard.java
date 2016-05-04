@@ -188,6 +188,10 @@ public class GameBoard {
 		}
 	}
 
+	public void landOnField(Player player, Texts text) {
+		logicFields[player.getPosition()].landOnField(player, text, gui, this);
+	}
+	
 	public void createCardDeck(Texts text) {
 		deck = new CardStack();
 		deck.shuffle();
@@ -227,6 +231,16 @@ public class GameBoard {
 		return ((Territory)logicFields[field_id]).getHouseCount();
 	}
 
+	public boolean isOwnable(int field_id) {
+		return this.logicFields[field_id] instanceof Ownable;
+	}
+	
+	public Player getOwner(int field_id) {
+		if (isOwnable(field_id)) {
+		return ((Ownable)logicFields[field_id]).getOwner();
+		}
+		return null;
+	}
 
 
 }
