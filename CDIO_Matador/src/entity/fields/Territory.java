@@ -47,8 +47,8 @@ public class Territory extends AbstractFields implements Ownable {
 			if (board.hasAll(this.owner, this.colour)) {
 				rent *= 2;
 			}
-			gui.showMessage(text.getFormattedString("rent", rent, owner));
-			player.updateBalance(rent);
+			gui.showMessage(text.getFormattedString("rent", rent, owner.getName()));
+			player.updateBalance(-rent);
 			owner.updateBalance(rent);
 		}
 	}

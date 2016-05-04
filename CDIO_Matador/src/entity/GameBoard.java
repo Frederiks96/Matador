@@ -155,8 +155,9 @@ public class GameBoard {
 		for (int i = 0; i < logicFields.length; i++) {
 			if (logicFields[i] instanceof Territory) {
 				if (((Territory) (logicFields[i])).getColour().equals(COLOUR)) {
-					if (((Territory) (logicFields[i])).getOwner().equals(owner)) {
-						j++;
+					if (((Territory) (logicFields[i])).getOwner()!=null) {
+						if (((Territory) (logicFields[i])).getOwner().equals(owner))
+							j++;
 					}
 				}
 			}
@@ -189,7 +190,7 @@ public class GameBoard {
 	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		logicFields[player.getPosition()].landOnField(player, text, gui, this);
 	}
-	
+
 	public void createCardDeck(Texts text) {
 		deck = new CardStack();
 		deck.shuffle();
@@ -232,10 +233,10 @@ public class GameBoard {
 	public boolean isOwnable(int field_id) {
 		return this.logicFields[field_id] instanceof Ownable;
 	}
-	
+
 	public Player getOwner(int field_id) {
 		if (isOwnable(field_id)) {
-		return ((Ownable)logicFields[field_id]).getOwner();
+			return ((Ownable)logicFields[field_id]).getOwner();
 		}
 		return null;
 	}
