@@ -212,7 +212,7 @@ public class GameBoard {
 		hotelCount++;
 	}
 
-	public void subtactHotel(){
+	public void subtractHotel(){
 		hotelCount--;
 	}
 
@@ -224,7 +224,7 @@ public class GameBoard {
 		houseCount++;
 	}
 
-	public void subractHouse(){
+	public void subtractHouse(){
 		houseCount--;
 	}
 
