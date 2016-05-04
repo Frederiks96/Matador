@@ -1,7 +1,5 @@
 package entity;
 
-import boundary.SQL;
-
 public class Account {
 
 	private int balance;
