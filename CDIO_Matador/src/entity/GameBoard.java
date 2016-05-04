@@ -19,11 +19,9 @@ public class GameBoard {
 	private int houseCount; 
 	private AbstractFields[] logicFields = new AbstractFields[40];
 	private CardStack deck;
-	private GUI_Commands gui;
 
 
 	public void setupBoard(Texts text) {
-		this.gui = new GUI_Commands();
 		for  (int i = 0; i < logicFields.length; i++){
 			if (i == 5 || i==15 || i==25 || i==35){
 				this.logicFields[i] = new Fleet(i,null, text);
@@ -41,8 +39,7 @@ public class GameBoard {
 		}
 	}
 
-	public void setupBoard(Texts text, String gameName, Player[] players, SQL sql) throws SQLException {
-		this.gui = new GUI_Commands();
+	public void setupBoard(Texts text, String gameName, Player[] players, GUI_Commands gui, SQL sql) throws SQLException {
 		Player owner;
 		for  (int i = 0; i < this.logicFields.length; i++){
 			if (sql.getOwnerID(i)!=0) {
@@ -65,7 +62,7 @@ public class GameBoard {
 			} else if (i == 12 || i == 28){
 				this.logicFields[i] = new Brewery(i,owner, text);
 				if (owner!=null) {
-					this.gui.setOwner(i, owner.getName());
+					gui.setOwner(i, owner.getName());
 				}
 			} else {
 				this.logicFields[i] = new Territory(i,owner, text);
@@ -75,9 +72,9 @@ public class GameBoard {
 				int house = sql.getFieldHouseCount(((Territory)this.logicFields[i]));
 				((Territory) (this.logicFields[i])).setHouseCount(house);
 				if (house<4 && house>0){
-					this.gui.setHouse(i, house);
+					gui.setHouse(i, house);
 				} else if (house == 5) {
-					this.gui.setHotel(i, true);
+					gui.setHotel(i, true);
 				}
 			}
 		}
@@ -189,7 +186,7 @@ public class GameBoard {
 		}
 	}
 
-	public void landOnField(Player player, Texts text) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		logicFields[player.getPosition()].landOnField(player, text, gui, this);
 	}
 	

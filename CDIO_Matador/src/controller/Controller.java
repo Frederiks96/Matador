@@ -100,7 +100,7 @@ public class Controller  {
 				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
 			}
 		}
-		gameboard.setupBoard(text,gameName,players,sql);
+		gameboard.setupBoard(text,gameName,players,gui,sql);
 	}
 
 	public void playerTurn(Player player) throws SQLException {
@@ -122,7 +122,7 @@ public class Controller  {
 				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
 				gui.setCar(player.getPosition(), player.getName());		
 
-				gameboard.landOnField(player, text);
+				gameboard.landOnField(player, text, gui);
 				if (gameboard.isOwnable(player.getPosition())) {
 					if (gameboard.getOwner(player.getPosition()) == null) {
 						auctioneer.auction(players, gameboard.getLogicField(player.getPosition()), this, gui,text);
