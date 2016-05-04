@@ -101,6 +101,7 @@ public class Controller  {
 		while (true) {
 			try {
 				loadPlayers();
+				System.out.println("Hej");
 				//				loadCards(text);
 				break;
 			} catch (SQLException s) {

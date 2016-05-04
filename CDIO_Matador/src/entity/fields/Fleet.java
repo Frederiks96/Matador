@@ -57,7 +57,7 @@ public class Fleet extends AbstractFields implements Ownable {
 	}
 
 	public boolean isOwned() {
-		return this.owner==null;
+		return this.owner != null;
 	}
 
 	public void mortgage(Texts text, GUI_Commands gui) {
