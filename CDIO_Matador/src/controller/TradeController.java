@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import boundary.GUI_Commands;
 import entity.GameBoard;
@@ -8,30 +9,29 @@ import entity.Player;
 import entity.Texts;
 
 public class TradeController {
-	private Controller c;
-	private String[] ownProperties;
-	private String[] foeProperties;
+	private ArrayList<String> ownProperties;
+	private ArrayList<String> foeProperties;
 	private String answer;
 	private int ownOffer;
 	private int foeOffer;
 
 	public TradeController() throws SQLException {
-		c = new Controller();
 	}
 
-	public void suggestDeal(Player offeror, Player offeree, Texts text, GameBoard board, GUI_Commands gui) {
-		int j = 0;
-		ownProperties = null;
-		
+	public void suggestDeal(Player offeror, Player offeree, Texts text, GameBoard board, GUI_Commands gui, Controller con) {
+		ownProperties = new ArrayList<String>();
+		foeProperties = new ArrayList<String>();
 		do {
-			ownProperties[j] = gui.getUserSelection(text.getString("commenceTrade"), c.getOwnedProperties(offeror));
-			j++;
+			if (con.getOwnedProperties(offeror)!=null) {
+			ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), con.getOwnedProperties(offeror)));
+			} else {
+				gui.showMessage(text.getString("noPropOwned"));
+				break;
+			}
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
-		j = 0;
 		
 		do {
-			foeProperties[j] = gui.getUserSelection(text.getString("foeProperties"), c.getOwnedProperties(offeree));
-			j++;
+			foeProperties.add(gui.getUserSelection(text.getString("foeProperties"), con.getOwnedProperties(offeree)));
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		
 		ownOffer = gui.getUserInteger(text.getString("getOwnOffer"));
@@ -42,14 +42,14 @@ public class TradeController {
 		if (text.getString("Yes").equals(answer)) {
 			completeDeal(offeror, offeree, ownProperties, ownOffer,foeOffer);
 		} else if (text.getString("counterOffer").equals(answer)) {
-			suggestDeal(offeree, offeror, text, board, gui);
+			suggestDeal(offeree, offeror, text, board, gui,con);
 		} else {
 			gui.showMessage(text.getFormattedString("handover", offeror.getName()));
 			gui.showMessage(text.getFormattedString("dealRejected", offeree.getName()));
 		}
 	}
 
-	private void completeDeal(Player offeror, Player offeree, String[] properties, int ownOffer, int foeOffer) {
+	private void completeDeal(Player offeror, Player offeree, ArrayList<String> properties, int ownOffer, int foeOffer) {
 		
 	}
 	

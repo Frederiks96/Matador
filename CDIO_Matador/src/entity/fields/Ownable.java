@@ -15,4 +15,5 @@ public interface Ownable {
 	void sellProperty(Player player);
 	int getPrice();
 	int getRent();
+	boolean isMortgaged();
 }

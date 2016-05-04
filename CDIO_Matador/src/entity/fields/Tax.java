@@ -1,6 +1,7 @@
 package entity.fields;
 
 import boundary.GUI_Commands;
+import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 
@@ -15,7 +16,7 @@ public class Tax extends AbstractFields {
 	}
 
 	@Override
-	public void landOnField(Player player,boolean buy, Texts text, GUI_Commands gui) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		if (this.id==4) {
 			answer = gui.getUserButtonPressed(text.getString("taxOrFine"), text.getString("tax"),text.getString("fine"));
 			if (answer.equals(text.getString("tax"))) {

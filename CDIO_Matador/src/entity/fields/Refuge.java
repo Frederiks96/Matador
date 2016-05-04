@@ -1,6 +1,7 @@
 package entity.fields;
 
 import boundary.GUI_Commands;
+import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 
@@ -13,7 +14,7 @@ public class Refuge extends AbstractFields {
 	}
 
 	@Override
-	public void landOnField(Player player,boolean buy, Texts text, GUI_Commands gui) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		if (player.getPosition() == 0) {
 			// START - the player receives his money in Player.updatePosition()
 			gui.showMessage(text.getString("startLanded"));

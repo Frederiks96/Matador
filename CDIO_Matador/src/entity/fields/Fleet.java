@@ -1,6 +1,7 @@
 package entity.fields;
 
 import boundary.GUI_Commands;
+import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 
@@ -20,7 +21,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		this.name = (String) text.getInfo(id+"_name");
 	}
 	
-	public void landOnField(Player player, boolean buy, Texts text, GUI_Commands gui) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 
 		if(buy) {	// The Fleet is not Owned, and the player wishes to buy it
 			buyProperty(player, text, gui);

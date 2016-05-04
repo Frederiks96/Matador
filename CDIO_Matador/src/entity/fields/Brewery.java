@@ -1,6 +1,7 @@
 package entity.fields;
 
 import boundary.GUI_Commands;
+import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.dicecup.DiceCup;
@@ -22,7 +23,7 @@ public class Brewery extends AbstractFields implements Ownable {
 	}
 
 	@Override
-	public void landOnField(Player player, boolean buy, Texts text, GUI_Commands gui) {
+	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		
 		if (buy){ // The Brewery is owned and the Player wishes to buy it
 			buyProperty(player, text, gui);
