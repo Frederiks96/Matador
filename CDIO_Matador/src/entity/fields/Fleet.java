@@ -20,12 +20,14 @@ public class Fleet extends AbstractFields implements Ownable {
 		this.price = 4000;
 		this.name = (String) text.getInfo(id+"_name");
 	}
-	
+
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
-		boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
-				getPrice()),text.getString("Yes"), text.getString("No"));
-		if (buy) {	// The Fleet is not Owned, and the player wishes to buy it
-			buyProperty(player, text, gui);
+		if (!isOwned()) {
+			boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
+					getPrice()),text.getString("Yes"), text.getString("No"));
+			if (buy) {	// The Fleet is not Owned, and the player wishes to buy it
+				buyProperty(player, text, gui);
+			}
 		} else if (!isMortgaged && owner!=player && isOwned()) {	//another player owns the Fleet
 			gui.showMessage(text.getFormattedString("rent", getRent(), owner));
 			player.updateBalance(-getRent());
@@ -42,7 +44,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		else 
 			gui.showMessage(text.getString("failedTransaction"));
 	}
-	
+
 	public Player getOwner() {
 		return this.owner;
 	}
@@ -71,12 +73,12 @@ public class Fleet extends AbstractFields implements Ownable {
 		owner.addFleet();
 		owner.updateBalance(-(int)(this.price*0.5*1.1)); 
 	}
-	
+
 	@Override
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public boolean isMortgaged() {
 		return this.isMortgaged;
 	}
@@ -96,5 +98,5 @@ public class Fleet extends AbstractFields implements Ownable {
 		return price;
 	}
 
-	
+
 }

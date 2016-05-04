@@ -5,13 +5,11 @@ import java.util.ResourceBundle;
 public class Texts {
 	
 	public enum language {Dansk,English};
-	private language l;
 	private ResourceBundle fieldInfo;
 	private ResourceBundle texts;
 	private ResourceBundle cards;
 	
 	public Texts(language l) {
-		this.l=l;
 		fieldInfo = ResourceBundle.getBundle("properties.fieldInfo");
 		texts = ResourceBundle.getBundle("properties."+l+"_texts");
 		cards = ResourceBundle.getBundle("properties."+l+"_cards");

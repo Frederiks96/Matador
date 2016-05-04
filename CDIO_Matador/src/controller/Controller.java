@@ -100,7 +100,7 @@ public class Controller  {
 				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
 			}
 		}
-		gameboard.setupBoard(text,gameName,players,sql);
+		gameboard.setupBoard(text,gameName,players,gui,sql);
 	}
 
 	public void playerTurn(Player player) throws SQLException {
@@ -122,10 +122,10 @@ public class Controller  {
 				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
 				gui.setCar(player.getPosition(), player.getName());		
 
-				gameboard.landOnField(player, text);
+				gameboard.landOnField(player, text, gui);
 				if (gameboard.isOwnable(player.getPosition())) {
 					if (gameboard.getOwner(player.getPosition()) == null) {
-						auctioneer.auction(players, gameboard.getLogicField(player.getPosition()), this, gui);
+						auctioneer.auction(players, gameboard.getLogicField(player.getPosition()), this, gui,text);
 					}
 				}
 
@@ -153,9 +153,9 @@ public class Controller  {
 	private void getLanguage() {
 		String lang = gui.getUserButtonPressed("Choose your preferred language", "Dansk", "English");
 		if (lang.equals("Dansk")) {
-			text = new Texts(language.Dansk);
+			this.text = new Texts(language.Dansk);
 		} else {
-			text = new Texts(language.English);	
+			this.text = new Texts(language.English);	
 		}
 	}
 
@@ -282,7 +282,7 @@ public class Controller  {
 			player.updateBalance(-player.getBalance());
 			String[] properties = gameboard.getOwnedProperties(player);
 			for (int i = 0; i < properties.length; i++) {
-				auctioneer.auction(players, gameboard.getProperty(properties[i]), this, gui);
+				auctioneer.auction(players, gameboard.getProperty(properties[i]), this, gui, text);
 			}
 		}
 	}
