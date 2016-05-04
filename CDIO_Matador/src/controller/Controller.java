@@ -49,8 +49,12 @@ public class Controller  {
 				if (players[i].isAlive() && players[i].isTurn()) {
 					playerTurn(players[i]);
 					players[i].setTurn(false);
-					if(players.length == i+1 )players[0].setTurn(true);
-					else players[i+1].setTurn(true);
+					if(players.length == i+1 ) { 
+						players[0].setTurn(true);
+					}
+					else { 
+						players[i+1].setTurn(true);
+					}
 
 				}
 			}
@@ -145,7 +149,7 @@ public class Controller  {
 				saveGame();
 			}
 
-		} while (!options.equals(text.getString("roll")) || !dicecup.hasPair());
+		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
