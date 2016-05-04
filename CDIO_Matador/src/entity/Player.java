@@ -159,7 +159,7 @@ public class Player {
 	}
 
 	public boolean isTurn() {
-		return turn;
+		return this.turn;
 	}
 
 	public void setTurn(boolean turn) {

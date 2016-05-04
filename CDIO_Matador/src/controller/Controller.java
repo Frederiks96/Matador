@@ -30,6 +30,7 @@ public class Controller  {
 	private DiceCup dicecup = new DiceCup();
 	private TradeController broker;
 	private PropertiesController manage;
+	AuctionController auctioneer = new AuctionController();
 
 	public Controller() throws SQLException {
 		this.sql = new SQL();
@@ -48,8 +49,12 @@ public class Controller  {
 				if (players[i].isAlive() && players[i].isTurn()) {
 					playerTurn(players[i]);
 					players[i].setTurn(false);
-					if(players.length == i+1 )players[0].setTurn(true);
-					else players[i+1].setTurn(true);
+					if(players.length == i+1 ) { 
+						players[0].setTurn(true);
+					}
+					else { 
+						players[i+1].setTurn(true);
+					}
 
 				}
 			}
@@ -144,7 +149,7 @@ public class Controller  {
 				saveGame();
 			}
 
-		} while (!options.equals(text.getString("roll")) || !dicecup.hasPair());
+		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
 	}
 
 	public boolean hasAll(Player owner, String COLOUR) {
@@ -216,7 +221,7 @@ public class Controller  {
 	public boolean isValidName(String name) {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i] != null) {
-				if (players[i].getName().toLowerCase().trim().equals(name.toLowerCase().trim())) {
+				if (players[i].getName().toLowerCase().trim().equals(name.toLowerCase().trim()) || name.trim().equals("")) {
 					return false;
 				}
 			}
@@ -368,7 +373,7 @@ public class Controller  {
 
 	}
 
-	public void bankrupt(Player player, Player creditor, AbstractFields field) {
+	public void bankrupt(Player player, Player creditor) {
 		player.bankrupt();
 		if (creditor!=null) {
 			creditor.updateBalance(player.getBalance());
@@ -378,9 +383,9 @@ public class Controller  {
 			//TODO
 			player.updateBalance(-player.getBalance());
 			String[] properties = getOwnedProperties(player);
-			AuctionController auktion = new AuctionController();
-			auktion.auction(players, field, this, gui);
-
+			for (int i = 0; i < properties.length; i++) {
+				auctioneer.auction(players, getProperty(properties[i]), this, gui);
+			}
 		}
 	}
 
@@ -394,8 +399,7 @@ public class Controller  {
 			
 			field.landOnField(player, buy, text, gui);;
 			if(!buy){
-				AuctionController auctioncon = new AuctionController();
-				auctioncon.auction(players, field, this, gui);
+				auctioneer.auction(players, field, this, gui);
 			}
 		}
 	
@@ -405,8 +409,7 @@ public class Controller  {
 			
 			field.landOnField(player, buy, text, gui);;
 			if(!buy){
-				AuctionController auctioncon = new AuctionController();
-				auctioncon.auction(players, field, this, gui);
+				auctioneer.auction(players, field, this, gui);
 			}
 		}
 		
@@ -416,12 +419,21 @@ public class Controller  {
 			
 			field.landOnField(player, buy, text, gui);;
 			if(!buy){
-				AuctionController auctioncon = new AuctionController();
-				auctioncon.auction(players, field, this, gui);
+				auctioneer.auction(players, field, this, gui);
 			}
 		}
 		else 
 			field.landOnField(player,buy, text, gui);
 		
 	}
+	
+	private AbstractFields getProperty(String propertyName) {
+		for (int i = 0; i < fields.length; i++) {
+			if (propertyName.equals(fields[i].getName())) {
+				return fields[i];
+			}
+		}
+		return null;
+	}
+
 }
