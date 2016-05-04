@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import boundary.GUI_Commands;
 import boundary.SQL;
-import desktop_fields.Ownable;
 import entity.CardStack;
 import entity.GameBoard;
 import entity.Player;
@@ -211,9 +210,9 @@ public class Controller  {
 		}
 	}
 
-	private void loadCards(Texts text) throws SQLException {
-		deck.loadCards(text);
-	}
+//	private void loadCards(Texts text) throws SQLException {
+//		deck.loadCards(text);
+//	}
 
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();

@@ -1,12 +1,10 @@
 package controller;
 
 import boundary.GUI_Commands;
-import desktop_fields.Brewery;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.fields.AbstractFields;
-import entity.fields.Fleet;
 import entity.fields.Territory;
 
 public class PropertiesController {

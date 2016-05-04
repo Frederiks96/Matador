@@ -5,32 +5,25 @@ import org.junit.Before;
 import org.junit.Test;
 
 import boundary.GUI_Commands;
-import controller.Controller;
-import controller.PropertiesController;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
-import entity.fields.AbstractFields;
 
 public class TestGetTerritoriesOwned {
 	
-	PropertiesController con;
-	GUI_Commands gui;
-	Player player1;
-	GameBoard board;
-	Texts text;
-	AbstractFields[] fields;
+	private GUI_Commands gui;
+	private Player player1;
+	private GameBoard board;
+	private Texts text;
 
 	@Before
 	public void setUp() throws Exception {
-		con = new PropertiesController();
 		gui = new GUI_Commands();
 		player1 = new Player("John","Green","UFO");
 		board = new GameBoard();
 		text = new Texts(language.Dansk);
 		board.setupBoard(text);
-		fields = board.getLogicFields();
 		
 	}
 
@@ -40,10 +33,13 @@ public class TestGetTerritoriesOwned {
 
 	@Test
 	public void test() {
-		fields[1].landOnField(player1, text, gui);
-		fields[3].landOnField(player1, text, gui);
-		fields[6].landOnField(player1, text, gui);
-		gui.getUserSelection("Vælg din grunde", con.getOwnedTerritories(player1,fields));
+		player1.setPosition(1);
+		board.landOnField(player1, text, gui);
+		player1.setPosition(3);
+		board.landOnField(player1, text, gui);
+		player1.setPosition(6);
+		board.landOnField(player1, text, gui);
+		gui.getUserSelection("Vælg din grunde", board.getOwnedProperties(player1));
 	}
 
 }
