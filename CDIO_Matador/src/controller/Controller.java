@@ -286,42 +286,5 @@ public class Controller  {
 			}
 		}
 	}
-
-//	public void landedOn(Player player){	// Asks if Player wants to buy, otherwise auction
-//		boolean buy = false;
-//
-//		if(field instanceof Territory && ((Territory)field).getOwner() == null){
-//			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
-//					((Territory)field).getPrice()),text.getString("Yes"), text.getString("No"));
-//
-//			field.landOnField(player, text, gui, gameboard);;
-//			if(!buy){
-//				auctioneer.auction(players, field, this, gui);
-//			}
-//		}
-//
-//		else if(field instanceof Fleet && ((Fleet)field).getOwner() == null){
-//			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
-//					((Fleet)field).getPrice()),text.getString("Yes"), text.getString("No"));
-//
-//			field.landOnField(player, text, gui, gameboard);
-//			if(!buy){
-//				auctioneer.auction(players, field, this, gui);
-//			}
-//		}
-//
-//		else if(field instanceof Brewery && ((Brewery)field).getOwner() == null){
-//			buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",field.getName(),
-//					((Brewery)field).getPrice()),text.getString("Yes"), text.getString("No"));
-//
-//			field.landOnField(player, text, gui, gameboard);
-//			if(!buy){
-//				auctioneer.auction(players, field, this, gui);
-//			}
-//		}
-//		else 
-//			field.landOnField(player, text, gui, gameboard);
-//
-//	}
 	
 }
