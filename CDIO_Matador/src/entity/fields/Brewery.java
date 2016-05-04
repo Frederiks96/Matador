@@ -7,13 +7,13 @@ import entity.Texts;
 import entity.dicecup.DiceCup;
 
 public class Brewery extends AbstractFields implements Ownable {
-	
+
 	private Player owner;
 	private DiceCup dicecup;
 	private int price;
 	private boolean isMortgaged;
 	private String name;
-	
+
 	public Brewery(int id, Player owner, Texts text) {
 		super(id);
 		this.owner = null;
@@ -24,23 +24,20 @@ public class Brewery extends AbstractFields implements Ownable {
 
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
-		if (text==null)
-			System.out.println("text");
-		if (gui==null)
-			System.out.println("gui");
-		System.out.println(getName());
-		boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
-				getPrice()),text.getString("Yes"), text.getString("No"));
-		
-		if (buy) { // The Brewery is owned and the Player wishes to buy it
-			buyProperty(player, text, gui);
+		if (!isOwned()) {
+			boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
+					getPrice()),text.getString("Yes"), text.getString("No"));
+
+			if (buy) { // The Brewery is owned and the Player wishes to buy it
+				buyProperty(player, text, gui);
+			}
 		} else if(!isMortgaged && owner!=player && isOwned()) {
 			gui.showMessage(text.getFormattedString("rent", getRent(), owner));
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
 		}
 	}
-	
+
 	public void buyProperty(Player player, Texts text, GUI_Commands gui) {
 		if(player.getAccount().legalTransaction(-price)){
 			player.updateBalance(-price);
@@ -50,12 +47,12 @@ public class Brewery extends AbstractFields implements Ownable {
 		else
 			gui.showMessage(text.getString("failedTransaction"));
 	}
-	
+
 	@Override
 	public void sellProperty(Player player) {
 		player.sellBrewery();
 	}
-	
+
 	public void mortgage(Texts text, GUI_Commands gui) {
 		this.isMortgaged=true;
 		owner.mortgageBrewery();
@@ -67,7 +64,7 @@ public class Brewery extends AbstractFields implements Ownable {
 		owner.addBrewery();
 		owner.updateBalance(-(int)(this.price*0.5*1.1));
 	}
-	
+
 	public boolean isMortgaged() {
 		return this.isMortgaged;
 	}
@@ -75,12 +72,12 @@ public class Brewery extends AbstractFields implements Ownable {
 	public boolean isOwned() {
 		return this.owner != null;
 	}
-			
+
 	public void setOwner(Player owner) {
 		this.owner = owner;
 		owner.addBrewery();
 	}
-	
+
 	public Player getOwner() {
 		return this.owner;
 	}
@@ -93,7 +90,7 @@ public class Brewery extends AbstractFields implements Ownable {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	@Override
 	public int getID() {
 		return id;
