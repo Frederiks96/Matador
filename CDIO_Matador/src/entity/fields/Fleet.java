@@ -26,7 +26,7 @@ public class Fleet extends AbstractFields implements Ownable {
 			buyProperty(player, text, gui);
 		}
 
-		if (!isMortgaged && owner!=player) {	//another player owns the Fleet
+		else if (!isMortgaged && owner!=player) {	//another player owns the Fleet
 			gui.showMessage(text.getFormattedString("rent", getRent(), owner));
 			player.updateBalance(-getRent());
 			owner.updateBalance(getRent());
