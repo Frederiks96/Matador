@@ -1,33 +1,33 @@
 package controller;
 
+import boundary.GUI_Commands;
+import desktop_fields.Brewery;
+import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
-import entity.fields.Territory;
-import boundary.GUI_Commands;
-import desktop_fields.Ownable;
-import entity.GameBoard;
 import entity.fields.AbstractFields;
+import entity.fields.Fleet;
+import entity.fields.Territory;
 
 public class PropertiesController {
 
 	private AbstractFields property;
 	private String propertyName;
 	private AbstractFields[] fields;
+	private String choice;
 
 	public void manage(GUI_Commands gui, Player player, Texts text, GameBoard gameboard){
-		
+
 		fields = gameboard.getLogicFields();
-		
+
 		propertyName = gui.getUserSelection(text.getString("choosePropertyBuild"),
-				getOwnedProperties(player));
-		
+				gameboard.getOwnedProperties(player));
+
 		for (int i = 0; i < fields.length; i++) {
-				if(fields[i].getName()==propertyName)
-					property = fields[i];
-			}
+			if(fields[i].getName()==propertyName)
+				property = fields[i];
 		}
-	
-		String choice;
+
 		do{
 
 			boolean isMortgaged = false;
@@ -38,7 +38,7 @@ public class PropertiesController {
 					isMortgaged = ((Territory)(fields[j])).isMortgaged();
 				}
 			}	
-			
+
 			if(!isMortgaged){
 				choice = gui.getUserButtonPressed("",  text.getString("mortgage"),
 						text.getString("manageBuildings"), text.getString("back"));
@@ -72,7 +72,7 @@ public class PropertiesController {
 
 		}while (choice != text.getString("back"));
 	}
-	
+
 	private void build(Player player, GUI_Commands gui, Texts text,
 			GameBoard gameboard){ // TODO mangler build even
 		String building;
@@ -113,42 +113,32 @@ public class PropertiesController {
 
 		}while (building != text.getString("back"));
 	}
-	
-	private String[] getOwnedProperties(Player player) { 
-		
-		int numPropertiesOwned = player.getNumTerritoryOwned()+player.getNumFleetsOwned()+player.getNumBreweriesOwned();
-		
-		String[] ownedProperties = new String[numPropertiesOwned];
-		
-		int j = 0;
-		for (int i = 0; i < fields.length; i++) {
-			if(fields[i] instanceof Ownable && ((Territory)(fields[i])).getOwner()!=null){
-				if (((Territory)(fields[i])).getOwner().equals(player)){
-					ownedProperties[j] = fields[i].getName();
-					j++;
-				}
-			}
-		}
-		return ownedProperties;
-	}
 
 	private boolean buildEven(){
 		boolean legal = false;
-		
-		int houseCount = 0;
-		
+
+		int totalHouse = 0;
+
 		for (int i = 0; i < fields.length; i++) {
-			 
+			if(fields[i] instanceof Territory && !property.equals(fields[i]) && ((Territory)fields[i]).getColour() == ((Territory)property).getColour()){
+				if(i==1 || i==3 || i==37 || i==39){
+					totalHouse = ((Territory)fields[i]).getHouseCount();				
+					legal =( totalHouse >= ((Territory)property).getHouseCount());
+				}
+				else{
+					totalHouse += ((Territory)fields[i]).getHouseCount();	
+					legal = ( totalHouse/2 >= ((Territory)property).getHouseCount());
+				}
+			}
 		}
-		
 		return legal;
 	}
 
 	private boolean removeEven(){
 		boolean legal = false;
-		
-		
+
+
 		return legal;
 	}
-	
+
 }
