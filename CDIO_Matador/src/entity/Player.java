@@ -3,8 +3,6 @@ package entity;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import controller.Controller;
-
 public class Player {
 
 	private String name;
