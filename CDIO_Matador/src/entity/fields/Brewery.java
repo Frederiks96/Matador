@@ -41,8 +41,7 @@ public class Brewery extends AbstractFields implements Ownable {
 	public void buyProperty(Player player, Texts text, GUI_Commands gui) {
 		if(player.getAccount().legalTransaction(-price)){
 			player.updateBalance(-price);
-			gui.setOwner(this.id, player.getName());
-			setOwner(player);
+			setOwner(player, gui);
 		}
 		else
 			gui.showMessage(text.getString("failedTransaction"));
@@ -73,9 +72,11 @@ public class Brewery extends AbstractFields implements Ownable {
 		return this.owner != null;
 	}
 
-	public void setOwner(Player owner) {
-		this.owner = owner;
-		owner.addBrewery();
+	public void setOwner(Player player, GUI_Commands gui) {
+		this.owner = player;
+		player.addBrewery();
+		gui.setOwner(id, owner.getName());
+		
 	}
 
 	public Player getOwner() {

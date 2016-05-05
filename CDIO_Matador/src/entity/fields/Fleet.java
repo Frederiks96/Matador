@@ -38,8 +38,7 @@ public class Fleet extends AbstractFields implements Ownable {
 	public void buyProperty(Player player, Texts text, GUI_Commands gui) { // 
 		if (player.getAccount().legalTransaction(-price)){
 			player.updateBalance(-price);
-			gui.setOwner(id, player.getName());
-			setOwner(player);
+			setOwner(player, gui);
 		}
 		else 
 			gui.showMessage(text.getString("failedTransaction"));
@@ -49,9 +48,10 @@ public class Fleet extends AbstractFields implements Ownable {
 		return this.owner;
 	}
 
-	public void setOwner(Player owner) {
+	public void setOwner(Player owner, GUI_Commands gui) {
 		this.owner=owner;
 		owner.addFleet();
+		gui.setOwner(id, owner.getName());
 	}
 
 	public int getRent() {

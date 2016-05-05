@@ -1,6 +1,7 @@
 package entity.fields;
 
 import boundary.GUI_Commands;
+import desktop_resources.GUI;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
@@ -118,9 +119,7 @@ public class Territory extends AbstractFields implements Ownable {
 	public void buyProperty(Player player, Texts text, GUI_Commands gui){
 		if (player.getAccount().legalTransaction(-this.price)){
 			player.updateBalance(-this.price);
-			this.owner = player;
-			gui.setOwner(this.id, player.getName());
-			player.addTerritory();
+			setOwner(player,gui);
 		}	
 	}
 
@@ -146,8 +145,10 @@ public class Territory extends AbstractFields implements Ownable {
 		this.owner.updateBalance(-(int)(this.price*0.5*1.1));
 	}
 
-	public void setOwner(Player owner) {
-		this.owner = owner;
+	public void setOwner(Player player, GUI_Commands gui) {
+		this.owner = player;
+		player.addTerritory();
+		gui.setOwner(id, player.getName());
 	}
 
 	public Player getOwner() {

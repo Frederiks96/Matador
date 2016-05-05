@@ -7,7 +7,7 @@ import entity.Texts;
 public interface Ownable {
 	
 	Player getOwner();
-	void setOwner(Player owner);
+	void setOwner(Player player, GUI_Commands gui);
 	boolean isOwned();
 	void buyProperty(Player player, Texts text, GUI_Commands gui);
 	void mortgage(Texts text, GUI_Commands gui);

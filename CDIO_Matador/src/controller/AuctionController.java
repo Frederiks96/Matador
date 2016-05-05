@@ -50,22 +50,22 @@ public class AuctionController {
 				}
 			} while (pass < con.numPlayersAlive()-1);
 
-			gui.showMessage(text.getFormattedString("bidWinner", players[winner].getName(),currentbid));
+			gui.showMessage(text.getFormattedString("bidWinner", players[winner].getName(), field.getName(),currentbid));
 
 
 			//territory
 			if(field instanceof Territory){
-				((Territory) field).setOwner(players[winner]);
+				((Territory) field).setOwner(players[winner], gui);
 				players[winner].updateBalance(-currentbid);
 			}
 			//fleet
 			if (field instanceof Fleet){
-				((Fleet) field).setOwner(players[winner]);
+				((Fleet) field).setOwner(players[winner], gui);
 				players[winner].updateBalance(-currentbid);
 			}	
 			//brewery
 			if (field instanceof Brewery){
-				((Brewery) field).setOwner(players[winner]);
+				((Brewery) field).setOwner(players[winner], gui);
 				players[winner].updateBalance(-currentbid);
 			}		
 		}
