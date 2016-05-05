@@ -50,7 +50,7 @@ public class FleetTest {
 	@Test
 	public void PayRentOneFleet(){
 		
-		board.setOwner(5, player1);
+		board.setOwner(5, player1,gui);
 		player2.setPosition(5);
 		board.landOnField(player2, text, gui);
 		
@@ -69,8 +69,8 @@ public class FleetTest {
 	@Test
 	public void PayRentTwoFleet(){
 		
-		board.setOwner(5, player1);
-		board.setOwner(15, player1);
+		board.setOwner(5, player1,gui);
+		board.setOwner(15, player1,gui);
 		player2.setPosition(5);
 		board.landOnField(player2, text, gui);
 		
@@ -89,9 +89,9 @@ public class FleetTest {
 	@Test
 	public void PayRentThreeFleet(){
 		
-		board.setOwner(5, player1);
-		board.setOwner(15, player1);
-		board.setOwner(25, player1);
+		board.setOwner(5, player1,gui);
+		board.setOwner(15, player1,gui);
+		board.setOwner(25, player1,gui);
 		player2.setPosition(5);
 		board.landOnField(player2, text, gui);
 		
@@ -110,10 +110,10 @@ public class FleetTest {
 	@Test
 	public void PayRentFourFleet(){
 		
-		board.setOwner(5, player1);
-		board.setOwner(15, player1);
-		board.setOwner(25, player1);
-		board.setOwner(35, player1);
+		board.setOwner(5, player1,gui);
+		board.setOwner(15, player1,gui);
+		board.setOwner(25, player1,gui);
+		board.setOwner(35, player1,gui);
 		player2.setPosition(5);
 		board.landOnField(player2, text, gui);
 		
@@ -131,7 +131,7 @@ public class FleetTest {
 	
 	@Test
 	public void MortgageFleet(){
-		board.setOwner(5, player1);
+		board.setOwner(5, player1,gui);
 		player1.setPosition(5);
 		((Fleet)(board.getLogicField(player1.getPosition()))).mortgage(text, gui);
 		
