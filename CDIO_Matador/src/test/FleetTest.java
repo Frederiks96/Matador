@@ -48,28 +48,100 @@ public class FleetTest {
 	}
 	
 	@Test
-	public void landOnFleetOneOwner(){
-		
+	public void PayRentOneFleet(){
 		
 		board.setOwner(5, player1);
+		player2.setPosition(5);
 		board.landOnField(player2, text, gui);
 		
 		int actualPlayer1Balance = player1.getBalance();
-		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getPrice();
+		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent();
 		
 		assertEquals(actualPlayer1Balance,expectedPlayer1Balance);
 		
 		int actualPlayer2Balance = player2.getBalance();
-		int expectedPlayer2Balance = 29500;
+		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent();
 		
 		assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
 
+	}
+	
+	@Test
+	public void PayRentTwoFleet(){
 		
+		board.setOwner(5, player1);
+		board.setOwner(15, player1);
+		player2.setPosition(5);
+		board.landOnField(player2, text, gui);
 		
+		int actualPlayer1Balance = player1.getBalance();
+		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent();
+		
+		assertEquals(actualPlayer1Balance,expectedPlayer1Balance);
+		
+		int actualPlayer2Balance = player2.getBalance();
+		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent();
+		
+		assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
+
+	}
+	
+	@Test
+	public void PayRentThreeFleet(){
+		
+		board.setOwner(5, player1);
+		board.setOwner(15, player1);
+		board.setOwner(25, player1);
+		player2.setPosition(5);
+		board.landOnField(player2, text, gui);
+		
+		int actualPlayer1Balance = player1.getBalance();
+		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent();
+		
+		assertEquals(actualPlayer1Balance,expectedPlayer1Balance);
+		
+		int actualPlayer2Balance = player2.getBalance();
+		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent();
+		
+		assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
+
+	}
+	
+	@Test
+	public void PayRentFourFleet(){
+		
+		board.setOwner(5, player1);
+		board.setOwner(15, player1);
+		board.setOwner(25, player1);
+		board.setOwner(35, player1);
+		player2.setPosition(5);
+		board.landOnField(player2, text, gui);
+		
+		int actualPlayer1Balance = player1.getBalance();
+		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent();
+		
+		assertEquals(actualPlayer1Balance,expectedPlayer1Balance);
+		
+		int actualPlayer2Balance = player2.getBalance();
+		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent();
+		
+		assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
+
+	}
+	
+	@Test
+	public void MortgageFleet(){
+		board.setOwner(5, player1);
+		player1.
 	}
 	
 	
+		
+		
+		
 	
 	
-
+	
+	
 }
+

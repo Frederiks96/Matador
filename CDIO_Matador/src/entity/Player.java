@@ -71,6 +71,10 @@ public class Player {
 	public void mortgageBrewery(){
 		numBreweriesOwned--;
 	}
+	
+	public void mortgageFleet(){
+		numFleetsOwned--;
+	}
 
 	public boolean isAlive() {
 		return this.isAlive;
