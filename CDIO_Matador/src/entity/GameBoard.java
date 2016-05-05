@@ -131,6 +131,8 @@ public class GameBoard {
 				for (int i = 0; i < tempProperties.length; i++) {
 					if (tempProperties[i]==null) {
 						properties = new String[i-1];
+					} else if (i == tempProperties.length-1) {
+						properties = new String[i];
 					}
 				}
 			}
