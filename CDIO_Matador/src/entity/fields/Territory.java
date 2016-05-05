@@ -51,6 +51,8 @@ public class Territory extends AbstractFields implements Ownable {
 			gui.showMessage(text.getFormattedString("rent", rent, owner.getName()));
 			player.updateBalance(-rent);
 			owner.updateBalance(rent);
+			gui.setBalance(player.getName(), player.getBalance());
+			gui.setBalance(owner.getName(), owner.getBalance());
 		}
 	}
 

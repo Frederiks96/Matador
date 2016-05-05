@@ -34,6 +34,8 @@ public class Brewery extends AbstractFields implements Ownable {
 			gui.showMessage(text.getFormattedString("rent", getRent(board), owner));
 			player.updateBalance(-getRent(board));
 			owner.updateBalance(getRent(board));
+			gui.setBalance(player.getName(), player.getBalance());
+			gui.setBalance(owner.getName(), owner.getBalance());
 		}
 	}
 
