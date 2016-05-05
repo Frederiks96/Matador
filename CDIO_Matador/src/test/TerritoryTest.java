@@ -66,11 +66,11 @@ public class TerritoryTest {
 		board.landOnField(player1, text, gui);
 		board.landOnField(player2, text, gui);
 
-		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent();
+		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent(board);
 		int actual = player2.getBalance();
 		assertEquals(expected, actual);
 
-		expected = 30000+((Ownable)(board.getLogicField(player1.getPosition()))).getRent()-((Ownable)(board.getLogicField(player1.getPosition()))).getPrice();
+		expected = 30000+((Ownable)(board.getLogicField(player1.getPosition()))).getRent(board)-((Ownable)(board.getLogicField(player1.getPosition()))).getPrice();
 		actual = player1.getBalance();
 		assertEquals(expected, actual);
 	}
@@ -84,7 +84,7 @@ public class TerritoryTest {
 		player2.setPosition(1);
 		board.landOnField(player2, text, gui);
 
-		int expected = 30000 - 2*((Ownable)(board.getLogicField(player1.getPosition()))).getRent();
+		int expected = 30000 - 2*((Ownable)(board.getLogicField(player1.getPosition()))).getRent(board);
 		int actual = player2.getBalance();
 		assertEquals(expected, actual);
 
@@ -102,7 +102,7 @@ public class TerritoryTest {
 		player2.setPosition(1);
 		board.landOnField(player2, text, gui);
 		
-		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent();
+		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent(board);
 		int actual = player2.getBalance();
 		assertEquals(expected, actual);
 	}
@@ -119,7 +119,7 @@ public class TerritoryTest {
 		player2.setPosition(1);
 		board.landOnField(player2, text, gui);
 		
-		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent();
+		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent(board);
 		int actual = player2.getBalance();
 		assertEquals(expected, actual);
 	}
@@ -136,7 +136,7 @@ public class TerritoryTest {
 		player2.setPosition(1);
 		board.landOnField(player2, text, gui);
 		
-		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent();
+		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent(board);
 		int actual = player2.getBalance();
 		assertEquals(expected, actual);
 	}
@@ -153,7 +153,7 @@ public class TerritoryTest {
 		player2.setPosition(1);
 		board.landOnField(player2, text, gui);
 		
-		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent();
+		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent(board);
 		int actual = player2.getBalance();
 		assertEquals(expected, actual);
 	}
@@ -170,7 +170,7 @@ public class TerritoryTest {
 		player2.setPosition(1);
 		board.landOnField(player2, text, gui);
 		
-		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent();
+		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent(board);
 		int actual = player2.getBalance();
 		assertEquals(expected, actual);
 	}

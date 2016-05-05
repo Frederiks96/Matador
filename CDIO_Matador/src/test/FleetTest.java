@@ -55,12 +55,12 @@ public class FleetTest {
 		board.landOnField(player2, text, gui);
 		
 		int actualPlayer1Balance = player1.getBalance();
-		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent();
+		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent(board);
 		
 		assertEquals(actualPlayer1Balance,expectedPlayer1Balance);
 		
 		int actualPlayer2Balance = player2.getBalance();
-		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent();
+		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent(board);
 		
 		assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
 
@@ -75,12 +75,12 @@ public class FleetTest {
 		board.landOnField(player2, text, gui);
 		
 		int actualPlayer1Balance = player1.getBalance();
-		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent();
+		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent(board);
 		
 		assertEquals(actualPlayer1Balance,expectedPlayer1Balance);
 		
 		int actualPlayer2Balance = player2.getBalance();
-		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent();
+		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent(board);
 		
 		assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
 
@@ -96,12 +96,12 @@ public class FleetTest {
 		board.landOnField(player2, text, gui);
 		
 		int actualPlayer1Balance = player1.getBalance();
-		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent();
+		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent(board);
 		
 		assertEquals(actualPlayer1Balance,expectedPlayer1Balance);
 		
 		int actualPlayer2Balance = player2.getBalance();
-		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent();
+		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent(board);
 		
 		assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
 
@@ -118,12 +118,12 @@ public class FleetTest {
 		board.landOnField(player2, text, gui);
 		
 		int actualPlayer1Balance = player1.getBalance();
-		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent();
+		int expectedPlayer1Balance = 30000 + ((Fleet)board.getLogicField(5)).getRent(board);
 		
 		assertEquals(actualPlayer1Balance,expectedPlayer1Balance);
 		
 		int actualPlayer2Balance = player2.getBalance();
-		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent();
+		int expectedPlayer2Balance = 30000 - ((Fleet)board.getLogicField(5)).getRent(board);
 		
 		assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
 

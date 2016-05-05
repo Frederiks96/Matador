@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import boundary.GUI_Commands;
 import boundary.SQL;
+import entity.dicecup.DiceCup;
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
 import entity.fields.ChanceField;
@@ -19,6 +20,7 @@ public class GameBoard {
 	private int houseCount; 
 	private AbstractFields[] logicFields = new AbstractFields[40];
 	private CardStack deck;
+	private DiceCup dicecup = new DiceCup();
 
 
 	public void setupBoard(Texts text) {
@@ -278,5 +280,9 @@ public class GameBoard {
 		}
 	}
 
-
+	public DiceCup getDiceCup(){
+		return dicecup;
+	}
+	
+	
 }

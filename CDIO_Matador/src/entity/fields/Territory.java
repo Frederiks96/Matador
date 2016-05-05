@@ -44,7 +44,7 @@ public class Territory extends AbstractFields implements Ownable {
 				buyProperty(player, text, gui);
 			}
 		} else if (!isMortgaged && owner!=player && isOwned()){	// another player owns the territory
-			int rent = getRent();
+			int rent = getRent(board);
 			if (board.hasAll(this.owner, this.colour)) {
 				rent *= 2;
 			}
@@ -54,7 +54,7 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 	}
 
-	public int getRent() {
+	public int getRent(GameBoard board) {
 		return this.rent[this.houseCount];	
 	}
 
