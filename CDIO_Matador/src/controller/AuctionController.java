@@ -19,7 +19,8 @@ public class AuctionController {
 		pass = 0;
 		winner = -1;
 		
-		if (((Territory) field).getHouseCount()==0){
+		
+		if (legalAuction(field)){
 
 			do {
 				for (int i=0; i < players.length; i++) {
@@ -75,4 +76,13 @@ public class AuctionController {
 		}
 	}
 
+	
+	private boolean legalAuction(AbstractFields field){
+		if (field instanceof Territory){
+			if (((Territory)field).getHouseCount() == 0){
+				return true;
+			}else return false;
+		}else return true;
+	}
+	
 }
