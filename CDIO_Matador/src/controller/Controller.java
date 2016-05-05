@@ -88,6 +88,7 @@ public class Controller  {
 		while (true) {
 			try {
 				loadPlayers();
+				board.countBuildings(sql);
 				//				loadCards(text);
 				break;
 			} catch (SQLException s) {
