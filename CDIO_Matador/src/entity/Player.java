@@ -57,7 +57,7 @@ public class Player {
 	}
 
 	public void addBrewery() {
-		this.numFleetsOwned++;
+		this.numBreweriesOwned++;
 	}
 	
 	public void sellBrewery() {
