@@ -10,8 +10,8 @@ import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
-import entity.dicecup.DiceCup;
 import entity.fields.ChanceField;
+import entity.fields.Territory;
 
 public class Controller  {
 
@@ -20,9 +20,8 @@ public class Controller  {
 	private TradeController broker;
 
 	private GUI_Commands gui = new GUI_Commands();
-	private GameBoard gameboard = new GameBoard();
+	private GameBoard board = new GameBoard();
 	private SQL sql = new SQL();
-	private DiceCup dicecup = new DiceCup();
 
 	private Texts text;
 	private CardStack deck;
@@ -75,7 +74,7 @@ public class Controller  {
 			gui.closeGUI();
 		}
 
-		gameboard.setupBoard(text);
+		board.setupBoard(text);
 		this.deck = new CardStack();
 		deck.newDeck(text);
 		deck.shuffle();
@@ -95,34 +94,36 @@ public class Controller  {
 				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
 			}
 		}
-		gameboard.setupBoard(text,gameName,players,gui,sql);
+		board.setupBoard(text,gameName,players,gui,sql);
 	}
 
 	public void playerTurn(Player player) throws SQLException {
 		String options;
 		int numPairs = 0;
-		
+
 		if (player.getJailTime()>-1){
 			// PLAYER IS IN JAIL
 			boolean roll = gui.getUserLeftButtonPressed(text.getString("prisonQuestion"), text.getString("roll"), text.getString("payBaiul"));
 			if (roll){
-				dicecup.roll();
-				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
+				board.getDiceCup().roll();
+				gui.setDice(board.getDiceCup().getDieOne(), board.getDiceCup().getDieTwo());	
+
 				
-				if(dicecup.hasPair()){
+				
+				if(board.getDiceCup().hasPair()){
 					gui.removeCar(player.getPosition(), player.getName());		
-					player.updatePosition((dicecup.getLastRoll()));		
+					player.updatePosition((board.getDiceCup().getLastRoll()));		
 					gui.setCar(player.getPosition(), player.getName());		
 
-					gameboard.landOnField(player, text, gui);
-					if (gameboard.isOwnable(player.getPosition())) {
-						if (gameboard.getOwner(player.getPosition()) == null) {
-							auctioneer.auction(players, gameboard.getLogicField(player.getPosition()), this, gui,text);
+					board.landOnField(player, text, gui);
+					if (board.isOwnable(player.getPosition())) {
+						if (board.getOwner(player.getPosition()) == null) {
+							auctioneer.auction(players, board.getLogicField(player.getPosition()), this, gui,text);
 						}
 					}
 
 					gui.setBalance(player.getName(), player.getAccount().getBalance());
-					if (gameboard.getLogicField(player.getPosition()) instanceof ChanceField) 
+					if (board.getLogicField(player.getPosition()) instanceof ChanceField) 
 						deck.draw(player);				
 					saveGame();
 				}else player.increaseJailTime();
@@ -140,22 +141,22 @@ public class Controller  {
 			if (options.equals(text.getString("roll"))) {
 				//ROLL
 				gui.removeCar(player.getPosition(), player.getName());		
-				dicecup.roll();
-				player.updatePosition((dicecup.getLastRoll()));		
-				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
+				board.getDiceCup().roll();
+				player.updatePosition((board.getDiceCup().getLastRoll()));		
+				gui.setDice(board.getDiceCup().getDieOne(), board.getDiceCup().getDieTwo());	
 				gui.setCar(player.getPosition(), player.getName());		
 
-				gameboard.landOnField(player, text, gui);
-				if (gameboard.isOwnable(player.getPosition())) {
-					if (gameboard.getOwner(player.getPosition()) == null) {
-						auctioneer.auction(players, gameboard.getLogicField(player.getPosition()), this, gui,text);
+				board.landOnField(player, text, gui);
+				if (board.isOwnable(player.getPosition())) {
+					if (board.getOwner(player.getPosition()) == null) {
+						auctioneer.auction(players, board.getLogicField(player.getPosition()), this, gui,text);
 					}
 				}
 
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
-				if (gameboard.getLogicField(player.getPosition()) instanceof ChanceField) 
+				if (board.getLogicField(player.getPosition()) instanceof ChanceField) 
 					deck.draw(player);				
-				if(dicecup.hasPair()) numPairs++;
+				if(board.getDiceCup().hasPair()) numPairs++;
 				if(numPairs == 3) player.imprison();
 				saveGame();
 
@@ -164,15 +165,15 @@ public class Controller  {
 				String offereeName = gui.getUserButtonPressed(text.getString("offereeName"), 
 						getOpponents(player));
 				broker = new TradeController();
-				broker.suggestDeal(player, getPlayer(offereeName), text, gameboard, gui);
+				broker.suggestDeal(player, getPlayer(offereeName), text, board, gui);
 				saveGame();
 
 			} else { //MANAGE PROPERTIES
-				propertiescon.manage(gui, player, text, gameboard);
+				propertiescon.manage(gui, player, text, board);
 				saveGame();
 			}
 
-		} while (!options.equals(text.getString("roll")) || dicecup.hasPair());
+		} while (!options.equals(text.getString("roll")) || board.getDiceCup().hasPair());
 	}
 
 	private void getLanguage() {
@@ -193,9 +194,9 @@ public class Controller  {
 			}else if(name.trim().equals(""))
 				return false;
 		}
-		
-		
-		
+
+
+
 		return true;
 	}
 
@@ -297,21 +298,46 @@ public class Controller  {
 		//					sql.setCardPosition(deck[i].getPosition, deck[i].getID());
 		//				}
 
-		gameboard.saveBoard(sql);
+		board.saveBoard(sql);
 	}
 
+	private void removeAllBuildings(Player player){
+		for (int i = 0; i < 40; i++){
+			if(board.getLogicField(i) instanceof Territory){
+				if (((Territory)board.getLogicField(i)).getOwner() == player){
+
+					while(((Territory)board.getLogicField(i)).getHouseCount() > 0){
+						if(((Territory)board.getLogicField(i)).getHouseCount()==5)
+							((Territory)board.getLogicField(i)).sellHotel(gui);
+						((Territory)board.getLogicField(i)).sellHouse(gui);
+					}
+				}
+			}
+		}
+	}	
 	public void bankrupt(Player player, Player creditor) {
 		player.bankrupt();
 		if (creditor!=null) {
+			removeAllBuildings(player);
 			creditor.updateBalance(player.getBalance());
 			player.updateBalance(-player.getBalance());
+
+			for (int i = 0; i < 40; i++) {
+				if(board.getLogicField(i) instanceof Territory){
+					if(((Territory)board.getLogicField(i)).getOwner().equals(player)){
+						gui.removeOwner(i);
+						((Territory)board.getLogicField(i)).setOwner(creditor, gui);
+					}
+				}	
+			}
+
 
 		} else {
 			//TODO
 			player.updateBalance(-player.getBalance());
-			String[] properties = gameboard.getOwnedProperties(player);
+			String[] properties = board.getOwnedProperties(player);
 			for (int i = 0; i < properties.length; i++) {
-				auctioneer.auction(players, gameboard.getProperty(properties[i]), this, gui, text);
+				auctioneer.auction(players, board.getProperty(properties[i]), this, gui, text);
 			}
 		}
 	}
