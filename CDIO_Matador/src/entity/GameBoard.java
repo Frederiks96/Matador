@@ -84,7 +84,7 @@ public class GameBoard {
 		String[] properties;
 		int numPropertiesOwned = player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoryOwned();
 		if (numPropertiesOwned>0) {
-			properties = new String[player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoryOwned()];
+			properties = new String[numPropertiesOwned];
 			int j = 0;
 			for (int i = 0; i < logicFields.length; i++) {
 
@@ -115,6 +115,57 @@ public class GameBoard {
 				}
 			}
 
+			return properties;
+		}
+		return null;
+	}
+
+	public String[] getOwnedUnbuiltProperties(Player player) {
+		String[] tempProperties;
+		String[] properties = null;
+		int numPropertiesOwned = player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoryOwned();
+		if (numPropertiesOwned>0) {
+			tempProperties = new String[player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoryOwned()];
+			int j = 0;
+			for (int i = 0; i < logicFields.length; i++) {
+
+				if (logicFields[i] instanceof Brewery) {
+					if (((Brewery) (logicFields[i])).getOwner() != null) {
+						if (((Brewery) (logicFields[i])).getOwner().equals(player))
+							tempProperties[j] = logicFields[i].getName();
+						j++;
+					}
+				}
+
+				if (logicFields[i] instanceof Fleet) {
+					if (((Fleet) (logicFields[i])).getOwner() != null) {
+						if (((Fleet) (logicFields[i])).getOwner().equals(player)) {
+							tempProperties[j] = logicFields[i].getName();
+							j++;
+						}
+					}
+				}
+
+				if (logicFields[i] instanceof Territory) {
+					if (((Territory) (logicFields[i])).getOwner() != null) {
+						if (((Territory) (logicFields[i])).getOwner().equals(player)) {
+							if (getHouseCount(i)==0) {
+								tempProperties[j] = logicFields[i].getName();
+								j++;
+							}
+						}
+					}
+				}
+			}
+			
+			for (int i = 0; i < tempProperties.length; i++) {
+				if (tempProperties[i]==null) {
+					properties = new String[i-1];
+				}
+			}
+			for (int i = 0; i < properties.length; i++) {
+				properties[i]=tempProperties[i];
+			}
 			return properties;
 		}
 		return null;
@@ -239,6 +290,18 @@ public class GameBoard {
 			return ((Ownable)logicFields[field_id]).getOwner();
 		}
 		return null;
+	}
+
+	public void setOwner(int field_id, Player owner) {
+		if (isOwnable(field_id)) {
+			if (logicFields[field_id] instanceof Territory) {
+				if (getHouseCount(field_id)==0) {
+					((Ownable)logicFields[field_id]).setOwner(owner);
+				}
+			} else {
+				((Ownable)logicFields[field_id]).setOwner(owner);
+			}
+		}
 	}
 
 

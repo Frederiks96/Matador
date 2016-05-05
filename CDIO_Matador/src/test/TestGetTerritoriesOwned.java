@@ -24,9 +24,8 @@ public class TestGetTerritoriesOwned {
 		board = new GameBoard();
 		text = new Texts(language.Dansk);
 		board.setupBoard(text);
-		
 	}
-
+	
 	@After
 	public void tearDown() throws Exception {
 	}

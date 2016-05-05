@@ -8,6 +8,8 @@ import entity.fields.AbstractFields;
 import entity.fields.Territory;
 
 public class PropertiesController {
+	
+	//Kontrolere alt du kan gøre med properties. mangage /mortgage osv. 
 
 	private AbstractFields property;
 	private String propertyName;

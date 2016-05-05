@@ -19,34 +19,16 @@ public class TradeController {
 	}
 
 	public void suggestDeal(Player offeror, Player offeree, Texts text, GameBoard board, GUI_Commands gui) {
-		ownProperties = new ArrayList<String>();
-		foeProperties = new ArrayList<String>();
-		do {
-			if (board.getOwnedProperties(offeror)!=null) {
-			ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), board.getOwnedProperties(offeror)));
-			} else {
-				gui.showMessage(text.getString("noPropOwned"));
-				break;
-			}
-		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
-		
-		do {
-			if (board.getOwnedProperties(offeree)!=null) {
-				foeProperties.add(gui.getUserSelection(text.getFormattedString("foeProperties",offeree.getName()), board.getOwnedProperties(offeree)));
-			} else {
-				gui.showMessage(text.getString("noPropOwnedByFoe"));
-				break;
-			}
-			
-		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
-		
+		ownProperties = getOwnProperties(board, offeror, gui, text);
+		foeProperties = getFoeProperties(board, offeree, gui, text);
+
 		ownOffer = gui.getUserInteger(text.getString("getOwnOffer"));
 		foeOffer = gui.getUserInteger(text.getString("getFoeOffer"));
 		gui.showMessage(text.getFormattedString("handover", offeree.getName()));
 		answer = gui.getUserSelection(text.getString("accept"),text.getString("Yes"),text.getString("No"),text.getString("counterOffer"));
-		
+
 		if (text.getString("Yes").equals(answer)) {
-			completeDeal(offeror, offeree, ownProperties, ownOffer,foeOffer);
+			completeDeal(board, offeror, offeree, ownProperties, foeProperties, ownOffer,foeOffer);
 		} else if (text.getString("counterOffer").equals(answer)) {
 			suggestDeal(offeree, offeror, text, board, gui);
 		} else {
@@ -55,11 +37,38 @@ public class TradeController {
 		}
 	}
 
-	private void completeDeal(Player offeror, Player offeree, ArrayList<String> properties, int ownOffer, int foeOffer) {
+	private void completeDeal(GameBoard board, Player offeror, Player offeree, ArrayList<String> ownProperties, ArrayList<String> foeProperties, int ownOffer, int foeOffer) {
+		
+		
+		
 		
 	}
 	
-	public void beginAuction() {
-		
+	private ArrayList<String> getOwnProperties(GameBoard board, Player offeror, GUI_Commands gui, Texts text) {
+		ownProperties = new ArrayList<String>();
+		do {
+			if (board.getOwnedUnbuiltProperties(offeror) != null) {
+				ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), board.getOwnedUnbuiltProperties(offeror)));
+			} else {
+				gui.showMessage(text.getString("noPropOwned"));
+				break;
+			}
+		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
+		return ownProperties;
 	}
+	
+	private ArrayList<String> getFoeProperties(GameBoard board, Player offeree, GUI_Commands gui, Texts text) {
+		foeProperties = new ArrayList<String>();
+		do {
+			if (board.getOwnedUnbuiltProperties(offeree)!=null) {
+				foeProperties.add(gui.getUserSelection(text.getFormattedString("foeProperties",offeree.getName()), board.getOwnedUnbuiltProperties(offeree)));
+			} else {
+				gui.showMessage(text.getString("noPropOwnedByFoe"));
+				break;
+			}
+
+		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
+		return foeProperties;
+	}
+
 }
