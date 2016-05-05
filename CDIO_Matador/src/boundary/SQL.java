@@ -310,10 +310,9 @@ public class SQL implements DAO, DTO {
 	public int countPlayers() throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		try {
-			String query = "SELECT COUNT(player_id) FROM "+dbName+".player";
-			java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+			Statement stmt = myCon.createStatement();
 			try {
-				ResultSet rs = stmt.executeQuery ();
+				ResultSet rs = stmt.executeQuery("SELECT COUNT(player_id) FROM "+dbName+".player");
 				try {
 					rs.next();
 					return rs.getInt(1);
@@ -328,7 +327,7 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-	public String[] getActiveGames() throws SQLException { // Skal denne have prepared statement? ---- er det ikke et DAO????
+	public String[] getActiveGames() throws SQLException { 
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		try {
 			Statement stmt = myCon.createStatement();
@@ -559,25 +558,32 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-	public void createNewDB(String dbName) throws IOException,SQLException { // Mangler prepared Statement - skal denne have interface?
+	public void createNewDB(String dbName) throws IOException,SQLException { 
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-		//		String query = "";
-
-
-
-		Statement stmt = myCon.createStatement();
-		stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS CDIO_"+dbName+" DEFAULT CHARACTER SET utf8;");
-		stmt.executeUpdate("USE CDIO_"+dbName+";");
-		useDB(dbName);
-		BufferedReader in = new BufferedReader(new FileReader("newDB.sql"));
-		String str;
-		while ((str = in.readLine()) != null) {
-			if (!str.equals("")) {
-				stmt.executeUpdate(str);
+		try {
+			Statement stmt1 = myCon.createStatement();
+			Statement stmt2 = myCon.createStatement();
+			Statement script = myCon.createStatement();
+			try {
+				stmt1.executeUpdate("CREATE DATABASE IF NOT EXISTS CDIO_"+dbName+" DEFAULT CHARACTER SET utf8");
+				stmt2.executeUpdate("USE CDIO_"+dbName);
+				useDB(dbName);
+				BufferedReader in = new BufferedReader(new FileReader("newDB.sql"));
+				String str;
+				while ((str = in.readLine()) != null) {
+					if (!str.equals("")) {
+						script.executeUpdate(str);
+					}
+				}
+				in.close();
+			} finally {
+				stmt1.close();
+				stmt2.close();
+				script.close();
 			}
+		} finally {
+			myCon.close();
 		}
-		in.close();
-		myCon.close();
 	}
 
 	public void createChanceCard(ChanceCard card) throws SQLException {
@@ -596,27 +602,27 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-//	public void createProperties(AbstractFields field) throws SQLException{
-//		int fID;
-//		Integer pID = null;
-//		int hCount = 0;
-//		boolean Mortgage = false;
-//		
-//		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
-//		try {
-//			String update = "INSERT INTO "+dbName+".property VALUES(?,?,?,?)";
-//			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-//			stmt.setInt(1, fID);
-//			stmt.setInt(2, null);
-//			stmt.setInt(3, 0);
-//			stmt.setString(4, false);
-//			try {
-//				stmt.executeUpdate();
-//			} finally {
-//				stmt.close();
-//			}
-//		} finally {
-//			myCon.close();
-//		}
-//	}
+	//	public void createProperties(AbstractFields field) throws SQLException{
+	//		int fID;
+	//		Integer pID = null;
+	//		int hCount = 0;
+	//		boolean Mortgage = false;
+	//		
+	//		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+	//		try {
+	//			String update = "INSERT INTO "+dbName+".property VALUES(?,?,?,?)";
+	//			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+	//			stmt.setInt(1, fID);
+	//			stmt.setInt(2, null);
+	//			stmt.setInt(3, 0);
+	//			stmt.setString(4, false);
+	//			try {
+	//				stmt.executeUpdate();
+	//			} finally {
+	//				stmt.close();
+	//			}
+	//		} finally {
+	//			myCon.close();
+	//		}
+	//	}
 }

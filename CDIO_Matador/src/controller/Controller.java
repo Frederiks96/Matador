@@ -66,7 +66,7 @@ public class Controller  {
 	public void startNewGame() throws SQLException {
 		do {
 			gameName = gui.getUserString(text.getString("nameGame"));
-		} while (gameName.equals(null) || gameName.trim().equals("") || dbNameUsed(gameName.trim()));
+		} while (dbNameUsed(gameName.trim()) || isValidDBName(gameName));
 
 		try {
 			sql.createNewDB(gameName);
@@ -287,6 +287,21 @@ public class Controller  {
 			}
 		}
 		return false;
+	}
+	
+	private boolean isValidDBName(String gameName) {
+		return gameName.equals(null) || gameName.trim().equals("") || 
+				gameName.contains("/") || gameName.contains(";") || 
+				gameName.contains("'") || gameName.contains("?") ||
+				gameName.contains("¨") || gameName.contains("´") ||
+				gameName.contains("`") || gameName.contains("^") ||
+				gameName.contains("!") || gameName.contains("#") ||
+				gameName.contains("€") || gameName.contains("%") ||
+				gameName.contains("(") || gameName.contains(")") ||
+				gameName.contains("=") || gameName.contains("<") ||
+				gameName.contains(">") || gameName.contains(",") ||
+				gameName.contains(".") || gameName.contains("-") ||
+				gameName.contains("@");
 	}
 
 	private Player getPlayer(String playerName) {
