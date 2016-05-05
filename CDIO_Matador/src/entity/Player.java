@@ -168,11 +168,13 @@ public class Player {
 	}
 
 	public void addTerritory() {
-		numTerritoryOwned++;	
+		numTerritoryOwned++;
+		System.out.println(this.name+" Territory up");
 	}
 	
 	public void sellTerritory() {
 		numTerritoryOwned--;
+		System.out.println(this.name+" Territory down");
 	}
 	
 	public String getVehicleColour() {
@@ -192,6 +194,18 @@ public class Player {
 		this.numBreweriesOwned 	= 0;
 		this.numFleetsOwned 	= 0;
 		this.numTerritoryOwned 	= 0;
+	}
+	
+	public void increaseJailTime() {
+		this.jailTime++;
+	}
+	
+	public void setJailTime(int jail_time) {
+		this.jailTime=jail_time;
+	}
+	
+	public void resetJailTime() {
+		this.jailTime=-1;
 	}
 	
 	
