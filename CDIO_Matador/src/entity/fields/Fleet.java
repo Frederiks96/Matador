@@ -90,7 +90,7 @@ public class Fleet extends AbstractFields implements Ownable {
 
 	@Override
 	public void sellProperty(Player player) {
-		player.addFleet();;
+		player.sellFleet();
 	}
 
 	@Override
