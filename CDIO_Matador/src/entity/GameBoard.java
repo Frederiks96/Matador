@@ -264,14 +264,14 @@ public class GameBoard {
 		return null;
 	}
 
-	public void setOwner(int field_id, Player owner) {
+	public void setOwner(int field_id, Player owner, GUI_Commands gui) {
 		if (isOwnable(field_id)) {
 			if (logicFields[field_id] instanceof Territory) {
 				if (getHouseCount(field_id)==0) {
-					((Ownable)logicFields[field_id]).setOwner(owner);
+					((Ownable)logicFields[field_id]).setOwner(owner, gui);
 				}
 			} else {
-				((Ownable)logicFields[field_id]).setOwner(owner);
+				((Ownable)logicFields[field_id]).setOwner(owner, gui);
 			}
 		}
 	}
