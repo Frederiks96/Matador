@@ -66,21 +66,30 @@ public class TradeController {
 				offeror.sellTerritory();
 			}
 		}
-		
+
 		offeror.updateBalance(-ownOffer);
 		offeree.updateBalance(ownOffer);
 		offeree.updateBalance(-foeOffer);
 		offeror.updateBalance(foeOffer);
-		
+
 		gui.setBalance(offeror.getName(), offeror.getBalance());
 		gui.setBalance(offeree.getName(), offeree.getBalance());
 	}
-	
+
 	private ArrayList<String> getOwnProperties(GameBoard board, Player offeror, GUI_Commands gui, Texts text) {
 		ownProperties = new ArrayList<String>();
 		do {
+			ArrayList<String> presented = new ArrayList<String>();
 			if (board.getOwnedUnbuiltProperties(offeror) != null) {
-				ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), board.getOwnedUnbuiltProperties(offeror)));
+				String[] possible = board.getOwnedUnbuiltProperties(offeror);
+				if (ownProperties.size() == 0) {
+					// Spilleren har endnu ikke tilføjet nogle
+					ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), possible));
+				} else {
+					// Sorter nogle fra
+					String[] a = new String[presented.size()];
+					ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(a)));
+				}
 			} else {
 				gui.showMessage(text.getString("noPropOwned"));
 				break;
@@ -88,7 +97,7 @@ public class TradeController {
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		return ownProperties;
 	}
-	
+
 	private ArrayList<String> getFoeProperties(GameBoard board, Player offeree, GUI_Commands gui, Texts text) {
 		foeProperties = new ArrayList<String>();
 		do {
