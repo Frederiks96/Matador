@@ -52,12 +52,26 @@ public class BreweryTest {
 		@Test
 		public void payRentBrewery(){
 			
-			
-			
 			board.setOwner(12, player1,gui);
-			player2.setPosition(4);
-			player2.setPosition(12);
-			//board.landOnField(player2, text, gui);
+			player2.setPosition(4);			
+			
+			int actualPlayer1Balance = player1.getBalance();
+			int expectedPlayer1Balance = 30000 + ((Brewery)board.getLogicField(12)).getRent(board);
+			
+			assertEquals(actualPlayer1Balance,expectedPlayer1Balance);
+			
+			int actualPlayer2Balance = player2.getBalance();
+			int expectedPlayer2Balance = 30000 - ((Brewery)board.getLogicField(12)).getRent(board);
+			
+			assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
+
+		}
+		
+		@Test
+		public void payRentTwoBrewery(){
+			board.setOwner(12, player1,gui);
+			board.setOwner(28, player1, gui);
+			player2.setPosition(4);			
 			
 			
 			int actualPlayer1Balance = player1.getBalance();
@@ -70,21 +84,29 @@ public class BreweryTest {
 			
 			assertEquals(actualPlayer2Balance,expectedPlayer2Balance);
 
-
+		}
+		
+		@Test
+		public void MortgageBrewery(){
+			board.setOwner(12, player1,gui);
+			player1.setPosition(12);
+			((Brewery)(board.getLogicField(player1.getPosition()))).mortgage(text, gui);
+			
+			boolean actual = ((Brewery)(board.getLogicField(player1.getPosition()))).isMortgaged();
+			boolean expected = true;
+			
+			assertEquals(expected, actual);
+			
+			int actualBalance = player1.getBalance();
+			int expectedBalance = 30000 + ((Brewery)board.getLogicField(12)).getPrice()/2;
+			
+			assertEquals(actualBalance,expectedBalance);
+			
 		}
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		
 		
 }
