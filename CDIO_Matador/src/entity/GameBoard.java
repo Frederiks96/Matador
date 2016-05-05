@@ -157,10 +157,14 @@ public class GameBoard {
 					}
 				}
 			}
-			
-			for (int i = 0; i < tempProperties.length; i++) {
-				if (tempProperties[i]==null) {
-					properties = new String[i-1];
+			if (tempProperties.length==1) {
+				properties = new String[1];
+				properties[0] = tempProperties[0];
+			} else {
+				for (int i = 0; i < tempProperties.length; i++) {
+					if (tempProperties[i]==null) {
+						properties = new String[i-1];
+					}
 				}
 			}
 			for (int i = 0; i < properties.length; i++) {

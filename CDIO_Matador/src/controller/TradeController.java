@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import boundary.GUI_Commands;
+import desktop_resources.GUI;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
@@ -28,7 +29,7 @@ public class TradeController {
 		answer = gui.getUserSelection(text.getString("accept"),text.getString("Yes"),text.getString("No"),text.getString("counterOffer"));
 
 		if (text.getString("Yes").equals(answer)) {
-			completeDeal(board, offeror, offeree, ownProperties, foeProperties, ownOffer,foeOffer);
+			completeDeal(board, offeror, offeree, ownProperties, foeProperties, ownOffer,foeOffer, gui);
 			gui.showMessage(text.getString("doneDeal"));
 		} else if (text.getString("counterOffer").equals(answer)) {
 			suggestDeal(offeree, offeror, text, board, gui);
@@ -38,19 +39,24 @@ public class TradeController {
 		}
 	}
 
-	private void completeDeal(GameBoard board, Player offeror, Player offeree, ArrayList<String> ownProperties, ArrayList<String> foeProperties, int ownOffer, int foeOffer) {
+	private void completeDeal(GameBoard board, Player offeror, Player offeree, ArrayList<String> ownProperties, ArrayList<String> foeProperties, int ownOffer, int foeOffer, GUI_Commands gui) {
 		// Setting offeror as owner to offeree's properties
 		for (int i = 0; i < foeProperties.size(); i++) {
 			board.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror);
+			gui.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror.getName());
 		}
 		// Setting offeree as owner to offeror's properties
 		for (int i = 0; i < ownProperties.size(); i++) {
 			board.setOwner(board.getProperty(ownProperties.get(i)).getID(), offeree);
+			gui.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeree.getName());
 		}
 		offeror.updateBalance(-ownOffer);
 		offeree.updateBalance(ownOffer);
 		offeree.updateBalance(-foeOffer);
 		offeror.updateBalance(foeOffer);
+		gui.setBalance(offeror.getName(), offeror.getBalance());
+		gui.setBalance(offeree.getName(), offeree.getBalance());
+		
 	}
 	
 	private ArrayList<String> getOwnProperties(GameBoard board, Player offeror, GUI_Commands gui, Texts text) {
