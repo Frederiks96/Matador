@@ -217,7 +217,7 @@ public class GameBoard {
 		for(int i = 0; i < 40; i++){
 			if (logicFields[i] instanceof Ownable && ((Ownable)logicFields[i]).isOwned()){
 				sql.setMortgage(i, ((Ownable)(logicFields[i])).isMortgaged()); 
-				sql.set
+				
 				if (logicFields[i] instanceof Territory)
 					sql.setHouseCount(i, ((Territory)(logicFields[i])).getHouseCount());
 			}
