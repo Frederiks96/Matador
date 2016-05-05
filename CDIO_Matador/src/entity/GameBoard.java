@@ -86,10 +86,12 @@ public class GameBoard {
 			String [] properties = new String[numPropertiesOwned];
 			int j = 0;
 			for (int i = 0; i < logicFields.length; i++) {
-				if (((Ownable)(logicFields[i])).isOwned()) {
-					if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
-						properties[j] = logicFields[i].getName();
-						j++;
+				if (logicFields[i] instanceof Ownable) {
+					if (((Ownable)(logicFields[i])).isOwned()) {
+						if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
+							properties[j] = logicFields[i].getName();
+							j++;
+						}
 					}
 				}
 			}
@@ -106,17 +108,18 @@ public class GameBoard {
 			tempProperties = new String[numPropertiesOwned];
 			int j = 0;
 			for (int i = 0; i < logicFields.length; i++) {
-
-				if (((Ownable)(logicFields[i])).isOwned()) {
-					if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
-						if (logicFields[i] instanceof Territory) {
-							if (getHouseCount(i)==0) {
+				if (logicFields[i] instanceof Ownable) {
+					if (((Ownable)(logicFields[i])).isOwned()) {
+						if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
+							if (logicFields[i] instanceof Territory) {
+								if (getHouseCount(i)==0) {
+									tempProperties[j] = logicFields[i].getName();
+									j++;
+								}
+							} else {
 								tempProperties[j] = logicFields[i].getName();
 								j++;
 							}
-						} else {
-							tempProperties[j] = logicFields[i].getName();
-							j++;
 						}
 					}
 				}
