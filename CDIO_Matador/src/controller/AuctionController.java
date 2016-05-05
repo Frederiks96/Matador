@@ -9,12 +9,16 @@ import entity.fields.Territory;
 
 public class AuctionController {
 
-	int currentbid = 0;
-	int pass = 0;
-	int winner = -1;
+	private int currentbid;
+	private int pass;
+	private int winner;
 
 	public void auction (Player[] players, AbstractFields field, Controller con, GUI_Commands gui, Texts text){
 
+		currentbid = 0;
+		pass = 0;
+		winner = -1;
+		
 		if (((Territory) field).getHouseCount()==0){
 
 			do {
