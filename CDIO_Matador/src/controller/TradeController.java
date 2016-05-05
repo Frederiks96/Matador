@@ -45,8 +45,8 @@ public class TradeController {
 		// Setting offeror as owner to offeree's properties
 		for (int i = 0; i < foeProperties.size(); i++) {
 			board.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror);
-			gui.removeOwner(board.getProperty(foeProperties.get(i)).getID());
-			gui.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror.getName());
+			gui.removeOwner(board.getProperty(foeProperties.get(i)).getID()+1);
+			gui.setOwner(board.getProperty(foeProperties.get(i)).getID()+1, offeror.getName());
 			if (board.getProperty(foeProperties.get(i)) instanceof Fleet) {
 				offeror.addFleet();
 				offeree.sellFleet();
@@ -61,8 +61,8 @@ public class TradeController {
 		// Setting offeree as owner to offeror's properties
 		for (int i = 0; i < ownProperties.size(); i++) {
 			board.setOwner(board.getProperty(ownProperties.get(i)).getID(), offeree);
-			gui.removeOwner(board.getProperty(ownProperties.get(i)).getID());
-			gui.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeree.getName());
+			gui.removeOwner(board.getProperty(ownProperties.get(i)).getID()+1);
+			gui.setOwner(board.getProperty(foeProperties.get(i)).getID()+1, offeree.getName());
 			if (board.getProperty(foeProperties.get(i)) instanceof Fleet) {
 				offeree.addFleet();
 				offeror.sellFleet();
