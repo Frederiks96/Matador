@@ -163,8 +163,19 @@ public class GameBoard {
 		return totalworth;
 	}
 
-	public void countCountBuildings(){
-		//TODO
+	public void countBuildings(SQL sql) throws SQLException{
+		for (int i = 0; i<40; i++){
+			if (logicFields[i] instanceof Territory){
+				if( sql.getFieldHouseCount((Territory)logicFields[i])  == 5){
+					// HAS A HOTEL
+					hotelCount++;
+				}
+				if(  sql.getFieldHouseCount((Territory)logicFields[i]) < 5){
+					// HAS HOUSES
+					houseCount += sql.getFieldHouseCount((Territory)logicFields[i]);
+				}
+			}
+		}
 	}
 
 	public AbstractFields getLogicField(int i) {
