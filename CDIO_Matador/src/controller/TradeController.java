@@ -31,7 +31,7 @@ public class TradeController {
 		answer = gui.getUserSelection(text.getString("accept"),text.getString("Yes"),text.getString("No"),text.getString("counterOffer"));
 
 		if (text.getString("Yes").equals(answer)) {
-			completeDeal(board, offeror, offeree, ownProperties, foeProperties, ownOffer,foeOffer, gui);
+			completeDeal(board, offeror, offeree, ownProperties, foeProperties, ownOffer, foeOffer, gui);
 			gui.showMessage(text.getString("doneDeal"));
 		} else if (text.getString("counterOffer").equals(answer)) {
 			suggestDeal(offeree, offeror, text, board, gui);
@@ -45,6 +45,7 @@ public class TradeController {
 		// Setting offeror as owner to offeree's properties
 		for (int i = 0; i < foeProperties.size(); i++) {
 			board.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror);
+			gui.removeOwner(board.getProperty(foeProperties.get(i)).getID());
 			gui.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror.getName());
 			if (board.getProperty(foeProperties.get(i)) instanceof Fleet) {
 				offeror.addFleet();
@@ -60,6 +61,7 @@ public class TradeController {
 		// Setting offeree as owner to offeror's properties
 		for (int i = 0; i < ownProperties.size(); i++) {
 			board.setOwner(board.getProperty(ownProperties.get(i)).getID(), offeree);
+			gui.removeOwner(board.getProperty(ownProperties.get(i)).getID());
 			gui.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeree.getName());
 			if (board.getProperty(foeProperties.get(i)) instanceof Fleet) {
 				offeree.addFleet();

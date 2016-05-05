@@ -75,6 +75,10 @@ public class GUI_Commands implements Boundary_Interface {
 		GUI.setBalance(name, balance);
 	}
 
+	public void removeOwner(int field_id) {
+		GUI.removeOwner(field_id);
+	}
+
 	
 
 }
