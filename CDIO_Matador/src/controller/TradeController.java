@@ -7,6 +7,9 @@ import boundary.GUI_Commands;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
+import entity.fields.Brewery;
+import entity.fields.Fleet;
+import entity.fields.Territory;
 
 public class TradeController {
 	private ArrayList<String> ownProperties;
@@ -43,19 +46,40 @@ public class TradeController {
 		for (int i = 0; i < foeProperties.size(); i++) {
 			board.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror);
 			gui.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror.getName());
+			if (board.getProperty(foeProperties.get(i)) instanceof Fleet) {
+				offeror.addFleet();
+				offeree.sellFleet();
+			} else if (board.getProperty(foeProperties.get(i)) instanceof Brewery) {
+				offeror.addBrewery();
+				offeree.sellBrewery();
+			} else if (board.getProperty(foeProperties.get(i)) instanceof Territory) {
+				offeror.addTerritory();
+				offeree.sellTerritory();
+			}
 		}
 		// Setting offeree as owner to offeror's properties
 		for (int i = 0; i < ownProperties.size(); i++) {
 			board.setOwner(board.getProperty(ownProperties.get(i)).getID(), offeree);
 			gui.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeree.getName());
+			if (board.getProperty(foeProperties.get(i)) instanceof Fleet) {
+				offeree.addFleet();
+				offeror.sellFleet();
+			} else if (board.getProperty(foeProperties.get(i)) instanceof Brewery) {
+				offeree.addBrewery();
+				offeror.sellBrewery();
+			} else if (board.getProperty(foeProperties.get(i)) instanceof Territory) {
+				offeree.addTerritory();
+				offeror.sellTerritory();
+			}
 		}
+		
 		offeror.updateBalance(-ownOffer);
 		offeree.updateBalance(ownOffer);
 		offeree.updateBalance(-foeOffer);
 		offeror.updateBalance(foeOffer);
+		
 		gui.setBalance(offeror.getName(), offeror.getBalance());
 		gui.setBalance(offeree.getName(), offeree.getBalance());
-		
 	}
 	
 	private ArrayList<String> getOwnProperties(GameBoard board, Player offeror, GUI_Commands gui, Texts text) {

@@ -143,11 +143,11 @@ public class Player {
 		setPosition(10);
 	}
 
-	public Account getAccount(){
+	public Account getAccount() {
 		return this.account;
 	}
 
-	public int getJailTime(){
+	public int getJailTime() {
 		return this.jailTime;
 	}
 
@@ -163,8 +163,12 @@ public class Player {
 		return numTerritoryOwned;
 	}
 
-	public void updateNumTerritoryOwned(){
+	public void addTerritory() {
 		numTerritoryOwned++;	
+	}
+	
+	public void sellTerritory() {
+		numTerritoryOwned--;
 	}
 	
 	public String getVehicleColour() {

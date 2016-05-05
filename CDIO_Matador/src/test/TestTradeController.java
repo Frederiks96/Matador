@@ -37,11 +37,14 @@ public class TestTradeController {
 	@Test
 	public void testTradeController() {
 		board.setOwner(1, player1);
+		player1.addTerritory();
 		board.setOwner(3, player2);
+		player2.addTerritory();
 		trade.suggestDeal(player1, player2, text, board, gui);
 		
 		assertEquals(board.getOwner(1),player2);
 		assertEquals(board.getOwner(3),player1);
+		
 	}
 
 }
