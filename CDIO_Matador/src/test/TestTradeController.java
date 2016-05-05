@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +35,7 @@ public class TestTradeController {
 	}
 
 	@Test
-	public void testTradeController() {
+	public void testTradeControllerTerritory() {
 		gui.addPlayer(player1.getName(), player1.getBalance());
 		gui.addPlayer(player2.getName(), player2.getBalance());
 		board.setOwner(1, player1, gui);
@@ -46,6 +47,41 @@ public class TestTradeController {
 		assertEquals(1,player1.getNumTerritoryOwned());
 		assertEquals(1,player2.getNumTerritoryOwned());
 		
+	}
+	
+	@Test
+	public void testTradeControllerFleet() {
+		gui.addPlayer(player1.getName(), player1.getBalance());
+		gui.addPlayer(player2.getName(), player2.getBalance());
+		board.setOwner(5, player1, gui);
+		board.setOwner(15, player2, gui);
+		trade.suggestDeal(player1, player2, text, board, gui);
+		
+		assertEquals(board.getOwner(5),player2);
+		assertEquals(board.getOwner(15),player1);
+		assertEquals(1,player1.getNumFleetsOwned());
+		assertEquals(1,player2.getNumFleetsOwned());
+	}
+	
+	@Test
+	public void testTradeControllerBrewery() {
+		gui.addPlayer(player1.getName(), player1.getBalance());
+		gui.addPlayer(player2.getName(), player2.getBalance());
+		board.setOwner(12, player1, gui);
+		board.setOwner(28, player2, gui);
+		trade.suggestDeal(player1, player2, text, board, gui);
+		
+		assertEquals(board.getOwner(12),player2);
+		assertEquals(board.getOwner(28),player1);
+		assertEquals(1,player1.getNumBreweriesOwned());
+		assertEquals(1,player2.getNumBreweriesOwned());
+	}
+	
+	@After
+	public void tearDown() throws Exception {
+		for (int i = 0; i < board.getLogicFields().length; i++) {
+			gui.removeOwner(i);
+		}
 	}
 
 }

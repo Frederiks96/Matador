@@ -78,7 +78,10 @@ public class GUI_Commands implements Boundary_Interface {
 	public void removeOwner(int field_id) {
 		GUI.removeOwner(field_id);
 	}
-
+	
+	public void removeAllCars(String name) {
+		GUI.removeAllCars(name);
+	}
 	
 
 }
