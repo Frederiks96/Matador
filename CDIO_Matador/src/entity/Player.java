@@ -169,12 +169,10 @@ public class Player {
 
 	public void addTerritory() {
 		numTerritoryOwned++;
-		System.out.println(this.name+" Territory up");
 	}
 	
 	public void sellTerritory() {
 		numTerritoryOwned--;
-		System.out.println(this.name+" Territory down");
 	}
 	
 	public String getVehicleColour() {
