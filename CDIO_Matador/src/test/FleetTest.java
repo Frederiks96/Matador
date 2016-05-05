@@ -132,10 +132,18 @@ public class FleetTest {
 	@Test
 	public void MortgageFleet(){
 		board.setOwner(5, player1);
-		player1.mortgageFleet();
+		player1.setPosition(5);
+		((Fleet)(board.getLogicField(player1.getPosition()))).mortgage(text, gui);
 		
+		boolean actual = ((Fleet)(board.getLogicField(player1.getPosition()))).isMortgaged();
+		boolean expected = true;
 		
+		assertEquals(expected, actual);
 		
+		int actualBalance = player1.getBalance();
+		int expectedBalance = 30000 + ((Fleet)(board.getLogicField(5))).getPrice()/2;
+		
+		assertEquals(actualBalance,expectedBalance);
 		
 	}
 	
