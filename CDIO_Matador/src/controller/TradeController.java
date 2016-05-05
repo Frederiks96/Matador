@@ -87,6 +87,13 @@ public class TradeController {
 					ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), possible));
 				} else {
 					// Sorter nogle fra
+					for (int i = 0; i < possible.length; i++) {
+						for (int j = 0; j < ownProperties.size(); j++) {
+							if (!ownProperties.contains(possible[i])) {
+								presented.add(possible[i]);
+							}
+						}
+					}
 					String[] a = new String[presented.size()];
 					ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(a)));
 				}
