@@ -100,9 +100,37 @@ public class Controller  {
 
 	public void playerTurn(Player player) throws SQLException {
 		String options;
-
+		int numPairs = 0;
+		
 		if (player.getJailTime()>-1){
-			// TODO
+			// PLAYER IS IN JAIL
+			boolean roll = gui.getUserLeftButtonPressed(text.getString("prisonQuestion"), text.getString("roll"), text.getString("payBaiul"));
+			if (roll){
+				dicecup.roll();
+				gui.setDice(dicecup.getDieOne(), dicecup.getDieTwo());	
+				
+				if(dicecup.hasPair()){
+					gui.removeCar(player.getPosition(), player.getName());		
+					player.updatePosition((dicecup.getLastRoll()));		
+					gui.setCar(player.getPosition(), player.getName());		
+
+					gameboard.landOnField(player, text, gui);
+					if (gameboard.isOwnable(player.getPosition())) {
+						if (gameboard.getOwner(player.getPosition()) == null) {
+							auctioneer.auction(players, gameboard.getLogicField(player.getPosition()), this, gui,text);
+						}
+					}
+
+					gui.setBalance(player.getName(), player.getAccount().getBalance());
+					if (gameboard.getLogicField(player.getPosition()) instanceof ChanceField) 
+						deck.draw(player);				
+					saveGame();
+				}else player.increaseJailTime();
+			}else {
+				player.updateBalance(-1000);
+				gui.setBalance(player.getName(),player.getBalance());
+				player.resetJailTime();
+			}
 		}
 
 		else do {
@@ -127,6 +155,8 @@ public class Controller  {
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (gameboard.getLogicField(player.getPosition()) instanceof ChanceField) 
 					deck.draw(player);				
+				if(dicecup.hasPair()) numPairs++;
+				if(numPairs == 3) player.imprison();
 				saveGame();
 
 			} else if (options.equals(text.getString("trade"))) {
