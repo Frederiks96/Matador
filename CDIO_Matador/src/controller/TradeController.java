@@ -85,13 +85,15 @@ public class TradeController {
 				if (ownProperties.size() == 0) {
 					// Spilleren har endnu ikke tilføjet nogle
 					ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), possible));
-				} else {
+				} else if (ownProperties.size() == possible.length) { 
+					gui.showMessage(text.getString("noMoreProp"));
+					break;
+				}
+				else {
 					// Sorter nogle fra
 					for (int i = 0; i < possible.length; i++) {
-						for (int j = 0; j < ownProperties.size(); j++) {
-							if (!ownProperties.contains(possible[i])) {
-								presented.add(possible[i]);
-							}
+						if (!ownProperties.contains(possible[i])) {
+							presented.add(possible[i]);
 						}
 					}
 					String[] a = new String[presented.size()];
@@ -108,13 +110,27 @@ public class TradeController {
 	private ArrayList<String> getFoeProperties(GameBoard board, Player offeree, GUI_Commands gui, Texts text) {
 		foeProperties = new ArrayList<String>();
 		do {
+			ArrayList<String> presented = new ArrayList<String>();
 			if (board.getOwnedUnbuiltProperties(offeree)!=null) {
-				foeProperties.add(gui.getUserSelection(text.getFormattedString("foeProperties",offeree.getName()), board.getOwnedUnbuiltProperties(offeree)));
+				String[] possible = board.getOwnedUnbuiltProperties(offeree);
+				if (foeProperties.size() == 0) {
+					foeProperties.add(gui.getUserSelection(text.getString("commenceTrade"), possible));
+				} else if (foeProperties.size() == possible.length) {
+					gui.showMessage(text.getString("noMoreProp"));
+					break;
+				} else {
+					for (int i = 0; i < possible.length; i++) {
+						if (!foeProperties.contains(possible[i])) {
+							presented.add(possible[i]);
+						}
+					}
+					String[] a = new String[presented.size()];
+					foeProperties.add(gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(a)));
+				}
 			} else {
 				gui.showMessage(text.getString("noPropOwnedByFoe"));
 				break;
 			}
-
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		return foeProperties;
 	}
