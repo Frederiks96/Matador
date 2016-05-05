@@ -10,7 +10,6 @@ import entity.fields.Territory;
 public class AuctionController {
 
 	int currentbid = 0;
-	int previousbid = -1;
 	int pass = 0;
 	int winner = -1;
 
@@ -18,11 +17,8 @@ public class AuctionController {
 
 		if (((Territory) field).getHouseCount()==0){
 
-
 			do {
-
 				for (int i=0; i < players.length; i++) {
-
 					if (players[i].isAlive()){
 
 						boolean choice = gui.getUserLeftButtonPressed(text.getFormattedString("bidQuestion", players[i].getName(),
@@ -32,27 +28,29 @@ public class AuctionController {
 							int bid;
 
 							do{
-								bid = gui.getUserInteger(text.getFormattedString("bid",players[i].getName(),previousbid));
+								bid = gui.getUserInteger(text.getFormattedString("bid",players[i].getName(),currentbid));
 
 								if (bid > players[i].getBalance()){
 									gui.showMessage(text.getString("failedTransaction"));
 								}
 
-							} while (bid > players[i].getBalance());
+								if (bid <= currentbid){
+									gui.showMessage(text.getString("lowBid"));
+								}
+								
+							} while (bid > players[i].getBalance() || bid <= currentbid);
 
-							if (bid > previousbid){
-								previousbid = currentbid;
+							if (bid > currentbid){
 								currentbid = bid;
 								winner = i;
 							}	
-						}	
-						else pass++;
+						}else pass++;
 					}
-
+					if(pass == con.numPlayersAlive()-1)break;
 				}
 			} while (pass < con.numPlayersAlive()-1);
 
-			gui.showMessage(text.getFormattedString("bidWinner", players[winner],field.getName(),currentbid));
+			gui.showMessage(text.getFormattedString("bidWinner", players[winner].getName(),currentbid));
 
 
 			//territory
