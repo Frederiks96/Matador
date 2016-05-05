@@ -214,9 +214,10 @@ public class GameBoard {
 	}
 
 	public void saveBoard(SQL sql) throws SQLException {
-		for(int i = 0; i < logicFields.length; i++){
-			if (logicFields[i] instanceof Ownable){
+		for(int i = 0; i < 40; i++){
+			if (logicFields[i] instanceof Ownable && ((Ownable)logicFields[i]).isOwned()){
 				sql.setMortgage(i, ((Ownable)(logicFields[i])).isMortgaged()); 
+				sql.set
 				if (logicFields[i] instanceof Territory)
 					sql.setHouseCount(i, ((Territory)(logicFields[i])).getHouseCount());
 			}

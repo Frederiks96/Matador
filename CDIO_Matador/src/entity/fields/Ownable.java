@@ -12,6 +12,7 @@ public interface Ownable {
 	boolean isOwned();
 	void buyProperty(Player player, Texts text, GUI_Commands gui);
 	void mortgage(Texts text, GUI_Commands gui);
+	void setMortgage(boolean x);
 	void unMortgage();
 	void sellProperty(Player player);
 	int getPrice();

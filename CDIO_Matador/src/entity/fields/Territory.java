@@ -190,4 +190,8 @@ public class Territory extends AbstractFields implements Ownable {
 		return housePrice;
 	}
 
+	@Override
+	public void setMortgage(boolean x) {
+		isMortgaged = x;
+	}
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import entity.ChanceCard;
 import entity.Player;
+import entity.fields.AbstractFields;
 import entity.fields.Territory;
 
 public class SQL implements DAO, DTO {
@@ -260,12 +261,12 @@ public class SQL implements DAO, DTO {
 	}
 
 
-	public boolean isMortgaged(Territory territory) throws SQLException {
+	public boolean isMortgaged(AbstractFields field) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		try {
 			String query = "SELECT mortgage FROM "+dbName+".property WHERE field_id = ?";
 			java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
-			stmt.setInt(1, territory.getID());
+			stmt.setInt(1, field.getID());
 			try {
 				ResultSet rs = stmt.executeQuery();
 				try {
@@ -282,7 +283,7 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-	public int getOwnerID(int fieldID) throws SQLException {
+	public Integer getOwnerID(int fieldID) throws SQLException {
 		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 		try {
 			String query = "SELECT player_id FROM "+dbName+".property WHERE field_id = ?";
@@ -595,4 +596,27 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+//	public void createProperties(AbstractFields field) throws SQLException{
+//		int fID;
+//		Integer pID = null;
+//		int hCount = 0;
+//		boolean Mortgage = false;
+//		
+//		Connection myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
+//		try {
+//			String update = "INSERT INTO "+dbName+".property VALUES(?,?,?,?)";
+//			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+//			stmt.setInt(1, fID);
+//			stmt.setInt(2, null);
+//			stmt.setInt(3, 0);
+//			stmt.setString(4, false);
+//			try {
+//				stmt.executeUpdate();
+//			} finally {
+//				stmt.close();
+//			}
+//		} finally {
+//			myCon.close();
+//		}
+//	}
 }

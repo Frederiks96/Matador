@@ -11,6 +11,7 @@ import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
 import entity.fields.ChanceField;
+import entity.fields.Ownable;
 import entity.fields.Territory;
 
 public class Controller  {
@@ -109,8 +110,8 @@ public class Controller  {
 				board.getDiceCup().roll();
 				gui.setDice(board.getDiceCup().getDieOne(), board.getDiceCup().getDieTwo());	
 
-				
-				
+
+
 				if(board.getDiceCup().hasPair()){
 					gui.removeCar(player.getPosition(), player.getName());		
 					player.updatePosition((board.getDiceCup().getLastRoll()));		
@@ -232,6 +233,28 @@ public class Controller  {
 				gui.showMessage(text.getString("invalidName"));
 			}
 		} while(i<players.length);
+	}
+
+	private void loadPropertires() throws SQLException{
+		//TODO
+		for(int i = 0; i < 40; i++){
+			if (board.getLogicField(i) instanceof Ownable){
+				// load mortgage
+				((Ownable)board.getLogicField(i)).setMortgage(sql.isMortgaged(board.getLogicField(i)));
+
+				if (board.getLogicField(i) instanceof Territory){
+					//load HouseCount and builds hotels and houses on board
+					((Territory)board.getLogicField(i)).setHouseCount(sql.getFieldHouseCount((Territory)board.getLogicField(i)));
+					if(sql.getFieldHouseCount((Territory)board.getLogicField(i))==5){
+						gui.setHotel(i, true);
+					}else gui.setHouse(i, ((Territory)board.getLogicField(i)).getHouseCount());
+
+				}
+				if(sql.getOwnerID(i)!= null)
+					((Ownable)board.getLogicField(i)).setOwner(players[sql.getOwnerID(i)], gui);
+
+			}
+		}
 	}
 
 	private void loadPlayers() throws SQLException {

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import entity.ChanceCard;
 import entity.Player;
+import entity.fields.AbstractFields;
 
 public interface DTO {
 	
@@ -14,6 +15,7 @@ public interface DTO {
 	void createAccount(int aId, int balance) 									throws SQLException;
 	void createVehicle(int vId, String vColour, String vType) 					throws SQLException;
 	void createChanceCard(ChanceCard card) 										throws SQLException;
+//	void createProperties(AbstractFields field);								throws SQLException;
 	void setPosition(Player player) 											throws SQLException;
 	void setBalance(Player player) 												throws SQLException;
 	void setJailTime(Player player) 											throws SQLException;

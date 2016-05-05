@@ -98,5 +98,9 @@ public class Fleet extends AbstractFields implements Ownable {
 		return price;
 	}
 
+	@Override
+	public void setMortgage(boolean x) {
+		isMortgaged = x;
+	}
 
 }
