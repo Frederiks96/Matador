@@ -34,10 +34,13 @@ public class TestTradeController {
 	}
 
 	@Test
-	public void testTradeController() {
-		board.setOwner(1, player1);
+	public void testTradeController() throws InterruptedException {
+		gui.addPlayer(player1.getName(), player1.getBalance());
+		gui.addPlayer(player2.getName(), player2.getBalance());
+		Thread.sleep(4000);
+		board.setOwner(1, player1, gui);
 		player1.addTerritory();
-		board.setOwner(3, player2);
+		board.setOwner(3, player2, gui);
 		player2.addTerritory();
 		trade.suggestDeal(player1, player2, text, board, gui);
 		
