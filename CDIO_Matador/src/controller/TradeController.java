@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import boundary.GUI_Commands;
-import desktop_resources.GUI;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
