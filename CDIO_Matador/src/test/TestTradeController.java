@@ -39,13 +39,16 @@ public class TestTradeController {
 		gui.addPlayer(player1.getName(), player1.getBalance());
 		gui.addPlayer(player2.getName(), player2.getBalance());
 		board.setOwner(1, player1, gui);
+		board.setOwner(6, player1, gui);
+		board.setOwner(8, player1, gui);
+		board.setOwner(9, player1, gui);
 		board.setOwner(3, player2, gui);
 		trade.suggestDeal(player1, player2, text, board, gui);
 		
 		assertEquals(board.getOwner(1),player2);
 		assertEquals(board.getOwner(3),player1);
 		assertEquals(1,player1.getNumTerritoryOwned());
-		assertEquals(1,player2.getNumTerritoryOwned());
+		assertEquals(4,player2.getNumTerritoryOwned());
 		
 	}
 	
@@ -75,6 +78,50 @@ public class TestTradeController {
 		assertEquals(board.getOwner(28),player1);
 		assertEquals(1,player1.getNumBreweriesOwned());
 		assertEquals(1,player2.getNumBreweriesOwned());
+	}
+	
+	@Test
+	public void testTradeControllerBreweryAndTerritory() {
+		gui.addPlayer(player1.getName(), player1.getBalance());
+		gui.addPlayer(player2.getName(), player2.getBalance());
+		
+		assertEquals(0,player1.getNumBreweriesOwned());
+		assertEquals(0,player1.getNumTerritoryOwned());
+		assertEquals(0,player2.getNumTerritoryOwned());
+		assertEquals(0,player2.getNumBreweriesOwned());
+		
+		board.setOwner(1, player1, gui);
+		board.setOwner(28, player2, gui);
+		
+		assertEquals(0,player1.getNumBreweriesOwned());
+		assertEquals(1,player1.getNumTerritoryOwned());
+		assertEquals(0,player2.getNumTerritoryOwned());
+		assertEquals(1,player2.getNumBreweriesOwned());
+		
+		trade.suggestDeal(player1, player2, text, board, gui);
+		
+		assertEquals(board.getOwner(1),player2);
+		assertEquals(board.getOwner(28),player1);
+		assertEquals(1,player1.getNumBreweriesOwned());
+		assertEquals(0,player1.getNumTerritoryOwned());
+		assertEquals(1,player2.getNumTerritoryOwned());
+		assertEquals(0,player2.getNumBreweriesOwned());
+	}
+	
+	@Test
+	public void testTradeControllerFleetAndTerritory() {
+		gui.addPlayer(player1.getName(), player1.getBalance());
+		gui.addPlayer(player2.getName(), player2.getBalance());
+		board.setOwner(1, player1, gui);
+		board.setOwner(5, player2, gui);
+		trade.suggestDeal(player1, player2, text, board, gui);
+		
+		assertEquals(board.getOwner(1),player2);
+		assertEquals(board.getOwner(5),player1);
+		assertEquals(1,player1.getNumFleetsOwned());
+		assertEquals(0,player1.getNumTerritoryOwned());
+		assertEquals(1,player2.getNumTerritoryOwned());
+		assertEquals(0,player2.getNumFleetsOwned());
 	}
 	
 	@After

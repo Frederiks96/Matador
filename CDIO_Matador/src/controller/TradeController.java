@@ -58,11 +58,11 @@ public class TradeController {
 		for (int i = 0; i < ownProperties.size(); i++) {
 			gui.removeOwner(board.getProperty(ownProperties.get(i)).getID());
 			board.setOwner(board.getProperty(ownProperties.get(i)).getID(), offeree, gui);
-			if (board.getProperty(foeProperties.get(i)) instanceof Fleet) {
+			if (board.getProperty(ownProperties.get(i)) instanceof Fleet) {
 				offeror.sellFleet();
-			} else if (board.getProperty(foeProperties.get(i)) instanceof Brewery) {
+			} else if (board.getProperty(ownProperties.get(i)) instanceof Brewery) {
 				offeror.sellBrewery();
-			} else if (board.getProperty(foeProperties.get(i)) instanceof Territory) {
+			} else if (board.getProperty(ownProperties.get(i)) instanceof Territory) {
 				offeror.sellTerritory();
 			}
 		}
