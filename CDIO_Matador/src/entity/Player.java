@@ -57,7 +57,7 @@ public class Player {
 	}
 
 	public void addBrewery() {
-		this.numFleetsOwned++;
+		this.numBreweriesOwned++;
 	}
 	
 	public void sellBrewery() {
@@ -168,7 +168,7 @@ public class Player {
 	}
 
 	public void addTerritory() {
-		numTerritoryOwned++;	
+		numTerritoryOwned++;
 	}
 	
 	public void sellTerritory() {
@@ -192,6 +192,18 @@ public class Player {
 		this.numBreweriesOwned 	= 0;
 		this.numFleetsOwned 	= 0;
 		this.numTerritoryOwned 	= 0;
+	}
+	
+	public void increaseJailTime() {
+		this.jailTime++;
+	}
+	
+	public void setJailTime(int jail_time) {
+		this.jailTime=jail_time;
+	}
+	
+	public void resetJailTime() {
+		this.jailTime=-1;
 	}
 	
 	

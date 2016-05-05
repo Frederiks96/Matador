@@ -103,11 +103,9 @@ public class GameBoard {
 	}
 
 	public String[] getOwnedUnbuiltProperties(Player player) {
-		String[] tempProperties;
-		String[] properties = null;
 		int numPropertiesOwned = player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoryOwned();
 		if (numPropertiesOwned>0) {
-			tempProperties = new String[numPropertiesOwned];
+			String[] tempProperties = new String[numPropertiesOwned];
 			int j = 0;
 			for (int i = 0; i < logicFields.length; i++) {
 				if (logicFields[i] instanceof Ownable) {
@@ -126,21 +124,21 @@ public class GameBoard {
 					}
 				}
 			}
-
+			String[] properties = null;
 			if (tempProperties.length==1) {
 				properties = new String[1];
 			} else {
+				j = 0;
 				for (int i = 0; i < tempProperties.length; i++) {
-					if (tempProperties[i]==null) {
-						properties = new String[i-1];
-					} else if (i == tempProperties.length-1) {
-						properties = new String[i];
+					if (tempProperties[i] != null) {
+						j++;
 					}
 				}
+				properties = new String[j];
 			}
 
 			for (int i = 0; i < properties.length; i++) {
-				properties[i]=tempProperties[i];
+				properties[i] = tempProperties[i];
 			}
 			return properties;
 		}

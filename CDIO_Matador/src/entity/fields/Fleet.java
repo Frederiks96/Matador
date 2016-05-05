@@ -39,9 +39,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		if (player.getAccount().legalTransaction(-price)){
 			player.updateBalance(-price);
 			setOwner(player, gui);
-		}
-		else 
-			gui.showMessage(text.getString("failedTransaction"));
+		}else gui.showMessage(text.getString("failedTransaction"));
 	}
 
 	public Player getOwner() {

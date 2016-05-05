@@ -24,5 +24,7 @@ public interface Boundary_Interface {
 	void setOwner(int id, String name);
 	void setDice(int faceValue1, int faceValue2);
 	void removeOwner(int field_id);
+	void removeCar(int position, String name);
+	void removeAllCars(String name);
 	
 }
