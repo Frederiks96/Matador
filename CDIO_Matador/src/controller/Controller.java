@@ -160,6 +160,10 @@ public class Controller  {
 					deck.draw(player);				
 				if(board.getDiceCup().hasPair()) numPairs++;
 				if(numPairs == 3) player.imprison();
+				for (int i = 0; i < players.length; i++) {
+					gui.setBalance(players[i].getName(), players[i].getBalance());
+				}
+				;
 				saveGame();
 
 			} else if (options.equals(text.getString("trade"))) {
@@ -168,10 +172,16 @@ public class Controller  {
 						getOpponents(player));
 				broker = new TradeController();
 				broker.suggestDeal(player, getPlayer(offereeName), text, board, gui);
+				for (int i = 0; i < players.length; i++) {
+					gui.setBalance(players[i].getName(), players[i].getBalance());
+				}
 				saveGame();
 
 			} else { //MANAGE PROPERTIES
 				propertiescon.manage(gui, player, text, board);
+				for (int i = 0; i < players.length; i++) {
+					gui.setBalance(players[i].getName(), players[i].getBalance());
+				}
 				saveGame();
 			}
 
