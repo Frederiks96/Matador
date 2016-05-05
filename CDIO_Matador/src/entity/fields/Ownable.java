@@ -1,6 +1,7 @@
 package entity.fields;
 
 import boundary.GUI_Commands;
+import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 
@@ -14,6 +15,6 @@ public interface Ownable {
 	void unMortgage();
 	void sellProperty(Player player);
 	int getPrice();
-	int getRent();
+	int getRent(GameBoard board);
 	boolean isMortgaged();
 }

@@ -9,7 +9,6 @@ import entity.dicecup.DiceCup;
 public class Brewery extends AbstractFields implements Ownable {
 
 	private Player owner;
-	private DiceCup dicecup;
 	private int price;
 	private boolean isMortgaged;
 	private String name;
@@ -32,9 +31,11 @@ public class Brewery extends AbstractFields implements Ownable {
 				buyProperty(player, text, gui);
 			}
 		} else if(!isMortgaged && owner!=player && isOwned()) {
-			gui.showMessage(text.getFormattedString("rent", getRent(), owner));
-			player.updateBalance(-getRent());
-			owner.updateBalance(getRent());
+			gui.showMessage(text.getFormattedString("rent", getRent(board), owner));
+			player.updateBalance(-getRent(board));
+			owner.updateBalance(getRent(board));
+			gui.setBalance(player.getName(), player.getBalance());
+			gui.setBalance(owner.getName(), owner.getBalance());
 		}
 	}
 
@@ -81,8 +82,8 @@ public class Brewery extends AbstractFields implements Ownable {
 		return this.owner;
 	}
 
-	public int getRent() {
-		return owner.getNumBreweriesOwned()*dicecup.getLastRoll()*100;
+	public int getRent(GameBoard board) {
+		return owner.getNumBreweriesOwned() * board.getDiceCup().getLastRoll() * 100;
 	}
 
 	@Override

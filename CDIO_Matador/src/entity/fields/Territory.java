@@ -44,17 +44,19 @@ public class Territory extends AbstractFields implements Ownable {
 				buyProperty(player, text, gui);
 			}
 		} else if (!isMortgaged && owner!=player && isOwned()){	// another player owns the territory
-			int rent = getRent();
+			int rent = getRent(board);
 			if (board.hasAll(this.owner, this.colour)) {
 				rent *= 2;
 			}
 			gui.showMessage(text.getFormattedString("rent", rent, owner.getName()));
 			player.updateBalance(-rent);
 			owner.updateBalance(rent);
+			gui.setBalance(player.getName(), player.getBalance());
+			gui.setBalance(owner.getName(), owner.getBalance());
 		}
 	}
 
-	public int getRent() {
+	public int getRent(GameBoard board) {
 		return this.rent[this.houseCount];	
 	}
 
@@ -120,7 +122,7 @@ public class Territory extends AbstractFields implements Ownable {
 		if (player.getAccount().legalTransaction(-this.price)){
 			player.updateBalance(-this.price);
 			setOwner(player,gui);
-		}else gui.showMessage("failedTranscation");
+		}else gui.showMessage(text.getString("failedTranscation"));
 	}
 
 	public void sellProperty(Player player){

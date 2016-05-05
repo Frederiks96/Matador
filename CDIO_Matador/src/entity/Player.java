@@ -3,6 +3,8 @@ package entity;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import desktop_resources.GUI;
+
 public class Player {
 
 	private String name;
@@ -103,6 +105,7 @@ public class Player {
 		if (lastRoll>0 && lastRoll<13) {
 			if ((position+lastRoll)>39) {
 				updateBalance(4000);
+				GUI.setBalance(name, account.getBalance());
 				position += lastRoll-40;
 			} else {
 				position += lastRoll;

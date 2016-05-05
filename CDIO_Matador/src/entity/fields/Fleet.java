@@ -29,9 +29,11 @@ public class Fleet extends AbstractFields implements Ownable {
 				buyProperty(player, text, gui);
 			}
 		} else if (!isMortgaged && owner!=player && isOwned()) {	//another player owns the Fleet
-			gui.showMessage(text.getFormattedString("rent", getRent(), owner));
-			player.updateBalance(-getRent());
-			owner.updateBalance(getRent());
+			gui.showMessage(text.getFormattedString("rent", getRent(board), owner));
+			player.updateBalance(-getRent(board));
+			owner.updateBalance(getRent(board));
+			gui.setBalance(player.getName(), player.getBalance());
+			gui.setBalance(owner.getName(), owner.getBalance());
 		}
 	}
 
@@ -52,7 +54,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		gui.setOwner(id, owner.getName());
 	}
 
-	public int getRent() {
+	public int getRent(GameBoard board) {
 		return (int) Math.pow(2, (owner.getNumFleetsOwned()-1))*BASERENT;
 	}
 
