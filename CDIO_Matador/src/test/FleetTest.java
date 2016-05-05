@@ -132,7 +132,11 @@ public class FleetTest {
 	@Test
 	public void MortgageFleet(){
 		board.setOwner(5, player1);
-		player1.
+		player1.mortgageFleet();
+		
+		
+		
+		
 	}
 	
 	
