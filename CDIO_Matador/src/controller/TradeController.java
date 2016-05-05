@@ -29,6 +29,7 @@ public class TradeController {
 
 		if (text.getString("Yes").equals(answer)) {
 			completeDeal(board, offeror, offeree, ownProperties, foeProperties, ownOffer,foeOffer);
+			gui.showMessage(text.getString("doneDeal"));
 		} else if (text.getString("counterOffer").equals(answer)) {
 			suggestDeal(offeree, offeror, text, board, gui);
 		} else {
@@ -38,10 +39,18 @@ public class TradeController {
 	}
 
 	private void completeDeal(GameBoard board, Player offeror, Player offeree, ArrayList<String> ownProperties, ArrayList<String> foeProperties, int ownOffer, int foeOffer) {
-		
-		
-		
-		
+		// Setting offeror as owner to offeree's properties
+		for (int i = 0; i < foeProperties.size(); i++) {
+			board.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror);
+		}
+		// Setting offeree as owner to offeror's properties
+		for (int i = 0; i < ownProperties.size(); i++) {
+			board.setOwner(board.getProperty(ownProperties.get(i)).getID(), offeree);
+		}
+		offeror.updateBalance(-ownOffer);
+		offeree.updateBalance(ownOffer);
+		offeree.updateBalance(-foeOffer);
+		offeror.updateBalance(foeOffer);
 	}
 	
 	private ArrayList<String> getOwnProperties(GameBoard board, Player offeror, GUI_Commands gui, Texts text) {
