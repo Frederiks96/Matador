@@ -6,6 +6,7 @@ import entity.Player;
 import entity.Texts;
 import entity.fields.AbstractFields;
 import entity.fields.Territory;
+import entity.fields.Ownable;
 
 public class PropertiesController {
 	
@@ -36,7 +37,7 @@ public class PropertiesController {
 				// Checks if the property is mortgaged
 				for (int j = 0; j < fields.length; j++) {
 					if (fields[j].getName().equals(propertyName)){
-						isMortgaged = ((Territory)(fields[j])).isMortgaged();
+						isMortgaged = ((Ownable)(fields[j])).isMortgaged();
 					}
 				}	
 
