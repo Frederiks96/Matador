@@ -120,15 +120,14 @@ public class Territory extends AbstractFields implements Ownable {
 			player.updateBalance(-this.price);
 			this.owner = player;
 			gui.setOwner(this.id, player.getName());
-			player.updateNumTerritoryOwned();
+			player.addTerritory();
 		}	
 	}
 
-	@Override
 	public void sellProperty(Player player){
 
 
-		player.updateNumTerritoryOwned();
+		player.sellTerritory();
 	}
 
 	@Override
