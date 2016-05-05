@@ -334,7 +334,7 @@ public class Controller  {
 
 
 		} else {
-			//TODO
+			removeAllBuildings(player);
 			player.updateBalance(-player.getBalance());
 			String[] properties = board.getOwnedProperties(player);
 			for (int i = 0; i < properties.length; i++) {
