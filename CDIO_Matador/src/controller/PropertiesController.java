@@ -18,59 +18,60 @@ public class PropertiesController {
 
 		fields = gameboard.getLogicFields();
 
-		propertyName = gui.getUserSelection(text.getString("choosePropertyBuild"),
-				gameboard.getOwnedProperties(player));
+		if(gameboard.getOwnedProperties(player)!=(null)){
+			propertyName = gui.getUserSelection(text.getString("choosePropertyBuild"),
+					gameboard.getOwnedProperties(player));
 
-		for (int i = 0; i < fields.length; i++) {
-			if(fields[i].getName()==propertyName)
-				property = fields[i];
-		}
-
-		do{
-
-			boolean isMortgaged = false;
-
-			// Checks if the property is mortgaged
-			for (int j = 0; j < fields.length; j++) {
-				if (fields[j].getName().equals(propertyName)){
-					isMortgaged = ((Territory)(fields[j])).isMortgaged();
-				}
-			}	
-
-			if(!isMortgaged){
-				choice = gui.getUserButtonPressed("",  text.getString("mortgage"),
-						text.getString("manageBuildings"), text.getString("back"));
-			}else {
-				choice = gui.getUserButtonPressed("",  text.getString("unMortgage"),
-						text.getString("manageBuildings"), text.getString("back"));
+			for (int i = 0; i < fields.length; i++) {
+				if(fields[i].getName()==propertyName)
+					property = fields[i];
 			}
 
-			// Build
-			if(choice == text.getString("manageBuildings")){
-				build(player, gui, text, gameboard);
-			}
+			do{
 
-			// Mortgage
-			if(choice == text.getString("mortgage")){
+				boolean isMortgaged = false;
+
+				// Checks if the property is mortgaged
 				for (int j = 0; j < fields.length; j++) {
 					if (fields[j].getName().equals(propertyName)){
-						((Territory)(fields[j])).mortgage(text, gui);
+						isMortgaged = ((Territory)(fields[j])).isMortgaged();
+					}
+				}	
+
+				if(!isMortgaged){
+					choice = gui.getUserButtonPressed("",  text.getString("mortgage"),
+							text.getString("manageBuildings"), text.getString("back"));
+				}else {
+					choice = gui.getUserButtonPressed("",  text.getString("unMortgage"),
+							text.getString("manageBuildings"), text.getString("back"));
+				}
+
+				// Build
+				if(choice == text.getString("manageBuildings")){
+					build(player, gui, text, gameboard);
+				}
+
+				// Mortgage
+				if(choice == text.getString("mortgage")){
+					for (int j = 0; j < fields.length; j++) {
+						if (fields[j].getName().equals(propertyName)){
+							((Territory)(fields[j])).mortgage(text, gui);
+						}
 					}
 				}
-			}
 
-			// UnMortgage
-			if(choice == text.getString("unMortgage")){
-				for (int j = 0; j < fields.length; j++) {
-					if (fields[j].getName().equals(propertyName)){
-						((Territory)(fields[j])).unMortgage();
+				// UnMortgage
+				if(choice == text.getString("unMortgage")){
+					for (int j = 0; j < fields.length; j++) {
+						if (fields[j].getName().equals(propertyName)){
+							((Territory)(fields[j])).unMortgage();
+						}
 					}
 				}
-			}
 
-		}while (choice != text.getString("back"));
+			}while (choice != text.getString("back"));
+		}else gui.showMessage(text.getString("noProperties"));
 	}
-
 	private void build(Player player, GUI_Commands gui, Texts text,
 			GameBoard gameboard){ // TODO mangler build even
 		String building;

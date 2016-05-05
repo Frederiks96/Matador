@@ -15,23 +15,19 @@ import entity.fields.ChanceField;
 
 public class Controller  {
 
-	private GUI_Commands gui = new GUI_Commands(); 
-	private GameBoard gameboard;
+	private PropertiesController propertiescon = new PropertiesController();
+	private AuctionController auctioneer = new AuctionController();
+	private TradeController broker;
+
+	private GUI_Commands gui = new GUI_Commands();
+	private GameBoard gameboard = new GameBoard();
+	private SQL sql = new SQL();
+	private DiceCup dicecup = new DiceCup();
+
 	private Texts text;
 	private CardStack deck;
 	private Player[] players;
-	private SQL sql;
 	private String gameName;
-	private DiceCup dicecup = new DiceCup();
-	private TradeController broker;
-	private PropertiesController manage;
-	private AuctionController auctioneer = new AuctionController();
-
-	public Controller() throws SQLException {
-		this.sql = new SQL();
-		gameboard = new GameBoard();
-		dicecup = new DiceCup();
-	}
 
 	public void run() throws SQLException {
 		getLanguage();
@@ -142,7 +138,7 @@ public class Controller  {
 				saveGame();
 
 			} else { //MANAGE PROPERTIES
-				manage.manage(gui, player, text, gameboard);
+				propertiescon.manage(gui, player, text, gameboard);
 				saveGame();
 			}
 
@@ -161,11 +157,15 @@ public class Controller  {
 	public boolean isValidName(String name) {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i] != null) {
-				if (players[i].getName().toLowerCase().trim().equals(name.toLowerCase().trim()) || name.trim().equals("")) {
+				if ((players[i].getName().toLowerCase().trim()).equals(name.toLowerCase().trim())) {
 					return false;
 				}
-			}
+			}else if(name.trim().equals(""))
+				return false;
 		}
+		
+		
+		
 		return true;
 	}
 
@@ -197,7 +197,7 @@ public class Controller  {
 				if(i==0) players[i].setTurn(true);
 				i++;
 			} else {
-				gui.showMessage(text.getString("nameTaken"));
+				gui.showMessage(text.getString("invalidName"));
 			}
 		} while(i<players.length);
 	}
@@ -208,11 +208,11 @@ public class Controller  {
 			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
 			sql.setBalance(players[i]);
 		}
-	}
 
-//	private void loadCards(Texts text) throws SQLException {
-//		deck.loadCards(text);
-//	}
+
+		//	private void loadCards(Texts text) throws SQLException {
+		//		deck.loadCards(text);
+	}
 
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();
@@ -285,5 +285,5 @@ public class Controller  {
 			}
 		}
 	}
-	
+
 }
