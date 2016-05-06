@@ -266,7 +266,7 @@ public class Controller  {
 					}else gui.setHouse(i, ((Territory)board.getLogicField(i)).getHouseCount());
 
 				}
-				if(sql.getOwnerID(i)!= null)
+				if(sql.getOwnerID(i)>0)
 					((Ownable)board.getLogicField(i)).setOwner(players[sql.getOwnerID(i)], gui);
 
 			}

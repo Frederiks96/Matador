@@ -47,7 +47,6 @@ public class SQL implements DAO, DTO {
 				stmt.close();
 			}
 		} finally {
-			myCon.close();
 		}
 	}
 
@@ -76,7 +75,6 @@ public class SQL implements DAO, DTO {
 				stmt.close();
 			} 
 		} finally {
-			myCon.close();
 		}
 	}
 
@@ -128,7 +126,7 @@ public class SQL implements DAO, DTO {
 		java.sql.PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			String query = "SELECT jail_time FROM "+dbName+".player WHERE player_id = ?";
+			String query = "SELECT jail_time FROM "+dbName+".Player WHERE player_id = ?";
 			stmt = myCon.prepareStatement(query);
 			stmt.setInt(1, playerID);
 			try {
@@ -268,7 +266,7 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-	public Integer getOwnerID(int fieldID) throws SQLException {
+	public int getOwnerID(int fieldID) throws SQLException {
 		try {
 			String query = "SELECT player_id FROM "+dbName+".property WHERE field_id = ?";
 			java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
@@ -325,6 +323,50 @@ public class SQL implements DAO, DTO {
 						games[i] = temp;
 					}
 					return games;
+				} finally {
+					rs.close();
+				}
+			} finally {
+				stmt.close();
+			}
+		} finally {
+		}
+	}
+	
+	public boolean getIsAlive(int playerID) throws SQLException {
+		try {
+			String query = "SELECT is_active FROM "+dbName+".player WHERE player_id = ?";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+			stmt.setInt(1, playerID);
+			try {
+				ResultSet rs = stmt.executeQuery();
+				try {
+					if (rs.next()) {
+						return rs.getBoolean(1);
+					}
+					return false;
+				} finally {
+					rs.close();
+				}
+			} finally {
+				stmt.close();
+			}
+		} finally {
+		}
+	}
+	
+	public boolean getTurn(int playerID) throws SQLException {
+		try {
+			String query = "SELECT turn FROM "+dbName+".player WHERE player_id = ?";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(query);
+			stmt.setInt(1, playerID);
+			try {
+				ResultSet rs = stmt.executeQuery();
+				try {
+					if (rs.next()) {
+						return rs.getBoolean(1);
+					}
+					return false;
 				} finally {
 					rs.close();
 				}
