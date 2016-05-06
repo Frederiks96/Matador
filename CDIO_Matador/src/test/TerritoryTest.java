@@ -36,8 +36,8 @@ public class TerritoryTest {
 	@Test
 	public void testBuy() {
 		player1.setPosition(1);
-		board.landOnField(player1, text, gui);
-
+		board.setOwner(1, player1, gui);
+		
 		Player expected = this.player1;
 		Player actual = board.getOwner(player1.getPosition());
 		assertEquals(expected, actual);
@@ -50,7 +50,8 @@ public class TerritoryTest {
 	@Test
 	public void testMortgage() {
 		player1.setPosition(1);
-		board.landOnField(player1, text, gui);
+		board.setOwner(1, player1, gui);
+		
 		((Ownable)(board.getLogicField(player1.getPosition()))).mortgage(text, gui);
 
 		boolean expected = true;
@@ -63,7 +64,7 @@ public class TerritoryTest {
 	public void testRentNoHouses() {
 		player1.setPosition(1);
 		player2.setPosition(1);
-		board.landOnField(player1, text, gui);
+		board.setOwner(1, player1, gui);
 		board.landOnField(player2, text, gui);
 
 		int expected = 30000 - ((Ownable)(board.getLogicField(player1.getPosition()))).getRent(board);
@@ -78,9 +79,9 @@ public class TerritoryTest {
 	@Test
 	public void testRentHasAll() {
 		player1.setPosition(1);
-		board.landOnField(player1, text, gui);
+		board.setOwner(1, player1, gui);
 		player1.setPosition(3);
-		board.landOnField(player1, text, gui);
+		board.setOwner(3, player1, gui);
 		player2.setPosition(1);
 		board.landOnField(player2, text, gui);
 
@@ -94,9 +95,9 @@ public class TerritoryTest {
 	public void testRentOneHouse() {
 		gui.showMessage("testRentOneHouse");
 		player1.setPosition(1);
-		board.landOnField(player1, text, gui);
+		board.setOwner(1, player1, gui);
 		player1.setPosition(3);
-		board.landOnField(player1, text, gui);
+		board.setOwner(3, player1, gui);
 		manager.manage(gui, player1, text, board); // Buys 1 house
 		
 		player2.setPosition(1);
@@ -111,9 +112,9 @@ public class TerritoryTest {
 	public void testRentTwoHouses() {
 		gui.showMessage("testRentTwoHouses");
 		player1.setPosition(1);
-		board.landOnField(player1, text, gui);
+		board.setOwner(1, player1, gui);
 		player1.setPosition(3);
-		board.landOnField(player1, text, gui);
+		board.setOwner(3, player1, gui);
 		manager.manage(gui, player1, text, board); // Buys 2 houses
 		
 		player2.setPosition(1);
@@ -128,9 +129,9 @@ public class TerritoryTest {
 	public void testRentThreeHouses() {
 		gui.showMessage("testRentThreeHouses");
 		player1.setPosition(1);
-		board.landOnField(player1, text, gui);
+		board.setOwner(1, player1, gui);
 		player1.setPosition(3);
-		board.landOnField(player1, text, gui);
+		board.setOwner(3, player1, gui);
 		manager.manage(gui, player1, text, board); // Buys 3 houses
 		
 		player2.setPosition(1);
@@ -145,9 +146,9 @@ public class TerritoryTest {
 	public void testRentFourHouses() {
 		gui.showMessage("testRentFourHouses");
 		player1.setPosition(1);
-		board.landOnField(player1, text, gui);
+		board.setOwner(1, player1, gui);
 		player1.setPosition(3);
-		board.landOnField(player1, text, gui);
+		board.setOwner(3, player1, gui);
 		manager.manage(gui, player1, text, board); // Buys 4 houses
 		
 		player2.setPosition(1);
@@ -162,9 +163,9 @@ public class TerritoryTest {
 	public void testRentHotel() {
 		gui.showMessage("testRentHotel");
 		player1.setPosition(1);
-		board.landOnField(player1, text, gui);
+		board.setOwner(1, player1, gui);
 		player1.setPosition(3);
-		board.landOnField(player1, text, gui);
+		board.setOwner(3, player1, gui);
 		manager.manage(gui, player1, text, board); // Buys hotel
 		
 		player2.setPosition(1);
