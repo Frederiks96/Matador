@@ -42,48 +42,35 @@ public class GameBoard {
 	}
 
 	public void setupBoard(Texts text, String gameName, Player[] players, GUI_Commands gui, SQL sql) throws SQLException {
-		Player owner;
 		for  (int i = 0; i < this.logicFields.length; i++){
-			if (sql.getOwnerID(i)!=0) {
-				owner = players[sql.getOwnerID(i)-1];
-			} else {
-				owner = null;
-			}
+			if (logicFields[i] instanceof Ownable) {
+				if (sql.getOwnerID(i)>0) {
+					((Ownable)logicFields[i]).setOwner(players[sql.getOwnerID(i)-1], gui);
+				}
 
-			if (i == 5 || i==15 || i==25 || i==35){
-				this.logicFields[i] = new Fleet(i,owner, text);
-				if (owner!=null) {
-					gui.setOwner(i, owner.getName());
+				if (sql.isMortgaged(logicFields[i])) {
+					((Ownable)logicFields[i]).setMortgage(true);
+					if (((Ownable)logicFields[i]) instanceof Fleet) {
+						((Ownable)logicFields[i]).getOwner().mortgageFleet();
+					} else if (((Ownable)logicFields[i]) instanceof Brewery) {
+						((Ownable)logicFields[i]).getOwner().mortgageBrewery();
+					}
 				}
-			} else if (i == 4 || i == 38){
-				this.logicFields[i] = new Tax(i, text);
-			} else if (i == 0 || i == 10 || i == 20 || i == 30){ 
-				this.logicFields[i] = new Refuge(i, text);
-			} else if (i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 36){
-				this.logicFields[i] = new ChanceField(i,text);
-			} else if (i == 12 || i == 28){
-				this.logicFields[i] = new Brewery(i,owner, text);
-				if (owner!=null) {
-					gui.setOwner(i, owner.getName());
-				}
-			} else {
-				this.logicFields[i] = new Territory(i,owner, text);
-				if (owner!=null) {
-					gui.setOwner(i, owner.getName());
-				}
-				int house = sql.getFieldHouseCount(((Territory)this.logicFields[i]));
-				((Territory) (this.logicFields[i])).setHouseCount(house);
-				if (house<4 && house>0){
-					gui.setHouse(i, house);
-				} else if (house == 5) {
-					gui.setHotel(i, true);
+
+				if (logicFields[i] instanceof Territory) {
+					((Territory)logicFields[i]).setHouseCount(sql.getFieldHouseCount((Territory)logicFields[i]));
+					if(sql.getFieldHouseCount((Territory)logicFields[i])==5){
+						gui.setHotel(i, true);
+					} else {
+						gui.setHouse(i, ((Territory)logicFields[i]).getHouseCount());
+					}
 				}
 			}
 		}
 	}
 
 	public String[] getOwnedProperties(Player player) {
-		int numPropertiesOwned = player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoryOwned();
+		int numPropertiesOwned = player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoriesOwned();
 		if (numPropertiesOwned>0) {
 			String [] properties = new String[numPropertiesOwned];
 			int j = 0;
@@ -103,7 +90,7 @@ public class GameBoard {
 	}
 
 	public String[] getOwnedUnbuiltProperties(Player player) {
-		int numPropertiesOwned = player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoryOwned();
+		int numPropertiesOwned = player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoriesOwned();
 		if (numPropertiesOwned>0) {
 			String[] tempProperties = new String[numPropertiesOwned];
 			int j = 0;
@@ -217,7 +204,7 @@ public class GameBoard {
 		for(int i = 0; i < 40; i++){
 			if (logicFields[i] instanceof Ownable && ((Ownable)logicFields[i]).isOwned()){
 				sql.setMortgage(i, ((Ownable)(logicFields[i])).isMortgaged()); 
-				
+
 				if (logicFields[i] instanceof Territory)
 					sql.setHouseCount(i, ((Territory)(logicFields[i])).getHouseCount());
 			}
@@ -293,6 +280,6 @@ public class GameBoard {
 	public DiceCup getDiceCup(){
 		return dicecup;
 	}
-	
-	
+
+
 }

@@ -47,8 +47,8 @@ public class TestTradeController {
 		
 		assertEquals(board.getOwner(1),player2);
 		assertEquals(board.getOwner(3),player1);
-		assertEquals(1,player1.getNumTerritoryOwned());
-		assertEquals(4,player2.getNumTerritoryOwned());
+		assertEquals(1,player1.getNumTerritoriesOwned());
+		assertEquals(4,player2.getNumTerritoriesOwned());
 		
 	}
 	
@@ -86,16 +86,16 @@ public class TestTradeController {
 		gui.addPlayer(player2.getName(), player2.getBalance());
 		
 		assertEquals(0,player1.getNumBreweriesOwned());
-		assertEquals(0,player1.getNumTerritoryOwned());
-		assertEquals(0,player2.getNumTerritoryOwned());
+		assertEquals(0,player1.getNumTerritoriesOwned());
+		assertEquals(0,player2.getNumTerritoriesOwned());
 		assertEquals(0,player2.getNumBreweriesOwned());
 		
 		board.setOwner(1, player1, gui);
 		board.setOwner(28, player2, gui);
 		
 		assertEquals(0,player1.getNumBreweriesOwned());
-		assertEquals(1,player1.getNumTerritoryOwned());
-		assertEquals(0,player2.getNumTerritoryOwned());
+		assertEquals(1,player1.getNumTerritoriesOwned());
+		assertEquals(0,player2.getNumTerritoriesOwned());
 		assertEquals(1,player2.getNumBreweriesOwned());
 		
 		trade.suggestDeal(player1, player2, text, board, gui);
@@ -103,8 +103,8 @@ public class TestTradeController {
 		assertEquals(board.getOwner(1),player2);
 		assertEquals(board.getOwner(28),player1);
 		assertEquals(1,player1.getNumBreweriesOwned());
-		assertEquals(0,player1.getNumTerritoryOwned());
-		assertEquals(1,player2.getNumTerritoryOwned());
+		assertEquals(0,player1.getNumTerritoriesOwned());
+		assertEquals(1,player2.getNumTerritoriesOwned());
 		assertEquals(0,player2.getNumBreweriesOwned());
 	}
 	
@@ -119,8 +119,8 @@ public class TestTradeController {
 		assertEquals(board.getOwner(1),player2);
 		assertEquals(board.getOwner(5),player1);
 		assertEquals(1,player1.getNumFleetsOwned());
-		assertEquals(0,player1.getNumTerritoryOwned());
-		assertEquals(1,player2.getNumTerritoryOwned());
+		assertEquals(0,player1.getNumTerritoriesOwned());
+		assertEquals(1,player2.getNumTerritoriesOwned());
 		assertEquals(0,player2.getNumFleetsOwned());
 	}
 	

@@ -12,7 +12,7 @@ public class Player {
 	private static int numOfPlayers = 0;			//    så det kommer til at hedde 001, 002, osv..
 	private int numFleetsOwned;
 	private int numBreweriesOwned;
-	private int numTerritoryOwned;
+	private int numTerritoriesOwned;
 	private boolean isAlive;
 	private boolean turn;
 	private Account account;
@@ -165,16 +165,16 @@ public class Player {
 		this.turn = turn;
 	}
 
-	public int getNumTerritoryOwned() {
-		return numTerritoryOwned;
+	public int getNumTerritoriesOwned() {
+		return numTerritoriesOwned;
 	}
 
 	public void addTerritory() {
-		numTerritoryOwned++;
+		numTerritoriesOwned++;
 	}
 	
 	public void sellTerritory() {
-		numTerritoryOwned--;
+		numTerritoriesOwned--;
 	}
 	
 	public String getVehicleColour() {
@@ -193,7 +193,7 @@ public class Player {
 		this.isAlive 			= false;
 		this.numBreweriesOwned 	= 0;
 		this.numFleetsOwned 	= 0;
-		this.numTerritoryOwned 	= 0;
+		this.numTerritoriesOwned 	= 0;
 	}
 	
 	public void increaseJailTime() {

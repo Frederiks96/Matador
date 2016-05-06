@@ -10,7 +10,9 @@ import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
+import entity.fields.Brewery;
 import entity.fields.ChanceField;
+import entity.fields.Fleet;
 import entity.fields.Ownable;
 import entity.fields.Territory;
 
@@ -28,7 +30,7 @@ public class Controller  {
 	private CardStack deck;
 	private Player[] players;
 	private String gameName;
-	
+
 	public Controller() throws SQLException {
 		this.sql = new SQL();
 		sql.getConnection();
@@ -96,13 +98,13 @@ public class Controller  {
 			try {
 				loadPlayers();
 				board.countBuildings(sql);
+				board.setupBoard(text,gameName,players,gui,sql);
 				//				loadCards(text);
 				break;
 			} catch (SQLException s) {
 				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
 			}
 		}
-		board.setupBoard(text,gameName,players,gui,sql);
 	}
 
 	public void playerTurn(Player player) throws SQLException {
@@ -251,28 +253,6 @@ public class Controller  {
 		} while(i<players.length);
 	}
 
-	private void loadPropertires() throws SQLException{
-		//TODO
-		for(int i = 0; i < 40; i++){
-			if (board.getLogicField(i) instanceof Ownable){
-				// load mortgage
-				((Ownable)board.getLogicField(i)).setMortgage(sql.isMortgaged(board.getLogicField(i)));
-
-				if (board.getLogicField(i) instanceof Territory){
-					//load HouseCount and builds hotels and houses on board
-					((Territory)board.getLogicField(i)).setHouseCount(sql.getFieldHouseCount((Territory)board.getLogicField(i)));
-					if(sql.getFieldHouseCount((Territory)board.getLogicField(i))==5){
-						gui.setHotel(i, true);
-					}else gui.setHouse(i, ((Territory)board.getLogicField(i)).getHouseCount());
-
-				}
-				if(sql.getOwnerID(i)>0)
-					((Ownable)board.getLogicField(i)).setOwner(players[sql.getOwnerID(i)], gui);
-
-			}
-		}
-	}
-
 	private void loadPlayers() throws SQLException {
 		players = new Player[sql.countPlayers()];
 		for (int i = 0; i < players.length; i++) {
@@ -282,13 +262,13 @@ public class Controller  {
 			players[i].setPosition(sql.getPosition(players[i].getPlayerID()));
 			players[i].setJailTime(sql.getJailTime(players[i].getPlayerID()));
 			players[i].setIsAlive(sql.getIsAlive(players[i].getPlayerID()));
-//			players[i].giveCard(card); TODO 
+			//			players[i].giveCard(card); TODO 
 		}
 	}
-	
-//	private void loadCards(Texts text) throws SQLException {
-//		deck.loadCards(text);
-// }
+
+	//	private void loadCards(Texts text) throws SQLException {
+	//		deck.loadCards(text);
+	// }
 
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();
