@@ -22,12 +22,16 @@ public class Controller  {
 
 	private GUI_Commands gui = new GUI_Commands();
 	private GameBoard board = new GameBoard();
-	private SQL sql = new SQL();
+	private SQL sql;
 
 	private Texts text;
 	private CardStack deck;
 	private Player[] players;
 	private String gameName;
+	
+	public Controller() throws SQLException {
+		this.sql = new SQL();
+	}
 
 	public void run() throws SQLException {
 		getLanguage();
@@ -273,11 +277,11 @@ public class Controller  {
 			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
 			sql.setBalance(players[i]);
 		}
-
-
-		//	private void loadCards(Texts text) throws SQLException {
-		//		deck.loadCards(text);
 	}
+	
+//	private void loadCards(Texts text) throws SQLException {
+//		deck.loadCards(text);
+// }
 
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();
@@ -288,7 +292,7 @@ public class Controller  {
 		}
 		return false;
 	}
-	
+
 	private boolean isValidDBName(String gameName) {
 		return gameName.equals(null) || gameName.trim().equals("") || 
 				gameName.contains("/") || gameName.contains(";") || 
