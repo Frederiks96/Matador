@@ -15,7 +15,7 @@ public class ChanceField extends AbstractFields {
 
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
-		// Du er landet på prøv lykken
+		gui.showMessage(text.getFormattedString("land",this.name));
 	}
 
 	@Override

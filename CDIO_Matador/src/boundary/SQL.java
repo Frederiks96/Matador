@@ -400,10 +400,10 @@ public class SQL implements DAO, DTO {
 
 	public void setBalance(Player player) throws SQLException {
 		try {
-			String update = "UPDATE "+dbName+".bank SET balance = ? WHERE account_id = ?";
+			String update = "UPDATE "+dbName+".bank SET balance = ? WHERE (SELECT account_id form "+dbName+".player where player_id = ?)";
 			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 			stmt.setInt(1, player.getBalance());
-			stmt.setInt(2, player.getAccountID());
+			stmt.setInt(2, player.getPlayerID());
 			try {
 				stmt.executeUpdate();
 			} finally {

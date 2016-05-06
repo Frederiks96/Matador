@@ -26,7 +26,7 @@ public class TradeController {
 		foeProperties = getFoeProperties(board, offeree, gui, text);
 
 		ownOffer = gui.getUserInteger(text.getString("getOwnOffer"));
-		foeOffer = gui.getUserInteger(text.getString("getFoeOffer"));
+		foeOffer = gui.getUserInteger(text.getFormattedString("getFoeOffer",offeree.getName()));
 		gui.showMessage(text.getFormattedString("handover", offeree.getName()));
 		answer = gui.getUserSelection(text.getString("accept"),text.getString("Yes"),text.getString("No"),text.getString("counterOffer"));
 
@@ -119,7 +119,7 @@ public class TradeController {
 					}
 				}
 			} else {
-				gui.showMessage(text.getString("noPropOwned"));
+				gui.showMessage(text.getFormattedString("noPropOwned"));
 				break;
 			}
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
@@ -138,14 +138,14 @@ public class TradeController {
 				}
 				possible[possible.length-1] = text.getString("none");;
 				if (foeProperties.size() == 0) {
-					String choice = gui.getUserSelection(text.getString("commenceTrade"), possible);
+					String choice = gui.getUserSelection(text.getFormattedString("foeProperties",offeree.getName()), possible);
 					if (!choice.equals(text.getString("none"))) {
 						foeProperties.add(choice);
 					} else {
 						break;
 					}
 				} else if (foeProperties.size() == possible.length) {
-					gui.showMessage(text.getString("noMoreProp"));
+					gui.showMessage(text.getFormattedString("noMorePropFoe",offeree.getName()));
 					break;
 				} else {
 					for (int i = 0; i < possible.length; i++) {
@@ -163,7 +163,7 @@ public class TradeController {
 					}
 				}
 			} else {
-				gui.showMessage(text.getString("noPropOwnedByFoe"));
+				gui.showMessage(text.getFormattedString("noPropOwnedByFoe",offeree.getName()));
 				break;
 			}
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
