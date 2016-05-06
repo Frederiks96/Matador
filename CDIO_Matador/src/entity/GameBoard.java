@@ -206,16 +206,12 @@ public class GameBoard {
 				if (((Ownable)logicFields[i]).isOwned()) {
 					sql.setMortgage(i, ((Ownable)(logicFields[i])).isMortgaged()); 
 					sql.setOwner(i, ((Ownable)(logicFields[i])).getOwner().getPlayerID());
+					System.out.println("Jeg gemmer et Ownable felt");
 
 					if (logicFields[i] instanceof Territory) {
 						sql.setHouseCount(i, ((Territory)(logicFields[i])).getHouseCount());
-					} else {
-						sql.setHouseCount(i, 0);
 					}
 				}
-			} else {
-				sql.setMortgage(i, false);
-				sql.setOwner(i, 0);
 			}
 		}
 	}

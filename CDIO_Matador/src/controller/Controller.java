@@ -51,7 +51,7 @@ public class Controller  {
 					else { 
 						players[i+1].setTurn(true);
 					}
-
+					saveGame();
 				}
 			}
 		} 
@@ -97,17 +97,17 @@ public class Controller  {
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
 		board.setupBoard(text);
-		while (true) {
-			try {
+//		while (true) {
+//			try {
 				loadPlayers();
 				board.countBuildings(sql);
 				board.setupBoard(text,gameName,players,gui,sql);
 				//				loadCards(text);
-				break;
-			} catch (SQLException s) {
-				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
-			}
-		}
+//				break;
+//			} catch (SQLException s) {
+//				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
+//			}
+//		}
 	}
 
 	public void playerTurn(Player player) throws SQLException {
@@ -168,14 +168,12 @@ public class Controller  {
 
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (board.getLogicField(player.getPosition()) instanceof ChanceField) 
-					deck.draw(player);				
+//					deck.draw(player);				
 				if(board.getDiceCup().hasPair()) numPairs++;
 				if(numPairs == 3) player.imprison();
 				for (int i = 0; i < players.length; i++) {
 					gui.setBalance(players[i].getName(), players[i].getBalance());
 				}
-				;
-				saveGame();
 
 			} else if (options.equals(text.getString("trade"))) {
 				//TRADE
@@ -186,16 +184,13 @@ public class Controller  {
 				for (int i = 0; i < players.length; i++) {
 					gui.setBalance(players[i].getName(), players[i].getBalance());
 				}
-				saveGame();
 
 			} else { //MANAGE PROPERTIES
 				propertiescon.manage(gui, player, text, board);
 				for (int i = 0; i < players.length; i++) {
 					gui.setBalance(players[i].getName(), players[i].getBalance());
 				}
-				saveGame();
 			}
-
 		} while (!options.equals(text.getString("roll")) || board.getDiceCup().hasPair());
 	}
 
@@ -217,9 +212,6 @@ public class Controller  {
 			}else if(name.trim().equals(""))
 				return false;
 		}
-
-
-
 		return true;
 	}
 
@@ -257,7 +249,7 @@ public class Controller  {
 	}
 
 	private void loadPlayers() throws SQLException {
-		players = new Player[sql.countPlayers()];
+		players = new Player[sql.countPlayers()-1];
 		for (int i = 0; i < players.length; i++) {
 			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
 			players[i].setBalance(sql.getBalance(players[i].getPlayerID()));
@@ -265,6 +257,8 @@ public class Controller  {
 			players[i].setPosition(sql.getPosition(players[i].getPlayerID()));
 			players[i].setJailTime(sql.getJailTime(players[i].getPlayerID()));
 			players[i].setIsAlive(sql.getIsAlive(players[i].getPlayerID()));
+			gui.addPlayer(players[i].getName(), players[i].getBalance());
+			gui.setCar(players[i].getPosition(), players[i].getName());
 			//			players[i].giveCard(card); TODO 
 		}
 	}

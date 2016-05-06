@@ -528,14 +528,14 @@ public class SQL implements DAO, DTO {
 
 	public void createBankManager() throws SQLException {
 		createAccount(0, 0);
-		createVehicle(0, "BANKMANAGER", "BANKMANAGER");
+		createVehicle(0, "MANAGER", "MANAGER");
 		try {
 			String update = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?,?)";
 			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
 			stmt.setInt(1, 0);
 			stmt.setInt(2, 0);
 			stmt.setInt(3, 0);
-			stmt.setString(4, "BANKMANAGER");
+			stmt.setString(4, "MANAGER");
 			stmt.setInt(5, 0);
 			stmt.setInt(6, 0);
 			stmt.setBoolean(7, false);
@@ -649,7 +649,7 @@ public class SQL implements DAO, DTO {
 				stmt.setInt(3, 0);
 				stmt.setBoolean(4, false);
 				try {
-					stmt.executeUpdate(update);
+					stmt.executeUpdate();
 				} finally {
 					stmt.close();
 				}
