@@ -208,5 +208,13 @@ public class Player {
 		this.jailTime=-1;
 	}
 	
+	public void setBalance(int newBalance) {
+		this.account.setBalance(newBalance);
+	}
+	
+	public void setIsAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
+	
 	
 }

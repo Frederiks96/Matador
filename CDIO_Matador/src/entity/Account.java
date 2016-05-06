@@ -31,5 +31,9 @@ public class Account {
 	public int getAccountID() {
 		return this.accountID;
 	}
+	
+	public void setBalance(int newBalance) {
+		this.balance = newBalance;
+	}
 
 }

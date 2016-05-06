@@ -277,7 +277,12 @@ public class Controller  {
 		players = new Player[sql.countPlayers()];
 		for (int i = 0; i < players.length; i++) {
 			players[i] = new Player(sql.getPlayerName(i+1),sql.getVehicleColour(i+1),sql.getVehicleType(i+1));
-			sql.setBalance(players[i]);
+			players[i].setBalance(sql.getBalance(players[i].getPlayerID()));
+			players[i].setTurn(sql.getTurn(players[i].getPlayerID()));
+			players[i].setPosition(sql.getPosition(players[i].getPlayerID()));
+			players[i].setJailTime(sql.getJailTime(players[i].getPlayerID()));
+			players[i].setIsAlive(sql.getIsAlive(players[i].getPlayerID()));
+//			players[i].giveCard(card); TODO 
 		}
 	}
 	
