@@ -31,8 +31,6 @@ public class SQL implements DAO, DTO {
 
 	public void useDB(String dbName) throws SQLException {
 		SQL.dbName = "CDIO_"+dbName;
-//		Statement stmt = myCon.createStatement();
-//		stmt.executeUpdate("USE DATABASE CDIO_"+dbName+";");
 	}
 
 	public void updateUser(String username, String password) {
