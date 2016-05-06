@@ -97,17 +97,17 @@ public class Controller  {
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
 		board.setupBoard(text);
-//		while (true) {
-//			try {
+		while (true) {
+			try {
 				loadPlayers();
 				board.countBuildings(sql);
-				board.setupBoard(text,gameName,players,gui,sql);
+				board.setupBoard(players,gui,sql);
 				//				loadCards(text);
-//				break;
-//			} catch (SQLException s) {
-//				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
-//			}
-//		}
+				break;
+			} catch (SQLException s) {
+				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
+			}
+		}
 	}
 
 	public void playerTurn(Player player) throws SQLException {

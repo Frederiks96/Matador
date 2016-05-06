@@ -126,8 +126,6 @@ public class Territory extends AbstractFields implements Ownable {
 	}
 
 	public void sellProperty(Player player){
-
-
 		player.sellTerritory();
 	}
 

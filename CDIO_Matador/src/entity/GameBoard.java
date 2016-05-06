@@ -41,10 +41,10 @@ public class GameBoard {
 		}
 	}
 
-	public void setupBoard(Texts text, String gameName, Player[] players, GUI_Commands gui, SQL sql) throws SQLException {
+	public void setupBoard(Player[] players, GUI_Commands gui, SQL sql) throws SQLException {
 		for  (int i = 0; i < this.logicFields.length; i++) {
 			if (logicFields[i] instanceof Ownable) {
-				if (((Ownable)logicFields[i]).isOwned() && sql.getOwnerID(i)>0) {
+				if (sql.getOwnerID(i)>0) {
 					((Ownable)logicFields[i]).setOwner(players[sql.getOwnerID(i)-1], gui);
 				}
 
@@ -206,7 +206,6 @@ public class GameBoard {
 				if (((Ownable)logicFields[i]).isOwned()) {
 					sql.setMortgage(i, ((Ownable)(logicFields[i])).isMortgaged()); 
 					sql.setOwner(i, ((Ownable)(logicFields[i])).getOwner().getPlayerID());
-					System.out.println("Jeg gemmer et Ownable felt");
 
 					if (logicFields[i] instanceof Territory) {
 						sql.setHouseCount(i, ((Territory)(logicFields[i])).getHouseCount());
