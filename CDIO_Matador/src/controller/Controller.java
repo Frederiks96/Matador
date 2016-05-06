@@ -31,6 +31,7 @@ public class Controller  {
 	
 	public Controller() throws SQLException {
 		this.sql = new SQL();
+		sql.getConnection();
 	}
 
 	public void run() throws SQLException {

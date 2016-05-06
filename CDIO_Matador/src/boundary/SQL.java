@@ -23,11 +23,16 @@ public class SQL implements DAO, DTO {
 	private Connection myCon = null;
 
 	public SQL() throws SQLException {
+	}
+	
+	public void getConnection() throws SQLException {
 		myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 	}
 
-	public void useDB(String dbName) {
+	public void useDB(String dbName) throws SQLException {
 		SQL.dbName = "CDIO_"+dbName;
+//		Statement stmt = myCon.createStatement();
+//		stmt.executeUpdate("USE DATABASE CDIO_"+dbName+";");
 	}
 
 	public void updateUser(String username, String password) {
