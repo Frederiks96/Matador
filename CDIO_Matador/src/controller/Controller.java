@@ -39,7 +39,7 @@ public class Controller  {
 	public void run() throws SQLException {
 		getLanguage();
 		chooseGame();
-
+		
 		while (numPlayersAlive()>1) {	
 			for (int i=0; i < players.length; i++) {
 				if (players[i].isAlive() && players[i].isTurn()) {
@@ -84,6 +84,8 @@ public class Controller  {
 		}
 
 		board.setupBoard(text);
+		sql.createBankManager();
+		sql.createProperties();
 		this.deck = new CardStack();
 		deck.newDeck(text);
 		deck.shuffle();
@@ -95,17 +97,17 @@ public class Controller  {
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
 		board.setupBoard(text);
-//		while (true) {
-//			try {
+		while (true) {
+			try {
 				loadPlayers();
 				board.countBuildings(sql);
 				board.setupBoard(text,gameName,players,gui,sql);
 				//				loadCards(text);
-//				break;
-//			} catch (SQLException s) {
-//				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
-//			}
-//		}
+				break;
+			} catch (SQLException s) {
+				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
+			}
+		}
 	}
 
 	public void playerTurn(Player player) throws SQLException {

@@ -42,9 +42,9 @@ public class GameBoard {
 	}
 
 	public void setupBoard(Texts text, String gameName, Player[] players, GUI_Commands gui, SQL sql) throws SQLException {
-		for  (int i = 0; i < this.logicFields.length; i++){
-			if (logicFields[i] instanceof Ownable && ((Ownable)logicFields[i]).isOwned()) {
-				if (sql.getOwnerID(i)>0) {
+		for  (int i = 0; i < this.logicFields.length; i++) {
+			if (logicFields[i] instanceof Ownable) {
+				if (((Ownable)logicFields[i]).isOwned() && sql.getOwnerID(i)>0) {
 					((Ownable)logicFields[i]).setOwner(players[sql.getOwnerID(i)-1], gui);
 				}
 
@@ -150,14 +150,14 @@ public class GameBoard {
 		return totalworth;
 	}
 
-	public void countBuildings(SQL sql) throws SQLException{
-		for (int i = 0; i<40; i++){
-			if (logicFields[i] instanceof Territory){
-				if( sql.getFieldHouseCount((Territory)logicFields[i])  == 5){
+	public void countBuildings(SQL sql) throws SQLException {
+		for (int i = 0; i<40; i++) {
+			if (logicFields[i] instanceof Territory) {
+				if( sql.getFieldHouseCount((Territory)logicFields[i])  == 5) {
 					// HAS A HOTEL
 					hotelCount++;
 				}
-				if(  sql.getFieldHouseCount((Territory)logicFields[i]) < 5){
+				if(  sql.getFieldHouseCount((Territory)logicFields[i]) < 5) {
 					// HAS HOUSES
 					houseCount += sql.getFieldHouseCount((Territory)logicFields[i]);
 				}
@@ -201,14 +201,21 @@ public class GameBoard {
 	}
 
 	public void saveBoard(SQL sql) throws SQLException {
-		for(int i = 0; i < 40; i++){
+		for(int i = 0; i < 40; i++) {
 			if (logicFields[i] instanceof Ownable) {
 				if (((Ownable)logicFields[i]).isOwned()) {
 					sql.setMortgage(i, ((Ownable)(logicFields[i])).isMortgaged()); 
+					sql.setOwner(i, ((Ownable)(logicFields[i])).getOwner().getPlayerID());
 
-					if (logicFields[i] instanceof Territory)
+					if (logicFields[i] instanceof Territory) {
 						sql.setHouseCount(i, ((Territory)(logicFields[i])).getHouseCount());
+					} else {
+						sql.setHouseCount(i, 0);
+					}
 				}
+			} else {
+				sql.setMortgage(i, false);
+				sql.setOwner(i, 0);
 			}
 		}
 	}

@@ -24,7 +24,7 @@ public class SQL implements DAO, DTO {
 
 	public SQL() throws SQLException {
 	}
-	
+
 	public void getConnection() throws SQLException {
 		myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 	}
@@ -332,7 +332,7 @@ public class SQL implements DAO, DTO {
 		} finally {
 		}
 	}
-	
+
 	public boolean getIsAlive(int playerID) throws SQLException {
 		try {
 			String query = "SELECT is_active FROM "+dbName+".player WHERE player_id = ?";
@@ -354,7 +354,7 @@ public class SQL implements DAO, DTO {
 		} finally {
 		}
 	}
-	
+
 	public boolean getTurn(int playerID) throws SQLException {
 		try {
 			String query = "SELECT turn FROM "+dbName+".player WHERE player_id = ?";
@@ -526,6 +526,29 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	public void createBankManager() throws SQLException {
+		createAccount(0, 0);
+		createVehicle(0, "BANKMANAGER", "BANKMANAGER");
+		try {
+			String update = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?,?)";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1, 0);
+			stmt.setInt(2, 0);
+			stmt.setInt(3, 0);
+			stmt.setString(4, "BANKMANAGER");
+			stmt.setInt(5, 0);
+			stmt.setInt(6, 0);
+			stmt.setBoolean(7, false);
+			stmt.setBoolean(8, false);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+		}
+	}
+
 	public void createAccount(int aId, int balance) throws SQLException {
 		try {
 			String update = "INSERT INTO "+dbName+".bank VALUES(?,?)";
@@ -596,30 +619,42 @@ public class SQL implements DAO, DTO {
 		} finally {
 		}
 	}
-	
+
+	public void setOwner(int field_id, int player_id) throws SQLException {
+		try {
+			String update = "UPDATE "+dbName+".property SET player_id = ? WHERE field_id = ?";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1, player_id);
+			stmt.setInt(2, field_id);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+		}
+	}
+
 	public void closeConnection() throws SQLException {
 		myCon.close();
 	}
 
-	//	public void createProperties(AbstractFields field) throws SQLException{
-	//		int fID;
-	//		Integer pID = null;
-	//		int hCount = 0;
-	//		boolean Mortgage = false;
-	//		
-	//		try {
-	//			String update = "INSERT INTO "+dbName+".property VALUES(?,?,?,?)";
-	//			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-	//			stmt.setInt(1, fID);
-	//			stmt.setInt(2, null);
-	//			stmt.setInt(3, 0);
-	//			stmt.setString(4, false);
-	//			try {
-	//				stmt.executeUpdate();
-	//			} finally {
-	//				stmt.close();
-	//			}
-	//		} finally {
-	//		}
-	//	}
+	public void createProperties() throws SQLException{
+		try {
+			String update = "INSERT INTO "+dbName+".property VALUES(?,?,?,?)";
+			for (int i = 0; i < 40; i++) {
+				java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+				stmt.setInt(1, i);
+				stmt.setInt(2, 0);
+				stmt.setInt(3, 0);
+				stmt.setBoolean(4, false);
+				try {
+					stmt.executeUpdate(update);
+				} finally {
+					stmt.close();
+				}
+			}
+		} finally {
+		}
+	}
 }
