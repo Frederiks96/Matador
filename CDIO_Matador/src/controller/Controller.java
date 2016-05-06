@@ -74,7 +74,7 @@ public class Controller  {
 	public void startNewGame() throws SQLException {
 		do {
 			gameName = gui.getUserString(text.getString("nameGame"));
-		} while (dbNameUsed(gameName.trim()) || isValidDBName(gameName));
+		} while (dbNameUsed(gameName.trim()) || isNotValidDBName(gameName));
 
 		try {
 			sql.createNewDB(gameName);
@@ -94,17 +94,18 @@ public class Controller  {
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
-		while (true) {
-			try {
+		board.setupBoard(text);
+//		while (true) {
+//			try {
 				loadPlayers();
 				board.countBuildings(sql);
 				board.setupBoard(text,gameName,players,gui,sql);
 				//				loadCards(text);
-				break;
-			} catch (SQLException s) {
-				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
-			}
-		}
+//				break;
+//			} catch (SQLException s) {
+//				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
+//			}
+//		}
 	}
 
 	public void playerTurn(Player player) throws SQLException {
@@ -280,7 +281,7 @@ public class Controller  {
 		return false;
 	}
 
-	private boolean isValidDBName(String gameName) {
+	private boolean isNotValidDBName(String gameName) {
 		return gameName.equals(null) || gameName.trim().equals("") || 
 				gameName.contains("/") || gameName.contains(";") || 
 				gameName.contains("'") || gameName.contains("?") ||

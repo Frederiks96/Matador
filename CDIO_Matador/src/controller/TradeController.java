@@ -43,27 +43,31 @@ public class TradeController {
 
 	private void completeDeal(GameBoard board, Player offeror, Player offeree, ArrayList<String> ownProperties, ArrayList<String> foeProperties, int ownOffer, int foeOffer, GUI_Commands gui) {
 		// Setting offeror as owner to offeree's properties
-		for (int i = 0; i < foeProperties.size(); i++) {
-			gui.removeOwner(board.getProperty(foeProperties.get(i)).getID());
-			board.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror, gui);
-			if (board.getProperty(foeProperties.get(i)) instanceof Fleet) {
-				offeree.sellFleet();
-			} else if (board.getProperty(foeProperties.get(i)) instanceof Brewery) {
-				offeree.sellBrewery();
-			} else if (board.getProperty(foeProperties.get(i)) instanceof Territory) {
-				offeree.sellTerritory();
+		if (foeProperties.size() > 0) {
+			for (int i = 0; i < foeProperties.size(); i++) {
+				gui.removeOwner(board.getProperty(foeProperties.get(i)).getID());
+				board.setOwner(board.getProperty(foeProperties.get(i)).getID(), offeror, gui);
+				if (board.getProperty(foeProperties.get(i)) instanceof Fleet) {
+					offeree.sellFleet();
+				} else if (board.getProperty(foeProperties.get(i)) instanceof Brewery) {
+					offeree.sellBrewery();
+				} else if (board.getProperty(foeProperties.get(i)) instanceof Territory) {
+					offeree.sellTerritory();
+				}
 			}
 		}
 		// Setting offeree as owner to offeror's properties
-		for (int i = 0; i < ownProperties.size(); i++) {
-			gui.removeOwner(board.getProperty(ownProperties.get(i)).getID());
-			board.setOwner(board.getProperty(ownProperties.get(i)).getID(), offeree, gui);
-			if (board.getProperty(ownProperties.get(i)) instanceof Fleet) {
-				offeror.sellFleet();
-			} else if (board.getProperty(ownProperties.get(i)) instanceof Brewery) {
-				offeror.sellBrewery();
-			} else if (board.getProperty(ownProperties.get(i)) instanceof Territory) {
-				offeror.sellTerritory();
+		if (ownProperties.size() > 0) {
+			for (int i = 0; i < ownProperties.size(); i++) {
+				gui.removeOwner(board.getProperty(ownProperties.get(i)).getID());
+				board.setOwner(board.getProperty(ownProperties.get(i)).getID(), offeree, gui);
+				if (board.getProperty(ownProperties.get(i)) instanceof Fleet) {
+					offeror.sellFleet();
+				} else if (board.getProperty(ownProperties.get(i)) instanceof Brewery) {
+					offeror.sellBrewery();
+				} else if (board.getProperty(ownProperties.get(i)) instanceof Territory) {
+					offeror.sellTerritory();
+				}
 			}
 		}
 
@@ -81,10 +85,19 @@ public class TradeController {
 		do {
 			ArrayList<String> presented = new ArrayList<String>();
 			if (board.getOwnedUnbuiltProperties(offeror) != null) {
-				String[] possible = board.getOwnedUnbuiltProperties(offeror);
+				String[] forced = board.getOwnedUnbuiltProperties(offeror);
+				String[] possible = new String[forced.length+1];
+				for (int i = 0; i < possible.length-1; i++) {
+					possible[i] = forced[i];
+				}
+				possible[possible.length-1] = text.getString("none");
 				if (ownProperties.size() == 0) {
-					// Spilleren har endnu ikke tilføjet nogle
-					ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), possible));
+					String choice = gui.getUserSelection(text.getString("commenceTrade"), possible);
+					if (!choice.equals(text.getString("none"))) {
+						ownProperties.add(choice);
+					} else {
+						break;
+					}
 				} else if (ownProperties.size() == possible.length) { 
 					gui.showMessage(text.getString("noMoreProp"));
 					break;
@@ -96,8 +109,14 @@ public class TradeController {
 							presented.add(possible[i]);
 						}
 					}
+					presented.add(text.getString("none"));
 					String[] a = new String[presented.size()];
-					ownProperties.add(gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(a)));
+					String choice = gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(a));
+					if (!choice.equals(text.getString("none"))) {
+						ownProperties.add(choice);
+					} else {
+						break;
+					}
 				}
 			} else {
 				gui.showMessage(text.getString("noPropOwned"));
@@ -112,9 +131,19 @@ public class TradeController {
 		do {
 			ArrayList<String> presented = new ArrayList<String>();
 			if (board.getOwnedUnbuiltProperties(offeree)!=null) {
-				String[] possible = board.getOwnedUnbuiltProperties(offeree);
+				String[] forced = board.getOwnedUnbuiltProperties(offeree);
+				String[] possible = new String[forced.length+1];
+				for (int i = 0; i < possible.length-1; i++) {
+					possible[i] = forced[i];
+				}
+				possible[possible.length-1] = text.getString("none");;
 				if (foeProperties.size() == 0) {
-					foeProperties.add(gui.getUserSelection(text.getString("commenceTrade"), possible));
+					String choice = gui.getUserSelection(text.getString("commenceTrade"), possible);
+					if (!choice.equals(text.getString("none"))) {
+						foeProperties.add(choice);
+					} else {
+						break;
+					}
 				} else if (foeProperties.size() == possible.length) {
 					gui.showMessage(text.getString("noMoreProp"));
 					break;
@@ -124,8 +153,14 @@ public class TradeController {
 							presented.add(possible[i]);
 						}
 					}
+					presented.add(text.getString("none"));
 					String[] a = new String[presented.size()];
-					foeProperties.add(gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(a)));
+					String choice = gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(a));
+					if (choice.equals(text.getString("none"))) {
+						foeProperties.add(choice);
+					} else {
+						break;
+					}
 				}
 			} else {
 				gui.showMessage(text.getString("noPropOwnedByFoe"));
