@@ -10,7 +10,6 @@ public class CardStack {
 	private ChanceCard card;
 	private ArrayList<String> texts;
 	private ArrayList<ChanceCard> chanceCardDeck;
-	private SQL sql;
 
 
 	public CardStack(){
@@ -52,7 +51,7 @@ public class CardStack {
 		return texts;
 	}
 	
-	public void loadCards(Texts text) throws SQLException {
+	public void loadCards(Texts text, SQL sql) throws SQLException {
 		sql = new SQL();
 		for (int i = 0; i < chanceCardDeck.size(); i++) {
 			chanceCardDeck.add(new ChanceCard(text.getCardString("k"+sql.getCardId(i))));

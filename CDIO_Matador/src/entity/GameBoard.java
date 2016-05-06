@@ -234,9 +234,9 @@ public class GameBoard {
 		deck.newDeck(text);
 	}
 
-	public void loadCardDeck(Texts text) throws SQLException {
+	public void loadCardDeck(Texts text, SQL sql) throws SQLException {
 		deck = new CardStack();
-		deck.loadCards(text);
+		deck.loadCards(text, sql);
 	}
 
 	public int getHotelCount(){

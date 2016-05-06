@@ -1,6 +1,5 @@
 package entity;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import desktop_resources.GUI;
@@ -24,7 +23,7 @@ public class Player {
 	private int jailTime;
 
 
-	public Player(String name, String vColor, String vType) throws SQLException {
+	public Player(String name, String vColor, String vType) {
 		numOfPlayers++;
 		this.name 				= name;
 		this.numFleetsOwned 	= 0;
@@ -101,7 +100,7 @@ public class Player {
 		}
 	}
 
-	public void updatePosition(int lastRoll) throws SQLException {
+	public void updatePosition(int lastRoll) {
 		if (lastRoll>0 && lastRoll<13) {
 			if ((position+lastRoll)>39) {
 				updateBalance(4000);
