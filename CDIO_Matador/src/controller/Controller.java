@@ -54,8 +54,9 @@ public class Controller  {
 		} 
 
 		gui.showMessage(text.getFormattedString("winner", getWinner()));
-		gui.closeGUI();
 		sql.dropDataBase();
+		sql.closeConnection();
+		gui.closeGUI();
 	}
 
 	private void chooseGame() throws SQLException {

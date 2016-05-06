@@ -551,6 +551,10 @@ public class SQL implements DAO, DTO {
 		} finally {
 		}
 	}
+	
+	public void closeConnection() throws SQLException {
+		myCon.close();
+	}
 
 	//	public void createProperties(AbstractFields field) throws SQLException{
 	//		int fID;
