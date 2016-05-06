@@ -12,6 +12,8 @@ import entity.Texts.language;
 
 public class TestGetTerritoriesOwned {
 	
+	// TODO Hvad er formålet med denne klasse?
+	
 	private GUI_Commands gui;
 	private Player player1;
 	private GameBoard board;
