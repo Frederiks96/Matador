@@ -27,6 +27,7 @@ public class Refuge extends AbstractFields {
 		} else if (player.getPosition() == 30) {
 			// Go to Jail
 			gui.showMessage(text.getString("goToJail"));
+			gui.removeCar(player.getPosition(), player.getName());
 			player.imprison();
 			gui.setCar(player.getPosition(), player.getName());
 		}
