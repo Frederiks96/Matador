@@ -148,6 +148,9 @@ public class Controller  {
 		}
 
 		else do {
+			if (board.getDiceCup().hasPair()) {
+				gui.showMessage(text.getFormattedString("turnAgain", player.getName()));
+			}
 			options = gui.getUserButtonPressed(text.getFormattedString("turn", player.getName()), 
 					text.getStrings("roll","trade","manageProperties"));
 
@@ -169,8 +172,13 @@ public class Controller  {
 				gui.setBalance(player.getName(), player.getAccount().getBalance());
 				if (board.getLogicField(player.getPosition()) instanceof ChanceField) 
 //					deck.draw(player);				
-				if(board.getDiceCup().hasPair()) numPairs++;
-				if(numPairs == 3) player.imprison();
+				if(board.getDiceCup().hasPair()) {
+					numPairs++;
+				}
+				if(numPairs == 3) { 
+					player.imprison();
+					break;
+				}
 				for (int i = 0; i < players.length; i++) {
 					gui.setBalance(players[i].getName(), players[i].getBalance());
 				}
