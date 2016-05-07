@@ -47,7 +47,26 @@ public class TestPropertiesManager {
 		
 		actual = board.getHouseCount(1);
 		assertEquals(expected,actual);
-		
 	}
+	
+	@Test
+	public void testWishesToBuyUnEven() {
+		board.setOwner(1, player1, gui);
+		board.setOwner(3, player1, gui);
+		int expected = 0;
+		int actual = board.getHouseCount(1);
+		assertEquals(expected,actual);
+		
+		actual = board.getHouseCount(3);
+		assertEquals(expected,actual);
+		
+		prop.manage(gui, player1, text, board);
+		
+		actual = board.getHouseCount(1);
+		expected = 1;
+		assertEquals(expected,actual);
+	}
+	
+	
 
 }

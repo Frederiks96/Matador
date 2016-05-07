@@ -46,11 +46,11 @@ public class PropertiesController {
 				} else if (choice.equals(text.getString("unMortgage"))) {
 					// UnMortgage
 					((Territory)(property)).unMortgage();
-				} else if (!gameboard.hasAll(player, ((Territory)property).getColour())) {
+				} else if (choice.equals(text.getString("manageBuildings")) && !gameboard.hasAll(player, ((Territory)property).getColour())) {
 					gui.showMessage(text.getString("notEnoughTerritory"));
 				}
 
-			} while (choice != text.getString("back"));
+			} while (!choice.equals(text.getString("back")));
 		} else {
 			gui.showMessage(text.getString("noProperties"));
 		}
@@ -103,7 +103,7 @@ public class PropertiesController {
 				}
 			}
 
-		} while (building.equals(text.getString("back")));
+		} while (!building.equals(text.getString("back")));
 	}
 
 	private boolean buildEven(){
