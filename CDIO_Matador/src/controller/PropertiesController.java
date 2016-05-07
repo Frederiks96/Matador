@@ -37,7 +37,7 @@ public class PropertiesController {
 					choice = gui.getUserButtonPressed("", text.getString("unMortgage"), text.getString("back"));
 				}
 
-				if (choice.equals(text.getString("manageBuildings"))) {
+				if (choice.equals(text.getString("manageBuildings")) && gameboard.hasAll(player, ((Territory)property).getColour())) {
 					// Build
 					build(player, gui, text, gameboard);
 				} else if (choice.equals(text.getString("mortgage"))) {
@@ -46,6 +46,8 @@ public class PropertiesController {
 				} else if (choice.equals(text.getString("unMortgage"))) {
 					// UnMortgage
 					((Territory)(property)).unMortgage();
+				} else if (!gameboard.hasAll(player, ((Territory)property).getColour())) {
+					gui.showMessage(text.getString("notEnoughTerritory"));
 				}
 
 			} while (choice != text.getString("back"));

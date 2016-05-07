@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import boundary.GUI_Commands;
+import controller.PropertiesController;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
@@ -18,6 +19,7 @@ public class TestPropertiesManager {
 	private GameBoard board;
 	private GUI_Commands gui;
 	private Texts text;
+	private PropertiesController prop;
 
 	@Before
 	public void setUp() throws Exception {
@@ -26,6 +28,7 @@ public class TestPropertiesManager {
 		gui = new GUI_Commands();
 		board = new GameBoard();
 		board.setupBoard(text);
+		prop = new PropertiesController();
 	}
 
 	@After
@@ -34,9 +37,16 @@ public class TestPropertiesManager {
 
 	@Test
 	public void testWishesToBuyHouseButNotAllPropsOwnedOfSameColour() {
+		board.setOwner(1, player1, gui);
+		int expected = 0;
+		int actual = board.getHouseCount(1);
 		
+		assertEquals(expected,actual);
 		
+		prop.manage(gui, player1, text, board);
 		
+		actual = board.getHouseCount(1);
+		assertEquals(expected,actual);
 		
 	}
 
