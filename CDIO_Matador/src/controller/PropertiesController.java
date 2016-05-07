@@ -116,7 +116,7 @@ public class PropertiesController {
 						legal = (totalHouse >= ((Territory)property).getHouseCount());
 					} else {
 						totalHouse += ((Territory)fields[i]).getHouseCount();	
-						legal = ( totalHouse/2 >= ((Territory)property).getHouseCount());
+						legal = (totalHouse/2 >= ((Territory)property).getHouseCount());
 					}
 				}
 			}
