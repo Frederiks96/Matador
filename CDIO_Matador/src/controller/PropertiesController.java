@@ -76,7 +76,7 @@ public class PropertiesController {
 
 			// Removes a house
 			if(building.equals(text.getString("house-"))) {
-				if (!buildEven()) {
+				if (sellEven()) {
 					((Territory)(property)).sellHouse(gui);
 				} else {
 					gui.showMessage(text.getString("sellEven"));
@@ -96,7 +96,7 @@ public class PropertiesController {
 
 			// Removes a hotel
 			if(building.equals(text.getString("hotel-"))) {
-				if (!buildEven()) {
+				if (sellEven()) {
 					((Territory)(property)).sellHotel(gui);
 				} else {
 					gui.showMessage(text.getString("sellEven"));
@@ -106,7 +106,7 @@ public class PropertiesController {
 		} while (!building.equals(text.getString("back")));
 	}
 
-	private boolean buildEven(){
+	private boolean buildEven() {
 		boolean legal = false;
 		int totalHouse = 0;
 
@@ -119,6 +119,26 @@ public class PropertiesController {
 					} else {
 						totalHouse += ((Territory)fields[i]).getHouseCount();	
 						legal = (totalHouse/2 >= ((Territory)property).getHouseCount());
+					}
+				}
+			}
+		}
+		return legal;
+	}
+	
+	private boolean sellEven() {
+		boolean legal = false;
+		int totalHouse = 0;
+
+		for (int i = 0; i < fields.length; i++) {
+			if(fields[i] instanceof Territory && !property.equals(fields[i])) {
+				if (((Territory)fields[i]).getColour().equals(((Territory)property).getColour())) {
+					if(i==1 || i==3 || i==37 || i==39) {
+						totalHouse += ((Territory)fields[i]).getHouseCount();				
+						legal = (totalHouse <= ((Territory)property).getHouseCount());
+					} else {
+						totalHouse += ((Territory)fields[i]).getHouseCount();	
+						legal = (totalHouse/2 <= ((Territory)property).getHouseCount());
 					}
 				}
 			}

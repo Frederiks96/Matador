@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,6 +12,7 @@ import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
+import entity.fields.Territory;
 
 public class TestPropertiesManager {
 
@@ -64,6 +65,25 @@ public class TestPropertiesManager {
 		
 		actual = board.getHouseCount(1);
 		expected = 1;
+		assertEquals(expected,actual);
+	}
+	
+	@Test
+	public void testWishesToSellUnEven() {
+		board.setOwner(1, player1, gui);
+		board.setOwner(3, player1, gui);
+		
+		((Territory)(board.getLogicField(1))).buyHouse(text, gui);
+		((Territory)(board.getLogicField(3))).buyHouse(text, gui);
+		((Territory)(board.getLogicField(1))).buyHouse(text, gui);
+		((Territory)(board.getLogicField(3))).buyHouse(text, gui);
+		((Territory)(board.getLogicField(1))).buyHouse(text, gui);
+		((Territory)(board.getLogicField(3))).buyHouse(text, gui);
+		
+		prop.manage(gui, player1, text, board);
+		
+		int expected = 2;
+		int actual = board.getHouseCount(1);
 		assertEquals(expected,actual);
 	}
 	
