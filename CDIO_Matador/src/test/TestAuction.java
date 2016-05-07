@@ -50,13 +50,13 @@ public class TestAuction {
 		gui.removeOwner(1);
 	}
 
-//	@Test
-//	public void testAuctionAllSayNo() {
-//		player1.setPosition(1);
-//		board.landOnField(player1, text, gui);
-//		auction.auction(players, board.getLogicField(1), gui, text);
-//		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),null);
-//	}
+	@Test
+	public void testAuctionAllSayNo() {
+		player1.setPosition(1);
+		board.landOnField(player1, text, gui);
+		auction.auction(players, board.getLogicField(1), gui, text);
+		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),null);
+	}
 	
 	@Test
 	public void testAuctionPlayer1SayYes() {
@@ -66,44 +66,44 @@ public class TestAuction {
 		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player1);
 	}
 	
-//	@Test
-//	public void testAuctionPlayer2SayYes() {
-//		player1.setPosition(1);
-//		board.landOnField(player1, text, gui);
-//		auction.auction(players, board.getLogicField(1), gui, text);
-//		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player2);
-//	}
-//	
-//	@Test
-//	public void testAuctionPlayer3SayYes() {
-//		player1.setPosition(1);
-//		board.landOnField(player1, text, gui);
-//		auction.auction(players, board.getLogicField(1), gui, text);
-//		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player3);
-//	}
-//	
-//	@Test
-//	public void testAuctionPlayer4SayYes() {
-//		player1.setPosition(1);
-//		board.landOnField(player1, text, gui);
-//		auction.auction(players, board.getLogicField(1), gui, text);
-//		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player4);
-//	}
-//	
-//	@Test
-//	public void testAuctionPlayer5SayYes() {
-//		player1.setPosition(1);
-//		board.landOnField(player1, text, gui);
-//		auction.auction(players, board.getLogicField(1), gui, text);
-//		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player5);
-//	}
-//	
-//	@Test
-//	public void testAuctionPlayer6SayYes() {
-//		player1.setPosition(1);
-//		board.landOnField(player1, text, gui);
-//		auction.auction(players, board.getLogicField(1), gui, text);
-//		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player6);
-//	}
+	@Test
+	public void testAuctionPlayer2SayYes() {
+		player1.setPosition(1);
+		board.landOnField(player1, text, gui);
+		auction.auction(players, board.getLogicField(1), gui, text);
+		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player2);
+	}
+	
+	@Test
+	public void testAuctionPlayer3SayYes() {
+		player1.setPosition(1);
+		board.landOnField(player1, text, gui);
+		auction.auction(players, board.getLogicField(1), gui, text);
+		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player3);
+	}
+	
+	@Test
+	public void testAuctionPlayer4SayYes() {
+		player1.setPosition(1);
+		board.landOnField(player1, text, gui);
+		auction.auction(players, board.getLogicField(1), gui, text);
+		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player4);
+	}
+	
+	@Test
+	public void testAuctionPlayer5SayYes() {
+		player1.setPosition(1);
+		board.landOnField(player1, text, gui);
+		auction.auction(players, board.getLogicField(1), gui, text);
+		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player5);
+	}
+	
+	@Test
+	public void testAuctionPlayer6SayYes() {
+		player1.setPosition(1);
+		board.landOnField(player1, text, gui);
+		auction.auction(players, board.getLogicField(1), gui, text);
+		assertEquals(((Ownable)(board.getLogicField(1))).getOwner(),player6);
+	}
 
 }
