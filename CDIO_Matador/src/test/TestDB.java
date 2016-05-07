@@ -34,7 +34,7 @@ public class TestDB {
 
 	@AfterClass // Connection lukkes efterfølgende 
 	public static void tearDownAfterClass() throws Exception {
-		//sql.dropDataBase(); // Smider databasen, således at testen kan køres flere gange, uden at man får fejl
+//		sql.dropDataBase(); // Smider databasen, således at testen kan køres flere gange, uden at man får fejl
 		sql.closeConnection();
 	}
 
@@ -132,6 +132,7 @@ public class TestDB {
 	@Test
 	public void testSetBalance() throws SQLException {
 		sql.createPlayer(player1);
+		sql.createPlayer(player2);
 		player1.updateBalance(-10);
 		sql.setBalance(player1);
 		
@@ -139,6 +140,11 @@ public class TestDB {
 		int actual = 0;
 		
 		actual = sql.getBalance(player1.getPlayerID());
+		
+		assertEquals(expected,actual);
+		
+		expected = player2.getBalance();
+		actual = sql.getBalance(player2.getPlayerID());
 		
 		assertEquals(expected,actual);
 	}
