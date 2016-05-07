@@ -52,7 +52,7 @@ public class PropertiesController {
 
 			} while (!choice.equals(text.getString("back")));
 		} else {
-			gui.showMessage(text.getString("noProperties"));
+			gui.showMessage(text.getString("noPropOwned"));
 		}
 	}
 
