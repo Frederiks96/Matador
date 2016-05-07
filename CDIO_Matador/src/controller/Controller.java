@@ -131,7 +131,7 @@ public class Controller  {
 					board.landOnField(player, text, gui);
 					if (board.isOwnable(player.getPosition())) {
 						if (board.getOwner(player.getPosition()) == null) {
-							auctioneer.auction(players, board.getLogicField(player.getPosition()), this, gui,text);
+							auctioneer.auction(players, board.getLogicField(player.getPosition()), gui,text);
 						}
 					}
 
@@ -165,7 +165,7 @@ public class Controller  {
 				board.landOnField(player, text, gui);
 				if (board.isOwnable(player.getPosition())) {
 					if (board.getOwner(player.getPosition()) == null) {
-						auctioneer.auction(players, board.getLogicField(player.getPosition()), this, gui,text);
+						auctioneer.auction(players, board.getLogicField(player.getPosition()), gui,text);
 					}
 				}
 
@@ -382,7 +382,7 @@ public class Controller  {
 			player.updateBalance(-player.getBalance());
 			String[] properties = board.getOwnedProperties(player);
 			for (int i = 0; i < properties.length; i++) {
-				auctioneer.auction(players, board.getProperty(properties[i]), this, gui, text);
+				auctioneer.auction(players, board.getProperty(properties[i]), gui, text);
 			}
 		}
 	}

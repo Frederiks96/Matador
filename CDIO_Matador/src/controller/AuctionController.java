@@ -14,7 +14,7 @@ public class AuctionController {
 	private int pass;
 	private int winner;
 
-	public void auction (Player[] players, AbstractFields field, Controller con, GUI_Commands gui, Texts text){
+	public void auction (Player[] players, AbstractFields field, GUI_Commands gui, Texts text){
 
 		currentBid = 0;
 		pass = 0;
@@ -25,14 +25,17 @@ public class AuctionController {
 
 			do {
 				for (int i=0; i < players.length; i++) {
-					if (players[i].isAlive()){
+					if (players[i].isAlive()) {
 
 						boolean choice = gui.getUserLeftButtonPressed(text.getFormattedString("bidQuestion", players[i].getName(),
 								field.getName()),text.getString("Yes"),text.getString("No"));
 
-						if (choice) {
-							int bid;
+						if (choice && (players[i].getBalance()<currentBid || players[i].getBalance()==currentBid)) {
+							gui.showMessage(text.getString("failedTransaction"));
+							pass++;
+						} else if (choice) {
 
+							int bid;
 							do {
 								bid = gui.getUserInteger(text.getFormattedString("bid",players[i].getName(),currentBid));
 
@@ -46,21 +49,25 @@ public class AuctionController {
 
 							} while (bid > players[i].getBalance() || bid <= currentBid);
 
-								currentBid = bid;
-								winner = i;
+							currentBid = bid;
+							winner = i;
 							
 						} else { 
 							pass++;
 						}
 					}
-					if(pass == con.numPlayersAlive()-1) {
+					if (pass == numPlayersAlive(players) && winner == -1) {
+						return;
+					} else if (pass >= numPlayersAlive(players)-1 && winner != -1) {
 						break;
 					}
 				}
-			} while (pass < con.numPlayersAlive()-1);
+				
+				
+			} while (pass < numPlayersAlive(players)-1);
 
 			gui.showMessage(text.getFormattedString("bidWinner", players[winner].getName(), field.getName(),currentBid));
-			
+
 			((Ownable) field).setOwner(players[winner], gui);
 			players[winner].updateBalance(-currentBid);
 		}
@@ -74,6 +81,16 @@ public class AuctionController {
 				return true;
 			}else return false;
 		}else return true;
+	}
+	
+	private int numPlayersAlive(Player[] players) {
+		int num = 0;
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].isAlive()) {
+				num++;
+			}
+		}
+		return num;
 	}
 
 }
