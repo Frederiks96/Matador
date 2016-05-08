@@ -18,6 +18,8 @@ public class ChanceField extends AbstractFields {
 		gui.showMessage(text.getFormattedString("land",this.name));
 		String cardText = board.drawCard(player);
 		
+		// Vi skal tjekke om spilleren har råd til at betale, hvad der står på kortet
+		
 		if (cardText.equals(text.getCardString("k1"))) {
 			
 		} else if (cardText.equals(text.getCardString("k2"))) {
@@ -73,6 +75,9 @@ public class ChanceField extends AbstractFields {
 		} else if (cardText.equals(text.getCardString("k33"))) {
 			
 		}
+		
+		
+		
 	}
 
 	@Override
