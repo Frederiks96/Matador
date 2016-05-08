@@ -35,7 +35,7 @@ public class Controller  {
 	public void run() throws SQLException {
 		getLanguage();
 		chooseGame();
-		
+
 		while (numPlayersAlive()>1) {	
 			for (int i=0; i < players.length; i++) {
 				if (players[i].isAlive() && players[i].isTurn()) {
@@ -109,17 +109,21 @@ public class Controller  {
 
 		if (player.getJailTime()>-1){
 			// PLAYER IS IN JAIL
+
+
 			boolean roll = gui.getUserLeftButtonPressed(text.getString("prisonQuestion"), text.getString("roll"), text.getString("payBail"));
 			if (roll){
-				board.getDiceCup().roll();
-				gui.setDice(board.getDiceCup().getDieOne(), board.getDiceCup().getDieTwo());	
-
+				for(int i = 1; i < 3; i++){
+					board.getDiceCup().roll();
+					gui.setDice(board.getDiceCup().getDieOne(), board.getDiceCup().getDieTwo());	
+				}
 
 
 				if(board.getDiceCup().hasPair()){
 					gui.removeCar(player.getPosition(), player.getName());		
 					player.updatePosition((board.getDiceCup().getLastRoll()));		
-					gui.setCar(player.getPosition(), player.getName());		
+					gui.setCar(player.getPosition(), player.getName());	
+					player.resetJailTime();
 
 					board.landOnField(player, text, gui);
 					if (board.isOwnable(player.getPosition())) {
@@ -136,6 +140,14 @@ public class Controller  {
 				gui.setBalance(player.getName(),player.getBalance());
 				player.resetJailTime();
 			}
+			if (player.getJailTime()>3){
+				gui.showMessage(text.getString("payBailForced"));
+				player.updateBalance(-1000);
+				gui.setBalance(player.getName(),player.getBalance());
+				player.resetJailTime();
+
+			}
+
 		}
 
 		else do {
