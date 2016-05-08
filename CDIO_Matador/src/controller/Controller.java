@@ -116,7 +116,7 @@ public class Controller  {
 
 		if (player.getJailTime()>-1){
 			// PLAYER IS IN JAIL
-			boolean roll = gui.getUserLeftButtonPressed(text.getString("prisonQuestion"), text.getString("roll"), text.getString("payBaiul"));
+			boolean roll = gui.getUserLeftButtonPressed(text.getString("prisonQuestion"), text.getString("roll"), text.getString("payBail"));
 			if (roll){
 				board.getDiceCup().roll();
 				gui.setDice(board.getDiceCup().getDieOne(), board.getDiceCup().getDieTwo());	
