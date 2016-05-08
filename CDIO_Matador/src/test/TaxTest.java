@@ -33,8 +33,8 @@ public class TaxTest {
 	public void payTax10(){
 		player1.setPosition(4);
 
-		int actualPlayer1Balance = player1.getBalance();
-		int expectedPlayer1Balance = 30000 - ((Tax)board.getLogicField(4)).landOnField(player1, chosefine, gui, board);
+		boolean actualPlayer1Balance = player1.getBalance();
+		int expectedPlayer1Balance = 30000 - 
 		
 		
 	}
@@ -42,7 +42,7 @@ public class TaxTest {
 }
 
 
-
+//hvivs det er left button pressed er det false, hvis højre er 10 %
 
 
 
