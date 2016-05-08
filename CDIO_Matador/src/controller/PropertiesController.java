@@ -29,7 +29,6 @@ public class PropertiesController {
 
 
 			do {
-
 				if (!((Ownable)(property)).isMortgaged()){
 					choice = gui.getUserButtonPressed("", text.getString("mortgage"),
 							text.getString("manageBuildings"), text.getString("back"));
@@ -49,7 +48,7 @@ public class PropertiesController {
 				} else if (choice.equals(text.getString("manageBuildings")) && !gameboard.hasAll(player, ((Territory)property).getColour())) {
 					gui.showMessage(text.getString("notEnoughTerritory"));
 				}
-
+				gui.setBalance(player.getName(), player.getBalance());
 			} while (!choice.equals(text.getString("back")));
 		} else {
 			gui.showMessage(text.getString("noPropOwned"));

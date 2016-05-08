@@ -105,7 +105,7 @@ public class Controller  {
 		String options;
 		int numPairs = 0;
 
-		if (player.getJailTime()>-1){
+		if (player.getJailTime()>-1 && player.getJailTime()<3){
 			// PLAYER IS IN JAIL
 
 
@@ -132,20 +132,22 @@ public class Controller  {
 
 					gui.setBalance(player.getName(), player.getAccount().getBalance());
 					saveGame();
-				}else player.increaseJailTime();
-			}else {
+				} else { 
+					player.increaseJailTime();
+				}
+			} else {
 				player.updateBalance(-1000);
 				gui.setBalance(player.getName(),player.getBalance());
 				player.resetJailTime();
-			}
-			if (player.getJailTime()>3){
-				gui.showMessage(text.getString("payBailForced"));
-				player.updateBalance(-1000);
-				gui.setBalance(player.getName(),player.getBalance());
-				player.resetJailTime();
-
+				gui.showMessage(text.getString("payedBail"));
+				playerTurn(player); // Man får lov til at slå
 			}
 
+		} else if (player.getJailTime()>2) {
+			gui.showMessage(text.getString("payBailForced"));
+			player.updateBalance(-1000);
+			gui.setBalance(player.getName(),player.getBalance());
+			player.resetJailTime();
 		}
 
 		else do {

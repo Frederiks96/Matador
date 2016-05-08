@@ -30,10 +30,13 @@ public class Fleet extends AbstractFields implements Ownable {
 			}
 		} else if (!isMortgaged && owner!=player && isOwned()) {	//another player owns the Fleet
 			gui.showMessage(text.getFormattedString("rent", getRent(board), owner.getName()));
-			player.updateBalance(-getRent(board));
-			owner.updateBalance(getRent(board));
-			gui.setBalance(player.getName(), player.getBalance());
-			gui.setBalance(owner.getName(), owner.getBalance());
+			if (player.updateBalance(-getRent(board))) {
+				owner.updateBalance(getRent(board));
+				gui.setBalance(player.getName(), player.getBalance());
+				gui.setBalance(owner.getName(), owner.getBalance());
+			} else {
+				// Player cannot pay
+			}
 		}
 	}
 
