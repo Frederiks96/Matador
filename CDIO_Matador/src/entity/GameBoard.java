@@ -288,8 +288,7 @@ public class GameBoard {
 	}
 
 	public String drawCard(Player player){
-		String text = deck.draw(player);
-		return text;
+		return deck.draw(player);
 		
 	}
 
