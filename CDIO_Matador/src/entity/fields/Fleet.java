@@ -36,7 +36,12 @@ public class Fleet extends AbstractFields implements Ownable {
 				gui.setBalance(player.getName(), player.getBalance());
 				gui.setBalance(owner.getName(), owner.getBalance());
 			} else {
-				// Player cannot pay
+				if (board.netWorth(player)>getRent(board)) {
+					
+				} else {
+					// Player is done
+					player.bankrupt();
+				}
 			}
 		}
 	}

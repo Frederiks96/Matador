@@ -38,7 +38,12 @@ public class Brewery extends AbstractFields implements Ownable {
 				gui.setBalance(player.getName(), player.getBalance());
 				gui.setBalance(owner.getName(), owner.getBalance());
 			} else {
-				// Player cannot pay
+				if (board.netWorth(player)>getRent(board)) {
+					
+				} else {
+					// Spilleren er færdig
+					player.bankrupt();
+				}
 			}
 		}
 	}
