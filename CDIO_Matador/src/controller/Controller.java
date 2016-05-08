@@ -101,7 +101,7 @@ public class Controller  {
 			try {
 				loadPlayers();
 				board.countBuildings(sql);
-				board.setupBoard(players,gui,sql);
+				board.loadBoard(players,gui,sql);
 				//				loadCards(text);
 				break;
 			} catch (SQLException s) {
