@@ -52,8 +52,7 @@ public class CardStack {
 	}
 	
 	public void loadCards(Texts text, SQL sql) throws SQLException {
-		sql = new SQL();
-		for (int i = 0; i < chanceCardDeck.size(); i++) {
+		for (int i = 0; i < 33; i++) {
 			chanceCardDeck.add(new ChanceCard(text.getCardString("k"+sql.getCardId(i))));
 		}
 	}

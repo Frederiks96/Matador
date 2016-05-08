@@ -23,6 +23,7 @@ public class GameBoard {
 	private DiceCup dicecup = new DiceCup();
 
 
+
 	public void setupBoard(Texts text) {
 		for  (int i = 0; i < logicFields.length; i++){
 			if (i == 5 || i==15 || i==25 || i==35){
@@ -221,8 +222,9 @@ public class GameBoard {
 
 	public void createCardDeck(Texts text) {
 		deck = new CardStack();
-		deck.shuffle();
 		deck.newDeck(text);
+		deck.shuffle();
+		
 	}
 
 	public void loadCardDeck(Texts text, SQL sql) throws SQLException {
@@ -285,5 +287,10 @@ public class GameBoard {
 		return dicecup;
 	}
 
+	public String drawCard(Player player){
+		String text = deck.draw(player);
+		return text;
+		
+	}
 
 }
