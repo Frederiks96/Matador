@@ -6,4 +6,4 @@ CREATE TABLE IF NOT EXISTS `Player`(`player_id` INT NOT NULL,`vehicle_id` INT NO
 
 CREATE TABLE IF NOT EXISTS `ChanceCard` (`card_id` INT NOT NULL,`player_id` INT NOT NULL,`position` INT NOT NULL,PRIMARY KEY (`card_id`),FOREIGN KEY (`player_id`)REFERENCES `Player` (`player_id`));
 
-CREATE TABLE IF NOT EXISTS `Property` (`field_id` INT NOT NULL,`player_id` INT,`house_count` INT NOT NULL,`mortgage` BOOLEAN NOT NULL,PRIMARY KEY (`field_id`),FOREIGN KEY (`player_id`)REFERENCES `Player` (`player_id`));
+CREATE TABLE IF NOT EXISTS `Property` (`field_id` INT NOT NULL,`player_id` INT NOT NULL,`house_count` INT NOT NULL,`mortgage` BOOLEAN NOT NULL,PRIMARY KEY (`field_id`),FOREIGN KEY (`player_id`)REFERENCES `Player` (`player_id`));
