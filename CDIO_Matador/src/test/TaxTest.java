@@ -1,5 +1,7 @@
 package test;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,15 +33,22 @@ public class TaxTest {
 	
 	@Test
 	public void payTax10(){
-		player1.setPosition(4);
-
-		boolean actualPlayer1Balance = player1.getBalance();
-		int expectedPlayer1Balance = 30000 - 
 		
+		player1.setPosition(4);
+		board.landOnField(player1, text, gui);
+
+		int actual = player1.getBalance();
+		int expected = 27000;
+		
+		assertEquals(actual,expected);
 		
 	}
 
-}
+
+		
+	}
+
+
 
 
 //hvivs det er left button pressed er det false, hvis højre er 10 %

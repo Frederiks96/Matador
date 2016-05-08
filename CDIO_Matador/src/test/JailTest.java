@@ -1,5 +1,7 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,14 +32,16 @@ public class JailTest {
 	
 	@Test
 	public void playerGoToJail(){
-		player1.setPosition(10);
+		player1.setPosition(30);
+		board.landOnField(player1, text, gui);
 		
-		int expected = player1
+		int expected = 10;
 		int actual = player1.getPosition();
 		
-		
-		
-		
+		assertEquals(actual,expected);
 	}
+	
+	
+	
 
 }
