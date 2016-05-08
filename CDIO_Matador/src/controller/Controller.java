@@ -10,10 +10,7 @@ import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
-import entity.fields.Brewery;
 import entity.fields.ChanceField;
-import entity.fields.Fleet;
-import entity.fields.Ownable;
 import entity.fields.Territory;
 
 public class Controller  {
@@ -27,7 +24,6 @@ public class Controller  {
 	private SQL sql;
 
 	private Texts text;
-	private CardStack deck;
 	private Player[] players;
 	private String gameName;
 
@@ -86,9 +82,6 @@ public class Controller  {
 		board.setupBoard(text);
 		sql.createBankManager();
 		sql.createProperties();
-		this.deck = new CardStack();
-		deck.newDeck(text);
-		deck.shuffle();
 		addPlayers();
 		players[0].setTurn(true);
 
@@ -136,8 +129,6 @@ public class Controller  {
 					}
 
 					gui.setBalance(player.getName(), player.getAccount().getBalance());
-					if (board.getLogicField(player.getPosition()) instanceof ChanceField) 
-						deck.draw(player);				
 					saveGame();
 				}else player.increaseJailTime();
 			}else {
@@ -169,9 +160,7 @@ public class Controller  {
 					}
 				}
 
-				gui.setBalance(player.getName(), player.getAccount().getBalance());
-				if (board.getLogicField(player.getPosition()) instanceof ChanceField) 
-//					deck.draw(player);				
+				gui.setBalance(player.getName(), player.getAccount().getBalance());		
 				if(board.getDiceCup().hasPair()) {
 					numPairs++;
 				}
