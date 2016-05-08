@@ -42,7 +42,7 @@ public class GameBoard {
 		}
 	}
 
-	public void setupBoard(Player[] players, GUI_Commands gui, SQL sql) throws SQLException {
+	public void loadBoard(Player[] players, GUI_Commands gui, SQL sql) throws SQLException {
 		for  (int i = 0; i < this.logicFields.length; i++) {
 			if (logicFields[i] instanceof Ownable) {
 				if (sql.getOwnerID(i)>0) {
