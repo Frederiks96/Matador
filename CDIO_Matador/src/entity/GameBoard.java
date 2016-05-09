@@ -214,16 +214,18 @@ public class GameBoard {
 				}
 			}
 		}
+		deck.updateCards(sql);
 	}
 
 	public void landOnField(Player player, Texts text, GUI_Commands gui) {
 		logicFields[player.getPosition()].landOnField(player, text, gui, this);
 	}
 
-	public void createCardDeck(Texts text) {
+	public void createCardDeck(Texts text, SQL sql) throws SQLException {
 		deck = new CardStack();
 		deck.newDeck(text);
 		deck.shuffle();
+		deck.createCards(sql);
 	}
 
 	public void loadCardDeck(Texts text, SQL sql) throws SQLException {

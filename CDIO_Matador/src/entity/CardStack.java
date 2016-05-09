@@ -18,7 +18,7 @@ public class CardStack {
 	
 	public void newDeck(Texts text) {
 		for(int i = 1; i<34; i++) {
-			this.card = new ChanceCard(text.getCardString("k"+i));
+			this.card = new ChanceCard(text.getCardString("k"+i),i);
 			chanceCardDeck.add(card);
 		}
 	}
@@ -53,7 +53,19 @@ public class CardStack {
 	
 	public void loadCards(Texts text, SQL sql) throws SQLException {
 		for (int i = 0; i < 33; i++) {
-			chanceCardDeck.add(new ChanceCard(text.getCardString("k"+sql.getCardId(i))));
+			chanceCardDeck.add(sql.getCardPosition(i+1), new ChanceCard(text.getCardString("k"+i+1),sql.getCardPosition(i+1)));
+		}
+	}
+	
+	public void createCards(SQL sql) throws SQLException {
+		for (int i = 0; i < chanceCardDeck.size(); i++) {
+			sql.createChanceCard(chanceCardDeck.get(i), i);
+		}
+	}
+	
+	public void updateCards(SQL sql) throws SQLException {
+		for (int i = 0; i < chanceCardDeck.size(); i++) {
+			sql.updateCard(chanceCardDeck.get(i), i);
 		}
 	}
 

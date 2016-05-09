@@ -5,9 +5,9 @@ public class ChanceCard {
 	private String text;
 	private boolean isOwnable;
 	private Player owner;
-	private String cardID;
+	private int cardID;
 
-	public ChanceCard(String text){
+	public ChanceCard(String text, int cardID){
 		this.text = text;
 		if (text.charAt(0)=='I' || text.charAt(0)=='O') { // Skal lige rettes til, når teksterne er oversat
 			isOwnable = true;
@@ -15,7 +15,7 @@ public class ChanceCard {
 		else {
 			isOwnable = false;
 		}
-		this.cardID = text;
+		this.cardID = cardID;
 	}
 
 	public String toString() {
@@ -38,7 +38,7 @@ public class ChanceCard {
 		this.owner=player;
 	}
 	
-	public String getCardID() {
+	public int getCardID() {
 		return this.cardID;
 	}
 

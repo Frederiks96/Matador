@@ -606,11 +606,33 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-	public void createChanceCard(ChanceCard card) throws SQLException {
+	public void createChanceCard(ChanceCard card, int position) throws SQLException {
 		try {
-			String update = "INSERT INTO "+dbName+".chancecard VALUES(?)";
+			String update = "INSERT INTO "+dbName+".chancecard VALUES(?,?,?)";
 			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-			stmt.setString(1, card.getCardID());
+			stmt.setInt(1, card.getCardID());
+			stmt.setInt(2, 0);
+			stmt.setInt(3, position);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+		}
+	}
+	
+	public void updateCard(ChanceCard card, int position) throws SQLException {
+		try {
+			String update = "UPDATE "+dbName+".chancecard SET position = ?, player_id = ? WHERE card_id = ?";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1, position);
+			if (card.isOwnable() && card.getOwner() != null) {
+				stmt.setInt(2, card.getOwner().getPlayerID());
+			} else {
+				stmt.setInt(2, 0);
+			}
+			stmt.setInt(3, card.getCardID());
 			try {
 				stmt.executeUpdate();
 			} finally {

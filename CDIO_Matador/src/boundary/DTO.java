@@ -14,7 +14,7 @@ public interface DTO {
 	void createPlayer(Player player)										 	throws SQLException;
 	void createAccount(int aId, int balance) 									throws SQLException;
 	void createVehicle(int vId, String vColour, String vType) 					throws SQLException;
-	void createChanceCard(ChanceCard card) 										throws SQLException;
+	void createChanceCard(ChanceCard card, int position) 						throws SQLException;
 //	void createProperties(AbstractFields field);								throws SQLException;
 	void setPosition(Player player) 											throws SQLException;
 	void setBalance(Player player) 												throws SQLException;
