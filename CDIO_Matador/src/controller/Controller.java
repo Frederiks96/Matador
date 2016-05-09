@@ -139,7 +139,7 @@ public class Controller  {
 				player.updateBalance(-1000);
 				gui.setBalance(player.getName(),player.getBalance());
 				player.resetJailTime();
-				gui.showMessage(text.getString("payedBail"));
+				gui.showMessage(text.getString("paidBail"));
 				playerTurn(player); // Man får lov til at slå
 			}
 
