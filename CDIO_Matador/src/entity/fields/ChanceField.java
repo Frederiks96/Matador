@@ -27,7 +27,6 @@ public class ChanceField extends AbstractFields {
 			player.setPosition(0);
 			player.updateBalance(4000);
 		} else if (cardText.equals(text.getCardString("k3"))) {
-			player.setPosition(10);
 			player.imprison();
 		} else if (cardText.equals(text.getCardString("k5"))) {
 			if (!player.updateBalance(-200)) {
@@ -97,7 +96,7 @@ public class ChanceField extends AbstractFields {
 			} else if (player.getPosition()>24 && player.getPosition()<35) {
 				player.setPosition(35);
 			} else {
-				if (player.getPosition()<40) {
+				if (player.getPosition()<40 && player.getPosition()>34) {
 					player.updateBalance(4000);
 				}
 				player.setPosition(5);
@@ -139,22 +138,24 @@ public class ChanceField extends AbstractFields {
 			board.landOnField(player, text, gui);
 		} else if (cardText.equals(text.getCardString("k25"))) {
 			String [] props = board.getOwnedProperties(player);
-			int numHouses = 0;
-			int numHotels = 0;
-			for (int i = 0; i < props.length; i++) {
-				if (board.getProperty(props[i]) instanceof Territory) {
-					if (((Territory)board.getProperty(props[i])).getHouseCount()==5) {
-						numHotels++;
-					} else {
-						numHouses += ((Territory)board.getProperty(props[i])).getHouseCount();
+			if (props != null) {
+				int numHouses = 0;
+				int numHotels = 0;
+				for (int i = 0; i < props.length; i++) {
+					if (board.getProperty(props[i]) instanceof Territory) {
+						if (((Territory)board.getProperty(props[i])).getHouseCount()==5) {
+							numHotels++;
+						} else {
+							numHouses += ((Territory)board.getProperty(props[i])).getHouseCount();
+						}
 					}
 				}
-			}
-			if (!player.updateBalance(-(numHouses*500+numHotels*2000))) {
-				if (board.netWorth(player)>(numHouses*500+numHotels*2000)) {
-					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
-				} else {
-					// Bankrupt
+				if (!player.updateBalance(-(numHouses*500+numHotels*2000))) {
+					if (board.netWorth(player)>(numHouses*500+numHotels*2000)) {
+						// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+					} else {
+						// Bankrupt
+					}
 				}
 			}
 		} else if (cardText.equals(text.getCardString("k26"))) {
@@ -169,7 +170,7 @@ public class ChanceField extends AbstractFields {
 			if (board.netWorth(player)<15000) {
 				player.updateBalance(40000);
 			} else {
-				gui.showMessage(text.getString(""));
+				gui.showMessage(text.getString("noScholarship"));
 			}
 		} else if (cardText.equals(text.getCardString("k29"))) {
 			player.updateBalance(3000);

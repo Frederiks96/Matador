@@ -91,11 +91,6 @@ public class Player {
 	
 	public void setPosition(int position) {
 		if (position>0 && position<40) {
-			if (position != 10) {
-				if (position<this.position) {
-					updateBalance(-4000);
-				}
-			}
 			this.position = position;
 		}
 	}
@@ -188,9 +183,9 @@ public class Player {
 	}
 	
 	public void bankrupt() {
-		this.isAlive 			= false;
-		this.numBreweriesOwned 	= 0;
-		this.numFleetsOwned 	= 0;
+		this.isAlive 				= false;
+		this.numBreweriesOwned 		= 0;
+		this.numFleetsOwned 		= 0;
 		this.numTerritoriesOwned 	= 0;
 	}
 	

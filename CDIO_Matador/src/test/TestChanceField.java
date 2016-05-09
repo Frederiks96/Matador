@@ -30,7 +30,13 @@ public class TestChanceField {
 	public void test() {
 		player1.setPosition(2);
 		board.createCardDeck(text);
-		board.landOnField(player1, text, gui);
+		gui.addPlayer(player1.getName(), player1.getBalance());
+		gui.setCar(player1.getPosition(), player1.getName());
+		for (int i = 0; i < 35; i++) {
+			board.landOnField(player1, text, gui);
+			player1.setPosition(2);
+			gui.setBalance(player1.getName(), player1.getBalance());
+		}
 	}
 
 }
