@@ -101,7 +101,6 @@ public class Player {
 	}
 
 	public void updatePosition(int lastRoll) {
-		if (lastRoll>0 && lastRoll<13) {
 			if ((position+lastRoll)>39) {
 				updateBalance(4000);
 				GUI.setBalance(name, account.getBalance());
@@ -109,7 +108,6 @@ public class Player {
 			} else {
 				position += lastRoll;
 			}
-		}
 	}
 
 	public int getBalance() {
