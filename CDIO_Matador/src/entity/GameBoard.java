@@ -224,7 +224,6 @@ public class GameBoard {
 		deck = new CardStack();
 		deck.newDeck(text);
 		deck.shuffle();
-		
 	}
 
 	public void loadCardDeck(Texts text, SQL sql) throws SQLException {

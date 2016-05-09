@@ -82,7 +82,7 @@ public class Controller  {
 		sql.createProperties();
 		addPlayers();
 		players[0].setTurn(true);
-
+		board.createCardDeck(text);
 	}
 
 	public void loadGame(Texts text, String gameName) throws SQLException {
