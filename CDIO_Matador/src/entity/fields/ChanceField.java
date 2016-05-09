@@ -170,10 +170,25 @@ public class ChanceField extends AbstractFields {
 				gui.showMessage(text.getString(""));
 			}
 		} else if (cardText.equals(text.getCardString("k29"))) {
+			player.updateBalance(3000);
 		} else if (cardText.equals(text.getCardString("k30"))) {
+			player.updateBalance(1000);
 		} else if (cardText.equals(text.getCardString("k32"))) {
+			if (!player.updateBalance(-1000)) {
+				if (board.netWorth(player)>1000) {
+					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+				} else {
+					// Bankrupt
+				}
+			}
 		} else if (cardText.equals(text.getCardString("k33"))) {
-
+			if (!player.updateBalance(-200)) {
+				if (board.netWorth(player)>200) {
+					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+				} else {
+					// Bankrupt
+				}
+			}
 		}
 	}
 
