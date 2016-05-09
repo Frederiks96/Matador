@@ -93,7 +93,7 @@ public class Controller  {
 				loadPlayers();
 				board.countBuildings(sql);
 				board.loadBoard(players,gui,sql);
-				//				loadCards(text);
+				board.loadCardDeck(text,sql);
 				break;
 			} catch (SQLException s) {
 				sql.updateUser(gui.getUserString(text.getString("getUser")), gui.getUserString("getPass"));
