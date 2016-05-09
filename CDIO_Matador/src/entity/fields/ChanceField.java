@@ -63,22 +63,24 @@ public class ChanceField extends AbstractFields {
 			}
 		} else if (cardText.equals(text.getCardString("k13"))) {
 			String [] props = board.getOwnedProperties(player);
-			int numHouses = 0;
-			int numHotels = 0;
-			for (int i = 0; i < props.length; i++) {
-				if (board.getProperty(props[i]) instanceof Territory) {
-					if (((Territory)board.getProperty(props[i])).getHouseCount()==5) {
-						numHotels++;
-					} else {
-						numHouses += ((Territory)board.getProperty(props[i])).getHouseCount();
+			if (props != null) {
+				int numHouses = 0;
+				int numHotels = 0;
+				for (int i = 0; i < props.length; i++) {
+					if (board.getProperty(props[i]) instanceof Territory) {
+						if (((Territory)board.getProperty(props[i])).getHouseCount()==5) {
+							numHotels++;
+						} else {
+							numHouses += ((Territory)board.getProperty(props[i])).getHouseCount();
+						}
 					}
 				}
-			}
-			if (!player.updateBalance(-(numHouses*800+numHotels*2300))) {
-				if (board.netWorth(player)>(numHouses*800+numHotels*2300)) {
-					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
-				} else {
-					// Bankrupt
+				if (!player.updateBalance(-(numHouses*800+numHotels*2300))) {
+					if (board.netWorth(player)>(numHouses*800+numHotels*2300)) {
+						// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+					} else {
+						// Bankrupt
+					}
 				}
 			}
 		} else if (cardText.equals(text.getCardString("k14"))) {
