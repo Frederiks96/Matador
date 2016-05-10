@@ -274,10 +274,14 @@ public class GameBoard {
 		gui.showMessage(text.getString("probateCourt"));
 		ArrayList<String> properties = getOwnedProperties(player);
 		String[] propertiesArr = new String[properties.size()];
+		String choice = "";
+		String button = "";
 		do {
-			String choice = gui.getUserSelection(text.getFormattedString("currentAmount",debt,player.getBalance())+
-												 text.getString("chooseProperty"), propertiesArr);
-			String button = "";
+			do {
+				choice = gui.getUserSelection(text.getFormattedString("currentAmount",debt,player.getBalance())+
+											  text.getString("chooseProperty"), propertiesArr);
+			} while (((Ownable)getProperty(choice)).isMortgaged());
+			
 			if (getProperty(choice) instanceof Territory) {
 				if (((Territory)getProperty(choice)).getHouseCount()>0) {
 					button = gui.getUserButtonPressed("", text.getStrings("mortgage","manageBuildings","back"));
@@ -285,18 +289,18 @@ public class GameBoard {
 			} else {
 				button = gui.getUserButtonPressed("", text.getStrings("mortgage","back"));
 			}
-			
+
 			if (button.equals(text.getString("mortgage"))) {
 				((Ownable)getProperty(choice)).mortgage(text, gui);
 			} else if (button.equals(text.getString("manageBuildings"))) {
-				button = gui.getUserButtonPressed("", text.getStrings("house-","hotel-","back"));
+				String sell = gui.getUserButtonPressed("", text.getStrings("house-","hotel-","back"));
+				if (sell.equals(text.getString("house-"))) {
+					((Territory)getProperty(choice)).sellHouse(gui);
+				} else if (sell.equals(text.getString("hotel-"))) {
+					((Territory)getProperty(choice)).sellHotel(gui);
+				}
 			}
-
-
-
-		} while (player.getBalance()<debt);
-
-
+		} while (player.getBalance()<debt || button.equals(text.getString("back")));
 	}
 
 }

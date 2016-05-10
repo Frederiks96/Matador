@@ -101,7 +101,7 @@ public class Territory extends AbstractFields implements Ownable {
 	}
 
 	public void sellHouse(GUI_Commands gui){
-		if(houseCount>1){
+		if(houseCount>0){
 			owner.updateBalance(housePrice/2);
 			gui.setHouse(id, houseCount-1);
 			this.houseCount--;
