@@ -29,7 +29,7 @@ public class GameBoard {
 	public GameBoard(Controller con) {
 		this.con = con;
 	}
-	
+
 	public GameBoard() {
 	}
 
@@ -120,12 +120,16 @@ public class GameBoard {
 
 		for (int i = 0; i < logicFields.length; i++) {
 			if(logicFields[i] instanceof Ownable) {
-				if (((Ownable)(logicFields[i])).isMortgaged())
-					totalworth += (((Ownable)(logicFields[i])).getPrice()*0.5*0.9);
-				else {
-					totalworth += ((Ownable)(logicFields[i])).getPrice();
-					if (logicFields[i] instanceof Territory)
-						totalworth += (int) getHouseCount(i)*((Territory)(logicFields[i])).getHousePrice()*0.5;
+				if (((Ownable)(logicFields[i])).isOwned()) {
+					if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
+						if (((Ownable)(logicFields[i])).isMortgaged())
+							totalworth += (((Ownable)(logicFields[i])).getPrice()*0.5*0.9);
+						else {
+							totalworth += ((Ownable)(logicFields[i])).getPrice()*0.5;
+							if (logicFields[i] instanceof Territory)
+								totalworth += (int) getHouseCount(i)*((Territory)(logicFields[i])).getHousePrice()*0.5;
+						}
+					}
 				}
 			}
 		}
@@ -288,9 +292,9 @@ public class GameBoard {
 		do {
 			do {
 				choice = gui.getUserSelection(text.getFormattedString("currentAmount",debt,player.getBalance())+
-											  text.getString("chooseProperty"), propertiesArr);
+						text.getString("chooseProperty"), propertiesArr);
 			} while (((Ownable)getProperty(choice)).isMortgaged());
-			
+
 			if (getProperty(choice) instanceof Territory) {
 				if (((Territory)getProperty(choice)).getHouseCount()>0) {
 					button = gui.getUserButtonPressed("", text.getStrings("mortgage","manageBuildings","back"));
@@ -311,7 +315,7 @@ public class GameBoard {
 			}
 		} while (player.getBalance()<debt || button.equals(text.getString("back")));
 	}
-	
+
 	private void removeAllBuildings(Player player, GUI_Commands gui){
 		for (int i = 0; i < 40; i++){
 			if(logicFields[i] instanceof Territory){
@@ -326,7 +330,7 @@ public class GameBoard {
 			}
 		}
 	}
-	
+
 	public void bankrupt(Player player, Player creditor, GUI_Commands gui, Texts text) {
 		player.bankrupt();
 		if (creditor!=null) {
@@ -354,11 +358,11 @@ public class GameBoard {
 			}
 		}
 	}
-	
+
 	public Player[] getPlayers() {
 		return con.getPlayers();
 	}
-	
+
 	public AuctionController getAuctionController() {
 		return con.getAuctionController();
 	}
