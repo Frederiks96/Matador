@@ -1,4 +1,4 @@
-package test;
+				package test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -53,11 +53,16 @@ public class TerritoryTest {
 		board.setOwner(1, player1, gui);
 		
 		((Ownable)(board.getLogicField(player1.getPosition()))).mortgage(text, gui);
-
-		boolean expected = true;
-		boolean actual = ((Ownable)(board.getLogicField(player1.getPosition()))).isMortgaged();
-
+		
+		int expected = 30600;
+		int actual = player1.getBalance();
+		
 		assertEquals(expected, actual);
+
+		boolean expected1 = true;
+		boolean actual1 = ((Ownable)(board.getLogicField(player1.getPosition()))).isMortgaged();
+
+		assertEquals(expected1, actual1);
 	}
 
 	@Test

@@ -27,26 +27,35 @@ public class TaxTest {
 		player1 = new Player("Oliver", "grøn", "bil");
 		board = new GameBoard();
 		board.setupBoard(text);
-	
+
 	}
-	
-	
+
+
 	@Test
 	public void payTax10(){
-		
+
 		player1.setPosition(4);
 		board.landOnField(player1, text, gui);
 
 		int actual = player1.getBalance();
 		int expected = 27000;
-		
+
 		assertEquals(actual,expected);
-		
+	
 	}
 
+	@Test
+	public void payTax4000(){
+		player1.setPosition(4);
+		board.landOnField(player1, text, gui);
 
-		
+		int actual = player1.getBalance();
+		int expected = 26000;
+
+		assertEquals(actual,expected);
 	}
+
+}
 
 
 
