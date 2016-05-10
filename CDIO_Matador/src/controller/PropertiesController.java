@@ -31,8 +31,7 @@ public class PropertiesController {
 
 			do {
 				if (!((Ownable)(property)).isMortgaged() && property instanceof Territory){
-					choice = gui.getUserButtonPressed("", text.getString("mortgage"),
-							text.getString("manageBuildings"), text.getString("back"));
+					choice = gui.getUserButtonPressed("", text.getStrings("mortgage","manageBuildings","back"));
 				} else if (((Ownable)(property)).isMortgaged()) {
 					choice = gui.getUserButtonPressed("", text.getString("unMortgage"), text.getString("back"));
 				} else {

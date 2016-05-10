@@ -270,13 +270,31 @@ public class GameBoard {
 
 	}
 
-	public void probateCourt(Player player) {
+	public void probateCourt(Player player, int debt, Texts text, GUI_Commands gui) {
+		gui.showMessage(text.getString("probateCourt"));
 		ArrayList<String> properties = getOwnedProperties(player);
-		
+		String[] propertiesArr = new String[properties.size()];
+		do {
+			String choice = gui.getUserSelection(text.getFormattedString("currentAmount",debt,player.getBalance())+
+												 text.getString("chooseProperty"), propertiesArr);
+			String button = "";
+			if (getProperty(choice) instanceof Territory) {
+				if (((Territory)getProperty(choice)).getHouseCount()>0) {
+					button = gui.getUserButtonPressed("", text.getStrings("mortgage","manageBuildings","back"));
+				} 
+			} else {
+				button = gui.getUserButtonPressed("", text.getStrings("mortgage","back"));
+			}
+			
+			if (button.equals(text.getString("mortgage"))) {
+				((Ownable)getProperty(choice)).mortgage(text, gui);
+			} else if (button.equals(text.getString("manageBuildings"))) {
+				button = gui.getUserButtonPressed("", text.getStrings("house-","hotel-","back"));
+			}
 
 
 
-
+		} while (player.getBalance()<debt);
 
 
 	}
