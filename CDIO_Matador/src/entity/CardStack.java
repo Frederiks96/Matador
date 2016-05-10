@@ -56,6 +56,9 @@ public class CardStack {
 		for (int i = 1; i < 34; i++) {
 			chanceCardDeck.set(sql.getCardPosition(i), new ChanceCard(text.getCardString("k"+i),sql.getCardPosition(i)));
 		}
+		while (chanceCardDeck.contains(null)) {
+			chanceCardDeck.remove(null);
+		}
 	}
 	
 	public void createCards(SQL sql) throws SQLException {
@@ -70,8 +73,8 @@ public class CardStack {
 		}
 	}
 	
-	private static void ensureSize(ArrayList<?> list, int size) {
-		list.ensureCapacity(33);
+	private void ensureSize(ArrayList<?> list, int size) {
+		list.ensureCapacity(size);
 		while (list.size()<size) {
 			list.add(null);
 		}
