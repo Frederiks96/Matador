@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import boundary.GUI_Commands;
 import boundary.SQL;
+import controller.AuctionController;
+import controller.Controller;
 import entity.dicecup.DiceCup;
 import entity.fields.AbstractFields;
 import entity.fields.Brewery;
@@ -22,7 +24,11 @@ public class GameBoard {
 	private AbstractFields[] logicFields = new AbstractFields[40];
 	private CardStack deck;
 	private DiceCup dicecup = new DiceCup();
+	private Controller con;
 
+	public GameBoard(Controller con) {
+		this.con = con;
+	}
 
 
 	public void setupBoard(Texts text) {
@@ -301,6 +307,57 @@ public class GameBoard {
 				}
 			}
 		} while (player.getBalance()<debt || button.equals(text.getString("back")));
+	}
+	
+	private void removeAllBuildings(Player player, GUI_Commands gui){
+		for (int i = 0; i < 40; i++){
+			if(logicFields[i] instanceof Territory){
+				if (((Territory)logicFields[i]).getOwner() == player){
+
+					while(((Territory)logicFields[i]).getHouseCount() > 0){
+						if(((Territory)logicFields[i]).getHouseCount()==5)
+							((Territory)logicFields[i]).sellHotel(gui);
+						((Territory)logicFields[i]).sellHouse(gui);
+					}
+				}
+			}
+		}
+	}
+	
+	public void bankrupt(Player player, Player creditor, GUI_Commands gui, Texts text) {
+		player.bankrupt();
+		if (creditor!=null) {
+			removeAllBuildings(player, gui);
+			creditor.updateBalance(player.getBalance());
+			player.updateBalance(-player.getBalance());
+
+			for (int i = 0; i < 40; i++) {
+				if(logicFields[i] instanceof Territory){
+					if(((Territory)logicFields[i]).getOwner().equals(player)){
+						gui.removeOwner(i);
+						((Territory)logicFields[i]).setOwner(creditor, gui);
+					}
+				}	
+			}
+
+
+		} else {
+			removeAllBuildings(player, gui);
+			player.updateBalance(-player.getBalance());
+			String[] properties = new String[getOwnedProperties(player).size()];
+			getOwnedProperties(player).toArray(properties);
+			for (int i = 0; i < properties.length; i++) {
+				getAuctionController().auction(getPlayers(), getProperty(properties[i]), gui, text);
+			}
+		}
+	}
+	
+	public Player[] getPlayers() {
+		return con.getPlayers();
+	}
+	
+	public AuctionController getAuctionController() {
+		return con.getAuctionController();
 	}
 
 }

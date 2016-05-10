@@ -9,7 +9,6 @@ import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
-import entity.fields.Territory;
 
 public class Controller  {
 
@@ -18,7 +17,7 @@ public class Controller  {
 	private TradeController broker;
 
 	private GUI_Commands gui = new GUI_Commands();
-	private GameBoard board = new GameBoard();
+	private GameBoard board = new GameBoard(this);
 	private SQL sql;
 
 	private Texts text;
@@ -345,47 +344,13 @@ public class Controller  {
 
 		board.saveBoard(sql);
 	}
-
-	private void removeAllBuildings(Player player){
-		for (int i = 0; i < 40; i++){
-			if(board.getLogicField(i) instanceof Territory){
-				if (((Territory)board.getLogicField(i)).getOwner() == player){
-
-					while(((Territory)board.getLogicField(i)).getHouseCount() > 0){
-						if(((Territory)board.getLogicField(i)).getHouseCount()==5)
-							((Territory)board.getLogicField(i)).sellHotel(gui);
-						((Territory)board.getLogicField(i)).sellHouse(gui);
-					}
-				}
-			}
-		}
-	}	
-	public void bankrupt(Player player, Player creditor) {
-		player.bankrupt();
-		if (creditor!=null) {
-			removeAllBuildings(player);
-			creditor.updateBalance(player.getBalance());
-			player.updateBalance(-player.getBalance());
-
-			for (int i = 0; i < 40; i++) {
-				if(board.getLogicField(i) instanceof Territory){
-					if(((Territory)board.getLogicField(i)).getOwner().equals(player)){
-						gui.removeOwner(i);
-						((Territory)board.getLogicField(i)).setOwner(creditor, gui);
-					}
-				}	
-			}
-
-
-		} else {
-			removeAllBuildings(player);
-			player.updateBalance(-player.getBalance());
-			String[] properties = new String[board.getOwnedProperties(player).size()];
-			board.getOwnedProperties(player).toArray(properties);
-			for (int i = 0; i < properties.length; i++) {
-				auctioneer.auction(players, board.getProperty(properties[i]), gui, text);
-			}
-		}
+	
+	public Player[] getPlayers() {
+		return this.players;
+	}
+	
+	public AuctionController getAuctionController() {
+		return this.auctioneer;
 	}
 
 }

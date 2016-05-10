@@ -33,17 +33,17 @@ public class ChanceField extends AbstractFields {
 		} else if (cardText.equals(text.getCardString("k5"))) {
 			if (!player.updateBalance(-200)) {
 				if (board.netWorth(player)>200) {
-					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+					board.probateCourt(player, 200, text, gui);
 				} else {
-					// Bankrupt
+					board.bankrupt(player, null, gui, text);
 				}
 			}
 		} else if (cardText.equals(text.getCardString("k6"))) {
 			if (!player.updateBalance(-2000)) {
 				if (board.netWorth(player)>2000) {
-					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+					board.probateCourt(player, 2000, text, gui);
 				} else {
-					// Bankrupt
+					board.bankrupt(player, null, gui, text);
 				}
 			}
 		} else if (cardText.equals(text.getCardString("k7"))) {
@@ -51,15 +51,27 @@ public class ChanceField extends AbstractFields {
 		} else if (cardText.equals(text.getCardString("k8"))) {
 			player.updateBalance(1000);
 		} else if (cardText.equals(text.getCardString("k10"))) {
-			// Modtag fra hver medspiller... Hmm, så skal vi have en metode i GameBoard der hedder getPlayers
+			for (int i = 0; i < board.getPlayers().length; i++) {
+				if (!board.getPlayers()[i].equals(player) && board.getPlayers()[i].isAlive()) {
+					if (!board.getPlayers()[i].updateBalance(-200)) {
+						if (board.netWorth(board.getPlayers()[i])>200) {
+							board.probateCourt(board.getPlayers()[i], 200, text, gui);
+						} else {
+							board.bankrupt(board.getPlayers()[i], player, gui, text);
+						}
+					} else {
+						player.updateBalance(200);
+					}
+				}
+			}
 		} else if (cardText.equals(text.getCardString("k11"))) {
 			player.updateBalance(200);
 		} else if (cardText.equals(text.getCardString("k12"))) {
 			if(!player.updateBalance(-1000)) {
 				if (board.netWorth(player)>1000) {
-					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+					board.probateCourt(player, 1000, text, gui);
 				} else {
-					// Bankrupt
+					board.bankrupt(player, null, gui, text);
 				}
 			}
 		} else if (cardText.equals(text.getCardString("k13"))) {
@@ -78,9 +90,9 @@ public class ChanceField extends AbstractFields {
 				}
 				if (!player.updateBalance(-(numHouses*800+numHotels*2300))) {
 					if (board.netWorth(player)>(numHouses*800+numHotels*2300)) {
-						// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+						board.probateCourt(player, (numHouses*800+numHotels*2300), text, gui);
 					} else {
-						// Bankrupt
+						player.bankrupt();
 					}
 				}
 			}
@@ -154,18 +166,18 @@ public class ChanceField extends AbstractFields {
 				}
 				if (!player.updateBalance(-(numHouses*500+numHotels*2000))) {
 					if (board.netWorth(player)>(numHouses*500+numHotels*2000)) {
-						// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+						board.probateCourt(player, (numHouses*500+numHotels*2000), text, gui);
 					} else {
-						// Bankrupt
+						board.bankrupt(player, null, gui, text);
 					}
 				}
 			}
 		} else if (cardText.equals(text.getCardString("k26"))) {
 			if (!player.updateBalance(-3000)) {
 				if (board.netWorth(player)>(3000)) {
-					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+					board.probateCourt(player, 3000, text, gui);
 				} else {
-					// Bankrupt
+					board.bankrupt(player, null, gui, text);
 				}
 			}
 		} else if (cardText.equals(text.getCardString("k28"))) {
@@ -181,17 +193,17 @@ public class ChanceField extends AbstractFields {
 		} else if (cardText.equals(text.getCardString("k32"))) {
 			if (!player.updateBalance(-1000)) {
 				if (board.netWorth(player)>1000) {
-					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+					board.probateCourt(player, 1000, text, gui);
 				} else {
-					// Bankrupt
+					board.bankrupt(player, null, gui, text);
 				}
 			}
 		} else if (cardText.equals(text.getCardString("k33"))) {
 			if (!player.updateBalance(-200)) {
 				if (board.netWorth(player)>200) {
-					// Kør logik med at spilleren kan vælge hvad han ønsker at sælge
+					board.probateCourt(player, 200, text, gui);
 				} else {
-					// Bankrupt
+					board.bankrupt(player, null, gui, text);
 				}
 			}
 		}
