@@ -1,5 +1,7 @@
 package entity.fields;
 
+import java.util.ArrayList;
+
 import boundary.GUI_Commands;
 import entity.GameBoard;
 import entity.Player;
@@ -61,16 +63,16 @@ public class ChanceField extends AbstractFields {
 				}
 			}
 		} else if (cardText.equals(text.getCardString("k13"))) {
-			String [] props = board.getOwnedProperties(player);
-			if (props != null) {
+			ArrayList<String> props = board.getOwnedProperties(player);
+			if (props.size()>0) {
 				int numHouses = 0;
 				int numHotels = 0;
-				for (int i = 0; i < props.length; i++) {
-					if (board.getProperty(props[i]) instanceof Territory) {
-						if (((Territory)board.getProperty(props[i])).getHouseCount()==5) {
+				for (int i = 0; i < props.size(); i++) {
+					if (board.getProperty(props.get(i)) instanceof Territory) {
+						if (((Territory)board.getProperty(props.get(i))).getHouseCount()==5) {
 							numHotels++;
 						} else {
-							numHouses += ((Territory)board.getProperty(props[i])).getHouseCount();
+							numHouses += ((Territory)board.getProperty(props.get(i))).getHouseCount();
 						}
 					}
 				}
@@ -137,16 +139,16 @@ public class ChanceField extends AbstractFields {
 			}
 			board.landOnField(player, text, gui);
 		} else if (cardText.equals(text.getCardString("k25"))) {
-			String [] props = board.getOwnedProperties(player);
-			if (props != null) {
+			ArrayList<String> props = board.getOwnedProperties(player);
+			if (props.size()>0) {
 				int numHouses = 0;
 				int numHotels = 0;
-				for (int i = 0; i < props.length; i++) {
-					if (board.getProperty(props[i]) instanceof Territory) {
-						if (((Territory)board.getProperty(props[i])).getHouseCount()==5) {
+				for (int i = 0; i < props.size(); i++) {
+					if (board.getProperty(props.get(i)) instanceof Territory) {
+						if (((Territory)board.getProperty(props.get(i))).getHouseCount()==5) {
 							numHotels++;
 						} else {
-							numHouses += ((Territory)board.getProperty(props[i])).getHouseCount();
+							numHouses += ((Territory)board.getProperty(props.get(i))).getHouseCount();
 						}
 					}
 				}

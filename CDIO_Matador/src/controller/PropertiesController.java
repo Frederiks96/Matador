@@ -22,8 +22,9 @@ public class PropertiesController {
 		fields = gameboard.getLogicFields();
 
 		if (gameboard.getOwnedProperties(player) != null) {
+			String[] properties = new String[gameboard.getOwnedProperties(player).size()];
 			propertyName = gui.getUserSelection(text.getString("choosePropertyBuild"),
-					gameboard.getOwnedProperties(player));
+					gameboard.getOwnedProperties(player).toArray(properties));
 
 			property = gameboard.getProperty(propertyName);
 

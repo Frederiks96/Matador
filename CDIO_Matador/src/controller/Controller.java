@@ -381,7 +381,8 @@ public class Controller  {
 		} else {
 			removeAllBuildings(player);
 			player.updateBalance(-player.getBalance());
-			String[] properties = board.getOwnedProperties(player);
+			String[] properties = new String[board.getOwnedProperties(player).size()];
+			board.getOwnedProperties(player).toArray(properties);
 			for (int i = 0; i < properties.length; i++) {
 				auctioneer.auction(players, board.getProperty(properties[i]), gui, text);
 			}

@@ -1,6 +1,7 @@
 package entity;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import boundary.GUI_Commands;
 import boundary.SQL;
@@ -70,67 +71,38 @@ public class GameBoard {
 		}
 	}
 
-	public String[] getOwnedProperties(Player player) {
-		int numPropertiesOwned = player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoriesOwned();
-		if (numPropertiesOwned>0) {
-			String [] properties = new String[numPropertiesOwned];
-			int j = 0;
-			for (int i = 0; i < logicFields.length; i++) {
-				if (logicFields[i] instanceof Ownable) {
-					if (((Ownable)(logicFields[i])).isOwned()) {
-						if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
-							properties[j] = logicFields[i].getName();
-							j++;
-						}
+	public ArrayList<String> getOwnedProperties(Player player) {
+		ArrayList<String> properties = new ArrayList<String>();
+		for (int i = 0; i < logicFields.length; i++) {
+			if (logicFields[i] instanceof Ownable) {
+				if (((Ownable)(logicFields[i])).isOwned()) {
+					if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
+						properties.add(logicFields[i].getName());
 					}
 				}
 			}
-			return properties;
 		}
-		return null;
+		return properties;
 	}
 
-	public String[] getOwnedUnbuiltProperties(Player player) {
-		int numPropertiesOwned = player.getNumBreweriesOwned()+player.getNumFleetsOwned()+player.getNumTerritoriesOwned();
-		if (numPropertiesOwned>0) {
-			String[] tempProperties = new String[numPropertiesOwned];
-			int j = 0;
-			for (int i = 0; i < logicFields.length; i++) {
-				if (logicFields[i] instanceof Ownable) {
-					if (((Ownable)(logicFields[i])).isOwned()) {
-						if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
-							if (logicFields[i] instanceof Territory) {
-								if (getHouseCount(i)==0) {
-									tempProperties[j] = logicFields[i].getName();
-									j++;
-								}
-							} else {
-								tempProperties[j] = logicFields[i].getName();
-								j++;
+	public ArrayList<String> getOwnedUnbuiltProperties(Player player) {
+		ArrayList<String> properties = new ArrayList<String>();
+		for (int i = 0; i < logicFields.length; i++) {
+			if (logicFields[i] instanceof Ownable) {
+				if (((Ownable)(logicFields[i])).isOwned()) {
+					if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
+						if (logicFields[i] instanceof Territory) {
+							if (getHouseCount(i)==0) {
+								properties.add(logicFields[i].getName());
 							}
+						} else {
+							properties.add(logicFields[i].getName());
 						}
 					}
 				}
 			}
-			String[] properties = null;
-			if (tempProperties.length==1) {
-				properties = new String[1];
-			} else {
-				j = 0;
-				for (int i = 0; i < tempProperties.length; i++) {
-					if (tempProperties[i] != null) {
-						j++;
-					}
-				}
-				properties = new String[j];
-			}
-
-			for (int i = 0; i < properties.length; i++) {
-				properties[i] = tempProperties[i];
-			}
-			return properties;
 		}
-		return null;
+		return properties;
 	}
 
 	public int netWorth(Player player) {
@@ -235,7 +207,7 @@ public class GameBoard {
 		} catch (SQLException s) {
 			deck.newDeck(text);
 		}
-		
+
 	}
 
 	public int getHotelCount(){
@@ -295,7 +267,18 @@ public class GameBoard {
 
 	public String drawCard(Player player){
 		return deck.draw(player);
+
+	}
+
+	public void probateCourt(Player player) {
+		ArrayList<String> properties = getOwnedProperties(player);
 		
+
+
+
+
+
+
 	}
 
 }
