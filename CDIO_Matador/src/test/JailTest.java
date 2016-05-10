@@ -41,7 +41,10 @@ public class JailTest {
 		assertEquals(actual,expected);
 	}
 	
-	
-	
+	@Test
+	public void prisonPayment(){
+		
+		
+	}
 
 }
