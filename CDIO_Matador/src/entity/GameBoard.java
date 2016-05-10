@@ -230,7 +230,12 @@ public class GameBoard {
 
 	public void loadCardDeck(Texts text, SQL sql) throws SQLException {
 		deck = new CardStack();
-		deck.loadCards(text, sql);
+		try {
+			deck.loadCards(text, sql);
+		} catch (SQLException s) {
+			deck.newDeck(text);
+		}
+		
 	}
 
 	public int getHotelCount(){
