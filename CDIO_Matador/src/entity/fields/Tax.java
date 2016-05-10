@@ -22,7 +22,7 @@ public class Tax extends AbstractFields {
 			answer = gui.getUserButtonPressed(text.getString("taxOrFine"), text.getString("tax"),text.getString("fine"));
 			if (answer.equals(text.getString("tax"))) {
 				gui.showMessage(text.getString("choseTax"));
-				player.updateBalance(-((int)(player.getBalance()*0.1)));
+				player.updateBalance(-(int)(board.netWorth(player)*0.1));
 			} else {
 				gui.showMessage(text.getString("choseFine"));
 				player.updateBalance(-4000);
