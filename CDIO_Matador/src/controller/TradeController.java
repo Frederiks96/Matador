@@ -82,13 +82,13 @@ public class TradeController {
 
 	private ArrayList<String> getOwnProperties(GameBoard board, Player offeror, GUI_Commands gui, Texts text) {
 		ownProperties = new ArrayList<String>();
+		ArrayList<String> presented = board.getOwnedUnbuiltProperties(offeror);
 		do {
-			ArrayList<String> presented = new ArrayList<String>();
-			String[] possible = new String[board.getOwnedUnbuiltProperties(offeror).size()+1];
-			if (board.getOwnedUnbuiltProperties(offeror).size()>0) {
-				presented = board.getOwnedUnbuiltProperties(offeror);
-				presented.add(text.getString("none"));
+			String[] possible;
+			if (presented.size()>0) {
 				if (ownProperties.size() == 0) {
+					presented.add(text.getString("none"));
+					possible = new String[presented.size()];
 					presented.toArray(possible);
 					String choice = gui.getUserSelection(text.getString("commenceTrade"), possible);
 					if (!choice.equals(text.getString("none"))) {
@@ -96,18 +96,18 @@ public class TradeController {
 					} else {
 						break;
 					}
-				} else if (ownProperties.size() == possible.length-1) { 
+				} else if (ownProperties.size() == board.getOwnedUnbuiltProperties(offeror).size()) { 
 					gui.showMessage(text.getString("noMoreProp"));
 					break;
 				}
 				else {
 					// Sorter nogle fra
-					for (int i = 0; i < possible.length; i++) {
+					for (int i = 0; i < presented.size(); i++) {
 						if (ownProperties.contains(presented.get(i))) {
 							presented.remove(i);
 						}
 					}
-					presented.add(text.getString("none"));
+					possible = new String[presented.size()];
 					String choice = gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(possible));
 					if (!choice.equals(text.getString("none"))) {
 						ownProperties.add(choice);
@@ -126,12 +126,12 @@ public class TradeController {
 	private ArrayList<String> getFoeProperties(GameBoard board, Player offeree, GUI_Commands gui, Texts text) {
 		foeProperties = new ArrayList<String>();
 		do {
-			ArrayList<String> presented = new ArrayList<String>();
-			String[] possible = new String[board.getOwnedUnbuiltProperties(offeree).size()+1];
-			if (board.getOwnedUnbuiltProperties(offeree).size()>0) {
-				presented = board.getOwnedUnbuiltProperties(offeree);
-				presented.add(text.getString("none"));
+			ArrayList<String> presented = board.getOwnedUnbuiltProperties(offeree);
+			String[] possible;
+			if (presented.size()>0) {
 				if (foeProperties.size() == 0) {
+					presented.add(text.getString("none"));
+					possible = new String[presented.size()];
 					presented.toArray(possible);
 					String choice = gui.getUserSelection(text.getFormattedString("foeProperties",offeree.getName()), possible);
 					if (!choice.equals(text.getString("none"))) {
@@ -139,16 +139,17 @@ public class TradeController {
 					} else {
 						break;
 					}
-				} else if (foeProperties.size() == possible.length-1) {
+				} else if (foeProperties.size() == presented.size()) {
 					gui.showMessage(text.getFormattedString("noMorePropFoe",offeree.getName()));
 					break;
 				} else {
-					for (int i = 0; i < possible.length; i++) {
+					for (int i = 0; i < presented.size(); i++) {
 						if (foeProperties.contains(presented.get(i))) {
 							presented.remove(i);
 						}
 					}
 					presented.add(text.getString("none"));
+					possible = new String[presented.size()];
 					String choice = gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(possible));
 					if (!choice.equals(text.getString("none"))) {
 						foeProperties.add(choice);

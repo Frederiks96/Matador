@@ -78,7 +78,6 @@ public class Controller  {
 		}
 
 		board.setupBoard(text);
-		sql.createBankManager();
 		sql.createProperties();
 		addPlayers();
 		players[0].setTurn(true);
