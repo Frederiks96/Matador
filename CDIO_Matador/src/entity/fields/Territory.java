@@ -118,7 +118,6 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 	}
 
-	@Override
 	public void buyProperty(Player player, Texts text, GUI_Commands gui){
 		if (player.getAccount().legalTransaction(-this.price)){
 			player.updateBalance(-this.price);
@@ -130,7 +129,6 @@ public class Territory extends AbstractFields implements Ownable {
 		player.sellTerritory();
 	}
 
-	@Override
 	public void mortgage(Texts text, GUI_Commands gui) { 
 		if (houseCount == 0) {
 			isMortgaged = true;
@@ -169,6 +167,7 @@ public class Territory extends AbstractFields implements Ownable {
 		return this.isMortgaged;
 	}
 
+	@Override
 	public int getID() {
 		return this.id;
 	}
@@ -189,7 +188,6 @@ public class Territory extends AbstractFields implements Ownable {
 		return housePrice;
 	}
 
-	@Override
 	public void setMortgage(boolean x) {
 		isMortgaged = x;
 	}

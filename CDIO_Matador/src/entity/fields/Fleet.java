@@ -21,6 +21,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		this.name = (String) text.getInfo(id+"_name");
 	}
 
+	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		gui.showMessage(text.getFormattedString("land", this.name));
 		if (!isOwned()) {
@@ -97,17 +98,14 @@ public class Fleet extends AbstractFields implements Ownable {
 		return id;
 	}
 
-	@Override
 	public void sellProperty(Player player) {
 		player.sellFleet();
 	}
 
-	@Override
 	public int getPrice() {
 		return price;
 	}
 
-	@Override
 	public void setMortgage(boolean x) {
 		isMortgaged = x;
 	}
