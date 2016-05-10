@@ -50,13 +50,17 @@ public class TestChanceField {
 	public void test() throws SQLException {
 		board.createCardDeck(text, sql);
 		player1.setPosition(2);
-		for (int i = 0; i < 50; i++) {
-			board.landOnField(player1, text, gui);
-			player1.setPosition(2);
-		}
-		while (player1.getCard() != null) {
-			System.out.println(player1.getCard().toString());
-			player1.takeCard();
+		try {
+			for (int i = 0; i < 50; i++) {
+				board.landOnField(player1, text, gui);
+				player1.setPosition(2);
+			}
+			while (player1.getCard() != null) {
+				System.out.println(player1.getCard().toString());
+				player1.takeCard();
+			}
+		} catch (NullPointerException n) {
+			
 		}
 	}
 
