@@ -25,8 +25,12 @@ public class TradeController {
 		ownProperties = getOwnProperties(board, offeror, gui, text);
 		foeProperties = getFoeProperties(board, offeree, gui, text);
 
-		ownOffer = gui.getUserInteger(text.getString("getOwnOffer"));
-		foeOffer = gui.getUserInteger(text.getFormattedString("getFoeOffer",offeree.getName()));
+		do {
+			ownOffer = gui.getUserInteger(text.getString("getOwnOffer")+text.getFormattedString("lessThan",offeror.getBalance()));
+		} while (ownOffer>offeror.getBalance());
+		do {
+		foeOffer = gui.getUserInteger(text.getFormattedString("getFoeOffer",offeree.getName())+text.getFormattedString("lessThan",offeree.getBalance()));
+		} while (foeOffer>offeree.getBalance());
 		gui.showMessage(text.getFormattedString("handover", offeree.getName()));
 		answer = gui.getUserSelection(text.getString("accept"),text.getString("Yes"),text.getString("No"),text.getString("counterOffer"));
 
@@ -125,8 +129,8 @@ public class TradeController {
 
 	private ArrayList<String> getFoeProperties(GameBoard board, Player offeree, GUI_Commands gui, Texts text) {
 		foeProperties = new ArrayList<String>();
+		ArrayList<String> presented = board.getOwnedUnbuiltProperties(offeree);
 		do {
-			ArrayList<String> presented = board.getOwnedUnbuiltProperties(offeree);
 			String[] possible;
 			if (presented.size()>0) {
 				if (foeProperties.size() == 0) {
@@ -139,7 +143,7 @@ public class TradeController {
 					} else {
 						break;
 					}
-				} else if (foeProperties.size() == presented.size()) {
+				} else if (foeProperties.size() == board.getOwnedUnbuiltProperties(offeree).size()) {
 					gui.showMessage(text.getFormattedString("noMorePropFoe",offeree.getName()));
 					break;
 				} else {
@@ -148,7 +152,6 @@ public class TradeController {
 							presented.remove(i);
 						}
 					}
-					presented.add(text.getString("none"));
 					possible = new String[presented.size()];
 					String choice = gui.getUserSelection(text.getString("commenceTrade"), presented.toArray(possible));
 					if (!choice.equals(text.getString("none"))) {
