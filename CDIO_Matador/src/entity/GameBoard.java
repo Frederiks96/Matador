@@ -29,6 +29,9 @@ public class GameBoard {
 	public GameBoard(Controller con) {
 		this.con = con;
 	}
+	
+	public GameBoard() {
+	}
 
 
 	public void setupBoard(Texts text) {
