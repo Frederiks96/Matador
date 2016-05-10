@@ -7,3 +7,7 @@ CREATE TABLE IF NOT EXISTS `Player`(`player_id` INT NOT NULL,`vehicle_id` INT NO
 CREATE TABLE IF NOT EXISTS `ChanceCard` (`card_id` INT NOT NULL,`player_id` INT NOT NULL,`position` INT NOT NULL,PRIMARY KEY (`card_id`),FOREIGN KEY (`player_id`)REFERENCES `Player` (`player_id`));
 
 CREATE TABLE IF NOT EXISTS `Property` (`field_id` INT NOT NULL,`player_id` INT NOT NULL,`house_count` INT NOT NULL,`mortgage` BOOLEAN NOT NULL,PRIMARY KEY (`field_id`),FOREIGN KEY (`player_id`)REFERENCES `Player` (`player_id`));
+
+INSERT INTO Vehicle VALUES(0,"","");
+INSERT INTO Bank VALUES(0,0);
+INSERT INTO Player VALUES(0,0,0,"MANAGER",0,0,false,false);

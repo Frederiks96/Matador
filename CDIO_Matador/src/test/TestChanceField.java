@@ -1,9 +1,13 @@
 package test;
 
+import java.sql.SQLException;
+
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import boundary.GUI_Commands;
+import boundary.SQL;
 import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
@@ -11,11 +15,24 @@ import entity.Texts.language;
 
 public class TestChanceField {
 	
-	private Player player1;
 	private GameBoard board;
 	private Texts text;
-	private GUI_Commands gui;
+	private static SQL sql;
+	private Player player1;
 	
+	@BeforeClass // Ét SQL objekt (og dermed én connection) til fælles for hele testklassen, som ikke skal åbnes og lukkes løbende
+	public static void setUpBeforeClass() throws Exception {
+		sql = new SQL();
+		sql.getConnection();
+		sql.createNewDB("JUNITTESTKORT");
+		sql.useDB("JUNITTESTKORT");
+	}
+
+	@AfterClass // Connection lukkes efterfølgende 
+	public static void tearDownAfterClass() throws Exception {
+		sql.dropDataBase(); // Smider databasen, således at testen kan køres flere gange, uden at man får fejl
+		sql.closeConnection();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -23,20 +40,16 @@ public class TestChanceField {
 		board = new GameBoard();
 		text = new Texts(language.Dansk);
 		board.setupBoard(text);
-		gui = new GUI_Commands();
+		
 	}
 
 	@Test
-	public void test() {
-		player1.setPosition(2);
-		board.createCardDeck(text);
-		gui.addPlayer(player1.getName(), player1.getBalance());
-		gui.setCar(player1.getPosition(), player1.getName());
-		for (int i = 0; i < 35; i++) {
-			board.landOnField(player1, text, gui);
-			player1.setPosition(2);
-			gui.setBalance(player1.getName(), player1.getBalance());
+	public void test() throws SQLException {
+		board.createCardDeck(text, sql);
+		for (int i = 0; i < 65; i++) {
+			System.out.println(board.drawCard(player1));
 		}
+		System.out.println(board.drawCard(player1));
 	}
 
 }
