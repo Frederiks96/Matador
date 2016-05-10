@@ -38,7 +38,7 @@ public class TestGetProperties {
 	public void test() throws SQLException {
 		player.setPosition(1);
 		board.landOnField(player, text, gui);
-		assertEquals(board.getOwnedProperties(player)[0],aha[0]);
+		assertEquals(board.getOwnedProperties(player).get(0),aha[0]);
 	}
 
 }
