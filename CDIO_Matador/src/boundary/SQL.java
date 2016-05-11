@@ -526,29 +526,6 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-	public void createBankManager() throws SQLException {
-		createAccount(0, 0);
-		createVehicle(0, "MANAGER", "MANAGER");
-		try {
-			String update = "INSERT INTO "+dbName+".player VALUES(?,?,?,?,?,?,?,?)";
-			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
-			stmt.setInt(1, 0);
-			stmt.setInt(2, 0);
-			stmt.setInt(3, 0);
-			stmt.setString(4, "MANAGER");
-			stmt.setInt(5, 0);
-			stmt.setInt(6, 0);
-			stmt.setBoolean(7, false);
-			stmt.setBoolean(8, false);
-			try {
-				stmt.executeUpdate();
-			} finally {
-				stmt.close();
-			}
-		} finally {
-		}
-	}
-
 	public void createAccount(int aId, int balance) throws SQLException {
 		try {
 			String update = "INSERT INTO "+dbName+".bank VALUES(?,?)";
