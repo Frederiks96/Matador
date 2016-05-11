@@ -23,7 +23,6 @@ public class Brewery extends AbstractFields implements Ownable {
 
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
-		gui.showMessage(text.getFormattedString("land", this.name));
 		if (!isOwned()) {
 			boolean buy = gui.getUserLeftButtonPressed(text.getFormattedString("buy",getName(),
 					getPrice()),text.getString("Yes"), text.getString("No"));
@@ -32,19 +31,11 @@ public class Brewery extends AbstractFields implements Ownable {
 				buyProperty(player, text, gui);
 			}
 		} else if(!isMortgaged && owner!=player && isOwned()) {
-			gui.showMessage(text.getFormattedString("rent", getRent(board), owner.getName()));
-			if (player.updateBalance(-getRent(board))) {
-				owner.updateBalance(getRent(board));
-				gui.setBalance(player.getName(), player.getBalance());
-				gui.setBalance(owner.getName(), owner.getBalance());
-			} else {
-				if (board.netWorth(player)>getRent(board)) {
-					
-				} else {
-					// Spilleren er færdig
-					player.bankrupt();
-				}
-			}
+			gui.showMessage(text.getFormattedString("rent", getRent(board), owner));
+			player.updateBalance(-getRent(board));
+			owner.updateBalance(getRent(board));
+			gui.setBalance(player.getName(), player.getBalance());
+			gui.setBalance(owner.getName(), owner.getBalance());
 		}
 	}
 
@@ -55,7 +46,6 @@ public class Brewery extends AbstractFields implements Ownable {
 		}else gui.showMessage(text.getString("failedTransaction"));
 	}
 
-	@Override
 	public void sellProperty(Player player) {
 		player.sellBrewery();
 	}
@@ -105,12 +95,11 @@ public class Brewery extends AbstractFields implements Ownable {
 		return id;
 	}
 
-	@Override
+
 	public int getPrice() {
 		return price;
 	}
 
-	@Override
 	public void setMortgage(boolean x) {
 		isMortgaged = x;
 	}
