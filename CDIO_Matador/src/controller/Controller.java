@@ -125,9 +125,9 @@ public class Controller  {
 	}
 
 	/**
+	 * Controls the chain of events in a player's turn. 
 	 * 
-	 * 
-	 * @param player
+	 * @param player – The player that has his turn
 	 * @throws SQLException
 	 */
 	public void playerTurn(Player player) throws SQLException {
@@ -232,6 +232,9 @@ public class Controller  {
 		} while (!options.equals(text.getString("roll")) || board.getDiceCup().hasPair());
 	}
 
+	/**
+	 * Prompts the users of which language they wish to use in the game 
+	 */
 	private void getLanguage() {
 		String lang = gui.getUserButtonPressed("Choose your preferred language", "Dansk", "English");
 		if (lang.equals("Dansk")) {
@@ -241,6 +244,12 @@ public class Controller  {
 		}
 	}
 
+	/**
+	 * Evaluates whether a given name is currently in use.
+	 * 
+	 * @param name – The name to be evaluated
+	 * @return true if the name is eligible for use, otherwise false
+	 */
 	public boolean isValidName(String name) {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i] != null) {
@@ -253,6 +262,11 @@ public class Controller  {
 		return true;
 	}
 
+	/**
+	 * Counts the number of players currently alive in the game
+	 * 
+	 * @return num
+	 */
 	public int numPlayersAlive() {
 		int num = 0;
 		for (int i = 0; i < players.length; i++) {
@@ -263,6 +277,12 @@ public class Controller  {
 		return num;
 	}
 
+	/**
+	 * Asks the users how many players will be participating in the game and adds this amount of players to the game logic and the GUI.
+	 * The number of players in a game cannot exceed 6 and has to be minimum 2.
+	 * 
+	 * @throws SQLException
+	 */
 	private void addPlayers() throws SQLException {
 		int numOfPlayers = 0;
 		do {
@@ -286,6 +306,11 @@ public class Controller  {
 		} while(i<players.length);
 	}
 
+	/**
+	 * Loads players and their last saved state from the database
+	 * 
+	 * @throws SQLException
+	 */
 	private void loadPlayers() throws SQLException {
 		players = new Player[sql.countPlayers()-1];
 		for (int i = 0; i < players.length; i++) {
@@ -305,6 +330,13 @@ public class Controller  {
 	//		deck.loadCards(text);
 	// }
 
+	/**
+	 * Evaluates whether the name of the game is fit for use, or if it conflicts with a already existing game. 
+	 * 
+	 * @param dbName – The name of the game
+	 * @return true if the name is already in use in the database, otherwise false
+	 * @throws SQLException
+	 */
 	private boolean dbNameUsed(String dbName) throws SQLException {
 		String[] s = sql.getActiveGames();
 		for (int i = 0; i < s.length; i++) {
@@ -315,6 +347,12 @@ public class Controller  {
 		return false;
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param gameName
+	 * @return
+	 */
 	private boolean isNotValidDBName(String gameName) {
 		return gameName.equals(null) || gameName.trim().equals("") || 
 				gameName.contains("/") || gameName.contains(";") || 
