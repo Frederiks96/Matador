@@ -29,6 +29,12 @@ public class Controller  {
 		sql.getConnection();
 	}
 
+	/**
+	 * Runs the game and give each player their turn. If only one player is alive, the player will be declared as winner, 
+	 * and the game will end.
+	 * 
+	 * @throws SQLException
+	 */
 	public void run() throws SQLException {
 		getLanguage();
 		chooseGame();
@@ -55,6 +61,11 @@ public class Controller  {
 		gui.closeGUI();
 	}
 
+	/**
+	 * Lets the user choose whether a new game should be started, or if they wish to continue a previous game.
+	 * 
+	 * @throws SQLException
+	 */
 	private void chooseGame() throws SQLException {
 		String game = gui.getUserButtonPressed(text.getString("loadGameQuestion"),text.getString("loadGame"),text.getString("newGame"));
 		if (game.equals(text.getString("newGame"))) {
@@ -64,6 +75,13 @@ public class Controller  {
 		}
 	}
 
+	/**
+	 * Lets the users choose a name for their game.
+	 * Starts a new game by setting up the gameboard and adding players to the game.
+	 * Creates a new deck of ChanceCards.
+	 * 
+	 * @throws SQLException
+	 */
 	public void startNewGame() throws SQLException {
 		do {
 			gameName = gui.getUserString(text.getString("nameGame"));
@@ -83,6 +101,13 @@ public class Controller  {
 		board.createCardDeck(text, sql);
 	}
 
+	/**
+	 * Loads a game stored in the database and sets up the board from the last saved state.
+	 * 
+	 * @param text – The text object that will determine which texts will be loaded from the properties file, dependent on the language.
+	 * @param gameName – The name of the game that will be loaded from the database
+	 * @throws SQLException
+	 */
 	public void loadGame(Texts text, String gameName) throws SQLException {
 		sql.useDB(gameName);
 		board.setupBoard(text);
@@ -99,6 +124,12 @@ public class Controller  {
 		}
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param player
+	 * @throws SQLException
+	 */
 	public void playerTurn(Player player) throws SQLException {
 		String options;
 		int numPairs = 0;
