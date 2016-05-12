@@ -12,6 +12,8 @@ public class DiceCup {
 	public DiceCup() {
 		this.die1 = new Dice();
 		this.die2 = new Dice();
+		die1.roll();
+		die2.roll();
 	}
 	/**
 	 * Roll the two dice

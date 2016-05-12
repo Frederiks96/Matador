@@ -16,7 +16,7 @@ import entity.fields.AbstractFields;
 import entity.fields.Territory;
 /**
  * This class contains methods that connect the program with a database. It contains both transfer and access methods.
- * @author Oliver
+ * @author Frederik
  *
  */
 public class SQL implements DAO, DTO {

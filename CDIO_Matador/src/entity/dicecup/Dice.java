@@ -6,7 +6,7 @@ package entity.dicecup;
  */
 public class Dice {
 
-	private int lastRoll;
+	private int lastRoll = 1;
 	/**
 	 * Rolls a random value between 1 and 6
 	 */

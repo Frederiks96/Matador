@@ -19,8 +19,8 @@ import entity.Texts.language;
 public class TestDB {
 
 	private static SQL sql;
-	private Player player1;
-	private Player player2;
+	private static Player player1;
+	private static Player player2;
 	private GameBoard board;
 	private Texts text;
 
@@ -28,21 +28,18 @@ public class TestDB {
 	public static void setUpBeforeClass() throws Exception {
 		sql = new SQL();
 		sql.getConnection();
-		sql.createNewDB("SQLTEST");
-		sql.useDB("SQLTEST");
+		player1 = new Player("Mikkel","Grøn","Bil");
+		player2 = new Player("Lars","Rød","UFO");
 	}
 
 	@AfterClass // Connection lukkes efterfølgende 
 	public static void tearDownAfterClass() throws Exception {
-		sql.dropDataBase(); // Smider databasen, således at testen kan køres flere gange, uden at man får fejl
 		sql.closeConnection();
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		text = new Texts(language.Dansk);
-		player1 = new Player("Mikkel","Grøn","Bil");
-		player2 = new Player("Lars","Rød","UFO");
 		board = new GameBoard();
 		board.setupBoard(text);
 	}
@@ -52,7 +49,9 @@ public class TestDB {
 	}
 
 	@Test
-	public void testCreatePlayer() throws SQLException {
+	public void testCreatePlayer() throws Exception {
+		sql.createNewDB("SQLTEST");
+		sql.useDB("SQLTEST");
 		sql.createPlayer(player1);
 		sql.createPlayer(player2);
 
@@ -127,10 +126,14 @@ public class TestDB {
 		assertEquals(expectedJailTime,actualJailTime);
 		assertEquals(expectedTurn,actualTurn);
 		assertEquals(expectedIsAlive,actualIsAlive);
+		
+		sql.dropDataBase();
 	}
 
 	@Test
-	public void testSetBalance() throws SQLException {
+	public void testSetBalance() throws Exception {
+		sql.createNewDB("SQLTEST");
+		sql.useDB("SQLTEST");
 		sql.createPlayer(player1);
 		sql.createPlayer(player2);
 		player1.updateBalance(-10);
@@ -143,10 +146,14 @@ public class TestDB {
 		expected = player2.getBalance();
 		actual = sql.getBalance(player2.getPlayerID());
 		assertEquals(expected,actual);
+		
+		sql.dropDataBase();
 	}
 	
 	@Test
-	public void testLoadPlayer() throws SQLException {
+	public void testLoadPlayer() throws Exception {
+		sql.createNewDB("SQLTEST");
+		sql.useDB("SQLTEST");
 		sql.createPlayer(player1);
 		sql.createPlayer(player2);
 		
@@ -193,6 +200,8 @@ public class TestDB {
 		assertEquals(player2.getNumFleetsOwned(),player4.getNumFleetsOwned());
 		assertEquals(player2.getNumTerritoriesOwned(),player4.getNumTerritoriesOwned());
 		assertEquals(player2.getPosition(),player4.getPosition());
+		
+		sql.dropDataBase();
 		
 	}
 	
