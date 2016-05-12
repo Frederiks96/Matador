@@ -60,7 +60,7 @@ public interface Ownable {
 	void unMortgage();
 	
 	/**
-	 * Sells the property to the bank for half the price, and sets the owner to null. Updates the player's balance with the amount. 
+	 * Decrements the number of fields the owner owns.
 	 * 
 	 * @param player – The owner of the field, who sells the property
 	 */
