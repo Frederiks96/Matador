@@ -6,6 +6,12 @@ import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 
+/**
+ * This class is for the territory fields
+ * It counts houses and hotels on the territories
+ * @author Benjamin Jensen
+ *
+ */
 public class Territory extends AbstractFields implements Ownable {
 
 
@@ -232,7 +238,10 @@ public class Territory extends AbstractFields implements Ownable {
 	public int getPrice() {
 		return price;
 	}
-
+	/**
+	 * 
+	 * @return - The price of a house
+	 */
 	public int getHousePrice(){
 		return housePrice;
 	}
