@@ -212,11 +212,17 @@ public class ChanceField extends AbstractFields {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public String getName() {
 		return this.name;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public int getID() {
 		return id;
