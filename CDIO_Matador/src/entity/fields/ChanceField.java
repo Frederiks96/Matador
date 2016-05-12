@@ -14,7 +14,10 @@ public class ChanceField extends AbstractFields {
 		super(id);
 		this.name = (String) text.getInfo(id+"_name");
 	}
-
+	
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		gui.showMessage(text.getFormattedString("land",this.name));

@@ -38,7 +38,6 @@ public class Account {
 	 * @param d the amount to be added or subtracted from the player's balance
 	 * @return whether the transaction has been made
 	 */
-	
 	public Boolean updateBalance(int d) {
 		if (legalTransaction(d)){
 			this.balance += d;
