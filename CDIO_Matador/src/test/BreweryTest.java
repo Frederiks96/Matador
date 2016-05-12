@@ -53,7 +53,8 @@ public class BreweryTest {
 		public void payRentBrewery(){
 			
 			board.setOwner(12, player1,gui);
-			player2.setPosition(4);			
+			player2.setPosition(12);
+			board.landOnField(player2, text, gui);
 			
 			int actualPlayer1Balance = player1.getBalance();
 			int expectedPlayer1Balance = 30000 + ((Brewery)board.getLogicField(12)).getRent(board);
@@ -71,7 +72,8 @@ public class BreweryTest {
 		public void payRentTwoBrewery(){
 			board.setOwner(12, player1,gui);
 			board.setOwner(28, player1, gui);
-			player2.setPosition(4);			
+			player2.setPosition(12);
+			board.landOnField(player2, text, gui);
 			
 			
 			int actualPlayer1Balance = player1.getBalance();

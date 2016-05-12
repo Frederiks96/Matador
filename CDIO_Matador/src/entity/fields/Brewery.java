@@ -34,7 +34,7 @@ public class Brewery extends AbstractFields implements Ownable {
 				buyProperty(player, text, gui);
 			}
 		} else if(!isMortgaged && owner!=player && isOwned()) {
-			gui.showMessage(text.getFormattedString("rent", getRent(board), owner));
+			gui.showMessage(text.getFormattedString("rent", getRent(board), owner.getName()));
 			player.updateBalance(-getRent(board));
 			owner.updateBalance(getRent(board));
 			gui.setBalance(player.getName(), player.getBalance());
