@@ -234,6 +234,7 @@ public class Controller  {
 			}
 			saveGame();
 		} while (!options.equals(text.getString("roll")) || board.getDiceCup().hasPair());
+		saveGame();
 	}
 
 	/**

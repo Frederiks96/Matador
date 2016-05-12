@@ -33,7 +33,7 @@ public class TaxTest {
 
 	@Test
 	public void payTax10(){
-
+		gui.showMessage("vælg 10%");
 		player1.setPosition(4);
 		board.landOnField(player1, text, gui);
 
@@ -46,6 +46,7 @@ public class TaxTest {
 
 	@Test
 	public void payTax4000(){
+		gui.showMessage("vælg 4000");
 		player1.setPosition(4);
 		board.landOnField(player1, text, gui);
 
