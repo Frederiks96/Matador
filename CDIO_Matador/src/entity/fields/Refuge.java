@@ -35,12 +35,16 @@ public class Refuge extends AbstractFields {
 			gui.setCar(player.getPosition(), player.getName());
 		}
 	}
-	
+	/**
+	 * @inheritDoc	
+	 */
 	@Override
 	public String getName() {
 		return this.name;
 	}
-
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public int getID() {
 		return id;
