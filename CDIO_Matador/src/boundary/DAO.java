@@ -110,5 +110,21 @@ public interface DAO {
 	 * @throws SQLException
 	 */
 	public String[] getActiveGames() 			throws SQLException;
+	
+	/**
+	 * 
+	 * @param playerID
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean getIsAlive(int playerID)	    throws SQLException;
+	
+	/**
+	 * 
+	 * @param playerID
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean getTurn(int playerID) 		throws SQLException;
 
 }

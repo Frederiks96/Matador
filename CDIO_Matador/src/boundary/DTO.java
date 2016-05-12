@@ -109,5 +109,33 @@ public interface DTO {
 	 * @throws IOException
 	 */
 	void createNewDB(String dbName)												throws SQLException, IOException;
+	
+	/**
+	 * 
+	 * @param card
+	 * @param position
+	 * @throws SQLException
+	 */
+	public void updateCard(ChanceCard card, int position) 						throws SQLException;
+	
+	/**
+	 * 
+	 * @param field_id
+	 * @param player_id
+	 * @throws SQLException
+	 */
+	public void setOwner(int field_id, int player_id) 							throws SQLException;
+	
+	/**
+	 * 
+	 * @throws SQLException
+	 */
+	public void closeConnection() 												throws SQLException;
+	
+	/**
+	 * 
+	 * @throws SQLException
+	 */
+	public void createProperties() 												throws SQLException;
 
 }

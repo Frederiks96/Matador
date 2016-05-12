@@ -25,19 +25,37 @@ public class SQL implements DAO, DTO {
 	public SQL() throws SQLException {
 	}
 
+	/**
+	 * 
+	 * @throws SQLException
+	 */
 	public void getConnection() throws SQLException {
 		myCon = DriverManager.getConnection("jdbc:mysql://localhost/",username,password);
 	}
 
+	/**
+	 * 
+	 * @param dbName
+	 * @throws SQLException
+	 */
 	public void useDB(String dbName) throws SQLException {
 		SQL.dbName = "CDIO_"+dbName;
 	}
 
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 */
 	public void updateUser(String username, String password) {
 		SQL.username = username;
 		SQL.password = password;
 	}
 
+	/**
+	 * 
+	 * @throws SQLException
+	 */
 	public void dropDataBase() throws SQLException {
 		try {
 			Statement stmt = myCon.createStatement();
@@ -55,7 +73,9 @@ public class SQL implements DAO, DTO {
 	//										>>> Data access objects <<<<
 	// ------------------------------------------------------------------------------------------------------------------
 
-
+	/**
+	 * @inheritDoc
+	 */
 	public int getPosition(int playerID) throws SQLException { 
 		java.sql.PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -78,6 +98,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public String getPlayerName(int playerID) throws SQLException {
 		java.sql.PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -100,6 +123,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public int getBalance(int playerID) throws SQLException {
 		java.sql.PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -122,6 +148,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public int getJailTime(int playerID) throws SQLException {
 		java.sql.PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -144,6 +173,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public String getVehicleColour(int playerID) throws SQLException {
 		try {
 			String query = "SELECT v_colour FROM "+dbName+".player NATURAL JOIN "+dbName+".vehicle WHERE player_id = ?";
@@ -164,6 +196,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public String getVehicleType(int playerID) throws SQLException {
 		try {
 			String query = "SELECT v_type FROM "+dbName+".player NATURAL JOIN "+dbName+".vehicle WHERE player_id = ?";
@@ -184,6 +219,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public int getCardId(int position) throws SQLException {
 		try {
 			String query = "SELECT card_id FROM "+dbName+".chanceCard WHERE position = ?";
@@ -204,6 +242,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public int getCardPosition(int cardID) throws SQLException {
 		try {
 			String query = "SELECT position FROM "+dbName+".chanceCard WHERE card_ID = ?";
@@ -224,6 +265,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public int getFieldHouseCount(Territory territory) throws SQLException {
 		try {
 			String query = "SELECT house_count FROM "+dbName+".property WHERE field_id = ?";
@@ -245,7 +289,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
-
+	/**
+	 * @inheritDoc
+	 */
 	public boolean isMortgaged(AbstractFields field) throws SQLException {
 		try {
 			String query = "SELECT mortgage FROM "+dbName+".property WHERE field_id = ?";
@@ -266,6 +312,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public int getOwnerID(int fieldID) throws SQLException {
 		try {
 			String query = "SELECT player_id FROM "+dbName+".property WHERE field_id = ?";
@@ -288,6 +337,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public int countPlayers() throws SQLException {
 		try {
 			Statement stmt = myCon.createStatement();
@@ -306,6 +358,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public String[] getActiveGames() throws SQLException { 
 		try {
 			Statement stmt = myCon.createStatement();
@@ -333,6 +388,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public boolean getIsAlive(int playerID) throws SQLException {
 		try {
 			String query = "SELECT is_active FROM "+dbName+".player WHERE player_id = ?";
@@ -355,6 +413,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public boolean getTurn(int playerID) throws SQLException {
 		try {
 			String query = "SELECT turn FROM "+dbName+".player WHERE player_id = ?";
@@ -382,7 +443,9 @@ public class SQL implements DAO, DTO {
 	//   										>>> Data transfer objects <<<<
 	// ------------------------------------------------------------------------------------------------------------------
 
-
+	/**
+	 * @inheritDoc
+	 */
 	public void setPosition(Player player) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".player SET position = ? WHERE player_id = ?";
@@ -398,6 +461,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void setBalance(Player player) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".bank SET balance = ? WHERE account_id = (SELECT account_id FROM "+dbName+".player WHERE player_id = ?)";
@@ -413,6 +479,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void setJailTime(Player player) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".player SET jail_time = ? WHERE player_id = ?";
@@ -428,6 +497,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void setCardPosition(int position, String card_id) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".chancecard SET position = ? WHERE card_id = ?";
@@ -443,6 +515,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void setHouseCount(int field_id, int house_count) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".property SET house_count = ? WHERE field_id = ?";
@@ -458,6 +533,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void setMortgage(int field_id, boolean mortgaged) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".property SET mortgage = ? WHERE field_id = ?";
@@ -473,6 +551,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void setIsAlive(Player player) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".player SET is_active = ? WHERE player_id = ?";
@@ -488,6 +569,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void setTurn(Player player) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".player SET turn = ? WHERE player_id = ?";
@@ -503,6 +587,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void createPlayer(Player player) throws SQLException {
 		createAccount(player.getAccountID(), player.getBalance());
 		createVehicle(player.getVehicleID(), player.getVehicleColour(), player.getVehicleType());
@@ -526,6 +613,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void createAccount(int aId, int balance) throws SQLException {
 		try {
 			String update = "INSERT INTO "+dbName+".bank VALUES(?,?)";
@@ -541,6 +631,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void createVehicle(int vId, String vColor, String vType) throws SQLException {
 		try {
 			String update = "INSERT INTO "+dbName+".vehicle VALUES(?,?,?)";
@@ -557,6 +650,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void createNewDB(String dbName) throws IOException,SQLException { 
 		try {
 			Statement stmt1 = myCon.createStatement();
@@ -583,6 +679,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void createChanceCard(ChanceCard card, int position) throws SQLException {
 		try {
 			String update = "INSERT INTO "+dbName+".chancecard VALUES(?,?,?)";
@@ -599,6 +698,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public void updateCard(ChanceCard card, int position) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".chancecard SET position = ?, player_id = ? WHERE card_id = ?";
@@ -619,6 +721,9 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void setOwner(int field_id, int player_id) throws SQLException {
 		try {
 			String update = "UPDATE "+dbName+".property SET player_id = ? WHERE field_id = ?";
@@ -634,10 +739,16 @@ public class SQL implements DAO, DTO {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public void closeConnection() throws SQLException {
 		myCon.close();
 	}
 
+	/**
+	 *@inheritDoc 
+	 */
 	public void createProperties() throws SQLException{
 		try {
 			String update = "INSERT INTO "+dbName+".property VALUES(?,?,?,?)";
