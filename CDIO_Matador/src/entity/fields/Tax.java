@@ -35,12 +35,16 @@ public class Tax extends AbstractFields {
 			player.updateBalance(-2000);
 		}
 	}
-	
+	/**
+	 * @inheritDoc	
+	 */
 	@Override
 	public String getName() {
 		return this.name;
 	}
-
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public int getID() {
 		return id;
