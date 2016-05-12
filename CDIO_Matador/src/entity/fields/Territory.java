@@ -6,6 +6,12 @@ import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 
+/**
+ * This class is for the territory fields
+ * It counts houses and hotels on the territories
+ * @author Benjamin Jensen
+ *
+ */
 public class Territory extends AbstractFields implements Ownable {
 
 
@@ -71,7 +77,11 @@ public class Territory extends AbstractFields implements Ownable {
 	public boolean isOwned() {
 		return this.owner != null;
 	}
-
+	/**
+	 * Builds a house if it is allowed and the player has sufficient funds
+	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
+	 * @param gui – The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
+	 */
 	public void buyHouse(Texts text, GUI_Commands gui){ 
 		if(owner.getAccount().legalTransaction(-housePrice) && houseCount < 4 && !isMortgaged){
 			owner.updateBalance(-housePrice);
@@ -87,7 +97,11 @@ public class Territory extends AbstractFields implements Ownable {
 		else if(!owner.getAccount().legalTransaction(-housePrice))
 			gui.showMessage(text.getString("faildTransaction"));
 	}
-
+	/**
+	 * Builds a hotel if it is allowed and the player has sufficient funds
+	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
+	 * @param gui – The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
+	 */
 	public void buyHotel(Texts text,GUI_Commands gui){	// has hotel betyder om der skal sættes eller fjernes hotel
 		if(owner.getAccount().legalTransaction(-housePrice) && houseCount == 4){
 			owner.updateBalance(-housePrice);
@@ -106,7 +120,10 @@ public class Territory extends AbstractFields implements Ownable {
 			gui.showMessage(text.getString("doubleHotel"));
 		}
 	}
-
+	/**
+	 * Sells a house and updates the player's balance
+	 * @param gui – The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
+	 */
 	public void sellHouse(GUI_Commands gui){
 		if(houseCount>0){
 			owner.updateBalance(housePrice/2);
@@ -115,7 +132,10 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 
 	}
-
+	/**
+	 * Sells a hotel and updates the player's balance
+	 * @param gui – The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
+	 */
 	public void sellHotel(GUI_Commands gui){
 		if(houseCount == 5){
 			owner.updateBalance(housePrice/2);
@@ -198,11 +218,17 @@ public class Territory extends AbstractFields implements Ownable {
 	public int getID() {
 		return this.id;
 	}
-
+	/**
+	 * 
+	 * @param houseCount - counts the amount of houses on the field
+	 */
 	public void setHouseCount(int houseCount) {
 		this.houseCount = houseCount;
 	}
-
+	/**
+	 * 
+	 * @return - the amount of houses on the field
+	 */
 	public int getHouseCount() {
 		return houseCount;
 	}
@@ -212,7 +238,10 @@ public class Territory extends AbstractFields implements Ownable {
 	public int getPrice() {
 		return price;
 	}
-
+	/**
+	 * 
+	 * @return - The price of a house
+	 */
 	public int getHousePrice(){
 		return housePrice;
 	}
