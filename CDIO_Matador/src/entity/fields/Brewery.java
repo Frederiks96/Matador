@@ -20,7 +20,10 @@ public class Brewery extends AbstractFields implements Ownable {
 		this.price = 3000;
 		this.name = (String) text.getInfo(id+"_name");
 	}
-
+	
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		if (!isOwned()) {

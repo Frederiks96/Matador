@@ -13,6 +13,9 @@ public class Refuge extends AbstractFields {
 		this.name = (String) text.getInfo(id+"_name");
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		if (player.getPosition() == 0) {

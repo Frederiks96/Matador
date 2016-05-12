@@ -20,7 +20,10 @@ public class Fleet extends AbstractFields implements Ownable {
 		this.price = 4000;
 		this.name = (String) text.getInfo(id+"_name");
 	}
-
+	
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		gui.showMessage(text.getFormattedString("land", this.name));

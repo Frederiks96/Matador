@@ -35,6 +35,9 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		gui.showMessage(text.getFormattedString("land", this.name));
