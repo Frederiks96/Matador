@@ -5,6 +5,11 @@ import java.sql.SQLException;
 import entity.fields.AbstractFields;
 import entity.fields.Territory;
 
+/**
+ * An interface for pulling data from the Database
+ * @author Benjamin Jensen
+ *
+ */
 public interface DAO {
 	
 	// Data Access object - "getters"
