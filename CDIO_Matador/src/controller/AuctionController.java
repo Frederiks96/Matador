@@ -14,6 +14,15 @@ public class AuctionController {
 	private int pass;
 	private int winner;
 
+	/**
+	 * Creates an auction if the field is eligible. The player that wins the auction is set as owner of the field.
+	 * Subtracts the winner's bid from his account.  
+	 * 
+	 * @param players – The array of players who will be participating in the auction.
+	 * @param field – The field that is on auction.
+	 * @param gui – The GUI that will receive the bids from the players and display messages to the players
+	 * @param text – The text object that specifies which texts will be printed based on the language
+	 */
 	public void auction (Player[] players, AbstractFields field, GUI_Commands gui, Texts text){
 
 		currentBid = 0;
@@ -74,7 +83,12 @@ public class AuctionController {
 		// Hvad gør vi, hvis det ikke er en legal auction???
 	}
 
-
+	/**
+	 * Returns whether the field is eligible for an auction
+	 * 
+	 * @param field – The field that will be evaluated
+	 * @return true while the field is unbuilt
+	 */
 	private boolean legalAuction(AbstractFields field){
 		if (field instanceof Territory){
 			if (((Territory)field).getHouseCount() == 0){
@@ -83,6 +97,12 @@ public class AuctionController {
 		}else return true;
 	}
 	
+	/**
+	 * Returns the number of players alive
+	 * 
+	 * @param players – The array of Players to be examined
+	 * @return num
+	 */
 	private int numPlayersAlive(Player[] players) {
 		int num = 0;
 		for (int i = 0; i < players.length; i++) {
