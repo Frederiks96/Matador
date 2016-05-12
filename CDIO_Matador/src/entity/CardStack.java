@@ -16,6 +16,11 @@ public class CardStack {
 		chanceCardDeck = new ArrayList<ChanceCard>();
 	}
 	
+	/**
+	 * Creates a new deck of ChanceCards with texts from the properties file specified by the text object
+	 * 
+	 * @param text the object initialized with an enum 'language', to get the texts for the cards
+	 */
 	public void newDeck(Texts text) {
 		for(int i = 1; i<34; i++) {
 			this.card = new ChanceCard(text.getCardString("k"+i),i);
@@ -23,10 +28,19 @@ public class CardStack {
 		}
 	}
 
+	/**
+	 * Shuffles the deck using the shuffle method in the Collections class
+	 */
 	public void shuffle() {
 		Collections.shuffle(chanceCardDeck);
 	}
 
+	/**
+	 * Draws a card and returns the text of the card drawn
+	 * 
+	 * @param player the player who draws the card from the deck
+	 * @return the text from the card
+	 */
 	public String draw(Player player) {
 		ChanceCard temp = chanceCardDeck.get(0);
 
