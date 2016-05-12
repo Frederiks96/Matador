@@ -11,6 +11,7 @@ import entity.fields.Brewery;
 import entity.fields.Fleet;
 import entity.fields.Territory;
 
+
 public class TradeController {
 	private ArrayList<String> ownProperties;
 	private ArrayList<String> foeProperties;
@@ -20,7 +21,14 @@ public class TradeController {
 
 	public TradeController() throws SQLException {
 	}
-
+	/**
+	 * This method is for suggesting a deal to other players
+	 * @param offeror - The player starting the offer
+	 * @param offeree - The player receiving the offer
+	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
+	 * @param board - The location of the fields on the gameboard
+	 * @param gui- The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
+	 */
 	public void suggestDeal(Player offeror, Player offeree, Texts text, GameBoard board, GUI_Commands gui) {
 		ownProperties = getOwnProperties(board, offeror, gui, text);
 		foeProperties = getFoeProperties(board, offeree, gui, text);
@@ -44,7 +52,17 @@ public class TradeController {
 			gui.showMessage(text.getFormattedString("dealRejected", offeree.getName()));
 		}
 	}
-
+	/**
+	 * 
+	 * @param board - The location of the fields on the gameboard
+	 * @param offeror - The player starting the offer
+	 * @param offeree - The player receiving the offer
+	 * @param ownProperties - The properties of the player making the offer
+	 * @param foeProperties - The properties of the player recieving the offer
+	 * @param ownOffer - The amount of money the player making the offer, offers
+	 * @param foeOffer - The amount of money the player receiving the offer, offers
+	 * @param gui- The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
+	 */
 	private void completeDeal(GameBoard board, Player offeror, Player offeree, ArrayList<String> ownProperties, ArrayList<String> foeProperties, int ownOffer, int foeOffer, GUI_Commands gui) {
 		// Setting offeror as owner to offeree's properties
 		if (foeProperties.size() > 0) {
@@ -83,7 +101,14 @@ public class TradeController {
 		gui.setBalance(offeror.getName(), offeror.getBalance());
 		gui.setBalance(offeree.getName(), offeree.getBalance());
 	}
-
+	/**
+	 * 
+	 * @param board - The location of the fields on the gameboard
+	 * @param offeror - The player starting the offer
+	 * @param gui- The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
+	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
+	 * @return ownProperties - The properties the player making the offer owns
+	 */
 	private ArrayList<String> getOwnProperties(GameBoard board, Player offeror, GUI_Commands gui, Texts text) {
 		ownProperties = new ArrayList<String>();
 		ArrayList<String> presented = board.getOwnedUnbuiltProperties(offeror);
@@ -126,7 +151,14 @@ public class TradeController {
 		} while (gui.getUserLeftButtonPressed(text.getString("moreProperties"), text.getString("Yes"), text.getString("No")));
 		return ownProperties;
 	}
-
+	/**
+	 * 
+	 * @param board - The location of the fields on the gameboard
+	 * @param offeree - The player receiving the offer
+	 * @param gui- The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
+	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
+	 * @return foeProperties - The properties the player receiving the offer owns
+	 */
 	private ArrayList<String> getFoeProperties(GameBoard board, Player offeree, GUI_Commands gui, Texts text) {
 		foeProperties = new ArrayList<String>();
 		ArrayList<String> presented = board.getOwnedUnbuiltProperties(offeree);
