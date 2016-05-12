@@ -348,10 +348,10 @@ public class Controller  {
 	}
 
 	/**
+	 * Evaluates whether the name contains any special characters, or only contains whitespace.
 	 * 
-	 * 
-	 * @param gameName
-	 * @return
+	 * @param gameName – The name to be evaluated
+	 * @return true if the name contains any special characters or is null, otherwise false
 	 */
 	private boolean isNotValidDBName(String gameName) {
 		return gameName.equals(null) || gameName.trim().equals("") || 
@@ -368,6 +368,12 @@ public class Controller  {
 				gameName.contains("@");
 	}
 
+	/**
+	 * Returns the player with a given name. Returns null, if the player doesn't exists.
+	 * 
+	 * @param playerName
+	 * @return Player, if the player exists, otherwise null
+	 */
 	private Player getPlayer(String playerName) {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i].getName().equals(playerName)) {
@@ -377,6 +383,12 @@ public class Controller  {
 		return null;
 	}
 
+	/**
+	 * Returns the rest of the players of the game
+	 * 
+	 * @param player – The player of which's perspective the opponents are classified
+	 * @return opponents
+	 */
 	private String[] getOpponents(Player player) {
 		String[] opponents = new String[players.length-1];
 		int j = 0;
@@ -389,6 +401,11 @@ public class Controller  {
 		return opponents;
 	}
 
+	/**
+	 * Returns the winner of the game
+	 * 
+	 * @return the name of the winner
+	 */
 	private String getWinner() {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i].isAlive()) {
@@ -398,6 +415,11 @@ public class Controller  {
 		return "";
 	}
 
+	/**
+	 * Stores the game's state in the database 
+	 * 
+	 * @throws SQLException
+	 */
 	private void saveGame() throws SQLException {
 		// TODO
 		for (int i = 0; i< players.length; i++){
@@ -407,17 +429,22 @@ public class Controller  {
 			sql.setTurn(players[i]);
 			sql.setIsAlive(players[i]);
 		}
-		//				for(int i=0; i < deck.size(); i++){
-		//					sql.setCardPosition(deck[i].getPosition, deck[i].getID());
-		//				}
-
 		board.saveBoard(sql);
 	}
 	
+	/**
+	 * Returns an array containing the players in the game.
+	 * 
+	 * @return players
+	 */
 	public Player[] getPlayers() {
 		return this.players;
 	}
 	
+	/**
+	 * Returns the AuctionController object
+	 * @return auctioneer
+	 */
 	public AuctionController getAuctionController() {
 		return this.auctioneer;
 	}
