@@ -118,4 +118,11 @@ public interface Boundary_Interface {
 	 */
 	void removeAllCars(String name);
 	
+	/**
+	 * 
+	 * @param name
+	 * @param balance
+	 */
+	void setBalance(String name, int balance);
+	
 }
