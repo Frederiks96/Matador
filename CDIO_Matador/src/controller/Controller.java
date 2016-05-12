@@ -9,6 +9,7 @@ import entity.GameBoard;
 import entity.Player;
 import entity.Texts;
 import entity.Texts.language;
+import entity.dicecup.DiceCup;
 
 public class Controller  {
 
@@ -180,6 +181,8 @@ public class Controller  {
 		}
 
 		else do {
+			// PLAYER IS NOT IN JAIL
+			
 			if (board.getDiceCup().hasPair()) {
 				gui.showMessage(text.getFormattedString("turnAgain", player.getName()));
 			}
@@ -193,7 +196,7 @@ public class Controller  {
 				player.updatePosition((board.getDiceCup().getLastRoll()));		
 				gui.setDice(board.getDiceCup().getDieOne(), board.getDiceCup().getDieTwo());	
 				gui.setCar(player.getPosition(), player.getName());		
-
+				
 				board.landOnField(player, text, gui);
 				if (board.isOwnable(player.getPosition())) {
 					if (board.getOwner(player.getPosition()) == null) {
@@ -229,6 +232,7 @@ public class Controller  {
 					gui.setBalance(players[i].getName(), players[i].getBalance());
 				}
 			}
+			saveGame();
 		} while (!options.equals(text.getString("roll")) || board.getDiceCup().hasPair());
 	}
 
@@ -430,6 +434,9 @@ public class Controller  {
 			sql.setIsAlive(players[i]);
 		}
 		board.saveBoard(sql);
+		for (int i = 0; i < players.length; i++) {
+			
+		}
 	}
 	
 	/**

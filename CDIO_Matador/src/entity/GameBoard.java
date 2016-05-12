@@ -265,7 +265,7 @@ public class GameBoard {
 	}
 	
 	/**
-	 * Saves gameboard - Saves the properties that are mortgaged, has a owner or has houses/hotels  
+	 * Saves gameboard - Saves the properties that are mortgaged, has an owner or has houses/hotels  
 	 * 
 	 * @param sql - Saves data in database
 	 * @throws SQLException
@@ -286,6 +286,7 @@ public class GameBoard {
 		}
 		deck.updateCards(sql);
 	}
+
 	
 	/**
 	 * Delegates the chain of events that occurs to a specific field when player lands on it.
