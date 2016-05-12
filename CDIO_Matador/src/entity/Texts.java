@@ -2,6 +2,11 @@ package entity;
 
 import java.util.ResourceBundle;
 
+/**
+ * This class is for pulling strings from our properties files
+ * @author Benjamin Jensen
+ *
+ */
 public class Texts {
 	
 	public enum language {Dansk,English};
