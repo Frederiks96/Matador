@@ -14,7 +14,11 @@ import entity.ChanceCard;
 import entity.Player;
 import entity.fields.AbstractFields;
 import entity.fields.Territory;
-
+/**
+ * This class contains methods that connect the program with a database. It contains both transfer and access methods.
+ * @author Oliver
+ *
+ */
 public class SQL implements DAO, DTO {
 
 	private static String username = "root";
@@ -697,7 +701,7 @@ public class SQL implements DAO, DTO {
 		} finally {
 		}
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -763,6 +767,112 @@ public class SQL implements DAO, DTO {
 				} finally {
 					stmt.close();
 				}
+			}
+		} finally {
+		}
+	}
+
+	/**
+	 *@inheritDoc 
+	 */
+	public void savePlayers(int id, int position, int jailTime, boolean isActive, boolean turn, int balance)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			String update = "call save_players(?,?,?,?,?,?)" ;
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1,id);
+			stmt.setInt(2, position);
+			stmt.setInt(3, jailTime);
+			stmt.setBoolean(4,  isActive);
+			stmt.setBoolean(5,turn);
+			stmt.setInt(6,balance);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+		}
+	}
+
+	/**
+	 *@inheritDoc 
+	 */
+	public void saveCards(int cardID, int playerID, int cardPosition) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			String update = "call save_cards(?,?,?)";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1,cardID);
+			stmt.setInt(2, playerID);
+			stmt.setInt(3, cardPosition);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+		}
+	}
+
+	/**
+	 *@inheritDoc 
+	 */
+	public void saveFields(int fieldID, int playerID, int houseCount, boolean mortgage) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			String update = "call save_fields(?,?,?,?)";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1,fieldID);
+			stmt.setInt(2, playerID);
+			stmt.setInt(3, houseCount);
+			stmt.setBoolean(4, mortgage);
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+		}
+	}
+
+	/**
+	 *@inheritDoc 
+	 */
+	public void moneyTransfer(Player player, Player owner) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			String update = "call money_transfer(?,?,?,?)";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1, player.getPlayerID());
+			stmt.setInt(2, owner.getPlayerID());
+			stmt.setInt(3, player.getBalance());
+			stmt.setInt(4, owner.getBalance());
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
+			}
+		} finally {
+		}
+	}
+
+	/**
+	 *@inheritDoc 
+	 */
+	public void buyField(Player player, AbstractFields field) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			String update = "call buy_field(?,?,?)";
+			java.sql.PreparedStatement stmt = myCon.prepareStatement(update);
+			stmt.setInt(1, field.getID());
+			stmt.setInt(2, player.getPlayerID());
+			stmt.setInt(3, player.getBalance());
+			try {
+				stmt.executeUpdate();
+			} finally {
+				stmt.close();
 			}
 		} finally {
 		}
