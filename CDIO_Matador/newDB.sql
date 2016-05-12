@@ -45,7 +45,7 @@ end; //
 delimiter ;
 
 delimiter //
-CREATE PROCEDURE money_transfer (player_id_in int, in owner_id_in int, player_balance_in int, in owner_balance_in int) begin start transaction;
+CREATE PROCEDURE money_transfer (in player_id_in int, in owner_id_in int, player_balance_in int, in owner_balance_in int) begin start transaction;
 update bank set balance = owner_balance_in where account_id = (select account_id from player where player_id = owner_id_in); 
 update bank set balance = player_balance_in where account_id = (select account_id from player where player_id = player_id_in); 
 if ((select balance from bank where account_id = (select account_id from player where player_id = player_id_in)) = player_balance_in AND (select balance from bank where account_id = (select account_id from player where player_id = owner_id_in)) = owner_balance_in) then commit;
