@@ -14,12 +14,13 @@ public class ChanceField extends AbstractFields {
 		super(id);
 		this.name = (String) text.getInfo(id+"_name");
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
+		int position = player.getPosition();
 		gui.showMessage(text.getFormattedString("land",this.name));
 		String cardText = board.drawCard(player);
 		gui.showMessage(text.getFormattedString("drawCard",cardText));
@@ -209,6 +210,11 @@ public class ChanceField extends AbstractFields {
 					board.bankrupt(player, null, gui, text);
 				}
 			}
+		}
+		
+		if (position != player.getPosition()) {
+			gui.removeCar(position, player.getName());
+			gui.setCar(player.getPosition(), player.getName());
 		}
 	}
 
