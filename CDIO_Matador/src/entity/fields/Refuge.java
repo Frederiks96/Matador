@@ -35,6 +35,7 @@ public class Refuge extends AbstractFields {
 			gui.setCar(player.getPosition(), player.getName());
 		}
 	}
+	
 	/**
 	 * @inheritDoc	
 	 */
@@ -42,6 +43,7 @@ public class Refuge extends AbstractFields {
 	public String getName() {
 		return this.name;
 	}
+	
 	/**
 	 * @inheritDoc
 	 */

@@ -20,7 +20,6 @@ public class ChanceField extends AbstractFields {
 	 */
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
-		int position = player.getPosition();
 		gui.showMessage(text.getFormattedString("land",this.name));
 		String cardText = board.drawCard(player);
 		gui.showMessage(text.getFormattedString("drawCard",cardText));
