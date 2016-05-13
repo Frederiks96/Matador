@@ -40,8 +40,10 @@ public class GameBoard {
 	}
 
 	/**
-	 * Sets up Fleet, Tax, refuge, chanceField, Brewery & Territory fields on gameboard at 
-	 * correct positions.
+	 * Creates all the fields on the board by making objects of the abstractField class.
+	 * Depending on which type of field it is, the object is set to being either a Fleet, Tax, Refuge and so forth. 
+	 * The method takes a text object as parameter, the object is used in the constructor for each field,
+	 * to access the method in the text class that collects the information about the field in the fieldInfo text file.
 	 * 
 	 * @param text - Information of the field.
 	 */
@@ -65,11 +67,13 @@ public class GameBoard {
 	}
 
 	/**
-	 * Loads a saved gameboard.
+	 * Loads everything board related from the database, when starting a saved game.
+	 * loads and sets the owners of the properties on the board and builds houses
+	 * and hotels on the fields.  
 	 * 
-	 * @param players - Sets the games players as owners on fields.
-	 * @param gui - Sets houses and hotels on fields 
-	 * @param sql - Loads all stored information from opened game
+	 * @param players - owner of the fields
+	 * @param gui - GUI object to access methods in the GUI_Commands class
+	 * @param sql - SQL class object to access methods in SQL class
 	 * @throws SQLException
 	 */
 
@@ -103,10 +107,10 @@ public class GameBoard {
 
 	/**
 	 * 
-	 * Returns a string of names of the properties the player owns
+	 * Returns a string array of names of the properties that the player owns
 	 * 
-	 * @param player - Owner of property
-	 * @return properties
+	 * @param player - Owner of properties
+	 * @return properties - name of properties
 	 */
 
 	public ArrayList<String> getOwnedProperties(Player player) {
@@ -124,10 +128,10 @@ public class GameBoard {
 	}
 
 	/**
-	 * Returns a string of names of the properties that are not built on.
+	 * Returns a string of names of the properties that are not built on, which the player owns.
 	 * 
 	 * @param player - Owner of property
-	 * @return properties
+	 * @return properties - name of properties
 	 */
 
 	public ArrayList<String> getOwnedUnbuiltProperties(Player player) {
@@ -151,7 +155,8 @@ public class GameBoard {
 	}
 
 	/**
-	 * Calculates total net-worth of player including balance, properties and buildings.
+	 * Calculates total net-worth of a player.
+	 * This includes his balance and value of properties and buildings.
 	 * 
 	 * @param player 
 	 * @return totalworth
@@ -178,9 +183,10 @@ public class GameBoard {
 	}
 
 	/**
-	 * Calculates amount of buildings on Territory 
+	 * Calculates the total amount of buildings saved in the database. Differentiating between hotels and houses.
+	 * If a field has 5 buildings it corresponds to it having 1 Hotel and no Houses. 
 	 * 
-	 * @param sql - loads fields house count from database
+	 * @param sql - SQL class object, to access methods from the SQL class
 	 * @throws SQLException
 	 */
 
@@ -200,9 +206,9 @@ public class GameBoard {
 	}
 
 	/**
-	 * Returns the abstract fields object at position i
+	 * Returns the abstract fields object at field position i
 	 * 
-	 * @param i - position
+	 * @param i - position a game board
 	 * @return logicFields[i]
 	 */
 
@@ -211,7 +217,7 @@ public class GameBoard {
 	}
 
 	/**
-	 * Returns all abstract fields from arraylist
+	 * Returns all abstract fields objects
 	 * 
 	 * @return logicFields
 	 */
@@ -221,10 +227,10 @@ public class GameBoard {
 	}
 
 	/**
-	 * Checks if player has all same colored properties
+	 * Checks if player has all properties of the same colour
 	 * 
 	 * @param owner - owner of field
-	 * @param COLOUR - color of field
+	 * @param COLOUR - colour of field
 	 * @return True if he owns all - otherwise false
 	 */
 
@@ -247,9 +253,9 @@ public class GameBoard {
 	}
 
 	/**
-	 * Returns abstract field object with input of the properties name
+	 * Returns an abstract field object by using the name of the field as an identifier
 	 * 
-	 * @param propertyName
+	 * @param propertyName - name of the field
 	 * @return logicfields[i]
 	 */
 
@@ -263,9 +269,10 @@ public class GameBoard {
 	}
 
 	/**
-	 * Saves gameboard - Saves the properties that are mortgaged, has an owner or has houses/hotels  
-	 * 
-	 * @param sql - Saves data in database
+	 * Saves the game board to the database.
+	 * This includes saving the properties owner, if they are mortgaged, if they have houses/hotels  
+	 * It also includes updating the positions of the cards in the database
+	 * @param sql - SQL class object, to access methods from the SQL class
 	 * @throws SQLException
 	 */
 
@@ -287,7 +294,7 @@ public class GameBoard {
 
 
 	/**
-	 * Delegates the chain of events that occurs to a specific field when player lands on it.
+	 * Delegates the chain of events that occurs to a specific player when the player lands on the field.
 	 * 
 	 * @param player – The player who lands on the field
 	 * @param text – The text object that specifies which texts should be shown to the user through the GUI
@@ -299,10 +306,10 @@ public class GameBoard {
 	}
 
 	/**
-	 * Creates deck of cards and shuffles them
+	 * Generates a new deck of cards and shuffles them
 	 * 
 	 * @param text - text that is shown when card is shown
-	 * @param sql - saves deck of cards in database
+	 * @param sql - SQL class object, to access methods from the SQL class
 	 * @throws SQLException
 	 */
 
@@ -314,10 +321,10 @@ public class GameBoard {
 	}
 
 	/**
-	 * Loads deck of cards
+	 * Generates a new deck of cards, and sets the position of each card corresponding to the position saved in the database
 	 * 
 	 * @param text - loadCards text
-	 * @param sql - loads deck of cards from database
+	 * @param sql - SQL class object, to access methods from the SQL class
 	 * @throws SQLException
 	 */
 
@@ -384,7 +391,7 @@ public class GameBoard {
 	}
 
 	/**
-	 * Gets amount of houses on specific field
+	 * Gets number of houses on specific field
 	 * 
 	 * @param field_id
 	 * @return houseCount on field_id
@@ -395,10 +402,10 @@ public class GameBoard {
 	}
 
 	/**
-	 * Checks if field is owned by any players
+	 * Checks if the field is of the typed ownable
 	 * 
-	 * @param field_id - the field we're checking
-	 * @return True if owned
+	 * @param field_id
+	 * @return true if its an ownable and false if its not
 	 */
 
 	public boolean isOwnable(int field_id) {
@@ -406,9 +413,9 @@ public class GameBoard {
 	}
 
 	/**
-	 * Lets you know who owns a field
+	 * Returns the owner of a specific field
 	 * 
-	 * @param field_id - the field we're checking
+	 * @param field_id
 	 * @return owner of field or null if there is no owner
 	 */
 
@@ -420,10 +427,11 @@ public class GameBoard {
 	}
 
 	/**
-	 * Sets Player as owner on field
+	 * Sets a Player as an owner of a field. 
+	 * It will only set a player as owner of a Territory if the territory has not been build on.
 	 * 
-	 * @param field_id - the field player is owner on
-	 * @param owner - Player who is owner of field
+	 * @param field_id
+	 * @param owner - The player who will become owner
 	 * @param gui - The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice 
 	 */
 
@@ -440,7 +448,8 @@ public class GameBoard {
 	}
 
 	/**
-	 * @return dice cup object
+	 * Returns a dicecup object
+	 * @return dicecup
 	 */
 
 	public DiceCup getDiceCup(){
@@ -448,9 +457,9 @@ public class GameBoard {
 	}
 
 	/**
-	 * draws card
+	 * draws a card from the deck
 	 * 
-	 * @param player - player who draws card
+	 * @param player - player who draws the card
 	 * @return deck.draw(player)
 	 */
 
@@ -460,11 +469,12 @@ public class GameBoard {
 	}
 
 	/**
-	 * When player is about to go bankrupt they have the options to mortgage and sell
+	 * When players are about to go bankrupt, they have the option to mortgage properties and sell buildings,
+	 * to make money to pay of their debt and stay in the game.
 	 * houses/hotels
 	 * 
-	 * @param player - Player whom recieves options
-	 * @param debt - The debt the player has
+	 * @param player - the player who is in debt
+	 * @param debt - The debt of the player
 	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
 	 * @param gui - The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice 
 	 */
@@ -506,9 +516,9 @@ public class GameBoard {
 	}
 
 	/**
-	 * Removes all buildings from player
+	 * Removes all buildings from the territories a certain player owns
 	 * 
-	 * @param player - player who's buildings are removed
+	 * @param player - owner of the territories
 	 * @param gui - The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice 
 	 */
 
@@ -532,7 +542,7 @@ public class GameBoard {
 	 * from players who hit bankruptcy is transfered to creditor.
 	 * 
 	 * @param player - player who goes bankrupt
-	 * @param creditor - player who made other player go bankrupt
+	 * @param creditor - the player who made the first player go bankrupt
 	 * @param gui - The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
 	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
 	 */
@@ -566,7 +576,8 @@ public class GameBoard {
 	}
 
 	/**
-	 * @return all players objects in an array 
+	 * Returns all player object in an array
+	 * @return players
 	 */
 
 	public Player[] getPlayers() {
@@ -574,7 +585,8 @@ public class GameBoard {
 	}
 
 	/**
-	 * @return Auction controller objects
+	 * Returns an object of the action controller
+	 * @return Auction controller
 	 */
 
 	public AuctionController getAuctionController() {
