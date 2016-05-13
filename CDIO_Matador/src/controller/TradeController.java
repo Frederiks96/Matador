@@ -12,6 +12,12 @@ import entity.fields.Fleet;
 import entity.fields.Territory;
 
 
+/**
+ * Controls all trades in the game
+ * 
+ * @author Frederik
+ *
+ */
 public class TradeController {
 	private ArrayList<String> ownProperties;
 	private ArrayList<String> foeProperties;
@@ -21,12 +27,13 @@ public class TradeController {
 
 	public TradeController() throws SQLException {
 	}
+	
 	/**
-	 * This method is for suggesting a deal to other players
-	 * @param offeror - The player starting the offer
-	 * @param offeree - The player receiving the offer
+	 * Suggests a deal from one player to another
+	 * @param offeror - The player suggesting the deal
+	 * @param offeree - The player receiving the deal
 	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
-	 * @param board - The location of the fields on the gameboard
+	 * @param board - The board on which the game is played
 	 * @param gui- The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
 	 */
 	public void suggestDeal(Player offeror, Player offeree, Texts text, GameBoard board, GUI_Commands gui) {
@@ -52,15 +59,17 @@ public class TradeController {
 			gui.showMessage(text.getFormattedString("dealRejected", offeree.getName()));
 		}
 	}
+	
 	/**
+	 * Completes the deal suggested and updates the board.
 	 * 
-	 * @param board - The location of the fields on the gameboard
-	 * @param offeror - The player starting the offer
-	 * @param offeree - The player receiving the offer
-	 * @param ownProperties - The properties of the player making the offer
-	 * @param foeProperties - The properties of the player recieving the offer
-	 * @param ownOffer - The amount of money the player making the offer, offers
-	 * @param foeOffer - The amount of money the player receiving the offer, offers
+	 * @param board - The board on which the game is played
+	 * @param offeror - The player who suggested the deal
+	 * @param offeree - The player who accepted the deal
+	 * @param ownProperties - A String array containing the names of the properties the offeror wishes to trade
+	 * @param foeProperties - A String array containing the names of the properties the offeror wants the offeree to trade
+	 * @param ownOffer - The amount the offeror offers
+	 * @param foeOffer - The amount the offeror wants the offeree to offer
 	 * @param gui- The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
 	 */
 	private void completeDeal(GameBoard board, Player offeror, Player offeree, ArrayList<String> ownProperties, ArrayList<String> foeProperties, int ownOffer, int foeOffer, GUI_Commands gui) {
@@ -101,13 +110,17 @@ public class TradeController {
 		gui.setBalance(offeror.getName(), offeror.getBalance());
 		gui.setBalance(offeree.getName(), offeree.getBalance());
 	}
+	
+	
 	/**
+	 * Gives the user the opportunity to choose from his/hers properties which should be traded. Removes the chosen properties
+	 * and breaks if the user doesn't own any properties, or wishes to offer more properties than he/she owns
 	 * 
-	 * @param board - The location of the fields on the gameboard
+	 * @param board - The board on which the game is being played
 	 * @param offeror - The player starting the offer
 	 * @param gui- The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
 	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
-	 * @return ownProperties - The properties the player making the offer owns
+	 * @return ownProperties - The properties the player making the offer wishes to trade
 	 */
 	private ArrayList<String> getOwnProperties(GameBoard board, Player offeror, GUI_Commands gui, Texts text) {
 		ownProperties = new ArrayList<String>();
@@ -152,12 +165,15 @@ public class TradeController {
 		return ownProperties;
 	}
 	/**
+	 * Gives the user the opportunity to choose from his/hers opponents properties which he/she wants to be traded. 
+	 * Removes the chosen properties and breaks if the opponent doesn't own any properties, or if the user 
+	 * wishes his/hers opponent to offer more properties than he/she owns
 	 * 
-	 * @param board - The location of the fields on the gameboard
-	 * @param offeree - The player receiving the offer
+	 * @param board - The board on which the game is being played
+	 * @param offeree - The player who is being suggested a deal
 	 * @param gui- The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
 	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
-	 * @return foeProperties - The properties the player receiving the offer owns
+	 * @return foeProperties - The properties the offeror wants the offeree to trade
 	 */
 	private ArrayList<String> getFoeProperties(GameBoard board, Player offeree, GUI_Commands gui, Texts text) {
 		foeProperties = new ArrayList<String>();
