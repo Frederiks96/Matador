@@ -39,13 +39,13 @@ public class GameBoard {
 	public GameBoard() {
 	}
 
-/**
- * Sets up Fleet, Tax, refuge, chanceField, Brewery & Territory fields on gameboard at 
- * correct positions.
- * 
- * @param text - Information of the field.
- */
-	
+	/**
+	 * Sets up Fleet, Tax, refuge, chanceField, Brewery & Territory fields on gameboard at 
+	 * correct positions.
+	 * 
+	 * @param text - Information of the field.
+	 */
+
 	public void setupBoard(Texts text) {
 		for  (int i = 0; i < logicFields.length; i++){
 			if (i == 5 || i==15 || i==25 || i==35){
@@ -72,7 +72,7 @@ public class GameBoard {
 	 * @param sql - Loads all stored information from opened game
 	 * @throws SQLException
 	 */
-	
+
 	public void loadBoard(Player[] players, GUI_Commands gui, SQL sql) throws SQLException {
 		for  (int i = 0; i < this.logicFields.length; i++) {
 			if (logicFields[i] instanceof Ownable) {
@@ -100,7 +100,7 @@ public class GameBoard {
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Returns a string of names of the properties the player owns
@@ -122,14 +122,14 @@ public class GameBoard {
 		}
 		return properties;
 	}
-	
+
 	/**
 	 * Returns a string of names of the properties that are not built on.
 	 * 
 	 * @param player - Owner of property
 	 * @return properties
 	 */
-	
+
 	public ArrayList<String> getOwnedUnbuiltProperties(Player player) {
 		ArrayList<String> properties = new ArrayList<String>();
 		for (int i = 0; i < logicFields.length; i++) {
@@ -149,7 +149,7 @@ public class GameBoard {
 		}
 		return properties;
 	}
-	
+
 	/**
 	 * Calculates total net-worth of player including balance, properties and buildings.
 	 * 
@@ -165,9 +165,7 @@ public class GameBoard {
 			if(logicFields[i] instanceof Ownable) {
 				if (((Ownable)(logicFields[i])).isOwned()) {
 					if (((Ownable)(logicFields[i])).getOwner().equals(player)) {
-						if (((Ownable)(logicFields[i])).isMortgaged())
-							totalworth += (((Ownable)(logicFields[i])).getPrice()*0.5*0.9);
-						else {
+						if (!((Ownable)(logicFields[i])).isMortgaged()) {
 							totalworth += ((Ownable)(logicFields[i])).getPrice()*0.5;
 							if (logicFields[i] instanceof Territory)
 								totalworth += (int) getHouseCount(i)*((Territory)(logicFields[i])).getHousePrice()*0.5;
@@ -178,7 +176,7 @@ public class GameBoard {
 		}
 		return totalworth;
 	}
-	
+
 	/**
 	 * Calculates amount of buildings on Territory 
 	 * 
@@ -200,7 +198,7 @@ public class GameBoard {
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns the abstract fields object at position i
 	 * 
@@ -211,7 +209,7 @@ public class GameBoard {
 	public AbstractFields getLogicField(int i) {
 		return this.logicFields[i];
 	}
-	
+
 	/**
 	 * Returns all abstract fields from arraylist
 	 * 
@@ -221,7 +219,7 @@ public class GameBoard {
 	public AbstractFields[] getLogicFields() {
 		return this.logicFields;
 	}
-	
+
 	/**
 	 * Checks if player has all same colored properties
 	 * 
@@ -247,7 +245,7 @@ public class GameBoard {
 		}
 		return j==3;
 	}
-	
+
 	/**
 	 * Returns abstract field object with input of the properties name
 	 * 
@@ -263,7 +261,7 @@ public class GameBoard {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Saves gameboard - Saves the properties that are mortgaged, has an owner or has houses/hotels  
 	 * 
@@ -287,7 +285,7 @@ public class GameBoard {
 		deck.updateCards(sql);
 	}
 
-	
+
 	/**
 	 * Delegates the chain of events that occurs to a specific field when player lands on it.
 	 * 
@@ -307,7 +305,7 @@ public class GameBoard {
 	 * @param sql - saves deck of cards in database
 	 * @throws SQLException
 	 */
-	
+
 	public void createCardDeck(Texts text, SQL sql) throws SQLException {
 		deck = new CardStack();
 		deck.newDeck(text);
@@ -322,7 +320,7 @@ public class GameBoard {
 	 * @param sql - loads deck of cards from database
 	 * @throws SQLException
 	 */
-	
+
 	public void loadCardDeck(Texts text, SQL sql) throws SQLException {
 		deck = new CardStack();
 		try {
@@ -332,7 +330,7 @@ public class GameBoard {
 		}
 
 	}
-	
+
 	/**
 	 * gets amount of hotels on territory
 	 * 
@@ -342,7 +340,7 @@ public class GameBoard {
 	public int getHotelCount(){
 		return hotelCount;
 	}
-	
+
 	/**
 	 * Adds one hotel on territory
 	 */
@@ -350,7 +348,7 @@ public class GameBoard {
 	public void addHotel(){
 		hotelCount++;
 	}
-	
+
 	/**
 	 * Removes one hotel on territory
 	 */
@@ -358,7 +356,7 @@ public class GameBoard {
 	public void subtractHotel(){
 		hotelCount--;
 	}
-	
+
 	/**
 	 * gets amount of houses on territory
 	 * 
@@ -368,7 +366,7 @@ public class GameBoard {
 	public int getHouseCount(){
 		return houseCount;
 	}
-	
+
 	/**
 	 *  Adds one house on territory
 	 */
@@ -376,7 +374,7 @@ public class GameBoard {
 	public void addHouse(){
 		houseCount++;
 	}
-	
+
 	/**
 	 *  Removes one house on territory
 	 */
@@ -384,7 +382,7 @@ public class GameBoard {
 	public void subtractHouse(){
 		houseCount--;
 	}
-	
+
 	/**
 	 * Gets amount of houses on specific field
 	 * 
@@ -395,7 +393,7 @@ public class GameBoard {
 	public int getHouseCount(int field_id) {
 		return ((Territory)logicFields[field_id]).getHouseCount();
 	}
-	
+
 	/**
 	 * Checks if field is owned by any players
 	 * 
@@ -406,7 +404,7 @@ public class GameBoard {
 	public boolean isOwnable(int field_id) {
 		return this.logicFields[field_id] instanceof Ownable;
 	}
-	
+
 	/**
 	 * Lets you know who owns a field
 	 * 
@@ -420,7 +418,7 @@ public class GameBoard {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Sets Player as owner on field
 	 * 
@@ -440,7 +438,7 @@ public class GameBoard {
 			}
 		}
 	}
-	
+
 	/**
 	 * @return dice cup object
 	 */
@@ -448,7 +446,7 @@ public class GameBoard {
 	public DiceCup getDiceCup(){
 		return dicecup;
 	}
-	
+
 	/**
 	 * draws card
 	 * 
@@ -460,7 +458,7 @@ public class GameBoard {
 		return deck.draw(player);
 
 	}
-	
+
 	/**
 	 * When player is about to go bankrupt they have the options to mortgage and sell
 	 * houses/hotels
@@ -482,12 +480,15 @@ public class GameBoard {
 			do {
 				choice = gui.getUserSelection(text.getFormattedString("currentAmount",debt,player.getBalance())+
 						" "+text.getString("chooseProperty"), propertiesArr);
+				System.out.println(((Ownable)getProperty(choice)).isMortgaged());
 			} while (((Ownable)getProperty(choice)).isMortgaged()==true);
 
 			if (getProperty(choice) instanceof Territory) {
 				if (((Territory)getProperty(choice)).getHouseCount()>0) {
 					button = gui.getUserButtonPressed("", text.getStrings("mortgage","manageBuildings","back"));
-				} 
+				} else {
+					button = gui.getUserButtonPressed("", text.getStrings("mortgage","back"));
+				}
 			} else {
 				button = gui.getUserButtonPressed("", text.getStrings("mortgage","back"));
 			}
@@ -504,7 +505,7 @@ public class GameBoard {
 			}
 		} while (player.getBalance()<debt || button.equals(text.getString("back")));
 	}
-	
+
 	/**
 	 * Removes all buildings from player
 	 * 
@@ -526,7 +527,7 @@ public class GameBoard {
 			}
 		}
 	}
-	
+
 	/**
 	 * When player hits bankruptcy all his buildings are removed. Besides that, the account
 	 * from players who hit bankruptcy is transfered to creditor.
@@ -564,7 +565,7 @@ public class GameBoard {
 			}
 		}
 	}
-	
+
 	/**
 	 * @return all players objects in an array 
 	 */
@@ -576,7 +577,7 @@ public class GameBoard {
 	/**
 	 * @return Auction controller objects
 	 */
-	
+
 	public AuctionController getAuctionController() {
 		return con.getAuctionController();
 	}

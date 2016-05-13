@@ -210,6 +210,8 @@ public class ChanceField extends AbstractFields {
 					board.bankrupt(player, null, gui, text);
 				}
 			}
+		} else {
+			System.out.println("Kortet blev ikke fanget i denne if/else clause");
 		}
 
 		gui.removeCar(position, player.getName());
