@@ -21,9 +21,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		this.name = (String) text.getInfo(id+"_name");
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
+	
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		gui.showMessage(text.getFormattedString("land", this.name));
@@ -53,9 +51,7 @@ public class Fleet extends AbstractFields implements Ownable {
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void buyProperty(Player player, Texts text, GUI_Commands gui) { // 
 		if (player.getAccount().legalTransaction(-price)){
 			player.updateBalance(-price);
@@ -63,94 +59,70 @@ public class Fleet extends AbstractFields implements Ownable {
 		}else gui.showMessage(text.getString("failedTransaction"));
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	public Player getOwner() {
 		return this.owner;
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void setOwner(Player owner, GUI_Commands gui) {
 		this.owner=owner;
 		owner.addFleet();
 		gui.setOwner(id, owner.getName());
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
+	
 	public int getRent(GameBoard board) {
 		return (int) Math.pow(2, (owner.getNumFleetsOwned()-1))*BASERENT;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	public boolean isOwned() {
 		return this.owner != null;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void mortgage(Texts text, GUI_Commands gui) {
 		isMortgaged = true;
 		owner.sellFleet();
 		owner.updateBalance((int) (this.price*0.5));
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void unMortgage() {
 		isMortgaged = false;
 		owner.addFleet();
 		owner.updateBalance(-(int)(this.price*0.5*1.1)); 
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+
 	@Override
 	public String getName() {
 		return this.name;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	public boolean isMortgaged() {
 		return this.isMortgaged;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	@Override
 	public int getID() {
 		return id;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void sellProperty(Player player) {
 		player.sellFleet();
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	public int getPrice() {
 		return price;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void setMortgage(boolean x) {
 		isMortgaged = x;
 	}

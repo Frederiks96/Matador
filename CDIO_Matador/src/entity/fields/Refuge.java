@@ -13,9 +13,7 @@ public class Refuge extends AbstractFields {
 		this.name = (String) text.getInfo(id+"_name");
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		if (player.getPosition() == 0) {
@@ -36,17 +34,13 @@ public class Refuge extends AbstractFields {
 		}
 	}
 	
-	/**
-	 * @inheritDoc	
-	 */
+	
 	@Override
 	public String getName() {
 		return this.name;
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
+	
 	@Override
 	public int getID() {
 		return id;

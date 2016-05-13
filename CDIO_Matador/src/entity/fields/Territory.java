@@ -41,9 +41,7 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	
 	@Override
 	public void landOnField(Player player, Texts text, GUI_Commands gui, GameBoard board) {
 		gui.showMessage(text.getFormattedString("land", this.name));
@@ -72,21 +70,18 @@ public class Territory extends AbstractFields implements Ownable {
 			}
 		}
 	}
-/**
- * @inheritDoc
- */
+
 	public int getRent(GameBoard board) {
 		if (board.hasAll(this.owner, this.colour) && this.houseCount == 0) {
 			return 2*this.rent[this.houseCount];
 		}
 		return this.rent[this.houseCount];	
 	}
-/**
- * @inheritDoc
- */
+
 	public boolean isOwned() {
 		return this.owner != null;
 	}
+	
 	/**
 	 * Builds a house if it is allowed and the player has sufficient funds
 	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
@@ -107,6 +102,7 @@ public class Territory extends AbstractFields implements Ownable {
 		else if(!owner.getAccount().legalTransaction(-housePrice))
 			gui.showMessage(text.getString("faildTransaction"));
 	}
+	
 	/**
 	 * Builds a hotel if it is allowed and the player has sufficient funds
 	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
@@ -130,6 +126,7 @@ public class Territory extends AbstractFields implements Ownable {
 			gui.showMessage(text.getString("doubleHotel"));
 		}
 	}
+	
 	/**
 	 * Sells a house and updates the player's balance
 	 * @param gui – The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
@@ -142,6 +139,7 @@ public class Territory extends AbstractFields implements Ownable {
 		}
 
 	}
+	
 	/**
 	 * Sells a hotel and updates the player's balance
 	 * @param gui – The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
@@ -154,24 +152,19 @@ public class Territory extends AbstractFields implements Ownable {
 			gui.setHouse(id, houseCount);
 		}
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
+	
 	public void buyProperty(Player player, Texts text, GUI_Commands gui){
 		if (player.getAccount().legalTransaction(-this.price)){
 			player.updateBalance(-this.price);
 			setOwner(player,gui);
 		}else gui.showMessage(text.getString("failedTransaction"));
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void sellProperty(Player player){
 		player.sellTerritory();
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void mortgage(Texts text, GUI_Commands gui) { 
 		if (houseCount == 0) {
 			isMortgaged = true;
@@ -181,83 +174,75 @@ public class Territory extends AbstractFields implements Ownable {
 			gui.showMessage(text.getString("errorHouseOnField"));
 		}
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void unMortgage() {
 		isMortgaged = false;
 		this.owner.updateBalance(-(int)(this.price*0.5*1.1));
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void setOwner(Player player, GUI_Commands gui) {
 		this.owner = player;
 		player.addTerritory();
 		gui.setOwner(id, player.getName());
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	public Player getOwner() {
 		return this.owner;
 	}
+	
 	/**
-	 * @return the colour of the field
+	 * Returns the colour of the field
+	 * 
+	 * @return colour
 	 */
 	public String getColour(){
 		return colour;
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	@Override
 	public String getName() {
 		return this.name;
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	public boolean isMortgaged() {
 		return this.isMortgaged;
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	@Override
 	public int getID() {
 		return this.id;
 	}
+	
 	/**
+	 * Sets the amount of houses currently built on the field
 	 * 
-	 * @param houseCount - counts the amount of houses on the field
+	 * @param houseCount
 	 */
 	public void setHouseCount(int houseCount) {
 		this.houseCount = houseCount;
 	}
+
 	/**
+	 * Returns the amount of houses currently built on the field
 	 * 
 	 * @return - the amount of houses on the field
 	 */
 	public int getHouseCount() {
 		return houseCount;
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	public int getPrice() {
 		return price;
 	}
 	/**
+	 * Returns the houseprice of the field
 	 * 
 	 * @return - The price of a house
 	 */
 	public int getHousePrice(){
 		return housePrice;
 	}
-	/**
-	 * @inheritDoc
-	 */
+	
 	public void setMortgage(boolean x) {
 		isMortgaged = x;
 	}

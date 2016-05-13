@@ -1,7 +1,7 @@
 package entity;
 
 /**
- * This class is for the stack of chance cards
+ * This class manages the chancecards
  * @author Benjamin Jensen
  *
  */
