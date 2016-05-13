@@ -8,12 +8,14 @@ import entity.fields.AbstractFields;
 import entity.fields.Territory;
 import entity.fields.Ownable;
 
+/**
+ * The class that manages mortgages and buildings
+ * 
+ * @author Frederik
+ *
+ */
+
 public class PropertiesController {
-	
-	/**
-	 *
-	 *
-	 */
 
 	//Kontrollerer alt du kan gøre med properties. mangage /mortgage osv. 
 
@@ -23,13 +25,13 @@ public class PropertiesController {
 	private String choice;
 	
 	/**
-	 * Allows player to manage properties so he/she can build houses/hotels
-	  and mortgage/ un-mortgage properties. 
+	 *Allows a player to manage his/hers properties so he/she can build houses/hotels
+	  and mortgage/un-mortgage properties. 
 	 * 
 	 * @param gui- The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
-	 * @param player - player who receives the options
+	 * @param player - The player who wishes to 
 	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
-	 * @param gameboard - Object in method to access method from gameboard.
+	 * @param gameboard - The gameboard on which the game is being played
 	 */
 	
 
@@ -76,10 +78,10 @@ public class PropertiesController {
 	/**
 	 * Allows player to build/remove house(s)/hotel.
 	 * 
-	 * @param player - The players turn
+	 * @param player - The player who wishes to build
 	 * @param gui - The GUI_Commands object, that controls the GUI and shows messages to the user and gets the user's choice
 	 * @param text - The text object that specifies which texts should be shown to the user through the GUI
-	 * @param gameboard - Object in method to access method from gameboard.
+	 * @param gameboard - The gameboard on which the game is being played
 	 */
 
 	private void build(Player player, GUI_Commands gui, Texts text, GameBoard gameboard) {
@@ -133,10 +135,9 @@ public class PropertiesController {
 	}
 	
 	/**
-	 * Allows player to build house on field if he owns all territories of one color group and
-	 * if the one of the fields does not excess more than two houses than the neighbor territory.
+	 * Controls that the user builds even across fields of the same colour. 
 	 * 
-	 * @return True if possible to build house
+	 * @return True if the field won't contain more than one more building than any of the others
 	 */
 
 	private boolean buildEven() {
@@ -160,10 +161,9 @@ public class PropertiesController {
 	}
 	
 	/**
-	 * Allows player to sell house on field if he owns all territories of one color group and
-	 * if the one of the fields does not excess more than two houses than the neighbor territory.
+	 * Controls that the user sells even across fields of the same colour
 	 * 
-	 * @return True if possible to sell house
+	 * @return True if the field won't contain less than one building less than any of the others
 	 */
 	
 	private boolean sellEven() {
