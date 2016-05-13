@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import desktop_resources.GUI;
 
 /**
- * Class containing player values, like position number of properties owned and if the player is bankrupt
- * @author Benjamin Jensen
+ * Class that manages the Player objects
+ * @author Frederik
  *
  */
 public class Player {
@@ -45,96 +45,118 @@ public class Player {
 		this.turn 				= false;
 
 	}
+	
 	/**
+	 * Returns the ID of the player
 	 * 
-	 * @return the player_id of the Player object
+	 * @return player_id – The ID of the player
 	 */
 	public int getPlayerID() {
 		return this.player_id;
 	}
+	
 	/**
 	 * Increments numFleetsOwned
 	 */
 	public void addFleet() {
 		this.numFleetsOwned++;
 	}
+	
 	/**
 	 * Decrement numFleetsOwned
 	 */
 	public void sellFleet() {
 		this.numFleetsOwned--;
 	}
+	
 	/**
+	 * Returns the number of Fleets owned by the player
 	 * 
 	 * @return numFleetsOwned
 	 */
 	public int getNumFleetsOwned() {
 		return this.numFleetsOwned;
 	}
+	
 	/**
 	 * Increments numBreweriesOwned
 	 */
 	public void addBrewery() {
 		this.numBreweriesOwned++;
 	}
+	
 	/**
-	 * Decrements numBreweriesOwned
+	 * Decrements numBreweriesOwned in the event of a sale
 	 */
 	public void sellBrewery() {
 		this.numBreweriesOwned--;
 	}
+	
 	/**
+	 * Returns the number of Breweries owned
 	 * 
 	 * @return numBreweriesOwned
 	 */
 	public int getNumBreweriesOwned() {
 		return this.numBreweriesOwned;
 	}
+	
 	/**
- 	 * Decrements numBreweriesOwned
+ 	 * Decrements numBreweriesOwned in the event of mortgage
  	 */
 	public void mortgageBrewery(){
 		numBreweriesOwned--;
 	}
+	
 	/**
-	 * Decrements numFleetsOwned	
+	 * Decrements numFleetsOwned in the event of mortgage
 	 */
 	public void mortgageFleet(){
 		numFleetsOwned--;
 	}
+	
 	/**
+	 * Returns the isAlive attribute of the player
 	 * 
-	 * @return if player isAlive
+	 * @return True if the player is alive
 	 */
 	public boolean isAlive() {
 		return this.isAlive;
 	}
+	
 	/**
+	 * Returns the position af a player
 	 * 
-	 * @return Player's position
+	 * @return position
 	 */
 	public int getPosition() {
 		return this.position;
 	}
+	
 	/**
+	 * Returns the accountID of the player's account
 	 * 
-	 * @return Player's account
+	 * @return accountID
 	 */
 	public int getAccountID(){
 		return account.getAccountID();
 	}
+	
 	/**
-	 * Sets the position of a player	
-	 * @param position of the player on the gameboard
+	 * Sets the position of a player
+	 * 	
+	 * @param position
 	 */
 	public void setPosition(int position) {
 		if (position>0 && position<40) {
 			this.position = position;
 		}
 	}
+	
 	/**
-	 * Updates the position of a player and gives the player 4000 if he passes 39
-	 * @param lastRoll the player made
+	 * Updates the position of a player and updates the player's balance with 4000 if he passes START
+	 * 
+	 * @param lastRoll – The player's last roll
 	 */
 	public void updatePosition(int lastRoll) {
 			if ((position+lastRoll)>39) {
@@ -145,31 +167,38 @@ public class Player {
 				position += lastRoll;
 			}
 	}
+	
 	/**
+	 * Returns the balance of a player
 	 * 
-	 * @return Player's Balance 
+	 * @return balance
 	 */
 	public int getBalance() {
 		return account.getBalance();
 	}
+	
 	/**
+	 * Returns whether an update has been made
 	 * 
 	 * @param d The amount to be added or subtracted from the player's balance
-	 * @return the player's new balance
+	 * @return True if the transaction has been made, otherwise false
 	 */
-	public Boolean updateBalance(int d) { 
+	public boolean updateBalance(int d) { 
 		return account.updateBalance(d);
 	}
+	
 	/**
-	 * Gives a player a chance card
-	 * @param card from the chance card stack
+	 * Gives a player a card
+	 * @param card – The card to be given to the player
 	 */
 	public void giveCard(ChanceCard card) {
 		this.cards.add(card);
 	}
+	
 	/**
+	 * Returns the card of a player, if he holds one. Otherwise returns null
 	 * 
-	 * @return the chance card if the player has one, otherwise returns null
+	 * @return Chancecard
 	 */
 	public ChanceCard getCard() {
 		if (this.cards.size()>0) {
@@ -178,103 +207,128 @@ public class Player {
 		else 
 			return null;
 	}
+	
 	/**
-	 * Player takes a card from the card stack
+	 * Removes a card from the player, if he holds one
 	 */
 	public void takeCard() {
 		this.cards.remove(0);
 	}
+	
 	/**
-	 * Shows if the player has a card
+	 * Returns whether a player holds a card
+	 * 
 	 * @return how many cards the player has
 	 */
 	public boolean hasCards() {
 		return this.cards.size()!=0;
 	}
+	
 	/**
+	 * Returns the name of the player
 	 * 
-	 * @return the player's name
+	 * @return name
 	 */
 	public String getName() {
 		return this.name;
 	}
+	
 	/**
-	 * puts a player in jail
+	 * Increments the player's jailTime and sets his/hers position to 10
 	 */
 	public void imprison() {
 		this.jailTime++;
 		setPosition(10);
 	}
+	
 	/**
-	 * Gets the players account
-	 * @return the players account
+	 * Returns the account of a player
+	 * 
+	 * @return account
 	 */
 	public Account getAccount() {
 		return this.account;
 	}
+	
 	/**
-	 * Shows how many turns the player have been in jail
-	 * @return the rounds the player have been in jail
+	 * Returns the jailTime of a player
+	 * 
+	 * @return jailTime
 	 */
 	public int getJailTime() {
 		return this.jailTime;
 	}
+	
 	/**
-	 * shows if it's the player's turn
-	 * @return if it's the players turn
+	 * Return the turn attribute of a player
+	 * 
+	 * @return True if it is the player's turn, otherwise false
 	 */
 	public boolean isTurn() {
 		return this.turn;
 	}
+	
 	/**
-	 * set's turn to a player
-	 * @param turn who's turn it is
+	 * Sets a players turn
+	 * 
+	 * @param turn – Whether it is a player's turn or not
 	 */
 	public void setTurn(boolean turn) {
 		this.turn = turn;
 	}
+	
 	/**
+	 * Returns the number of Territories owned by a player
 	 * 
 	 * @return numTerritoriesOwned
 	 */
 	public int getNumTerritoriesOwned() {
 		return numTerritoriesOwned;
 	}
+	
 	/**
 	 * Increments numTerriotriesOWned
 	 */
 	public void addTerritory() {
 		numTerritoriesOwned++;
 	}
+	
 	/**
-	 * Decrements numTerriroriesOwned
+	 * Decrements numTerriroriesOwned in the event of a sale
 	 */
 	public void sellTerritory() {
 		numTerritoriesOwned--;
 	}
+	
 	/**
-	 * Gives a color to the player's vehicle
-	 * @return the player's vehicle's color
+	 * Returns the colour of a player's vehicle
+	 * 
+	 * @return color
 	 */
 	public String getVehicleColour() {
 		return this.vColor;
 	}
+	
 	/**
-	 * Gives the player's vehicle a type
-	 * @return the player's vehicle's type
+	 * Returns the type of the player's vehicle
+	 * 
+	 * @return type
 	 */
 	public String getVehicleType() {
 		return this.vType;
 	}
+	
 	/**
-	 * Gives the player's vehicle an ID
-	 * @return the player's vehicle's ID
+	 * Returns the ID of the player's vehicle
+	 * 
+	 * @return the ID of the player's vehicle
 	 */
 	public int getVehicleID() {
 		return this.vID;
 	}
+	
 	/**
-	 * Shows if the player is bankrupt	
+	 * Declares the player as bankrupt	
 	 */
 	public void bankrupt() {
 		this.isAlive 				= false;
@@ -282,39 +336,45 @@ public class Player {
 		this.numFleetsOwned 		= 0;
 		this.numTerritoriesOwned 	= 0;
 	}
+	
 	/**
-	 * Increments jailTime	
+	 * Increments jailTime
 	 */
 	public void increaseJailTime() {
 		this.jailTime++;
 	}
+	
 	/**
+	 * Sets a player's jailTime to a specific value
 	 * 	
-	 * @param jail_time how many rounds have been spent in jail
+	 * @param jail_time
 	 */
 	public void setJailTime(int jail_time) {
 		this.jailTime=jail_time;
 	}
+	
 	/**
-	 * resets jailTime by setting jailTime to -1
+	 * Resets a player's jailTime
 	 */
 	public void resetJailTime() {
 		this.jailTime=-1;
 	}
+	
 	/**
-	 * 	Sets Balance to newBalance
-	 * @param newBalance is the updated balance
+	 * 	Sets a player's balance to newBalance
+	 * @param newBalance
 	 */
 	public void setBalance(int newBalance) {
 		this.account.setBalance(newBalance);
 	}
+	
 	/**
-	 * Checks if the player is still in the game	
-	 * @param isAlive checks if the player is bankrupt or still in the game
+	 * Sets a player's isAlive attribute to isAlive
+	 * 	
+	 * @param isAlive
 	 */
 	public void setIsAlive(boolean isAlive) {
 		this.isAlive = isAlive;
 	}
-	
 	
 }
