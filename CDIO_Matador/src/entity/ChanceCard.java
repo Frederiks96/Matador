@@ -22,22 +22,29 @@ public class ChanceCard {
 		}
 		this.cardID = cardID;
 	}
+	
 	/**
-	 * @return the string on the card
+	 * Returns the text of the card
+	 * 
+	 * @return The text of the card
 	 */
 	public String toString() {
 		return this.text;
 	}
+	
 	/**
+	 * Returns wether a card is ownable or not
 	 * 
-	 * @return if the card is ownable
+	 * @return True if the card is ownable, otherwise false
 	 */
 	public boolean isOwnable() {
 		return this.isOwnable;
 	}
+	
 	/**
+	 * Returns the owner of a specific card, if the card is ownable. Otherwise returns null
 	 * 
-	 * @return the owner of the card if the card is ownable otherwise returns null
+	 * @return The owner of the card
 	 */
 	public Player getOwner() {
 		if (this.isOwnable()) {
@@ -46,16 +53,20 @@ public class ChanceCard {
 			return null;
 		}
 	}
+	
 	/**
-	 * sets a player to be an owner of a chance card
-	 * @param player 
+	 * Sets a player to the owner of a card
+	 * 
+	 * @param player – The player that is to be the owner of the card
 	 */
 	public void setOwner(Player player) {
 		this.owner=player;
 	}
+	
 	/**
+	 * Returns the ID of a specific card
 	 * 	
-	 * @return the chance cards ID
+	 * @return The ID of the card
 	 */
 	public int getCardID() {
 		return this.cardID;

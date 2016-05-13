@@ -14,6 +14,7 @@ public class CardStack {
 	/**
 	 * The constructor of the card stack. Initializes the local ArrayList<ChanceCard> chanceCardDeck.
 	 */
+	
 	public CardStack(){
 		chanceCardDeck = new ArrayList<ChanceCard>();
 	}

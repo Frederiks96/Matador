@@ -7,11 +7,6 @@ package entity;
  */
 
 public class Account {
-	
-	/**
-	 * 
-	 * 
-	 */
 
 	private int balance;
 	private int accountID;
