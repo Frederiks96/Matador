@@ -475,6 +475,7 @@ public class GameBoard {
 		gui.showMessage(text.getString("probateCourt"));
 		ArrayList<String> properties = getOwnedProperties(player);
 		String[] propertiesArr = new String[properties.size()];
+		properties.toArray(propertiesArr);
 		String choice = "";
 		String button = "";
 		do {

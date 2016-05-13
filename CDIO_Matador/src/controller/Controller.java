@@ -178,6 +178,7 @@ public class Controller  {
 			player.updateBalance(-1000);
 			gui.setBalance(player.getName(),player.getBalance());
 			player.resetJailTime();
+			playerTurn(player); // Man får lov til at slå
 		}
 
 		else do {
@@ -209,7 +210,10 @@ public class Controller  {
 					numPairs++;
 				}
 				if(numPairs == 3) { 
+					gui.showMessage(text.getString(""));
 					player.imprison();
+					gui.removeAllCars(player.getName());
+					gui.setCar(player.getPosition(), player.getName());
 					break;
 				}
 				for (int i = 0; i < players.length; i++) {
