@@ -148,7 +148,7 @@ public class Controller  {
 
 
 				if(board.getDiceCup().hasPair()){
-					gui.removeCar(player.getPosition(), player.getName());		
+					gui.removeAllCars(player.getName());		
 					player.updatePosition((board.getDiceCup().getLastRoll()));		
 					gui.setCar(player.getPosition(), player.getName());	
 					player.resetJailTime();
@@ -192,7 +192,7 @@ public class Controller  {
 
 			if (options.equals(text.getString("roll"))) {
 				//ROLL
-				gui.removeCar(player.getPosition(), player.getName());		
+				gui.removeAllCars(player.getName());		
 				board.getDiceCup().roll();
 				player.updatePosition((board.getDiceCup().getLastRoll()));		
 				gui.setDice(board.getDiceCup().getDieOne(), board.getDiceCup().getDieTwo());	
@@ -210,7 +210,7 @@ public class Controller  {
 					numPairs++;
 				}
 				if(numPairs == 3) { 
-					gui.showMessage(text.getString(""));
+					gui.showMessage(text.getString("threePairs"));
 					player.imprison();
 					gui.removeAllCars(player.getName());
 					gui.setCar(player.getPosition(), player.getName());
