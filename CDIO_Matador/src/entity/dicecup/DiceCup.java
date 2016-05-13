@@ -15,38 +15,47 @@ public class DiceCup {
 		die1.roll();
 		die2.roll();
 	}
+	
 	/**
-	 * Roll the two dice
+	 * Rolls the dice
 	 */
 	public void roll(){
 		die1.roll();
 		die2.roll();
 	}
+	
 	/**
-	 * Checks if the dice are alike
-	 * @return die1.lastRoll = die2.lastRoll - The value of the dice
+	 * Checks if a pair has been rolled
+	 * 
+	 * @return True if a pair has been rolled, otherwise false
 	 */
 	public boolean hasPair() {
 		return die1.getLastRoll() == die2.getLastRoll();
 	}
+	
 	/**
+	 * Returns the sum of the last roll of the dice
 	 * 
-	 * @return die1.lastRoll + die2.lastRoll - The last roll of the dice
+	 * @return The sum of the dice
 	 */
 	public int getLastRoll() {
 		return die1.getLastRoll() + die2.getLastRoll();
 		
 	}
+	
 	/**
+	 * Returns the facevalue of die 1
 	 * 
-	 * @return die1.lastRoll - The last roll of die1
+	 * @return The last roll of die1
 	 */
 	public int getDieOne() {
 		return this.die1.getLastRoll();
 	}
+	
 	/**
+	 * Returns the facevalue of die 2
 	 * 
-	 * @return die2.lastRoll - The last roll of die2
+	 * @return The last roll of die2
 	 */
 	public int getDieTwo() {
 		return this.die2.getLastRoll();
