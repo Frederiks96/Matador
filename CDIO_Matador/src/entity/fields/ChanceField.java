@@ -212,10 +212,9 @@ public class ChanceField extends AbstractFields {
 			}
 		}
 		
-		if (position != player.getPosition()) {
 			gui.removeCar(position, player.getName());
 			gui.setCar(player.getPosition(), player.getName());
-		}
+			gui.setBalance(player.getName(), player.getBalance());
 	}
 
 	/**

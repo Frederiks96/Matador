@@ -53,12 +53,23 @@ public class Territory extends AbstractFields implements Ownable {
 			if (buy) {	// The territory is not owned and the player wishes to buy
 				buyProperty(player, text, gui);
 			}
-		} else if (!isMortgaged && owner!=player && isOwned()){	// another player owns the territory
+		} else if (!isMortgaged && owner!=player && isOwned() && owner.getJailTime() == -1){	// another player owns the territory
 			gui.showMessage(text.getFormattedString("rent", getRent(board), owner.getName()));
-			player.updateBalance(-getRent(board));
-			owner.updateBalance(getRent(board));
-			gui.setBalance(player.getName(), player.getBalance());
-			gui.setBalance(owner.getName(), owner.getBalance());
+			if (!player.updateBalance(-getRent(board))) {
+				if (board.netWorth(player)>getRent(board)) {
+					board.probateCourt(player, getRent(board), text, gui);
+					player.updateBalance(-getRent(board));
+					owner.updateBalance(getRent(board));
+					gui.setBalance(player.getName(), player.getBalance());
+					gui.setBalance(owner.getName(), owner.getBalance());
+				} else {
+					board.bankrupt(player, getOwner(), gui, text);
+				}
+			} else {
+				owner.updateBalance(getRent(board));
+				gui.setBalance(player.getName(), player.getBalance());
+				gui.setBalance(owner.getName(), owner.getBalance());
+			}
 		}
 	}
 /**

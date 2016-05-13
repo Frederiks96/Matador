@@ -28,11 +28,25 @@ public class Tax extends AbstractFields {
 				player.updateBalance(-(int)(board.netWorth(player)*0.1));
 			} else {
 				gui.showMessage(text.getString("choseFine"));
-				player.updateBalance(-4000);
+				if (!player.updateBalance(-4000)) {
+					if (board.netWorth(player)>4000) {
+						board.probateCourt(player, 4000, text, gui);
+					} else {
+						board.bankrupt(player, null, gui, text);
+					}
+				}
 			}
 		} else {
 			gui.showMessage(text.getFormattedString("payTax",2000));
-			player.updateBalance(-2000);
+			if (!player.updateBalance(-2000)) {
+				if (board.netWorth(player)>2000) {
+					board.probateCourt(player, 2000, text, gui);
+					player.updateBalance(-2000);
+					gui.setBalance(player.getName(), player.getBalance());
+				} else {
+					board.bankrupt(player, null, gui, text);
+				}
+			}
 		}
 	}
 	/**

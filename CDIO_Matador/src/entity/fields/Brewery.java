@@ -20,7 +20,7 @@ public class Brewery extends AbstractFields implements Ownable {
 		this.price = 3000;
 		this.name = (String) text.getInfo(id+"_name");
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -33,15 +33,24 @@ public class Brewery extends AbstractFields implements Ownable {
 			if (buy) { // The Brewery is owned and the Player wishes to buy it
 				buyProperty(player, text, gui);
 			}
-		} else if(!isMortgaged && owner!=player && isOwned()) {
+		} else if(!isMortgaged && owner!=player && isOwned() && owner.getJailTime() == -1) {
 			gui.showMessage(text.getFormattedString("rent", getRent(board), owner.getName()));
-			player.updateBalance(-getRent(board));
-			owner.updateBalance(getRent(board));
-			gui.setBalance(player.getName(), player.getBalance());
-			gui.setBalance(owner.getName(), owner.getBalance());
+			if (!player.updateBalance(-getRent(board))) {
+				if (board.netWorth(player)>getRent(board)) {
+					board.probateCourt(player, getRent(board), text, gui);
+					player.updateBalance(-getRent(board));
+					owner.updateBalance(getRent(board));
+					gui.setBalance(player.getName(), player.getBalance());
+					gui.setBalance(owner.getName(), owner.getBalance());
+				}
+			} else {
+				owner.updateBalance(getRent(board));
+				gui.setBalance(player.getName(), player.getBalance());
+				gui.setBalance(owner.getName(), owner.getBalance());
+			}
 		}
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -51,7 +60,7 @@ public class Brewery extends AbstractFields implements Ownable {
 			setOwner(player, gui);
 		}else gui.showMessage(text.getString("failedTransaction"));
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -67,7 +76,7 @@ public class Brewery extends AbstractFields implements Ownable {
 		owner.mortgageBrewery();
 		owner.updateBalance((int)(this.price*0.5));
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -76,21 +85,21 @@ public class Brewery extends AbstractFields implements Ownable {
 		owner.addBrewery();
 		owner.updateBalance(-(int)(this.price*0.5*1.1));
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	public boolean isMortgaged() {
 		return this.isMortgaged;
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	public boolean isOwned() {
 		return this.owner != null;
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -98,9 +107,9 @@ public class Brewery extends AbstractFields implements Ownable {
 		this.owner = player;
 		player.addBrewery();
 		gui.setOwner(id, owner.getName());
-		
+
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
