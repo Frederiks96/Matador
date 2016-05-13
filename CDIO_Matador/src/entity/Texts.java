@@ -3,34 +3,49 @@ package entity;
 import java.util.ResourceBundle;
 
 /**
- * This class is for pulling strings from our properties files
- * @author Benjamin Jensen
+ * The class manages the internationalization of the game through properties files 
+ * @author Frederik
  *
  */
 public class Texts {
+	
+	/**
+	 * 
+	 * This class has created an enum containing the languages the game supports
+	 *
+	 */
 	
 	public enum language {Dansk,English};
 	private ResourceBundle fieldInfo;
 	private ResourceBundle texts;
 	private ResourceBundle cards;
 	
+	/**
+	 * The constructor constructs an object that determines the language of the texts returned to the user.
+	 * 
+	 * @param l – The enum specifying the language of the game
+	 */
 	public Texts(language l) {
 		fieldInfo = ResourceBundle.getBundle("properties.fieldInfo");
 		texts = ResourceBundle.getBundle("properties."+l+"_texts");
 		cards = ResourceBundle.getBundle("properties."+l+"_cards");
-	}	
+	}
+	
 	/**
+	 *Returns the string specified by the key in the *_texts file
 	 * 
-	 * @param key is what text it searches for in the properties files
-	 * @return the string from whatever key was chosen
+	 * @param key – The keyword to search for in the file
+	 * @return The corresponding string
 	 */
 	public String getString(String key) {
 		return texts.getString(key);
 	}
+	
 	/**
-	 * 	
-	 * @param keys the different texts taken from the properties files
-	 * @return a string array
+	 * Returns multiple strings in a String array.	
+	 * 
+	 * @param keys – The The keywords to search for in the file
+	 * @return The strings specified by the keys, in a String array
 	 */
 	public String[] getStrings(String...keys) {
 		String[] result = new String[keys.length];
@@ -39,27 +54,33 @@ public class Texts {
 		}
 		return result;
 	}
+	
 	/**
+	 * Formats a string by inserting strings or numbers in the string
 	 * 	
-	 * @param key is what text it searches for in the properties files
-	 * @param args the amount of arguments
-	 * @return the string from the chosen key
+	 * @param key – The keyword to search for in the file
+	 * @param args – The Objects to be inserted in the strings
+	 * @return The formatted String
 	 */
 	public String getFormattedString(String key, Object... args) {
 		return String.format(texts.getString(key), args);
 	}
+	
 	/**
+	 * Returns the string of the corresponding keyword in the fieldInfo file
 	 * 	
-	 * @param key is what text it searches for in the properties files
-	 * @return The string needed for the field
+	 * @param key – The keyword to search for in the file
+	 * @return The corresponding string
 	 */
 	public String getInfo(String key) {
 		return fieldInfo.getString(key);
 	}
+	
 	/**
+	 * Returns the string of the corresponding keyword in the *_cards file
 	 * 	
-	 * @param key is what text it searches for in the properties files
-	 * @return the string needed for the chance card
+	 * @param key – The keyword to search for in the file
+	 * @return The corresponding string
 	 */
 	public String getCardString(String key) {
 		return cards.getString(key);
