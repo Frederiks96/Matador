@@ -237,7 +237,7 @@ public class Controller  {
 				}
 			}
 			saveGame();
-		} while (!options.equals(text.getString("roll")) || board.getDiceCup().hasPair());
+		} while (!options.equals(text.getString("roll")) || (board.getDiceCup().hasPair() && player.getJailTime() == -1));
 		saveGame();
 	}
 
