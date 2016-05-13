@@ -481,8 +481,8 @@ public class GameBoard {
 		do {
 			do {
 				choice = gui.getUserSelection(text.getFormattedString("currentAmount",debt,player.getBalance())+
-						text.getString("chooseProperty"), propertiesArr);
-			} while (((Ownable)getProperty(choice)).isMortgaged());
+						" "+text.getString("chooseProperty"), propertiesArr);
+			} while (((Ownable)getProperty(choice)).isMortgaged()==true);
 
 			if (getProperty(choice) instanceof Territory) {
 				if (((Territory)getProperty(choice)).getHouseCount()>0) {
