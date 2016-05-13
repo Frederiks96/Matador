@@ -214,7 +214,7 @@ public class ChanceField extends AbstractFields {
 			System.out.println("Kortet blev ikke fanget i denne if/else clause");
 		}
 
-		gui.removeCar(position, player.getName());
+		gui.removeAllCars(player.getName());
 		gui.setCar(player.getPosition(), player.getName());
 		gui.setBalance(player.getName(), player.getBalance());
 	}

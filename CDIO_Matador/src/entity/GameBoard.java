@@ -480,7 +480,6 @@ public class GameBoard {
 			do {
 				choice = gui.getUserSelection(text.getFormattedString("currentAmount",debt,player.getBalance())+
 						" "+text.getString("chooseProperty"), propertiesArr);
-				System.out.println(((Ownable)getProperty(choice)).isMortgaged());
 			} while (((Ownable)getProperty(choice)).isMortgaged()==true);
 
 			if (getProperty(choice) instanceof Territory) {
