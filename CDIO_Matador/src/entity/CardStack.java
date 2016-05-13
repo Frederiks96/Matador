@@ -12,7 +12,7 @@ public class CardStack {
 	private ArrayList<ChanceCard> chanceCardDeck;
 
 	/**
-	 * The constructor of the card stack. Initializes the local ArrayList<ChanceCard> chanceCardDeck.
+	 * The constructor of the card stack. Initializes the local ArrayList chanceCardDeck.
 	 */
 	
 	public CardStack(){
@@ -63,7 +63,7 @@ public class CardStack {
 	/**
 	 * Draws all cards from the deck, but leaves the cards in the deck.
 	 * 
-	 * @return ArrayList<String>
+	 * @return ArrayList of strings
 	 */
 	public ArrayList<String> drawAll() {
 		texts = new ArrayList<String>();
