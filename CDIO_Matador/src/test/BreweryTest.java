@@ -28,7 +28,7 @@ public class BreweryTest {
 	@Before
 	public void setUp() throws Exception {
 		text = new Texts(language.Dansk);
-		gui = new GUI_Commands();
+		gui = new GUI_Commands();	
 		player1 = new Player("Oliver", "grøn", "bil");
 		player2 = new Player("Frederik", "blå", "ufo");
 		board = new GameBoard();
@@ -53,8 +53,7 @@ public class BreweryTest {
 		public void payRentBrewery(){
 			
 			board.setOwner(12, player1,gui);
-			player2.setPosition(12);
-			board.landOnField(player2, text, gui);
+			player2.setPosition(4);			
 			
 			int actualPlayer1Balance = player1.getBalance();
 			int expectedPlayer1Balance = 30000 + ((Brewery)board.getLogicField(12)).getRent(board);
@@ -72,8 +71,7 @@ public class BreweryTest {
 		public void payRentTwoBrewery(){
 			board.setOwner(12, player1,gui);
 			board.setOwner(28, player1, gui);
-			player2.setPosition(12);
-			board.landOnField(player2, text, gui);
+			player2.setPosition(4);			
 			
 			
 			int actualPlayer1Balance = player1.getBalance();

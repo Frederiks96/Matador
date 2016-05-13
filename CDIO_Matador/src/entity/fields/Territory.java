@@ -150,7 +150,7 @@ public class Territory extends AbstractFields implements Ownable {
 		if (player.getAccount().legalTransaction(-this.price)){
 			player.updateBalance(-this.price);
 			setOwner(player,gui);
-		}else gui.showMessage(text.getString("failedTranscation"));
+		}else gui.showMessage(text.getString("failedTransaction"));
 	}
 	/**
 	 * @inheritDoc
