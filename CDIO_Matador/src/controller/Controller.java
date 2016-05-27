@@ -363,7 +363,7 @@ public class Controller  {
 	 * @return true if the name contains any special characters or is null, otherwise false
 	 */
 	private boolean isNotValidDBName(String gameName) {
-		return gameName.equals(null) || gameName.trim().equals("") || 
+		return gameName == null || gameName.trim().equals("") || 
 				gameName.contains("/") || gameName.contains(";") || 
 				gameName.contains("'") || gameName.contains("?") ||
 				gameName.contains("¨") || gameName.contains("´") ||
@@ -374,7 +374,7 @@ public class Controller  {
 				gameName.contains("=") || gameName.contains("<") ||
 				gameName.contains(">") || gameName.contains(",") ||
 				gameName.contains(".") || gameName.contains("-") ||
-				gameName.contains("@");
+				gameName.contains("@") || gameName.contains(" ");
 	}
 
 	/**

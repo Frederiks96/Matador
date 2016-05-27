@@ -3,16 +3,18 @@ package main;
 import java.sql.SQLException;
 
 import controller.Controller;
+import desktop_resources.GUI;
 
 public class Main {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) {
 		Controller con;
-//		try {
+		try {
 			con = new Controller();
 			con.run();
-//		} catch (SQLException e) {
-//			
-//		}
+		} catch (SQLException s) {
+			s.printStackTrace();
+			GUI.close();
+		}
 	}
 }
